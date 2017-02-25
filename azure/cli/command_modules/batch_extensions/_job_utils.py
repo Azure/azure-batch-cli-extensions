@@ -30,7 +30,8 @@ def deploy_tasks(client, job_id, tasks):
         start = 0
         while start < len(tasks):
             end = min(start + MAX_TASKS_COUNT_IN_BATCH, len(tasks))
-            client.task.add_collection(job_id, tasks[start:end])
+            ts = client._deserialize('[TaskAddParameter]', tasks[start:end])  # pylint: disable=protected-access
+            client.task.add_collection(job_id, ts)
             start = end
 
     _handle_batch_exception(add_task)

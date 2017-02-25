@@ -20,7 +20,6 @@ except ImportError:
 
 from azure.cli.core.prompting import prompt
 import azure.cli.core.azlogging as azlogging
-import azure.cli.command_modules.batch_extensions._file_utils as file_utils
 import azure.cli.command_modules.batch_extensions._pool_utils as pool_utils
 
 logger = azlogging.get_az_logger(__name__)
@@ -436,7 +435,7 @@ def _validate_parameter(name, content, value):
         elif content['type'] == 'bool':
             value = _validate_bool(value)
         elif content['type'] == 'string':
-            value = _validate_string(value, content)
+            value = _validate_string(value, content)  # pylint: disable=redefined-variable-type
         if value not in content.get('allowedValues', [value]):
             raise ValueError("Allowed values: {}".format(', '.join(content['allowedValues'])))
     except TypeError:
@@ -608,7 +607,7 @@ def _parse_template_string(string_content, template_obj, parameters):
             current_index = expression_start + 2
             continue
         expression_end = _find_nested(']', string_content, expression_start + 1)
-        if expression_end >= len(string_content): 
+        if expression_end >= len(string_content):
             # No closing delimiter for the expression (not our problem)
             break
         # Everything between [ and ]
@@ -941,19 +940,18 @@ def _expand_task_collection(factory):
         raise ValueError("Task objects on collection factory invalid.")
 
 
-def _expand_task_per_file(factory):
+def _expand_task_per_file(factory, fileutils):
     """Parse file iteration task factory object, and return task list.
     :param dict factory: A loaded JSON task factory object.
     """
     try:
-        files = file_utils.get_container_list(factory['source'])
+        files = fileutils.get_container_list(factory['source'])
     except (KeyError, TypeError):
         raise ValueError('No file source is defined in file iteration task factory.')
     try:
         repeat_task = _parse_repeat_task(factory['repeatTask'])
     except (KeyError, TypeError):
         raise ValueError('No repeat task is defined in file iteration task factory.')
-    files = file_utils.get_container_list(factory['source'])
     task_objs = [_transform_repeat_task(repeat_task, f, i, _transform_file_str) \
         for f, i in enumerate(files)]
     try:
@@ -1021,7 +1019,7 @@ def expand_template(template_file, parameter_file=None):
     return _parse_template(json.dumps(template_json), template_json, parameters)
 
 
-def expand_task_factory(job_obj):
+def expand_task_factory(job_obj, fileutils):
     """Parse a task factory object and expand to a list of tasks.
     :param dict job_obj: The JSON job entity loaded from a template.
     :returns: a list of task entities.
@@ -1036,7 +1034,7 @@ def expand_task_factory(job_obj):
     elif factory_type == 'taskCollection':
         return _expand_task_collection(task_factory)
     elif factory_type == 'taskPerFile':
-        return _expand_task_per_file(task_factory)
+        return _expand_task_per_file(task_factory, fileutils)
     else:
         raise TypeError("'{}' is not a valid Task Factory type.".format(factory_type))
 

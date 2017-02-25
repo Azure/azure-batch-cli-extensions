@@ -3,12 +3,9 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-import json
 import os
 import unittest
-import mock
 
-from azure.cli.command_modules.batch_extensions import _pool_utils
 from azure.cli.command_modules.batch_extensions import _file_utils as utils
 
 
@@ -34,7 +31,7 @@ class TestBatchNCJFiles(unittest.TestCase):
         with self.assertRaises(ValueError):
             utils.get_container_name("data-#$%")
 
-    def test_batch_ncj_resolve_filepaths(self):
+    def test_batch_ncj_resolve_filepaths(self):  # pylint: disable=too-many-statements
         if os.name == 'nt':
             resolved = utils.resolve_file_paths(self.win_base + "\\file_tests")
             self.assertEqual(resolved[0], self.win_base + '\\file_tests')
@@ -92,7 +89,6 @@ class TestBatchNCJFiles(unittest.TestCase):
         self.assertEqual(len(resolved[1]), 2)
 
     def test_batch_ncj_transform_resourcefiles_from_filegroup(self):
-        container = 'fgrp-data'
         resource = {
             'source': {'fileGroup': 'data'}
         }
@@ -155,7 +151,7 @@ class TestBatchNCJFiles(unittest.TestCase):
             'filePath': 'localFile/'
         }
         blobs = [
-            {'filePath': 'subdir/data1.txt', 'url': 
+            {'filePath': 'subdir/data1.txt', 'url':
              'https://blob.fgrp-data/subdir/data1.txt'}
         ]
         resources = utils.convert_blobs_to_resource_files(blobs, resource)

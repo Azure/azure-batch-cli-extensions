@@ -59,7 +59,7 @@ def create_pool(client, template=None, parameters=None, json_file=None,  # pylin
         # Handle any special post-processing steps.
         # - Resource Files
         # - etc
-        json_obj = template_utils.post_processing(json_obj)
+        json_obj = template_utils.post_processing(json_obj, None)
 
         # Batch Shipyard integration
         if 'clientExtensions' in json_obj and 'dockerOptions' in json_obj['clientExtensions']:
@@ -138,7 +138,7 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
             expanded_job_object = template_utils.expand_template(template, parameters)
             if not 'job' in expanded_job_object:
                 raise ValueError('Missing job element in the template.')
-            if not 'properties' in expanded_job_object['expanded_job_object']:
+            if not 'properties' in expanded_job_object['job']:
                 raise ValueError('Missing job properties element in the template.')
             # bulid up the jsonFile object to hand to the batch service.
             json_obj = expanded_job_object['job']['properties']
@@ -160,7 +160,7 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
         task_collection = []
         if 'taskFactory' in json_obj:
             logger.warning('You are using an experimental feature {Task Factory}.')
-            task_collection = template_utils.expand_task_factory(json_obj)
+            task_collection = template_utils.expand_task_factory(json_obj, None)
 
             # If job has a task factory and terminate job on all tasks complete is set, the job will
             # already be terminated when we add the tasks, so we need to set to noAction, then patch
@@ -197,9 +197,9 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
         # - Resource Files
         # - Output Files
         # - etc
-        json_obj = template_utils.post_processing(json_obj)
+        json_obj = template_utils.post_processing(json_obj, None)
         if task_collection:
-            task_collection = template_utils.post_processing(task_collection)
+            task_collection = template_utils.post_processing(task_collection, None)
 
         commands.append(template_utils.process_job_for_output_files(
             json_obj, task_collection, pool_os_flavor))
@@ -250,7 +250,7 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
             # now that the tasks have been added.
             client.job.patch(job.id, {'onAllTasksComplete': auto_complete})
 
-    return client.get(job.id)
+    return client.job.get(job.id)
 
 create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__
 

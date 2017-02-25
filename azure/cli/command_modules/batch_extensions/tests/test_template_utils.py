@@ -11,9 +11,9 @@ from azure.cli.command_modules.batch_extensions import _template_utils as utils
 from azure.cli.command_modules.batch_extensions import _pool_utils
 from azure.cli.command_modules.batch_extensions import _file_utils
 
-
+# pylint: disable=too-many-lines
 class TestBatchNCJTemplates(unittest.TestCase):
-    # pylint: disable=attribute-defined-outside-init,no-member
+    # pylint: disable=attribute-defined-outside-init,no-member,too-many-public-methods
 
     def setUp(self):
         self.data_dir = os.path.join(os.path.dirname(__file__), 'data')
@@ -231,47 +231,47 @@ class TestBatchNCJTemplates(unittest.TestCase):
         self.assertFalse('[parameters(' in json.dumps(resolved))
 
     def test_batch_ncj_replace_parametric_sweep_command(self):
-        input = {"value": "cmd {{{0}}}.mp3 {1}.mp3"}
+        test_input = {"value": "cmd {{{0}}}.mp3 {1}.mp3"}
         replaced = utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                                input, "value", [5, 10])
+                                                test_input, "value", [5, 10])
         self.assertEqual(replaced["value"], 'cmd {5}.mp3 10.mp3')
-        input["value"] = "cmd {{{0}}}.mp3 {{{1}}}.mp3"
+        test_input["value"] = "cmd {{{0}}}.mp3 {{{1}}}.mp3"
         replaced = utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                                input, "value", [5, 10])
+                                                test_input, "value", [5, 10])
         self.assertEqual(replaced["value"], 'cmd {5}.mp3 {10}.mp3')
-        input["value"] = "cmd {{0}}.mp3 {1}.mp3"
+        test_input["value"] = "cmd {{0}}.mp3 {1}.mp3"
         replaced = utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                                input, "value", [5, 10])
+                                                test_input, "value", [5, 10])
         self.assertEqual(replaced["value"], 'cmd {0}.mp3 10.mp3')
-        input["value"] = "cmd {0}.mp3 {1}.mp3"
+        test_input["value"] = "cmd {0}.mp3 {1}.mp3"
         replaced = utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                                input, "value", [5, 10])
+                                                test_input, "value", [5, 10])
         self.assertEqual(replaced["value"], 'cmd 5.mp3 10.mp3')
-        input["value"] = "cmd {0}{1}.mp3 {1}.mp3"
+        test_input["value"] = "cmd {0}{1}.mp3 {1}.mp3"
         replaced = utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                                input, "value", [5, 10])
+                                                test_input, "value", [5, 10])
         self.assertEqual(replaced["value"], 'cmd 510.mp3 10.mp3')
-        input["value"] = "cmd {0}.mp3 {0}.mp3"
+        test_input["value"] = "cmd {0}.mp3 {0}.mp3"
         replaced = utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                                input, "value", [5, 10])
+                                                test_input, "value", [5, 10])
         self.assertEqual(replaced["value"], 'cmd 5.mp3 5.mp3')
-        input["value"] = "cmd {0:3}.mp3 {0}.mp3"
+        test_input["value"] = "cmd {0:3}.mp3 {0}.mp3"
         replaced = utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                                input, "value", [5, 10])
+                                                test_input, "value", [5, 10])
         self.assertEqual(replaced["value"], 'cmd 005.mp3 5.mp3')
-        input["value"] = "cmd {0:3}.mp3 {1:3}.mp3"
+        test_input["value"] = "cmd {0:3}.mp3 {1:3}.mp3"
         replaced = utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                                input, "value", [5, 1234])
+                                                test_input, "value", [5, 1234])
         self.assertEqual(replaced["value"], 'cmd 005.mp3 1234.mp3')
-        input["value"] = "cmd {{}}.mp3"
+        test_input["value"] = "cmd {{}}.mp3"
         replaced = utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                                input, "value", [5, 1234])
+                                                test_input, "value", [5, 1234])
         self.assertEqual(replaced["value"], 'cmd {}.mp3')
-        input["value"] = ("gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha "
-                         "-sOutputFile={0}-%03d.png -r250 {0}.pdf && for f in *.png; do tesseract"
-                         " $f ${{f%.*}};done")
+        test_input["value"] = ("gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha "
+                               "-sOutputFile={0}-%03d.png -r250 {0}.pdf && for f in *.png;"
+                               " do tesseract $f ${{f%.*}};done")
         replaced = utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                                input, "value", [5])
+                                                test_input, "value", [5])
         self.assertEqual(
             replaced["value"],
             "gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha "
@@ -279,26 +279,26 @@ class TestBatchNCJTemplates(unittest.TestCase):
             "$f ${f%.*};done")
 
     def test_batch_ncj_replace_invalid_parametric_sweep(self):
-        input = {"value": "cmd {0}.mp3 {2}.mp3"}
+        test_input = {"value": "cmd {0}.mp3 {2}.mp3"}
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                         input, "value", [5, 10])
-        input["value"] = "cmd {}.mp3 {2}.mp3"
+                                         test_input, "value", [5, 10])
+        test_input["value"] = "cmd {}.mp3 {2}.mp3"
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                         input, "value", [5, 10])
-        input["value"] = "cmd {{0}}}.mp3 {1}.mp3"
+                                         test_input, "value", [5, 10])
+        test_input["value"] = "cmd {{0}}}.mp3 {1}.mp3"
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                         input, "value", [5, 10])
-        input["value"] = "cmd {0:3}.mp3 {1}.mp3"
+                                         test_input, "value", [5, 10])
+        test_input["value"] = "cmd {0:3}.mp3 {1}.mp3"
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                         input, "value", [-5, 10])
-        input["value"] = "cmd {0:-3}.mp3 {1}.mp3"
+                                         test_input, "value", [-5, 10])
+        test_input["value"] = "cmd {0:-3}.mp3 {1}.mp3"
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_sweep_str,  # pylint:disable=protected-access
-                                         input, "value", [5, 10])
+                                         test_input, "value", [5, 10])
 
     def test_batch_ncj_replace_file_iteration_command(self):
         file = {
@@ -307,25 +307,25 @@ class TestBatchNCJTemplates(unittest.TestCase):
             "fileName": "blob.ext",
             "fileNameWithoutExtension": "blob"
         }
-        input = {"value": "cmd {{{url}}}.mp3 {filePath}.mp3"}
+        test_input = {"value": "cmd {{{url}}}.mp3 {filePath}.mp3"}
         replaced = utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                                input, "value", file)
+                                                test_input, "value", file)
         self.assertEqual(replaced["value"],
                          'cmd {http://someurl/container/path/blob.ext}.mp3 path/blob.ext.mp3')
-        input["value"] = "cmd {{{fileName}}}.mp3 {{{fileNameWithoutExtension}}}.mp3"
+        test_input["value"] = "cmd {{{fileName}}}.mp3 {{{fileNameWithoutExtension}}}.mp3"
         replaced = utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                                input, "value", file)
+                                                test_input, "value", file)
         self.assertEqual(replaced["value"], 'cmd {blob.ext}.mp3 {blob}.mp3')
-        input["value"] = "cmd {{fileName}}.mp3 {fileName}.mp3"
+        test_input["value"] = "cmd {{fileName}}.mp3 {fileName}.mp3"
         replaced = utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                                input, "value", file)
+                                                test_input, "value", file)
         self.assertEqual(replaced["value"], 'cmd {fileName}.mp3 blob.ext.mp3')
-        input["value"] = (
+        test_input["value"] = (
             "gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha "
             "-sOutputFile={fileNameWithoutExtension}-%03d.png -r250 "
             "{fileNameWithoutExtension}.pdf && for f in *.png; do tesseract $f ${{f%.*}};done")
         replaced = utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                                input, "value", file)
+                                                test_input, "value", file)
         self.assertEqual(
             replaced["value"],
             "gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha "
@@ -339,18 +339,18 @@ class TestBatchNCJTemplates(unittest.TestCase):
             "fileName": "blob.ext",
             "fileNameWithoutExtension": "blob"
         }
-        input = {"value": "cmd {url}.mp3 {fullNameWithSome}.mp3"}
+        test_input = {"value": "cmd {url}.mp3 {fullNameWithSome}.mp3"}
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                         input, "value", file)
-        input["value"] = "cmd {}.mp3 {url}.mp3"
+                                         test_input, "value", file)
+        test_input["value"] = "cmd {}.mp3 {url}.mp3"
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                         input, "value", file)
-        input["value"] = "cmd {{url}}}.mp3 {filePath}.mp3"
+                                         test_input, "value", file)
+        test_input["value"] = "cmd {{url}}}.mp3 {filePath}.mp3"
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                         input, "value", file)
+                                         test_input, "value", file)
 
     def test_batch_ncj_parse_parameter_sets(self):
         parsed = utils._parse_parameter_sets([{'start':1, 'end':2}])  # pylint:disable=protected-access
@@ -378,7 +378,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         self.assertEqual(list(parsed), [(1, -1, -5), (1, -1, -2), (1, -1, 1), (1, -1, 4),
                                         (1, -2, -5), (1, -2, -2), (1, -2, 1), (1, -2, 4),
                                         (1, -3, -5), (1, -3, -2), (1, -3, 1), (1, -3, 4)])
-        parsed = list(utils._parse_parameter_sets([{'start':1, 'end':2000}]))  # pylint:disable=protected-access
+        parsed = list(utils._parse_parameter_sets([{'start':1, 'end':2000}]))  # pylint:disable=protected-access,redefined-variable-type
         self.assertEqual(len(parsed), 2000)
         self.assertEqual(len(parsed[0]), 1)
 
@@ -399,16 +399,18 @@ class TestBatchNCJTemplates(unittest.TestCase):
             utils._parse_parameter_sets([{'start':1, 'end':2}, {}])  # pylint:disable=protected-access
 
     def test_batch_ncj_parse_taskcollection_factory(self):
-        template = {  
+        template = {
             "type": "taskCollection",
             "tasks": [
                 {
                     "id" : "mytask1",
-                    "commandLine": "ffmpeg -i sampleVideo1.mkv -vcodec copy -acodec copy output.mp4 -y",
+                    "commandLine": "ffmpeg -i sampleVideo1.mkv"
+                                   " -vcodec copy -acodec copy output.mp4 -y",
                     "resourceFiles": [
                         {
                             "filePath": "sampleVideo1.mkv",
-                            "blobSource": "[parameters('inputFileStorageContainerUrl')]sampleVideo1.mkv"
+                            "blobSource": "[parameters('inputFileStorageContainerUrl')]"
+                                          "sampleVideo1.mkv"
                         }
                     ],
                     "outputFiles": [
@@ -427,7 +429,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
                 }
             ]
         }
-        result = utils._expand_task_collection(template)
+        result = utils._expand_task_collection(template)  # pylint: disable=protected-access
         expected = [
             {
                 "id" : "mytask1",
@@ -466,12 +468,12 @@ class TestBatchNCJTemplates(unittest.TestCase):
         }
         result = utils._expand_parametric_sweep(template)  # pylint:disable=protected-access
         expected = [
-            { "commandLine": 'cmd 1.mp3 3.mp3', "id": '0' },
-            { "commandLine": 'cmd 1.mp3 4.mp3', "id": '1' },
-            { "commandLine": 'cmd 1.mp3 5.mp3', "id": '2' },
-            { "commandLine": 'cmd 2.mp3 3.mp3', "id": '3' },
-            { "commandLine": 'cmd 2.mp3 4.mp3', "id": '4' },
-            { "commandLine": 'cmd 2.mp3 5.mp3', "id": '5' }
+            {"commandLine": 'cmd 1.mp3 3.mp3', "id": '0'},
+            {"commandLine": 'cmd 1.mp3 4.mp3', "id": '1'},
+            {"commandLine": 'cmd 1.mp3 5.mp3', "id": '2'},
+            {"commandLine": 'cmd 2.mp3 3.mp3', "id": '3'},
+            {"commandLine": 'cmd 2.mp3 4.mp3', "id": '4'},
+            {"commandLine": 'cmd 2.mp3 5.mp3', "id": '5'}
         ]
         sorting_key = lambda k: k['id']
         self.assertEqual(sorted(result, key=sorting_key), sorted(expected, key=sorting_key))
@@ -562,7 +564,8 @@ class TestBatchNCJTemplates(unittest.TestCase):
                         }
                     }
                 ]
-            },            {
+            },
+            {
                 "commandLine": 'cmd 3.mp3',
                 "resourceFiles": [
                     {
@@ -591,13 +594,13 @@ class TestBatchNCJTemplates(unittest.TestCase):
                 ]
             }
         ]
-        result = utils._expand_parametric_sweep(template)
+        result = utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
         self.assertEqual(sorted(expected, key=sorting_key), sorted(result, key=sorting_key))
 
         template = {
             "parameterSets": [
                 {"start": 1, "end": 3}
-            ], 
+            ],
             "repeatTask": {
                 "commandLine": "cmd {0}.mp3"
             },
@@ -610,27 +613,27 @@ class TestBatchNCJTemplates(unittest.TestCase):
             {"commandLine": 'cmd 2.mp3', "id": '1'},
             {"commandLine": 'cmd 3.mp3', "id": '2'},
             {"commandLine": 'summary.exe', "id": 'merge',
-             "dependsOn": {"taskIdRanges": {"start": 0, "end": 2 }}}
+             "dependsOn": {"taskIdRanges": {"start": 0, "end": 2}}}
         ]
-        result = utils._expand_parametric_sweep(template)
+        result = utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
         self.assertEqual(sorted(result, key=sorting_key), sorted(expected, key=sorting_key))
 
     def test_batch_ncj_parse_invalid_parametricsweep(self):
         with self.assertRaises(ValueError):
-            utils._expand_parametric_sweep({'repeatTask': {'commandLine': 'cmd {0}.mp3'}})
+            utils._expand_parametric_sweep({'repeatTask': {'commandLine': 'cmd {0}.mp3'}})  # pylint: disable=protected-access
         with self.assertRaises(ValueError):
-            utils._expand_parametric_sweep({'parameterSets': [{'start': 1, 'end': 3}]})
+            utils._expand_parametric_sweep({'parameterSets': [{'start': 1, 'end': 3}]})  # pylint: disable=protected-access
         template = {
             "parameterSets": [
                 {"start": 1, "end": 3}
             ],
             "repeatTask": {
                 "resourceFiles" : [
-                    { 
+                    {
                         "filePath": "run.exe",
                         "blobSource": "http://account.blob/run.exe"
                     },
-                    { 
+                    {
                         "filePath": "{0}.mp3",
                         "blobSource": "http://account.blob/{0}.dat"
                     }
@@ -638,7 +641,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
             }
         }
         with self.assertRaises(ValueError):
-            utils._expand_parametric_sweep(template)
+            utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
         template = {
             "parameterSets": [
                 {"start": 1, "end": 3}
@@ -646,18 +649,18 @@ class TestBatchNCJTemplates(unittest.TestCase):
             "repeatTask": {
                 "commandLine": "cmd {0}.mp3",
                 "resourceFiles" : [
-                    { 
+                    {
                         "filePath": "run.exe",
                         "blobSource": "http://account.blob/run.exe"
                     },
-                    { 
+                    {
                         "filePath": "{0}.mp3",
                         "blobSource": "http://account.blob/{0}.dat"
                     }
                 ]
             }
         }
-        utils._expand_parametric_sweep(template)
+        utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
 
     def test_batch_ncj_preserve_resourcefiles(self):
         fileutils = _file_utils.FileUtils(None, None, None)
@@ -689,7 +692,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         }
         transformed = utils.post_processing(dict(request), fileutils)
         self.assertEqual(transformed, request)
-        request = [
+        request = [  # pylint: disable=redefined-variable-type
             {
                 'resourceFiles': [
                     {
@@ -709,7 +712,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         ]
         transformed = utils.post_processing(list(request), fileutils)
         self.assertEqual(transformed, request)
-        request = {'resourceFiles': [{'blobSource': 'abc'}]};
+        request = {'resourceFiles': [{'blobSource': 'abc'}]}
         with self.assertRaises(ValueError):
             utils.post_processing(request, fileutils)
 
@@ -742,6 +745,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
                 "type": "bool"
             }
         }
+        # pylint: disable=protected-access
         self.assertEqual(utils._validate_parameter('a', content['a'], 3), 3)
         self.assertEqual(utils._validate_parameter('a', content['a'], 5), 5)
         self.assertIsNone(utils._validate_parameter('a', content['a'], 1))
@@ -753,7 +757,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         self.assertIsNone(utils._validate_parameter('b', content['b'], 1))
         self.assertEqual(utils._validate_parameter('b', content['b'], 100), '100')
         self.assertEqual(utils._validate_parameter('c', content['c'],
-                         'STANDARD_A1'), 'STANDARD_A1')
+                                                   'STANDARD_A1'), 'STANDARD_A1')
         self.assertIsNone(utils._validate_parameter('c', content['c'], 'STANDARD_C1'))
         self.assertIsNone(utils._validate_parameter('c', content['c'], 'standard_a1'))
         self.assertEqual(utils._validate_parameter('d', content['d'], True), True)
@@ -784,12 +788,12 @@ class TestBatchNCJTemplates(unittest.TestCase):
                 'clientExtensions': {'dockerOptions': {'image': 'ncj/caffe:cpu'}}
             }
         ]
-        result = utils._expand_task_collection(template)
+        result = utils._expand_task_collection(template)  # pylint: disable=protected-access
         self.assertEqual(result, expected)
         template = {
             "parameterSets": [
-                { "start": 1, "end": 3 }
-            ], 
+                {"start": 1, "end": 3}
+            ],
             "repeatTask": {
                 "commandLine": "cmd {0}.mp3",
                 "clientExtensions": {
@@ -822,8 +826,8 @@ class TestBatchNCJTemplates(unittest.TestCase):
         }
         expected = [
             {
-                "commandLine": 'cmd 1.mp3', 
-                "id": '0', 
+                "commandLine": 'cmd 1.mp3',
+                "id": '0',
                 "clientExtensions": {
                     "dockerOptions": {
                         "image": 'ncj/caffe:cpu',
@@ -844,8 +848,8 @@ class TestBatchNCJTemplates(unittest.TestCase):
                 }
             },
             {
-                "commandLine": 'cmd 2.mp3', 
-                "id": '1', 
+                "commandLine": 'cmd 2.mp3',
+                "id": '1',
                 "clientExtensions": {
                     "dockerOptions": {
                         "image": 'ncj/caffe:cpu',
@@ -866,8 +870,8 @@ class TestBatchNCJTemplates(unittest.TestCase):
                 }
             },
             {
-                "commandLine": 'cmd 3.mp3', 
-                "id": '2', 
+                "commandLine": 'cmd 3.mp3',
+                "id": '2',
                 "clientExtensions": {
                     "dockerOptions": {
                         "image": 'ncj/caffe:cpu',
@@ -893,7 +897,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
                 "clientExtensions": {"dockerOptions": {"image": 'ncj/merge'}}
             }
         ]
-        result = utils._expand_parametric_sweep(template)
+        result = utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
         self.assertEqual(expected, result)
 
     def test_batch_ncj_simple_linux_package_manager(self):
@@ -999,7 +1003,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
                 "waitForSuccess": True,
                 "resourceFiles": [
                     {
-                        "source": { 
+                        "source": {
                             "fileGroup": "abc",
                             "path": "nodeprep-cmd"
                         }
@@ -1037,8 +1041,8 @@ class TestBatchNCJTemplates(unittest.TestCase):
         job = {
             "taskFactory": {
                 "type": "parametricSweep",
-                "parameterSets": [{"start": 1, "end": 2}, {"start": 3, "end": 5}], 
-                "repeatTask": { 
+                "parameterSets": [{"start": 1, "end": 2}, {"start": 3, "end": 5}],
+                "repeatTask": {
                     "commandLine": "cmd {0}.mp3 {1}.mp3",
                     "packageReferences": [
                         {
@@ -1054,14 +1058,14 @@ class TestBatchNCJTemplates(unittest.TestCase):
                 }
             }
         }
-        collection = utils.expand_task_factory(job)
+        collection = utils.expand_task_factory(job, None)
         commands = []
         commands.append(utils.process_task_package_references(
-                        collection, _pool_utils.PoolOperatingSystemFlavor.LINUX))
+            collection, _pool_utils.PoolOperatingSystemFlavor.LINUX))
         commands.append(None)
         job['jobPreparationTask'] = utils.construct_setup_task(
-                            job.get('jobPreparationTask'), commands,
-                            _pool_utils.PoolOperatingSystemFlavor.LINUX)
+            job.get('jobPreparationTask'), commands,
+            _pool_utils.PoolOperatingSystemFlavor.LINUX)
         self.assertFalse('taskFactory' in job)
         # TODO: Shell escape
         #self.assertEqual(job['jobPreparationTask']['commandLine'],
@@ -1075,19 +1079,19 @@ class TestBatchNCJTemplates(unittest.TestCase):
             "taskFactory": {
                 "type": "parametricSweep",
                 "parameterSets": [{"start": 1, "end": 2}, {"start": 3, "end": 5}],
-                "repeatTask": { 
+                "repeatTask": {
                     "commandLine": "cmd {0}.mp3 {1}.mp3"
                 }
             }
         }
-        collection = utils.expand_task_factory(job)
+        collection = utils.expand_task_factory(job, None)
         commands = []
         commands.append(utils.process_task_package_references(
-                            collection, _pool_utils.PoolOperatingSystemFlavor.LINUX))
+            collection, _pool_utils.PoolOperatingSystemFlavor.LINUX))
         commands.append(None)
         job['jobPreparationTask'] = utils.construct_setup_task(
-                            job.get('jobPreparationTask'), commands,
-                            _pool_utils.PoolOperatingSystemFlavor.LINUX)
+            job.get('jobPreparationTask'), commands,
+            _pool_utils.PoolOperatingSystemFlavor.LINUX)
         self.assertFalse('taskFactory' in job)
         self.assertIsNone(job['jobPreparationTask'])
 
@@ -1191,14 +1195,14 @@ class TestBatchNCJTemplates(unittest.TestCase):
             'commandLine': 'foo.exe && /bin/bash -c "echo test"',
             'outputFiles': outputFiles
         }
-        new_task = utils._parse_task_output_files(task, _pool_utils.PoolOperatingSystemFlavor.LINUX)
+        new_task = utils._parse_task_output_files(task, _pool_utils.PoolOperatingSystemFlavor.LINUX)  # pylint: disable=protected-access
         expected_command_line = ("/bin/bash -c 'foo.exe && /bin/bash -c \"echo test\";err=$?;"
                                  "$AZ_BATCH_JOB_PREP_WORKING_DIR/uploadfiles.py $err;exit $err'")
         self.assertEqual(new_task['commandLine'], expected_command_line)
         self.assertFalse('outputFiles' in new_task)
         self.assertTrue('environmentSettings' in new_task)
         self.assertEqual(len(new_task['environmentSettings']), 1)
-        self.assertEqual(new_task['environmentSettings'][0]['name'], utils._FILE_EGRESS_ENV_NAME)
+        self.assertEqual(new_task['environmentSettings'][0]['name'], utils._FILE_EGRESS_ENV_NAME)  # pylint: disable=protected-access
         self.assertTrue('filePattern' in new_task['environmentSettings'][0]['value'])
 
     def test_batch_ncj_construct_jobprep_for_outputfiles(self):
@@ -1227,7 +1231,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         self.assertFalse('outputFiles' in taskList[0])
         self.assertTrue('environmentSettings' in taskList[0])
         self.assertEqual(len(taskList[0]['environmentSettings']), 1)
-        self.assertEqual(taskList[0]['environmentSettings'][0]['name'], utils._FILE_EGRESS_ENV_NAME)
+        self.assertEqual(taskList[0]['environmentSettings'][0]['name'], utils._FILE_EGRESS_ENV_NAME)  # pylint: disable=protected-access
         self.assertTrue('filePattern' in taskList[0]['environmentSettings'][0]['value'])
         self.assertTrue('jobPreparationTask' in job)
         self.assertEqual(job['jobPreparationTask']['commandLine'],
@@ -1265,7 +1269,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         self.assertEqual(job['jobManagerTask']['commandLine'], expected_command_line)
         self.assertEqual(len(job['jobManagerTask']['environmentSettings']), 1)
         self.assertEqual(job['jobManagerTask']['environmentSettings'][0]['name'],
-            utils._FILE_EGRESS_ENV_NAME)
+                         utils._FILE_EGRESS_ENV_NAME)  # pylint: disable=protected-access
         self.assertTrue('filePattern' in job['jobManagerTask']['environmentSettings'][0]['value'])
         self.assertTrue('jobPreparationTask' in job)
         self.assertEqual(job['jobPreparationTask']['commandLine'],
