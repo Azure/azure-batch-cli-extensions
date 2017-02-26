@@ -13,10 +13,7 @@ try:
     from shlex import quote as shell_escape
 except ImportError:
     from pipes import quote as shell_escape
-try:
-    from urlparse import urljoin  # Python2
-except ImportError:
-    from urllib.parse import urljoin  # Python3
+from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
 
 from azure.cli.core.prompting import prompt
 import azure.cli.core.azlogging as azlogging
@@ -399,7 +396,7 @@ def _validate_application_template(template):
     # Rule: Every parameter declared on a template must specify one of the supported types
     supported_types = ['int', 'string', 'bool']
     if template.get('parameters'):
-        for name, value in template['parameters']:
+        for name, value in template['parameters'].items():
             try:
                 if value['type'] not in supported_types:
                     raise ValueError("The parameter '{}' specifies an unsupported "
@@ -790,8 +787,8 @@ def _replacement_transform(transformer, source_obj, source_key, context):
         return {}
     # Handle '{' and '}' escape scenario : replace '{{' to LEFT_BRACKET_REPLACE_CHAR,
     # and '}}' to RIGHT_BRACKET_REPLACE_CHAR. The reverse function is used to handle {{{0}}}.
-    LEFT_BRACKET_REPLACE_CHAR = '\uE800'
-    RIGHT_BRACKET_REPLACE_CHAR = '\uE801'
+    LEFT_BRACKET_REPLACE_CHAR = '\uE800'  # pylint: disable=anomalous-unicode-escape-in-string
+    RIGHT_BRACKET_REPLACE_CHAR = '\uE801'  # pylint: disable=anomalous-unicode-escape-in-string
     transformed = re.sub(r'\{\{', LEFT_BRACKET_REPLACE_CHAR, source_str)[::-1]
     transformed = re.sub(r'\}\}', RIGHT_BRACKET_REPLACE_CHAR, transformed)[::-1]
     transformed = transformer(transformed, context)
@@ -953,7 +950,7 @@ def _expand_task_per_file(factory, fileutils):
     except (KeyError, TypeError):
         raise ValueError('No repeat task is defined in file iteration task factory.')
     task_objs = [_transform_repeat_task(repeat_task, f, i, _transform_file_str) \
-        for f, i in enumerate(files)]
+        for i, f in enumerate(files)]
     try:
         merge_task = _parse_repeat_task(factory['mergeTask'])
         merge_task['id'] = 'merge'

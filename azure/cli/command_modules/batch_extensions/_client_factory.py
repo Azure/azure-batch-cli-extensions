@@ -19,8 +19,16 @@ def batch_client_factory(**_):
 
 
 def batch_data_service_factory(kwargs):
-    account_name = kwargs.pop('account_name', None)
+    account_name = kwargs['account_name']
     account_key = kwargs.pop('account_key', None)
-    account_endpoint = kwargs.pop('account_endpoint', None)
-    credentials = batchauth.SharedKeyCredentials(account_name, account_key)
+    account_endpoint = kwargs['account_endpoint']
+
+    credentials = None
+    if not account_key:
+        from azure.cli.core._profile import Profile, CLOUD
+        profile = Profile()
+        credentials, _, _ = profile.get_login_credentials(
+            resource=CLOUD.endpoints.batch_resource_id)
+    else:
+        credentials = batchauth.SharedKeyCredentials(account_name, account_key)
     return batch.BatchServiceClient(credentials, base_url=account_endpoint)

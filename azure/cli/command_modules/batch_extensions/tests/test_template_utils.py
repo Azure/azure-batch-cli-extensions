@@ -301,7 +301,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
                                          test_input, "value", [5, 10])
 
     def test_batch_ncj_replace_file_iteration_command(self):
-        file = {
+        file_info = {
             "url": "http://someurl/container/path/blob.ext",
             "filePath": "path/blob.ext",
             "fileName": "blob.ext",
@@ -309,23 +309,23 @@ class TestBatchNCJTemplates(unittest.TestCase):
         }
         test_input = {"value": "cmd {{{url}}}.mp3 {filePath}.mp3"}
         replaced = utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                                test_input, "value", file)
+                                                test_input, "value", file_info)
         self.assertEqual(replaced["value"],
                          'cmd {http://someurl/container/path/blob.ext}.mp3 path/blob.ext.mp3')
         test_input["value"] = "cmd {{{fileName}}}.mp3 {{{fileNameWithoutExtension}}}.mp3"
         replaced = utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                                test_input, "value", file)
+                                                test_input, "value", file_info)
         self.assertEqual(replaced["value"], 'cmd {blob.ext}.mp3 {blob}.mp3')
         test_input["value"] = "cmd {{fileName}}.mp3 {fileName}.mp3"
         replaced = utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                                test_input, "value", file)
+                                                test_input, "value", file_info)
         self.assertEqual(replaced["value"], 'cmd {fileName}.mp3 blob.ext.mp3')
         test_input["value"] = (
             "gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha "
             "-sOutputFile={fileNameWithoutExtension}-%03d.png -r250 "
             "{fileNameWithoutExtension}.pdf && for f in *.png; do tesseract $f ${{f%.*}};done")
         replaced = utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                                test_input, "value", file)
+                                                test_input, "value", file_info)
         self.assertEqual(
             replaced["value"],
             "gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha "
@@ -333,7 +333,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
             "$f ${f%.*};done")
 
     def test_batch_ncj_replace_invalid_file_iteration_command(self):
-        file = {
+        file_info = {
             "url": "http://someurl/container/path/blob.ext",
             "filePath": "path/blob.ext",
             "fileName": "blob.ext",
@@ -342,15 +342,15 @@ class TestBatchNCJTemplates(unittest.TestCase):
         test_input = {"value": "cmd {url}.mp3 {fullNameWithSome}.mp3"}
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                         test_input, "value", file)
+                                         test_input, "value", file_info)
         test_input["value"] = "cmd {}.mp3 {url}.mp3"
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                         test_input, "value", file)
+                                         test_input, "value", file_info)
         test_input["value"] = "cmd {{url}}}.mp3 {filePath}.mp3"
         with self.assertRaises(ValueError):
             utils._replacement_transform(utils._transform_file_str,  # pylint:disable=protected-access
-                                         test_input, "value", file)
+                                         test_input, "value", file_info)
 
     def test_batch_ncj_parse_parameter_sets(self):
         parsed = utils._parse_parameter_sets([{'start':1, 'end':2}])  # pylint:disable=protected-access
@@ -663,7 +663,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
 
     def test_batch_ncj_preserve_resourcefiles(self):
-        fileutils = _file_utils.FileUtils(None, None, None)
+        fileutils = _file_utils.FileUtils(None, None, None, None)
         request = {
             "resourceFiles": [
                 {

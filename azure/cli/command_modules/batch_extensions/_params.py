@@ -30,6 +30,21 @@ register_cli_argument('batch pool create', 'certificate_references', nargs='+', 
 register_cli_argument('batch pool create', 'metadata', nargs='+', type=metadata_item_format)
 register_cli_argument('batch pool create', 'image', completer=load_node_agent_skus, arg_group="Pool: Virtual Machine Configuration",
                       help="OS image URN in 'publisher:offer:sku[:version]' format. Version is optional and if omitted latest will be used.\n\tValues from 'az batch pool node-agent-skus list'.\n\tExample: 'MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest'")
+register_cli_argument('batch pool create', 'account_name', arg_group='Batch Account',
+                      validator=validate_client_parameters,
+                      help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
+register_extra_cli_argument('batch pool create', 'account_key', arg_group='Batch Account',
+                            help='The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY')
+register_cli_argument('batch pool create', 'account_endpoint', arg_group='Batch Account',
+                      help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
+
+register_cli_argument('batch job create', 'account_name', arg_group='Batch Account',
+                      validator=validate_client_parameters,
+                      help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
+register_extra_cli_argument('batch job create', 'account_key', arg_group='Batch Account',
+                            help='The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY')
+register_cli_argument('batch job create', 'account_endpoint', arg_group='Batch Account',
+                      help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
 
 register_cli_argument('batch file upload', 'resource_group_name', resource_group_name_type, completer=None, validator=application_enabled)
 register_cli_argument('batch file upload', 'account_name', batch_name_type, options_list=('--name', '-n'))
@@ -44,12 +59,3 @@ register_cli_argument('batch file download', 'local_path', type=file_type, help=
 register_cli_argument('batch file download', 'file_group', help='Name of a file group under which the files will be stored.')
 register_cli_argument('batch file download', 'remote_path', help='Group subdirectory under which files will be uploaded.')
 register_cli_argument('batch file download', 'flatten', action='store_true', help='If set, will not retain local directory structure in storage.')
-
-for item in ['batch pool create', 'batch job create']:
-    register_extra_cli_argument(item, 'account_name', arg_group='Batch Account',
-                                validator=validate_client_parameters,
-                                help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
-    register_extra_cli_argument(item, 'account_key', arg_group='Batch Account',
-                                help='The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY')
-    register_extra_cli_argument(item, 'account_endpoint', arg_group='Batch Account',
-                                help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')

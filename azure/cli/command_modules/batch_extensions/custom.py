@@ -21,7 +21,8 @@ logger = azlogging.get_az_logger(__name__)
 
 # NCJ custom commands
 
-def create_pool(client, template=None, parameters=None, json_file=None,  # pylint:disable=too-many-arguments, too-many-locals
+def create_pool(client, account_name=None, account_endpoint=None,  # pylint:disable=too-many-arguments, too-many-locals
+                template=None, parameters=None, json_file=None,
                 id=None, vm_size=None, target_dedicated=None, auto_scale_formula=None,  # pylint: disable=redefined-builtin
                 enable_inter_node_communication=False, os_family=None, image=None,
                 node_agent_sku_id=None, resize_timeout=None, start_task_command_line=None,
@@ -59,7 +60,8 @@ def create_pool(client, template=None, parameters=None, json_file=None,  # pylin
         # Handle any special post-processing steps.
         # - Resource Files
         # - etc
-        json_obj = template_utils.post_processing(json_obj, None)
+        file_utils = FileUtils(None, account_name, None, account_endpoint)
+        json_obj = template_utils.post_processing(json_obj, file_utils)
 
         # Batch Shipyard integration
         if 'clientExtensions' in json_obj and 'dockerOptions' in json_obj['clientExtensions']:
@@ -124,7 +126,8 @@ def create_pool(client, template=None, parameters=None, json_file=None,  # pylin
 create_pool.__doc__ = PoolAddParameter.__doc__
 
 
-def create_job(client, template=None, parameters=None, json_file=None, id=None,  #pylint:disable=too-many-arguments, redefined-builtin, too-many-locals
+def create_job(client, account_name=None, account_endpoint=None,  # pylint:disable=too-many-arguments, too-many-locals
+               template=None, parameters=None, json_file=None, id=None,  #pylint:disable=redefined-builtin
                pool_id=None, priority=None, uses_task_dependencies=False, metadata=None,
                job_max_wall_clock_time=None, job_max_task_retry_count=None,
                job_manager_task_command_line=None, job_manager_task_environment_settings=None,
@@ -158,9 +161,10 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
 
         auto_complete = False
         task_collection = []
+        file_utils = FileUtils(None, account_name, None, account_endpoint)
         if 'taskFactory' in json_obj:
             logger.warning('You are using an experimental feature {Task Factory}.')
-            task_collection = template_utils.expand_task_factory(json_obj, None)
+            task_collection = template_utils.expand_task_factory(json_obj, file_utils)
 
             # If job has a task factory and terminate job on all tasks complete is set, the job will
             # already be terminated when we add the tasks, so we need to set to noAction, then patch
@@ -197,9 +201,9 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
         # - Resource Files
         # - Output Files
         # - etc
-        json_obj = template_utils.post_processing(json_obj, None)
+        json_obj = template_utils.post_processing(json_obj, file_utils)
         if task_collection:
-            task_collection = template_utils.post_processing(task_collection, None)
+            task_collection = template_utils.post_processing(task_collection, file_utils)
 
         commands.append(template_utils.process_job_for_output_files(
             json_obj, task_collection, pool_os_flavor))
@@ -248,7 +252,7 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
         if auto_complete:
             # If the option to terminate the job was set, we need to reapply it with a patch
             # now that the tasks have been added.
-            client.job.patch(job.id, {'onAllTasksComplete': auto_complete})
+            client.job.patch(job.id, {'on_all_tasks_complete': auto_complete})
 
     return client.job.get(job.id)
 
@@ -258,7 +262,7 @@ create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__
 def upload_file(client, resource_group_name, account_name,  # pylint: disable=too-many-arguments
                 local_path, file_group, remote_path=None, flatten=None):
     """Upload local file or directory of files to storage"""
-    file_utils = FileUtils(client, resource_group_name, account_name)
+    file_utils = FileUtils(client, account_name, resource_group_name, None)
     blob_client = file_utils.resolve_storage_account()
     path, files = resolve_file_paths(local_path)
     if len(files) > 0:

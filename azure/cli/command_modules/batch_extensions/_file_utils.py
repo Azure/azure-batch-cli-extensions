@@ -14,6 +14,7 @@ from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
 from azure.mgmt.storage import StorageManagementClient
 from azure.storage import CloudStorageAccount
 from azure.storage.blob import BlobPermissions, BlockBlobService
+from azure.mgmt.batch import BatchManagementClient
 
 from azure.cli.core.commands.client_factory import get_mgmt_service_client
 import azure.cli.core.azlogging as azlogging
@@ -73,7 +74,7 @@ def resolve_file_paths(local_path):
         # Supplied path is a pattern - relative directory will be the
         # path up to the first wildcard
         ref_dir = local_path.split('*')[0]
-        files = [f for f in glob.glob(local_path, recursive=True) if os.path.isfile(f)]
+        files = [f for f in glob.glob(local_path, recursive=True) if os.path.isfile(f)]  # pylint: disable=unexpected-keyword-arg
         local_path = FileUtils.STRIP_PATH.sub("", ref_dir)
         if not os.path.isdir(local_path):
             local_path = os.path.dirname(local_path)
@@ -187,12 +188,26 @@ class FileUtils(object):
     SAS_EXPIRY_DAYS = 7  # 7 days
     ROUND_DATE = 2 * 60 * 1000  # Round to nearest 2 minutes
 
-    def __init__(self, client, resource_group_name, account_name):
+    def __init__(self, client, account_name, resource_group_name, account_endpoint):
         self.resource_file_cache = {}
-        self.resource_group_name = resource_group_name
-        self.account_name = account_name
         self.resolved_storage_client = None
-        self.mgmt_client = client
+        if not account_name:
+            return
+
+        if not client:
+            client = get_mgmt_service_client(BatchManagementClient).batch_account
+        if resource_group_name:
+            # If a resource group was supplied, we can use that to query the Batch Account
+            self.account = client.get(resource_group_name, account_name)
+        elif account_endpoint:
+            # Otherwise, we need to parse the URL for a region in order to identify
+            # the Batch account in the subscription
+            # Example URL: https://batchaccount.westus.batch.azure.com
+            region = urlsplit(account_endpoint).netloc.split('.', 2)[1]
+            self.account, = (x for x in client.list() \
+                if x.name == account_name and x.location == region)
+        if not self.account:
+            raise ValueError('Couldn\'t find the account named {}'.format(account_name))
 
 
     def filter_resource_cache(self, container, prefix):
@@ -208,7 +223,7 @@ class FileUtils(object):
 
     def list_container_contents(self, source, container, blob_service):
         """List blob references in container."""
-        if not self.resource_file_cache[container]:
+        if not container in  self.resource_file_cache:
             self.resource_file_cache[container] = []
         blobs = blob_service.list_blobs(container)
         for blob in blobs:
@@ -228,11 +243,11 @@ class FileUtils(object):
     def generate_sas_token(self, blob, container, blob_service):
         """Generate a blob URL with SAS token."""
         sas_token = blob_service.generate_blob_shared_access_signature(
-            container, blob,
+            container, blob.name,
             permission=self.SAS_PERMISSIONS,
             start=datetime.datetime.utcnow(),
             expiry=datetime.datetime.utcnow() + datetime.timedelta(days=FileUtils.SAS_EXPIRY_DAYS))
-        return blob_service.make_blob_url(container, blob, sas_token=sas_token)
+        return blob_service.make_blob_url(container, blob.name, sas_token=sas_token)
 
 
     def get_container_list(self, source):
@@ -245,7 +260,7 @@ class FileUtils(object):
             storage_client = self.resolve_storage_account()
             container = get_container_name(source['fileGroup'])
         elif 'containerUrl' in source:
-            uri = urlsplit.urlsplit(source['containerUrl'])
+            uri = urlsplit(source['containerUrl'])
             if not uri.query:
                 raise ValueError('Invalid container url.')
             storage_account_name = uri.netloc.split('.')[0]
@@ -283,7 +298,7 @@ class FileUtils(object):
             return convert_blobs_to_resource_files(blobs, resource_file)
         elif 'containerUrl' in resource_file['source']:
             # Input data storage in arbitrary container
-            uri = urlsplit.urlsplit(resource_file['source']['containerUrl'])
+            uri = urlsplit(resource_file['source']['containerUrl'])
             container = uri.pathname.split('/')[1]
             blobs = self.list_container_contents(resource_file['source'], container, storage_client)
             return convert_blobs_to_resource_files(blobs, resource_file)
@@ -296,11 +311,10 @@ class FileUtils(object):
 
     def resolve_storage_account(self):
         """Resolve Auto-Storage account from supplied Batch Account"""
-        account = self.mgmt_client.get(self.resource_group_name, self.account_name)
-        if not account.auto_storage:
-            raise ValueError('No linked auto-storage for account {}'.format(self.account_name))
+        if not self.account.auto_storage:  # pylint: disable=no-member
+            raise ValueError('No linked auto-storage for account {}'.format(self.account.name))  # pylint: disable=no-member
 
-        storage_account_info = account.auto_storage.storage_account_id.split('/')
+        storage_account_info = self.account.auto_storage.storage_account_id.split('/')  # pylint: disable=no-member
         storage_resource_group = storage_account_info[4]
         storage_account = storage_account_info[8]
 
