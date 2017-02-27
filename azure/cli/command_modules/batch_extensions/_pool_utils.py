@@ -5,6 +5,8 @@
 
 from enum import Enum
 
+# pylint: disable=too-few-public-methods
+
 class PoolOperatingSystemFlavor(Enum):
     WINDOWS = 'windows'
     LINUX = 'linux'

@@ -9,7 +9,7 @@ import os
 from azure.batch.models import (
     PoolAddParameter, CloudServiceConfiguration, VirtualMachineConfiguration,
     ImageReference, PoolInformation, JobAddParameter, JobManagerTask,
-    JobConstraints, StartTask)
+    JobConstraints, StartTask, JobAddOptions, PoolAddOptions)
 from azure.cli.command_modules.batch_extensions._file_utils import (
     FileUtils, resolve_file_paths, upload_blob)
 import azure.cli.command_modules.batch_extensions._template_utils as template_utils
@@ -119,9 +119,9 @@ def create_pool(client, account_name=None, account_endpoint=None,  # pylint:disa
         if application_package_references:
             pool.application_package_references = application_package_references
 
-    # TODO: add _handle_exception
-    client.pool.add(pool)
-    return client.pool.get(pool.id)
+    add_option = PoolAddOptions()
+    job_utils._handle_batch_exception(lambda: client.pool.add(pool, add_option))  # pylint: disable=protected-access
+    #return client.pool.get(pool.id)
 
 create_pool.__doc__ = PoolAddParameter.__doc__
 
@@ -150,7 +150,7 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
             with open(json_file) as f:
                 json_obj = json.load(f)
             # validate the json file
-            job = client._deserialize('JobAddParameter', json_obj)  #  pylint: disable=protected-access
+            job = client._deserialize('JobAddParameter', json_obj)  # pylint: disable=protected-access
             if job is None:
                 raise ValueError("JSON file '{}' is not in correct format.".format(json_file))
             working_folder = os.path.dirname(json_file)
@@ -245,16 +245,20 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
                                                 job_manager_task_environment_settings)
             job.job_manager_task = job_manager_task
 
-    client.job.add(job)
+    def add_job_and_tasks():
+        add_option = JobAddOptions()
+        client.job.add(job, add_option)
 
-    if task_collection:
-        job_utils.deploy_tasks(client, job.id, task_collection)
-        if auto_complete:
-            # If the option to terminate the job was set, we need to reapply it with a patch
-            # now that the tasks have been added.
-            client.job.patch(job.id, {'on_all_tasks_complete': auto_complete})
+        if task_collection:
+            job_utils.deploy_tasks(client, job.id, task_collection)
+            if auto_complete:
+                # If the option to terminate the job was set, we need to reapply it with a patch
+                # now that the tasks have been added.
+                client.job.patch(job.id, {'on_all_tasks_complete': auto_complete})
 
-    return client.job.get(job.id)
+        #return client.job.get(job.id)
+
+    return job_utils._handle_batch_exception(add_job_and_tasks)  # pylint: disable=protected-access
 
 create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__
 

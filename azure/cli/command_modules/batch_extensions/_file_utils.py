@@ -191,23 +191,10 @@ class FileUtils(object):
     def __init__(self, client, account_name, resource_group_name, account_endpoint):
         self.resource_file_cache = {}
         self.resolved_storage_client = None
-        if not account_name:
-            return
-
-        if not client:
-            client = get_mgmt_service_client(BatchManagementClient).batch_account
-        if resource_group_name:
-            # If a resource group was supplied, we can use that to query the Batch Account
-            self.account = client.get(resource_group_name, account_name)
-        elif account_endpoint:
-            # Otherwise, we need to parse the URL for a region in order to identify
-            # the Batch account in the subscription
-            # Example URL: https://batchaccount.westus.batch.azure.com
-            region = urlsplit(account_endpoint).netloc.split('.', 2)[1]
-            self.account, = (x for x in client.list() \
-                if x.name == account_name and x.location == region)
-        if not self.account:
-            raise ValueError('Couldn\'t find the account named {}'.format(account_name))
+        self.batch_mgmt_client = client
+        self.batch_account_name = account_name
+        self.batch_resource_group = resource_group_name
+        self.batch_account_endpoint = account_endpoint
 
 
     def filter_resource_cache(self, container, prefix):
@@ -311,10 +298,33 @@ class FileUtils(object):
 
     def resolve_storage_account(self):
         """Resolve Auto-Storage account from supplied Batch Account"""
-        if not self.account.auto_storage:  # pylint: disable=no-member
-            raise ValueError('No linked auto-storage for account {}'.format(self.account.name))  # pylint: disable=no-member
+        if self.resolved_storage_client:
+            return self.resolved_storage_client
 
-        storage_account_info = self.account.auto_storage.storage_account_id.split('/')  # pylint: disable=no-member
+        if not self.batch_account_name:
+            return None
+
+        client = self.batch_mgmt_client if self.batch_mgmt_client else \
+            get_mgmt_service_client(BatchManagementClient).batch_account
+
+        if self.batch_resource_group:
+            # If a resource group was supplied, we can use that to query the Batch Account
+            account = client.get(self.batch_resource_group, self.batch_account_name)
+        elif self.batch_account_endpoint:
+            # Otherwise, we need to parse the URL for a region in order to identify
+            # the Batch account in the subscription
+            # Example URL: https://batchaccount.westus.batch.azure.com
+            region = urlsplit(self.batch_account_endpoint).netloc.split('.', 2)[1]
+            account, = (x for x in client.list() \
+                if x.name == self.batch_account_name and x.location == region)
+        if not account:
+            raise ValueError('Couldn\'t find the account named {}'.format(self.batch_account_name))
+
+        if not account.auto_storage:  # pylint: disable=no-member
+            raise ValueError('No linked auto-storage for account {}'
+                             .format(self.account.batch_account_name))  # pylint: disable=no-member
+
+        storage_account_info = account.auto_storage.storage_account_id.split('/')  # pylint: disable=no-member
         storage_resource_group = storage_account_info[4]
         storage_account = storage_account_info[8]
 
@@ -322,5 +332,7 @@ class FileUtils(object):
         keys = storage_client.storage_accounts.list_keys(storage_resource_group, storage_account)
         storage_key = keys.keys[0].value  # pylint: disable=no-member
 
-        return CloudStorageAccount(storage_account, storage_key).create_block_blob_service()
+        self.resolved_storage_client = CloudStorageAccount(storage_account, storage_key)\
+            .create_block_blob_service()
+        return self.resolved_storage_client
 
