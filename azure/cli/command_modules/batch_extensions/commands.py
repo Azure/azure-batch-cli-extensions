@@ -8,8 +8,6 @@ from azure.cli.core.commands import cli_command
 from azure.cli.command_modules.batch_extensions._client_factory import (
     account_mgmt_client_factory, batch_data_service_factory)
 
-#from ._validators import validate_pool_settings
-
 custom_path = 'azure.cli.command_modules.batch_extensions.custom#{}'
 
 # pylint: disable=line-too-long

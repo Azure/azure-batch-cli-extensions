@@ -77,12 +77,13 @@ def create_pool(client, account_name=None, account_endpoint=None,  # pylint:disa
             raise ValueError('Need either template, json_file, or id')
 
         pool = PoolAddParameter(id, vm_size=vm_size)
-        if target_dedicated is not None:
-            pool.target_dedicated = target_dedicated
-            pool.enable_auto_scale = False
-        else:
+        if auto_scale_formula:
             pool.auto_scale_formula = auto_scale_formula
             pool.enable_auto_scale = True
+        else:
+            pool.target_dedicated = target_dedicated
+            pool.enable_auto_scale = False
+
         pool.enable_inter_node_communication = enable_inter_node_communication
 
         if os_family:

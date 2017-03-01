@@ -13,7 +13,7 @@ from azure.cli.core.commands.parameters import \
 
 from azure.cli.command_modules.batch_extensions._validators import \
     (application_enabled, validate_client_parameters, metadata_item_format,
-     certificate_reference_format, validate_json_file, load_node_agent_skus)
+     certificate_reference_format, validate_json_file, load_node_agent_skus, validate_pool_settings)
 
 # pylint: disable=line-too-long
 # ARGUMENT DEFINITIONS
@@ -24,7 +24,7 @@ batch_name_type = CliArgumentType(help='Name of the Batch account.', options_lis
 
 
 register_cli_argument('batch pool create', 'json_file', type=file_type, help='The file containing the pool to create in JSON format, if this parameter is specified, all other parameters are ignored.', validator=validate_json_file, completer=FilesCompleter())
-register_cli_argument('batch pool create', 'pool_id', help='The ID of the pool to be updated.')
+register_cli_argument('batch pool create', 'id', help='The ID of the pool to be updated.', validator=validate_pool_settings)
 register_cli_argument('batch pool create', 'application_package_references', nargs='+')  # type=application_package_reference_format)
 register_cli_argument('batch pool create', 'certificate_references', nargs='+', type=certificate_reference_format)
 register_cli_argument('batch pool create', 'metadata', nargs='+', type=metadata_item_format)

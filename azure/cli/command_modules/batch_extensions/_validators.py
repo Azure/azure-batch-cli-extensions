@@ -48,6 +48,13 @@ def load_node_agent_skus(prefix, **kwargs):  # pylint: disable=unused-argument
 
 # TYPES VALIDATORS
 
+def arg_name(name):
+    """Convert snake case argument name to a command line name.
+    :param str name: The argument parameter name.
+    :returns: str
+    """
+    return "--" + name.replace('_', '-')
+
 
 def datetime_format(value):
     """Validate the correct format of a datetime string and deserialize."""
@@ -114,12 +121,6 @@ def certificate_reference_format(value):
 
 # COMMAND NAMESPACE VALIDATORS
 
-def validate_required_parameter(ns, parser):
-    """Validates required parameters in Batch complex objects"""
-    if not parser.done:
-        parser.parse(ns)
-
-
 def storage_account_id(namespace):
     """Validate storage account name"""
     if namespace.storage_account_name:
@@ -162,6 +163,10 @@ def validate_json_file(namespace):
             raise ValueError("Cannot access JSON request file: " + namespace.json_file)
         except ValueError as err:
             raise ValueError("Invalid JSON file: {}".format(err))
+        # other_values = [arg_name(n) for n in vars(namespace).keys() if getattr(namespace, n)]
+        # if other_values:
+        #     message = "--json-file cannot be combined with:\n"
+        #     raise ValueError(message + '\n'.join(other_values))
 
 
 def validate_cert_file(namespace):
@@ -247,17 +252,39 @@ def validate_client_parameters(namespace):
 
 # CUSTOM REQUEST VALIDATORS
 
-def validate_pool_settings(ns, parser):
+def validate_mutually_exclusive(namespace, required, param1, param2):
+    """Validate whether two or more mutually exclusive arguments or
+    argument groups have been set correctly.
+    :param bool required: Whether one of the parameters must be set.
+    :param str param1: Mutually exclusive parameter name 1.
+    :param str param2: Mutually exclusive parameter name 2.
+    """
+    value1 = getattr(namespace, param1, None)
+    value2 = getattr(namespace, param2, None)
+
+    message = None
+    if not value1 and not value2 and required:
+        message = "One of the following arguments are required: \n"
+    elif value1 and value2:
+        message = ("The follow arguments are mutually "
+                   "exclusive and cannot be combined: \n")
+    if message:
+        missing = ','.join([arg_name(param1), arg_name(param2)])
+        message += missing
+        raise ValueError(message)
+
+
+def validate_pool_settings(ns):
     """Custom parsing to enfore that either PaaS or IaaS instances are configured
     in the add pool request body.
     """
-    if not ns.json_file:
-        groups = ['pool.cloud_service_configuration', 'pool.virtual_machine_configuration']
-        parser.parse_mutually_exclusive(ns, True, groups)
+    if not ns.json_file and not ns.template:
+        if ns.node_agent_sku_id and not ns.image:
+            raise ValueError("Missing required argument: --image")
+        if not ns.id:
+            raise ValueError("id is required")
+        if not ns.vm_size:
+            raise ValueError("The --vm-size is required")
 
-        paas_sizes = ['small', 'medium', 'large', 'extralarge']
-        if ns.vm_size and ns.vm_size.lower() in paas_sizes and not ns.os_family:
-            message = ("The selected VM size in incompatible with Virtual Machine Configuration. "
-                       "Please swap for the IaaS equivalent: Standard_A1 (small), Standard_A2 "
-                       "(medium), Standard_A3 (large), or Standard_A4 (extra large).")
-            raise ValueError(message)
+        validate_mutually_exclusive(ns, False, 'target_dedicated', 'auto_scale_formula')
+        validate_mutually_exclusive(ns, True, 'os_family', 'image')
