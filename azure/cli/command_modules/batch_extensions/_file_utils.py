@@ -15,9 +15,11 @@ from azure.mgmt.storage import StorageManagementClient
 from azure.storage import CloudStorageAccount
 from azure.storage.blob import BlobPermissions, BlockBlobService
 from azure.mgmt.batch import BatchManagementClient
+from msrestazure.azure_exceptions import CloudError
 
 from azure.cli.core.commands.client_factory import get_mgmt_service_client
 import azure.cli.core.azlogging as azlogging
+from azure.cli.core._config import az_config
 
 logger = azlogging.get_az_logger(__name__)
 
@@ -193,8 +195,12 @@ class FileUtils(object):
         self.resolved_storage_client = None
         self.batch_mgmt_client = client
         self.batch_account_name = account_name
-        self.batch_resource_group = resource_group_name
+        if not self.batch_account_name:
+            self.batch_account_name = az_config.get('batch', 'account', None)
         self.batch_account_endpoint = account_endpoint
+        if not self.batch_account_endpoint:
+            self.batch_account_endpoint = az_config.get('batch', 'endpoint', None)
+        self.batch_resource_group = resource_group_name
 
 
     def filter_resource_cache(self, container, prefix):
@@ -302,27 +308,37 @@ class FileUtils(object):
             return self.resolved_storage_client
 
         if not self.batch_account_name:
-            return None
+            raise ValueError('No Batch account name specified')
 
         client = self.batch_mgmt_client if self.batch_mgmt_client else \
             get_mgmt_service_client(BatchManagementClient).batch_account
 
         if self.batch_resource_group:
             # If a resource group was supplied, we can use that to query the Batch Account
-            account = client.get(self.batch_resource_group, self.batch_account_name)
+            try:
+                account = client.get(self.batch_resource_group, self.batch_account_name)
+            except CloudError:
+                raise ValueError('Couldn\'t find the account named {} in subscription {} '
+                                 'with resource group {}'.format(
+                                 self.batch_account_name,
+                                 client.config.subscription_id,
+                                 self.batch_resource_group))
         elif self.batch_account_endpoint:
             # Otherwise, we need to parse the URL for a region in order to identify
             # the Batch account in the subscription
             # Example URL: https://batchaccount.westus.batch.azure.com
             region = urlsplit(self.batch_account_endpoint).netloc.split('.', 2)[1]
-            account, = (x for x in client.list() \
-                if x.name == self.batch_account_name and x.location == region)
-        if not account:
-            raise ValueError('Couldn\'t find the account named {}'.format(self.batch_account_name))
-
+            accounts = [x for x in client.list() \
+                if x.name == self.batch_account_name and x.location == region]
+            try:
+                account = accounts[0]
+            except IndexError:
+                raise ValueError('Couldn\'t find the account named {} in subscription {} '
+                                 'in region {}'.format(self.batch_account_name,
+                                 client.config.subscription_id, region))
         if not account.auto_storage:  # pylint: disable=no-member
             raise ValueError('No linked auto-storage for account {}'
-                             .format(self.account.batch_account_name))  # pylint: disable=no-member
+                             .format(self.batch_account_name))  # pylint: disable=no-member
 
         storage_account_info = account.auto_storage.storage_account_id.split('/')  # pylint: disable=no-member
         storage_resource_group = storage_account_info[4]
