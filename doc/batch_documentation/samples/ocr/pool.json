@@ -1,0 +1,43 @@
+{
+    "parameters": {
+        "vmSize": {
+            "type": "string",
+            "metadata": {
+                "description": "The size of the virtual machines that run the application"
+            },
+            "defaultValue": "STANDARD_D1_V2"
+        },
+        "vmCount": {
+            "type": "int",
+            "defaultValue": 3,
+            "metadata": {
+                "description": "The number of virtual machines"
+            }
+        },
+        "poolId": {
+            "type": "string",
+            "defaultValue": "ocrpool",
+            "metadata": {
+                "description": "The name of the Azure Batch pool"
+            }
+        }
+    },
+    "pool": {
+        "type": "Microsoft.Batch/batchAccounts/pools",
+        "apiVersion": "2016-12-01",
+        "properties": {
+            "id": "[parameters('poolId')]",
+            "virtualMachineConfiguration": {
+                "imageReference": { 
+                    "publisher": "Canonical",
+                    "offer": "UbuntuServer",
+                    "sku": "16.04.0-LTS"
+                },
+                "nodeAgentSKUId": "batch.node.ubuntu 16.04"
+            },
+            "vmSize": "[parameters('vmSize')]",
+            "targetDedicated": "[parameters('vmCount')]",
+            "enableAutoScale": false
+        }
+    }
+}

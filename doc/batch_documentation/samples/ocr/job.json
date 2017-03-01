@@ -1,0 +1,92 @@
+{
+    "parameters": {
+        "jobId": {
+            "type": "string",
+            "metadata": {
+                "description": "The id of the Azure Batch job"
+            }
+        },
+        "poolId": {
+            "type": "string",
+            "defaultValue": "ocrpool",
+            "metadata": {
+                "description": "The id of the Azure Batch pool to run on"
+            }
+        },
+        "inputFileGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The file group containing the input files"
+            }
+        },
+        "outputFileStorageUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "A storage SAS URL to a container with write access."
+            }
+        }
+    },
+    "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2016-12-01",
+        "properties": {
+            "id": "[parameters('jobId')]",
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "taskPerFile",
+                "source" : {
+                    "fileGroup" : "[parameters('inputFileGroup')]"
+                },
+                "repeatTask": {
+                    "commandLine": "gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha -sOutputFile={fileNameWithoutExtension}-%03d.png -r250 {fileName} && for f in *.png; do tesseract $f ${{f%.*}}; done",
+                    "resourceFiles": [
+                        {
+                            "source": {
+                                "fileGroup": "[parameters('inputFileGroup')]",
+                                "prefix": "{fileName}"
+                            }
+                        }
+                    ],
+                    "outputFiles": [
+                        {
+                            "filePattern": "*.txt",
+                            "destination": {
+                                "container": {
+                                    "path": "text",
+                                    "containerSas": "[parameters('outputFileStorageUrl')]"
+                                }
+                            },
+                            "uploadDetails": {
+                                "taskStatus": "TaskSuccess"
+                            }
+                        },
+                        {
+                            "filePattern": "../*.txt",
+                            "destination": {
+                                "container": {
+                                    "path": "output",
+                                    "containerSas": "[parameters('outputFileStorageUrl')]"
+                                }
+                            },
+                            "uploadDetails": {
+                                "taskStatus": "TaskFailure"
+                            }
+                        }
+                    ],
+                    "packageReferences": [
+                        {
+                            "type": "aptPackage",
+                            "id": "ghostscript"
+                        },
+                        {
+                            "type": "aptPackage",
+                            "id": "tesseract-ocr"
+                        }
+                    ]                    
+                }
+            }
+        }
+    }
+}

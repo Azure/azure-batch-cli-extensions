@@ -1,0 +1,21 @@
+{
+    "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2016-12-01",
+        "properties": {
+            "id": "helloworld-job",
+            "poolInfo": {
+                "poolId": "helloworld-pool"
+            },
+            "taskFactory": {
+                "type": "taskCollection",
+                "tasks": [
+                    {
+                        "id" : "mytask1",
+                        "commandLine": "cmd /c echo Hello world"
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,71 @@
+{
+    "parameters": {
+        "vmSize": {
+            "type": "string",
+            "metadata": {
+                "description": "The size of the virtual machines that run the application"
+            },
+            "defaultValue": "Small",
+            "allowedValues": [
+                "Small",
+                "Medium",
+                "Large",
+                "ExtraLarge",
+                "STANDARD_A8",
+                "STANDARD_A9"
+            ]
+        },
+        "vmCount": {
+            "type": "int",
+            "defaultValue": 3,
+            "metadata": {
+                "description": "The number of the virtual machines"
+            }
+        },
+        "poolId": {
+            "type": "string",
+            "defaultValue": "MultiInstanceSamplePool",
+            "metadata": {
+                "description": "The id of Azure Batch pool"
+            }
+        },
+        "appPackageId": {
+            "type": "string",
+            "defaultValue": "MSMPI",
+            "metadata": {
+                "description": "The id of application package which contains the MS-MPI setup"
+            }
+        },
+        "appPackageVersion": {
+            "type": "string",
+            "defaultValue": "1.0",
+            "metadata": {
+                "description": "The version of application package which contains the MS-MPI setup"
+            }
+        }
+    },
+    "pool": {
+        "type": "Microsoft.Batch/batchAccounts/pools",
+        "apiVersion": "2016-12-01",
+        "properties": {
+            "id": "[parameters('poolId')]",
+            "cloudServiceConfiguration": {
+                "osFamily": "4" 
+            },            
+            "vmSize": "[parameters('vmSize')]",
+            "targetDedicated": "[parameters('vmCount')]",
+            "enableInterNodeCommunication": true,
+            "maxTasksPerNode": 1,
+            "applicationPackageReferences": [
+                {
+                    "applicationId": "[parameters('appPackageId')]"
+                }
+            ],
+            "startTask": {
+                "commandLine": "cmd /c %AZ_BATCH_APP_PACKAGE_[parameters('appPackageId')]#[parameters('appPackageVersion')]%\\MSMpiSetup.exe -unattend -force",
+                "runElevated": true,
+                "waitForSuccess": true
+            }
+        }
+    }
+}

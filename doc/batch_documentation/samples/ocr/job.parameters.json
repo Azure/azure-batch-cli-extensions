@@ -1,0 +1,11 @@
+{
+  "jobId": {
+    "value": "ocr_demo_01"
+  },
+  "inputFileGroup": {
+    "value": "<Auto-storage group name>"
+  },
+  "outputFileStorageUrl": {
+    "value": "<the storage url to hold output file>"
+  }
+}

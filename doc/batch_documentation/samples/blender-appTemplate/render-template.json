@@ -1,0 +1,79 @@
+{
+    "templateMetadata" : {
+        "description" : "Sample application template for working with Blender."
+    },
+    "parameters": {
+        "blendFile": {
+            "type": "string",
+            "metadata": {
+                "description": "The Blender scene file to be rendered"
+            }
+        },
+        "sceneData": {
+            "type": "string",
+            "defaultValue": "blender-data",
+            "metadata": {
+                "description": "The file group where the input data is stored"
+            }
+        },
+        "outputPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "The prefix to use when naming the rendered outputs"
+            }
+        },
+        "frameStart": {
+            "type": "int",
+            "metadata": {
+                "description": "Index of the first frame to render"
+            }
+        },
+        "frameEnd": {
+            "type": "int",
+            "metadata": {
+                "description": "Index of the last frame to render"
+            }
+        },
+        "outputFileStorageUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "The SAS URL for a container where outputs will be stored"
+            }
+        }
+    },
+    "taskFactory": {
+        "type": "parametricSweep",
+        "parameterSets": [
+            {
+                "start": "[parameters('frameStart')]",
+                "end": "[parameters('frameEnd')]",
+                "step": 1
+            }
+        ],
+        "repeatTask": {
+            "displayName": "Frame {0}",
+            "commandLine": "blender -b \"[parameters('blendFile')]\" -o \"[parameters('outputPrefix')]_####\" -f {0} -t 0",
+            "resourceFiles": [
+                {
+                    "source": { 
+                        "fileGroup": "[parameters('sceneData')]"
+                    }
+                }
+            ],
+            "outputFiles": [
+                {
+                    "filePattern": "[parameters('outputPrefix')]_*",
+                    "destination": {
+                        "container": {
+                            "containerSas": "[parameters('outputFileStorageUrl')]"
+                        }
+                    },
+                    "uploadDetails": {
+                        "taskStatus": "TaskSuccess"
+                    }
+                }
+            ]
+        }
+    },
+    "onAllTasksComplete": "terminateJob"
+}

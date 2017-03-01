@@ -1,0 +1,17 @@
+{
+  "id": "blenderjob",
+  "displayName": "Blender",
+  "poolInfo": {
+      "poolId" : "blender-pool"
+  },
+  "applicationTemplateInfo" : {
+    "filePath" : "render-template.json",
+    "parameters" : {
+      "blendFile": "scene.blend",
+      "frameStart": 1,
+      "frameEnd": 100,
+      "outputFileStorageUrl": "https://storage.blob.core.windows.net/blender-outputs",
+      "outputPrefix": "blenderjob"
+    }
+  }
+}

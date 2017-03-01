@@ -1,0 +1,49 @@
+{
+    "templateMetadata" : {
+        "description" : "Sample application template for data movement."
+    },
+    "parameters": {
+        "testData": {
+            "type": "string",
+            "metadata": {
+                "description": "The linked storage group where the input data is stored."
+            }
+        },
+        "outputFileStorageUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "A storage SAS URL to a linked blob storage container with write access."
+            }
+        }
+    },
+    "onAllTasksComplete": "terminateJob",
+    "taskFactory": {
+        "type": "taskPerFile",
+        "source" : {
+            "fileGroup" : "[parameters('testData')]"
+        },
+        "repeatTask": {
+            "commandLine": "/bin/bash -c 'cat {fileName}'",
+            "resourceFiles": [
+                {
+                    "blobSource" : "{url}",
+                    "filePath" : "{fileName}"
+                }
+            ],
+            "outputFiles": [
+                {
+                    "filePattern": "$AZ_BATCH_TASK_DIR/stdout.txt",
+                    "destination": {
+                        "container": {
+                            "path": "output-{fileNameWithoutExtension}.txt",
+                            "containerSas": "[parameters('outputFileStorageUrl')]"
+                        }
+                    },
+                    "uploadDetails": {
+                        "taskStatus": "TaskSuccess"
+                    }
+                }
+            ]
+        }
+    }
+}

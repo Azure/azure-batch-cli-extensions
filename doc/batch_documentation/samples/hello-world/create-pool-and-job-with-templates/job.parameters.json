@@ -1,0 +1,14 @@
+{
+  "jobId": {
+    "value": "<Job id>"
+  },
+  "poolId": {
+    "value": "<Pool id>"
+  },
+  "taskStart": {
+    "value": <Task start value>
+  },
+  "taskEnd": {
+    "value": <Task end value>
+  }
+}

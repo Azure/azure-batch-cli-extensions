@@ -1,0 +1,58 @@
+{
+    "parameters": {
+        "jobId": {
+            "type": "string",
+            "metadata": {
+                "description": "The id of Azure Batch job"
+            }
+        },
+        "poolId": {
+            "type": "string",
+            "metadata": {
+                "description": "The id of Azure Batch pool which runs the job"
+            }
+        },
+        "taskStart": {
+            "type": "int",
+            "metadata": {
+                "description": "The sweep start parameter"
+            }
+        },
+        "taskEnd": {
+            "type": "int",
+            "metadata": {
+                "description": "The sweep end parameter"
+            }
+        }
+    },
+    "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2016-12-01",
+        "properties": {
+            "id": "[parameters('jobId')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    }
+}

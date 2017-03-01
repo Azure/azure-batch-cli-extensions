@@ -1,0 +1,62 @@
+{
+    "parameters": {
+        "vmCount": {
+            "type": "int",
+            "defaultValue": 3,
+            "metadata": {
+                "description": "The number of virtual machines to execute the multi-instance task on"
+            }
+        },
+        "inputFileGroup": {
+            "type": "string",
+            "defaultValue": "mpi",
+            "metadata": {
+                "description": "The auto-storage group where the MS-MPI program and its dependencies are stored"
+            }
+        },        
+        "poolId": {
+            "type": "string",
+            "defaultValue": "MultiInstanceSamplePool",
+            "metadata": {
+                "description": "The id of Azure Batch pool which runs the job"
+            }
+        },
+        "jobId": {
+            "type": "string",
+            "defaultValue": "MultiInstanceSampleJob",
+            "metadata": {
+                "description": "The id of Azure Batch job"
+            }
+        }
+    },
+    "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2016-12-01",
+        "properties": {
+            "id": "[parameters('jobId')]",
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "taskCollection",
+                "tasks": [
+                    {
+                        "id" : "mpi",
+                        "commandLine": "cmd /c mpiexec.exe -c 1 -wdir %AZ_BATCH_TASK_SHARED_DIR% MPIHelloWorld.exe",
+                        "multiInstanceSettings": {
+                            "numberOfInstances": "[parameters('vmCount')]",
+                            "coordinationCommandLine": "cmd /c start cmd /c smpd.exe -d",
+                            "commonResourceFiles": [
+                                {
+                                    "source": { 
+                                        "fileGroup": "[parameters('inputFileGroup')]"
+                                    }
+                                }                                    
+                            ]                                
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

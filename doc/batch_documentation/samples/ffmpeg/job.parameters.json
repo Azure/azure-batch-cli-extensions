@@ -1,0 +1,17 @@
+{
+  "jobId": {
+    "value": "<job id>"
+  },
+  "inputFileGroup": {
+    "value": "<file group name>"
+  },  
+  "outputFileStorageUrl": {
+    "value": "<blob url with sas>"
+  },
+  "taskStart": {
+    "value": <the first id of the files to convert>
+  },
+  "taskEnd": {
+    "value": <the last id of the files to convert>
+  }
+}
