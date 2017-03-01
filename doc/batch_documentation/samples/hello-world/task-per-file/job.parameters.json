@@ -1,0 +1,11 @@
+{
+  "jobId": {
+    "value": "<Job id>"
+  },
+  "testData": {
+    "value": "<Auto-storage group name>"
+  },
+  "outputFileStorageUrl": {
+    "value": "<Blob url with sas>"
+  }  
+}

@@ -1,0 +1,31 @@
+{
+  "id": "taskperfileapptemplate",
+  "displayName": "Task Per File with Application Template",
+  "applicationTemplateInfo" : {
+    "filePath" : "template.json",
+    "parameters" : {
+      "testData" : "<linked storage group name>",
+      "outputFileStorageUrl" : "<linked blob storage container url with write access>"
+    }
+  },
+  "poolInfo": {
+      "autoPoolSpecification": {
+          "autoPoolIdPrefix": "movement",
+          "poolLifetimeOption": "job",
+          "keepAlive": false,
+          "pool": {
+              "vmSize": "STANDARD_D1_V2",
+              "virtualMachineConfiguration": {
+                  "imageReference": {
+                    "publisher": "Canonical",
+                    "offer": "UbuntuServer",
+                    "sku": "16.04.0-LTS",
+                    "version": "latest"
+                  },
+                  "nodeAgentSKUId": "batch.node.ubuntu 16.04"
+              },
+              "targetDedicated": 3
+          }
+      }
+  }
+}

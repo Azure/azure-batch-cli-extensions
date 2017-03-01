@@ -1,0 +1,57 @@
+{
+    "parameters": {
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "STANDARD_D1",
+            "metadata": {
+                "description": "The size of the virtual machines that run the application"
+            },
+            "allowedValues": [
+                "STANDARD_A1",
+                "STANDARD_A2",
+                "STANDARD_A3",
+                "STANDARD_A4",
+                "STANDARD_D1",
+                "STANDARD_D2",
+                "STANDARD_D3",
+                "STANDARD_D4"
+            ]
+        },
+        "vmCount": {
+            "type": "int",
+            "defaultValue": 3,
+            "metadata": {
+                "description": "The number of virtual machines desired in the pool"
+            }
+        },
+        "poolId": {
+            "type": "string",
+            "defaultValue": "blender-pool",
+            "metadata": {
+                "description": "The unique id of the newly created Azure Batch pool"
+            }
+        }
+    },
+    "variables": {
+        "osType": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+        }
+    },    
+    "pool": {
+        "type": "Microsoft.Batch/batchAccounts/pools",
+        "apiVersion": "2016-12-01",
+        "properties": {
+            "id": "[parameters('poolId')]",
+            "virtualMachineConfiguration": {
+                "imageReference": "[variables('osType')]",
+                "nodeAgentSKUId": "batch.node.ubuntu 16.04"
+            },
+            "vmSize": "[parameters('vmSize')]",
+            "targetDedicated": "[parameters('vmCount')]",
+            "enableAutoScale": false
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "jobName": {
+    "value": "blender_render"
+  },
+  "blendFile": {
+    "value": "scene.blend"
+  },
+  "frameStart": {
+    "value": 1
+  },
+  "frameEnd": {
+    "value": 100
+  },
+  "outputFileStorageUrl": {
+    "value": "https://storage.blob.core.windows.net/blender-outputs"
+  }
+}
