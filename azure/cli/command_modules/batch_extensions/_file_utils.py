@@ -11,11 +11,11 @@ import datetime
 import copy
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
 
+from msrestazure.azure_exceptions import CloudError
 from azure.mgmt.storage import StorageManagementClient
 from azure.storage import CloudStorageAccount
 from azure.storage.blob import BlobPermissions, BlockBlobService
 from azure.mgmt.batch import BatchManagementClient
-from msrestazure.azure_exceptions import CloudError
 
 from azure.cli.core.commands.client_factory import get_mgmt_service_client
 import azure.cli.core.azlogging as azlogging
@@ -320,9 +320,9 @@ class FileUtils(object):
             except CloudError:
                 raise ValueError('Couldn\'t find the account named {} in subscription {} '
                                  'with resource group {}'.format(
-                                 self.batch_account_name,
-                                 client.config.subscription_id,
-                                 self.batch_resource_group))
+                                     self.batch_account_name,
+                                     client.config.subscription_id,
+                                     self.batch_resource_group))
         elif self.batch_account_endpoint:
             # Otherwise, we need to parse the URL for a region in order to identify
             # the Batch account in the subscription
@@ -334,8 +334,9 @@ class FileUtils(object):
                 account = accounts[0]
             except IndexError:
                 raise ValueError('Couldn\'t find the account named {} in subscription {} '
-                                 'in region {}'.format(self.batch_account_name,
-                                 client.config.subscription_id, region))
+                                 'in region {}'.format(
+                                     self.batch_account_name,
+                                     client.config.subscription_id, region))
         if not account.auto_storage:  # pylint: disable=no-member
             raise ValueError('No linked auto-storage for account {}'
                              .format(self.batch_account_name))  # pylint: disable=no-member

@@ -264,10 +264,10 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
 create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__
 
 
-def upload_file(client, local_path, file_group, # pylint: disable=too-many-arguments
-                resource_group_name=None, account_name=None, remote_path=None, flatten=None):
+def upload_file(client, resource_group, account_name,  # pylint: disable=too-many-arguments
+                local_path, file_group, remote_path=None, flatten=None):
     """Upload local file or directory of files to storage"""
-    file_utils = FileUtils(client, account_name, resource_group_name, None)
+    file_utils = FileUtils(client, account_name, resource_group, None)
     blob_client = file_utils.resolve_storage_account()
     path, files = resolve_file_paths(local_path)
     if len(files) > 0:

@@ -46,15 +46,15 @@ register_extra_cli_argument('batch job create', 'account_key', arg_group='Batch 
 register_cli_argument('batch job create', 'account_endpoint', arg_group='Batch Account',
                       help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
 
-register_cli_argument('batch file upload', 'resource_group_name', resource_group_name_type, completer=None, required=False)
+register_cli_argument('batch file upload', 'resource_group', resource_group_name_type, completer=None, required=False, validator=application_enabled)
 register_cli_argument('batch file upload', 'account_name', batch_name_type, options_list=('--name', '-n'), required=False)
 register_cli_argument('batch file upload', 'local_path', type=file_type, help='Path to a local file or directory to be uploaded - can include wildcard patterns.')
 register_cli_argument('batch file upload', 'file_group', help='Name of a file group under which the files will be stored.')
 register_cli_argument('batch file upload', 'remote_path', help='Group subdirectory under which files will be uploaded.')
 register_cli_argument('batch file upload', 'flatten', action='store_true', help='If set, will not retain local directory structure in storage.')
 
-register_cli_argument('batch file download', 'resource_group_name', resource_group_name_type, completer=None, validator=application_enabled)
-register_cli_argument('batch file download', 'account_name', batch_name_type, options_list=('--name', '-n'))
+register_cli_argument('batch file download', 'resource_group', resource_group_name_type, completer=None, required=False, validator=application_enabled)
+register_cli_argument('batch file download', 'account_name', batch_name_type, options_list=('--name', '-n'), required=False)
 register_cli_argument('batch file download', 'local_path', type=file_type, help='Path to a local file or directory to be uploaded - can include wildcard patterns.')
 register_cli_argument('batch file download', 'file_group', help='Name of a file group under which the files will be stored.')
 register_cli_argument('batch file download', 'remote_path', help='Group subdirectory under which files will be uploaded.')
