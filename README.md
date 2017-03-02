@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Contributing
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
@@ -22,9 +22,34 @@ A list of common install issues and their resolutions are available at [install 
 
 ### Developer Installation (see below)
 
-- [Docker](#docker)
-- [Nightly Builds](#nightly-builds)
-- [Developer Setup](#developer-setup)
+### Preparing your machine
+1.	Install Python 3.5.x from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. 
+2.	Clone your repository and check out the master branch.
+3.	Create a new virtual environment “env” for Python 3.5 in the root of your clone. You can do this by running:
+
+  ##### Windows
+  ```BatchFile
+  python -m venv <clone root>\env
+  ```
+  ##### OSX/Ubuntu (bash)
+  ```Shell
+  python –m venv <clone root>/env
+  ```
+4.  Activate the env virtual environment by running:
+
+  ##### Windows
+  ```BatchFile
+  <clone root>\env\scripts\activate.bat
+  ```
+  ##### OSX/Ubuntu (bash)
+  ```Shell
+  . <clone root>/env/bin/activate
+  ```
+
+5.	Install the dependencies and load the command module as a local package using pip.
+  ```Shell
+  python scripts/dev_setup.py
+  ```
 
 ## Usage
 

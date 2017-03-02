@@ -5,8 +5,6 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from __future__ import print_function
-
 import sys
 import os
 from subprocess import check_call, CalledProcessError
@@ -26,18 +24,10 @@ def exec_command(command):
 print('Running dev setup...')
 print('Root directory \'{}\'\n'.format(root_dir))
 
-# install general requirements
+# install general requirements and azure-cli
 exec_command('pip install -r requirements.txt')
 
-# install automation package
-exec_command('pip install -e ./scripts')
-
-# command modules have dependency on azure-cli-core so install this first
-exec_command('pip install -e src/azure-cli-nspkg')
-exec_command('pip install -e src/azure-cli-core')
-exec_command('python -m automation.setup.install_modules')
-
-# azure cli has dependencies on the above packages so install this one last
-exec_command('pip install -e src/azure-cli')
+# install reference to extension module package
+exec_command('pip install -e src')
 
 print('Finished dev setup.')
