@@ -16,4 +16,5 @@ max-locals=25
 max-branches=20
 [SIMILARITIES]
 min-similarity-lines=10
-
+[Master]
+init-hook='import sys; sys.path.extend(["./src/command_modules/azure-cli-batch-extensions/azure", "./env/Lib/site-packages/azure"])'

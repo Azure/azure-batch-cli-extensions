@@ -11,7 +11,7 @@ import datetime
 from azure.storage import CloudStorageAccount
 from azure.storage.blob import BlobPermissions
 from azure.batch.models import BatchErrorException
-from azure.cli.core.test_utils.vcr_test_base import VCRTestBase
+from azure.cli.command_modules.batch_extensions.tests.vcr_test_base import VCRTestBase
 
 
 class TestFileUpload(VCRTestBase):

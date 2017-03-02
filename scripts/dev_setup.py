@@ -28,6 +28,6 @@ print('Root directory \'{}\'\n'.format(root_dir))
 exec_command('pip install -r requirements.txt')
 
 # install reference to extension module package
-exec_command('pip install -e src')
+exec_command('pip install -e src/command_modules/azure-cli-batch-extensions')
 
 print('Finished dev setup.')
