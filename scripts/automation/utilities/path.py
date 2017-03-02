@@ -19,7 +19,7 @@ def get_repo_root():
 
 def get_all_module_paths():
     """List all core and command modules"""
-    return list(get_core_modules_paths()) + get_command_modules_paths(include_prefix=True)
+    return get_command_modules_paths(include_prefix=True)
 
 
 def get_command_modules_paths(include_prefix=False):
@@ -38,23 +38,6 @@ def get_command_modules_paths_with_tests():
         test_path = os.path.join(module_path, 'azure', 'cli', 'command_modules', name, 'tests')
         if os.path.exists(test_path):
             yield name, module_path, test_path
-
-
-def get_core_modules_paths():
-    def _get_path(name):
-        return os.path.join(get_repo_root(), 'src', name)
-
-    yield 'azure-cli', _get_path('azure-cli')
-    yield 'azure-cli-core', _get_path('azure-cli-core')
-    yield 'azure-cli-nspkg', _get_path('azure-cli-nspkg')
-
-
-def get_core_modules_paths_with_tests():
-    # the pattern for the test folder here is not consistent with command modules'
-    yield 'azure-cli', os.path.join(get_repo_root(), 'src', 'azure-cli'), \
-          os.path.join(get_repo_root(), 'src', 'azure-cli', 'azure', 'cli', 'tests')
-    yield 'azure-cli-core', os.path.join(get_repo_root(), 'src', 'azure-cli-core'), \
-          os.path.join(get_repo_root(), 'src', 'azure-cli-core', 'azure', 'cli', 'core', 'tests')
 
 
 def make_dirs(path):
@@ -96,8 +79,7 @@ def get_test_results_dir(with_timestamp=None, prefix=None):
 def filter_user_selected_modules(user_input_modules):
     import itertools
 
-    existing_modules = list(itertools.chain(get_core_modules_paths(),
-                                            get_command_modules_paths()))
+    existing_modules = list(itertools.chain(get_command_modules_paths()))
 
     if user_input_modules:
         selected_modules = set(user_input_modules)
@@ -115,8 +97,7 @@ def filter_user_selected_modules(user_input_modules):
 def filter_user_selected_modules_with_tests(user_input_modules):
     import itertools
 
-    existing_modules = list(itertools.chain(get_core_modules_paths_with_tests(),
-                                            get_command_modules_paths_with_tests()))
+    existing_modules = list(itertools.chain(get_command_modules_paths_with_tests()))
 
     if user_input_modules:
         selected_modules = set(user_input_modules)
