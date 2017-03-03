@@ -10,6 +10,7 @@ import hashlib
 import datetime
 import copy
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
+from six.moves.urllib.parse import quote
 
 from msrestazure.azure_exceptions import CloudError
 from azure.mgmt.storage import StorageManagementClient
@@ -27,7 +28,7 @@ logger = azlogging.get_az_logger(__name__)
 def construct_sas_url(blob, uri):
     """Make up blob URL with container URL"""
     newuri = copy.copy(uri)
-    newuri.pathname = '{}/{}'.format(uri.path, blob.name)
+    newuri.pathname = '{}/{}'.format(uri.path, quote(blob.name))
     return newuri.geturl()
 
 
@@ -218,18 +219,18 @@ class FileUtils(object):
         """List blob references in container."""
         if not container in  self.resource_file_cache:
             self.resource_file_cache[container] = []
-        blobs = blob_service.list_blobs(container)
-        for blob in blobs:
-            blob_sas = self.generate_sas_token(blob, container, blob_service) \
-                if 'fileGroup' in source else \
-                    construct_sas_url(blob, urlsplit(source['containerUrl']))
-            file_name = os.path.basename(blob.name)
-            file_name_only = os.path.splitext(file_name)[0]
-            self.resource_file_cache[container].append(
-                {'url' : blob_sas,
-                 'filePath' : blob.name,
-                 'fileName' : file_name,
-                 'fileNameWithoutExtension' : file_name_only})
+            blobs = blob_service.list_blobs(container)
+            for blob in blobs:
+                blob_sas = self.generate_sas_token(blob, container, blob_service) \
+                    if 'fileGroup' in source else \
+                        construct_sas_url(blob, urlsplit(source['containerUrl']))
+                file_name = os.path.basename(blob.name)
+                file_name_only = os.path.splitext(file_name)[0]
+                self.resource_file_cache[container].append(
+                    {'url' : blob_sas,
+                     'filePath' : blob.name,
+                     'fileName' : file_name,
+                     'fileNameWithoutExtension' : file_name_only})
         return self.filter_resource_cache(container, source.get('prefix'))
 
 
@@ -240,7 +241,7 @@ class FileUtils(object):
             permission=self.SAS_PERMISSIONS,
             start=datetime.datetime.utcnow(),
             expiry=datetime.datetime.utcnow() + datetime.timedelta(days=FileUtils.SAS_EXPIRY_DAYS))
-        return blob_service.make_blob_url(container, blob.name, sas_token=sas_token)
+        return blob_service.make_blob_url(container, quote(blob.name), sas_token=sas_token)
 
 
     def get_container_list(self, source):
@@ -274,7 +275,7 @@ class FileUtils(object):
             if not 'filePath' in resource_file:
                 raise ValueError('Malformed ResourceFile: \'blobSource\' must '
                                  'also have \'filePath\' attribute')
-            return dict(resource_file)
+            return [dict(resource_file)]
 
         if not 'source' in resource_file:
             raise ValueError('Malformed ResourceFile: Must have either '

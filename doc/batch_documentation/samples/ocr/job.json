@@ -40,7 +40,7 @@
                     "fileGroup" : "[parameters('inputFileGroup')]"
                 },
                 "repeatTask": {
-                    "commandLine": "gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha -sOutputFile={fileNameWithoutExtension}-%03d.png -r250 {fileName} && for f in *.png; do tesseract $f ${{f%.*}}; done",
+                    "commandLine": "gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha -sOutputFile=\"{fileNameWithoutExtension}-%03d.png\" -r250 \"{fileName}\" && for f in *.png; do tesseract \"$f\" \"${{f%.*}}\"; done",
                     "resourceFiles": [
                         {
                             "source": {

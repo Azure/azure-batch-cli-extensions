@@ -679,7 +679,9 @@ def _process_resource_files(request, fileutils):
     try:
         for parameter, value in request.items():
             if parameter in ['resourceFiles', 'commonResourceFiles'] and isinstance(value, list):
-                new_resources = [fileutils.resolve_resource_file(f) for f in value]
+                new_resources = []
+                for file_ref in value:
+                    new_resources.extend(fileutils.resolve_resource_file(file_ref))
                 request[parameter] = new_resources
             elif isinstance(value, dict) or isinstance(value, list):
                 request[parameter] = _process_resource_files(value, fileutils)
