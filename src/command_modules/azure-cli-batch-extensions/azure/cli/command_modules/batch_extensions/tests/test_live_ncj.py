@@ -10,13 +10,15 @@ import datetime
 
 from azure.storage import CloudStorageAccount
 from azure.storage.blob import BlobPermissions
-from azure.batch.models import BatchErrorException
+from azure.batch.models import BatchErrorException, AllocationState, ComputeNodeState, TaskState
+import azure.batch.batch_auth as batchauth
+import azure.batch.batch_service_client as batch
 from azure.cli.command_modules.batch_extensions.tests.vcr_test_base import VCRTestBase
 
 
 class TestFileUpload(VCRTestBase):
-    def __init__(self, test_file, test_method):
-        super(TestFileUpload, self).__init__(test_file, test_method)
+    def __init__(self, test_method):
+        super(TestFileUpload, self).__init__(__file__, test_method)
         self.account_name = 'test1'
         self.resource_name = 'batchexp'
         self.testPrefix = 'cli-batch-ncj-live-tests'
@@ -24,7 +26,7 @@ class TestFileUpload(VCRTestBase):
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
             debug=False):
-        command = '{} --resource-name {} --name {}'.\
+        command = '{} --resource-group {} --name {}'.\
             format(command, self.resource_name, self.account_name)
         return super(TestFileUpload, self).cmd(command, checks, allowed_exceptions, debug)
 
@@ -35,44 +37,45 @@ class TestFileUpload(VCRTestBase):
 
     def body(self):
         # should upload a local file to auto-storage
-        input_str = ".\\test\\data\\batchFileTests\\foo.txt"
-        result = self.cmd('batch file upload --local-path {} --file-group {}'.
+        input_str = os.path.join(os.path.dirname(__file__), 'data', 'file_tests', 'foo.txt')
+        result = self.cmd('batch file upload --local-path "{}" --file-group {}'.
                           format(input_str, self.testPrefix))
         print('Result text:{}'.format(result))
 
         # should upload a local file to auto-storage with path prefix
-        result = self.cmd('batch file upload --local-path {} --file-group {} '
-                          '--remote-path \\test/data\\'.format(input_str, self.testPrefix))
+        result = self.cmd('batch file upload --local-path "{}" --file-group {} '
+                          '--remote-path "test/data"'.format(input_str, self.testPrefix))
         print('Result text:{}'.format(result))
 
 
 class TestBatchNCJLive(VCRTestBase):
     # pylint: disable=attribute-defined-outside-init,no-member
-
-    def __init__(self, test_file, test_method):
-        super(TestBatchNCJLive, self).__init__(test_file, test_method)
+    def __init__(self, test_method):
+        super(TestBatchNCJLive, self).__init__(__file__, test_method)
         self.account_name = 'test1'
         if not self.playback:
             self.account_key = os.environ['AZURE_BATCH_ACCESS_KEY']
         else:
             self.account_key = 'ZmFrZV9hY29jdW50X2tleQ=='
         self.account_endpoint = 'https://test1.westus.batch.azure.com/'
-        storage_account = 'defaultaccount'
+        storage_account = 'testaccountforbatch'
         if not self.playback:
             storage_key = os.environ['AZURE_STORAGE_ACCESS_KEY']
         else:
             storage_key = '1234'
         self.blob_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
+        credentials = batchauth.SharedKeyCredentials(self.account_name, self.account_key)
+        self.batch_client = batch.BatchServiceClient(credentials, base_url=self.account_endpoint)
 
         self.output_blob_container = 'aaatestcontainer'
         sas_token = self.blob_client.generate_blob_shared_access_signature(
-            self.output_blob_container, None,
+            self.output_blob_container, '',
             permission=BlobPermissions(read=True, write=True),
             start=datetime.datetime.utcnow(),
             expiry=datetime.datetime.utcnow() + datetime.timedelta(days=1))
         self.output_container_sas = self.blob_client.make_blob_url(
-            self.output_blob_container, None, sas_token=sas_token)
+            self.output_blob_container, '', sas_token=sas_token)
         print('Full container sas: {}'.format(self.output_container_sas))
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
@@ -86,10 +89,7 @@ class TestBatchNCJLive(VCRTestBase):
 
 
     def submit_job_wrapper(self, file_name):
-        result = self.cmd('batch job create --template {} --account-name {} '
-                          '--account-key {} --account-endpoint {}'.
-                          format(file_name, self.account_name,
-                                 self.account_key, self.account_endpoint))
+        result = self.cmd('batch job create --template "{}"'.format(file_name))
         print('Result text:{}'.format(result))
 
 
@@ -102,7 +102,7 @@ class TestBatchNCJLive(VCRTestBase):
             all_completed = True
             print('determining if {} tasks are complete'.format(len(tasks)))
             for task in tasks:
-                if task.state != 'completed':
+                if task.state != TaskState.completed:
                     print('state is {}'.task.state)
                     all_completed = False
             if all_completed:
@@ -122,7 +122,7 @@ class TestBatchNCJLive(VCRTestBase):
 
         while True:
             pool = self.batch_client.pool.get(pool_id)
-            if pool.allocation_state == 'steady':
+            if pool.allocation_state == AllocationState.steady:
                 print('pool reached steady state')
                 return
             else:
@@ -139,11 +139,11 @@ class TestBatchNCJLive(VCRTestBase):
         print('waiting for vms to be idle')
 
         while True:
-            nodes = self.batch_client.compute_node_operations.list(pool_id)
+            nodes = self.batch_client.compute_node.list(pool_id)
             # Determine if the nodes are in the idle state
             all_idle = True
             for node in nodes:
-                if node.state != 'idle':
+                if node.state != ComputeNodeState.idle:
                     all_idle = False
             if all_idle:
                 print('VMs in pool {} are now idle.'.format(pool_id))
@@ -221,10 +221,13 @@ class TestBatchNCJLive(VCRTestBase):
         sku_id = None
         node_agent_sku_id = None
 
-        def sku_filter_function(sku):
-            result = [x for x in sku.verified_image_references \
-                if x.publisher == publisher and x.offer == offer and x.sku == sku_id]
-            return result[0].id
+        def sku_filter_function(skus):
+            for sku in skus:
+                result = [x for x in sku.verified_image_references \
+                    if x.publisher == publisher and x.offer == offer and x.sku == sku_id]
+                if len(result) > 0:
+                    return sku.id
+            return None
 
         if flavor == 'ubuntu14':
             publisher = 'Canonical'
@@ -279,7 +282,8 @@ class TestBatchNCJLive(VCRTestBase):
         }
 
         try:
-            self.batch_client.pool.add(pool)
+            add_pool = self.batch_client._deserialize('PoolAddParameter', pool)  # pylint:disable=protected-access
+            self.batch_client.pool.add(add_pool)
             print('Successfully created pool {}'.format(pool_id))
         except BatchErrorException as ex:
             if ex.error.code == 'PoolExists':

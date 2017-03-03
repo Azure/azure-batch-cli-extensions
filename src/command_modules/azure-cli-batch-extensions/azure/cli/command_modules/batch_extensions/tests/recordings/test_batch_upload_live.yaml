@@ -1,0 +1,306 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      User-Agent: [python/3.5.0 (Windows-2008ServerR2-6.1.7601-SP1) requests/2.9.1
+          msrest/0.4.4 msrest_azure/0.4.7 batchmanagementclient/2.0.0 Azure-SDK-For-Python
+          AZURECLI/TEST/0.1.2rc2+dev]
+      accept-language: [en-US]
+      x-ms-client-request-id: [98294fae-ff97-11e6-aa0d-24be0520f64e]
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Batch/batchAccounts/test1?api-version=2015-12-01
+  response:
+    body: {string: '{"name":"test1","location":"westus","properties":{"accountEndpoint":"test1.westus.batch.azure.com","provisioningState":"Succeeded","coreQuota":20,"poolQuota":20,"activeJobAndJobScheduleQuota":20,"autoStorage":{"storageAccountId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Storage/storageAccounts/testaccountforbatch","lastKeySync":"2017-01-27T19:36:43.6757668Z"}},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Batch/batchAccounts/test1","type":"Microsoft.Batch/batchAccounts"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 02 Mar 2017 22:28:45 GMT']
+      ETag: ['0x8D461BB7E02F029']
+      Expires: ['-1']
+      Last-Modified: ['Thu, 02 Mar 2017 22:28:46 GMT']
+      Pragma: [no-cache]
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      content-length: ['586']
+      request-id: [0f74259e-dcf4-4e37-b248-0fceeb60f563]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      User-Agent: [python/3.5.0 (Windows-2008ServerR2-6.1.7601-SP1) requests/2.9.1
+          msrest/0.4.4 msrest_azure/0.4.7 batchmanagementclient/2.0.0 Azure-SDK-For-Python
+          AZURECLI/TEST/0.1.2rc2+dev]
+      accept-language: [en-US]
+      x-ms-client-request-id: [99aa7b4a-ff97-11e6-85c0-24be0520f64e]
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Batch/batchAccounts/test1?api-version=2015-12-01
+  response:
+    body: {string: '{"name":"test1","location":"westus","properties":{"accountEndpoint":"test1.westus.batch.azure.com","provisioningState":"Succeeded","coreQuota":20,"poolQuota":20,"activeJobAndJobScheduleQuota":20,"autoStorage":{"storageAccountId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Storage/storageAccounts/testaccountforbatch","lastKeySync":"2017-01-27T19:36:43.6757668Z"}},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Batch/batchAccounts/test1","type":"Microsoft.Batch/batchAccounts"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 02 Mar 2017 22:28:46 GMT']
+      ETag: ['0x8D461BB7E1843C7']
+      Expires: ['-1']
+      Last-Modified: ['Thu, 02 Mar 2017 22:28:46 GMT']
+      Pragma: [no-cache]
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      content-length: ['586']
+      request-id: [2a645a7c-0b5e-4336-9e34-c721cf929d32]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json; charset=utf-8]
+      User-Agent: [python/3.5.0 (Windows-2008ServerR2-6.1.7601-SP1) requests/2.9.1
+          msrest/0.4.4 msrest_azure/0.4.7 storagemanagementclient/0.31.0 Azure-SDK-For-Python
+          AZURECLI/TEST/0.1.2rc2+dev]
+      accept-language: [en-US]
+      x-ms-client-request-id: [99fcbc14-ff97-11e6-a7a7-24be0520f64e]
+    method: POST
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Storage/storageAccounts/testaccountforbatch/listKeys?api-version=2016-12-01
+  response:
+    body: {string: '{"keys":[{"keyName":"key1","permissions":"Full","value":"VGhpcyBpcyBrZXkgMQ=="},{"keyName":"key2","permissions":"Full","value":"VGhpcyBpcyBrZXkgMg=="}]}
+
+        '}
+    headers:
+      Cache-Control: [no-cache]
+      Content-Type: [application/json]
+      Date: ['Thu, 02 Mar 2017 22:28:46 GMT']
+      Expires: ['-1']
+      Pragma: [no-cache]
+      Server: [Microsoft-Azure-Storage-Resource-Provider/1.0, Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+      content-length: ['289']
+      x-ms-ratelimit-remaining-subscription-writes: ['1199']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.33.0 (Python CPython 3.5.0; Windows 2008ServerR2)]
+      x-ms-client-request-id: [9a4d0102-ff97-11e6-8b63-24be0520f64e]
+      x-ms-date: ['Thu, 02 Mar 2017 22:28:47 GMT']
+      x-ms-version: ['2015-07-08']
+    method: PUT
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-cli-batch-ncj-live-tests?restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The\
+        \ specified container already exists.\nRequestId:8b7aa41c-0001-00e3-73a4-935f6b000000\n\
+        Time:2017-03-02T22:28:47.4159766Z</Message></Error>"}
+    headers:
+      Content-Length: ['230']
+      Content-Type: [application/xml]
+      Date: ['Thu, 02 Mar 2017 22:28:46 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      x-ms-version: ['2015-07-08']
+    status: {code: 409, message: The specified container already exists.}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      User-Agent: [Azure-Storage/0.33.0 (Python CPython 3.5.0; Windows 2008ServerR2)]
+      x-ms-client-request-id: [9a6396d8-ff97-11e6-8aa8-24be0520f64e]
+      x-ms-date: ['Thu, 02 Mar 2017 22:28:47 GMT']
+      x-ms-version: ['2015-07-08']
+    method: GET
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-cli-batch-ncj-live-tests/foo.txt?comp=metadata
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Thu, 02 Mar 2017 22:28:46 GMT']
+      ETag: ['"0x8D461BADECFA0E4"']
+      Last-Modified: ['Thu, 02 Mar 2017 22:24:19 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-meta-lastmodified: ['1487977782.9772563']
+      x-ms-version: ['2015-07-08']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      User-Agent: [python/3.5.0 (Windows-2008ServerR2-6.1.7601-SP1) requests/2.9.1
+          msrest/0.4.4 msrest_azure/0.4.7 batchmanagementclient/2.0.0 Azure-SDK-For-Python
+          AZURECLI/TEST/0.1.2rc2+dev]
+      accept-language: [en-US]
+      x-ms-client-request-id: [9a75719a-ff97-11e6-b944-24be0520f64e]
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Batch/batchAccounts/test1?api-version=2015-12-01
+  response:
+    body: {string: '{"name":"test1","location":"westus","properties":{"accountEndpoint":"test1.westus.batch.azure.com","provisioningState":"Succeeded","coreQuota":20,"poolQuota":20,"activeJobAndJobScheduleQuota":20,"autoStorage":{"storageAccountId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Storage/storageAccounts/testaccountforbatch","lastKeySync":"2017-01-27T19:36:43.6757668Z"}},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Batch/batchAccounts/test1","type":"Microsoft.Batch/batchAccounts"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 02 Mar 2017 22:28:47 GMT']
+      ETag: ['0x8D461BB7E7639C7']
+      Expires: ['-1']
+      Last-Modified: ['Thu, 02 Mar 2017 22:28:47 GMT']
+      Pragma: [no-cache]
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      content-length: ['586']
+      request-id: [dcc10604-399d-4a0f-815e-617714d06554]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      User-Agent: [python/3.5.0 (Windows-2008ServerR2-6.1.7601-SP1) requests/2.9.1
+          msrest/0.4.4 msrest_azure/0.4.7 batchmanagementclient/2.0.0 Azure-SDK-For-Python
+          AZURECLI/TEST/0.1.2rc2+dev]
+      accept-language: [en-US]
+      x-ms-client-request-id: [9af9720c-ff97-11e6-ba56-24be0520f64e]
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Batch/batchAccounts/test1?api-version=2015-12-01
+  response:
+    body: {string: '{"name":"test1","location":"westus","properties":{"accountEndpoint":"test1.westus.batch.azure.com","provisioningState":"Succeeded","coreQuota":20,"poolQuota":20,"activeJobAndJobScheduleQuota":20,"autoStorage":{"storageAccountId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Storage/storageAccounts/testaccountforbatch","lastKeySync":"2017-01-27T19:36:43.6757668Z"}},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Batch/batchAccounts/test1","type":"Microsoft.Batch/batchAccounts"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 02 Mar 2017 22:28:48 GMT']
+      ETag: ['0x8D461BB7F5079A4']
+      Expires: ['-1']
+      Last-Modified: ['Thu, 02 Mar 2017 22:28:48 GMT']
+      Pragma: [no-cache]
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      content-length: ['586']
+      request-id: [40166989-3a62-4b1e-8c3f-877196982199]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json; charset=utf-8]
+      User-Agent: [python/3.5.0 (Windows-2008ServerR2-6.1.7601-SP1) requests/2.9.1
+          msrest/0.4.4 msrest_azure/0.4.7 storagemanagementclient/0.31.0 Azure-SDK-For-Python
+          AZURECLI/TEST/0.1.2rc2+dev]
+      accept-language: [en-US]
+      x-ms-client-request-id: [9b37b524-ff97-11e6-ae18-24be0520f64e]
+    method: POST
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/batchexp/providers/Microsoft.Storage/storageAccounts/testaccountforbatch/listKeys?api-version=2016-12-01
+  response:
+    body: {string: '{"keys":[{"keyName":"key1","permissions":"Full","value":"VGhpcyBpcyBrZXkgMQ=="},{"keyName":"key2","permissions":"Full","value":"VGhpcyBpcyBrZXkgMg=="}]}
+
+        '}
+    headers:
+      Cache-Control: [no-cache]
+      Content-Type: [application/json]
+      Date: ['Thu, 02 Mar 2017 22:28:48 GMT']
+      Expires: ['-1']
+      Pragma: [no-cache]
+      Server: [Microsoft-Azure-Storage-Resource-Provider/1.0, Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+      content-length: ['289']
+      x-ms-ratelimit-remaining-subscription-writes: ['1199']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.33.0 (Python CPython 3.5.0; Windows 2008ServerR2)]
+      x-ms-client-request-id: [9ba2aeb4-ff97-11e6-ba5c-24be0520f64e]
+      x-ms-date: ['Thu, 02 Mar 2017 22:28:49 GMT']
+      x-ms-version: ['2015-07-08']
+    method: PUT
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-cli-batch-ncj-live-tests?restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The\
+        \ specified container already exists.\nRequestId:af41068c-0001-00dc-12a4-93e8b7000000\n\
+        Time:2017-03-02T22:28:49.6873507Z</Message></Error>"}
+    headers:
+      Content-Length: ['230']
+      Content-Type: [application/xml]
+      Date: ['Thu, 02 Mar 2017 22:28:49 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      x-ms-version: ['2015-07-08']
+    status: {code: 409, message: The specified container already exists.}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      User-Agent: [Azure-Storage/0.33.0 (Python CPython 3.5.0; Windows 2008ServerR2)]
+      x-ms-client-request-id: [9bc097b6-ff97-11e6-8884-24be0520f64e]
+      x-ms-date: ['Thu, 02 Mar 2017 22:28:49 GMT']
+      x-ms-version: ['2015-07-08']
+    method: GET
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-cli-batch-ncj-live-tests/test/data/foo.txt?comp=metadata
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Thu, 02 Mar 2017 22:28:49 GMT']
+      ETag: ['"0x8D40828A5DFB0F2"']
+      Last-Modified: ['Tue, 08 Nov 2016 22:43:24 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-meta-lastmodified: ['2016-10-17T20:28:00.000Z']
+      x-ms-version: ['2015-07-08']
+    status: {code: 200, message: OK}
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <BlockList />'
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['52']
+      Content-MD5: [NgbQHgw94OQ3P8fSkY5Pxg==]
+      User-Agent: [Azure-Storage/0.33.0 (Python CPython 3.5.0; Windows 2008ServerR2)]
+      x-ms-client-request-id: [9bd2998c-ff97-11e6-b189-24be0520f64e]
+      x-ms-date: ['Thu, 02 Mar 2017 22:28:50 GMT']
+      x-ms-meta-lastmodified: ['1487977782.9772563']
+      x-ms-version: ['2015-07-08']
+    method: PUT
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-cli-batch-ncj-live-tests/test/data/foo.txt?comp=blocklist
+  response:
+    body: {string: ''}
+    headers:
+      Content-MD5: [NgbQHgw94OQ3P8fSkY5Pxg==]
+      Date: ['Thu, 02 Mar 2017 22:28:49 GMT']
+      ETag: ['"0x8D461BB7FDC248B"']
+      Last-Modified: ['Thu, 02 Mar 2017 22:28:49 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2015-07-08']
+    status: {code: 201, message: Created}
+version: 1
