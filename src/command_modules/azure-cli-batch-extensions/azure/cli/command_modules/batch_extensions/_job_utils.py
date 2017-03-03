@@ -61,7 +61,7 @@ def get_task_counts(client, job_id):
 def get_target_pool(client, job):
     def action():
         pool_result = client.pool.get(job['poolInfo']['poolId'])
-        return client._serialize(pool_result, 'CloudPool')  # pylint: disable=protected-access
+        return client._serialize.body(pool_result, 'CloudPool')  # pylint: disable=protected-access
 
     if not job.get('poolInfo'):
         raise ValueError('Missing required poolInfo.')
