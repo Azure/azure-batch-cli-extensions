@@ -14,7 +14,6 @@ from msrest.serialization import Deserializer
 from msrest.exceptions import DeserializationError
 
 from azure.mgmt.batch import BatchManagementClient
-from azure.mgmt.storage import StorageManagementClient
 
 from azure.cli.core._config import az_config
 from azure.cli.core.commands.client_factory import get_mgmt_service_client
@@ -121,36 +120,15 @@ def certificate_reference_format(value):
 
 # COMMAND NAMESPACE VALIDATORS
 
-def storage_account_id(namespace):
-    """Validate storage account name"""
-    if namespace.storage_account_name:
-        if not namespace.storage_account_id:
-            storage_client = get_mgmt_service_client(StorageManagementClient)
-            acc = storage_client.storage_accounts.get_properties(namespace.resource_group_name,
-                                                                 namespace.storage_account_name)
-            if not acc:
-                raise ValueError("Batch account '{}' not found in the resource group '{}'.". \
-                    format(namespace.storage_account_name, namespace.resource_group_name))
-            namespace.storage_account_id = acc.id #pylint: disable=no-member
-    del namespace.storage_account_name
-
-
 def application_enabled(namespace):
     """Validates account has auto-storage enabled"""
     client = get_mgmt_service_client(BatchManagementClient)
-    acc = client.batch_account.get(namespace.resource_group_name, namespace.account_name)
+    acc = client.batch_account.get(namespace.resource_group, namespace.account_name)
     if not acc:
         raise ValueError("Batch account '{}' not found.".format(namespace.account_name))
     if not acc.auto_storage or not acc.auto_storage.storage_account_id: #pylint: disable=no-member
         raise ValueError("Batch account '{}' needs auto-storage enabled.".
                          format(namespace.account_name))
-
-
-def validate_pool_resize_parameters(namespace):
-    """Validate pool resize parameters correct"""
-    if not namespace.abort:
-        if not namespace.target_dedicated:
-            raise ValueError("The target-dedicated parameter is required to resize the pool.")
 
 
 def validate_json_file(namespace):
@@ -167,15 +145,6 @@ def validate_json_file(namespace):
         # if other_values:
         #     message = "--json-file cannot be combined with:\n"
         #     raise ValueError(message + '\n'.join(other_values))
-
-
-def validate_cert_file(namespace):
-    """Validate the give cert file existing"""
-    try:
-        with open(namespace.cert_file, "rb"):
-            pass
-    except EnvironmentError:
-        raise ValueError("Cannot access certificate file: " + namespace.cert_file)
 
 
 def validate_options(namespace):

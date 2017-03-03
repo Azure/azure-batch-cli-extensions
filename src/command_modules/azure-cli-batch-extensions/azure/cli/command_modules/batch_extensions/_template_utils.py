@@ -356,7 +356,7 @@ def _validate_job_requesting_app_template(job, working_dir):
     :param str working_dir: Folder from which the original job was loaded (if any).
     """
     # Rule: If job doesn't request an application template, don't validate further.
-    if not job.get('applicationTemplateInfo'):
+    if job.get('applicationTemplateInfo') is None:
         return
     # Rule: Job must specify a template to use.
     if not job['applicationTemplateInfo'].get('filePath'):
@@ -697,7 +697,7 @@ def _parse_task_output_files(task, os_flavor):
     :param str os_flavor: The OS flavor of the pool.
     :returns: A new task specification with modifications.
     """
-    if not task.get('outputFiles'):
+    if task.get('outputFiles') is None:
         return task
     new_task = {k: v for k, v in task.items() if k != 'outputFiles'}
     # Validate the output file configuration
@@ -725,7 +725,7 @@ def _parse_task_output_files(task, os_flavor):
         raise ValueError("Unknown pool OS flavor: " + os_flavor)
     config = {'outputFiles': task['outputFiles']}
     config_str = json.dumps(config)
-    if not new_task.get('environmentSettings'):
+    if new_task.get('environmentSettings') is None:
         new_task['environmentSettings'] = []
     new_task['environmentSettings'].append({'name': _FILE_EGRESS_ENV_NAME, 'value': config_str})
     return new_task
@@ -968,7 +968,7 @@ def expand_application_template(job, working_dir):
     :param dict job: A job specification that may contain an application template reference.
     :param string working_dir: Base folder for evaluation of relative paths (is required).
     """
-    if not job.get('applicationTemplateInfo'):
+    if job.get('applicationTemplateInfo') is None:
         # No application template used; nothing to do.
         return job
     _validate_job_requesting_app_template(job, working_dir)
@@ -995,7 +995,7 @@ def expand_application_template(job, working_dir):
     # Merge the job as defined by the application template with the original job we were given
     job.update(job_from_template)
     for key in ['applicationTemplateInfo', 'templateMetadata', 'parameters']:
-        job.pop(key)
+        job.pop(key, None)
     job['metadata'] = metadata
     return job
 

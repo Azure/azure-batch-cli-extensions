@@ -27,10 +27,13 @@
   <ItemGroup>
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\commands.py" />
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\custom.py" />
+    <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\test_application_templates.py" />
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\test_file_utils.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\test_live_ncj.py" />
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\test_template_utils.py" />
+    <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\vcr_test_base.py" />
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\__init__.py" />
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\_client_factory.py" />
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\_file_utils.py" />
