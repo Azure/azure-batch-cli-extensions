@@ -44,7 +44,7 @@
                     "fileGroup": "[parameters('inputFileGroup')]"
                 },
                 "repeatTask": {
-                    "commandLine": "ffmpeg -y -i {fileName} -acodec libmp3lame {fileNameWithoutExtension}.mp3",
+                    "commandLine": "ffmpeg -y -i \"{fileName}\" -acodec libmp3lame \"{fileNameWithoutExtension}.mp3\"",
                     "resourceFiles": [
                         {
                             "blobSource": "{url}",

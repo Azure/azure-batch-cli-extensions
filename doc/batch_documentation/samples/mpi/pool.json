@@ -58,7 +58,8 @@
             "maxTasksPerNode": 1,
             "applicationPackageReferences": [
                 {
-                    "applicationId": "[parameters('appPackageId')]"
+                    "applicationId": "[parameters('appPackageId')]",
+                    "version": "[parameters('appPackageVersion')]"
                 }
             ],
             "startTask": {
