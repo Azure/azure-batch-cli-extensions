@@ -8,6 +8,7 @@ import copy
 import os
 import unittest
 
+from azure.cli.command_modules.batch import _help
 from azure.cli.command_modules.batch_extensions import _template_utils as utils
 
 
