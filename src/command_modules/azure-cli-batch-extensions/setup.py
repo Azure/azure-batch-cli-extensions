@@ -30,7 +30,8 @@ CLASSIFIERS = [
 DEPENDENCIES = [
     'azure-batch==1.1.0',
     'azure-mgmt-batch==2.0.0',
-    'azure-cli-core'
+    'azure-cli-core',
+    'azure-cli-batch'
 ]
 
 with open('README.rst', 'r', encoding='utf-8') as f:
