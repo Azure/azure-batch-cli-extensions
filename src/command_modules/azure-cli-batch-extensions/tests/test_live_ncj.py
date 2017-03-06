@@ -299,7 +299,7 @@ class TestBatchNCJLive(VCRTestBase):
         return is_windows
 
 
-    def file_upload_test_helper(self, job_id, pool_id, task_id, pool_flavor):
+    def file_upload_helper(self, job_id, pool_id, task_id, pool_flavor):
         is_windows = self.create_pool_if_not_exist(pool_id, pool_flavor)
         text = 'test'
         spec = self.create_basic_spec(job_id, pool_id, task_id, text, is_windows)
@@ -341,11 +341,11 @@ class TestBatchNCJLive(VCRTestBase):
         job_id = 'ncj-ubuntu1404'
         pool_id = 'ncj-ubuntu1404'
         task_id = 'myTask'
-        self.file_upload_test_helper(job_id, pool_id, task_id, 'ubuntu14')
+        self.file_upload_helper(job_id, pool_id, task_id, 'ubuntu14')
 
         # should work on Windows 2012 R2
         self.clear_container(self.output_blob_container)
         job_id = 'ncj-windows-2012-r2'
         pool_id = 'ncj-windows-2012-r2'
         task_id = 'myTask'
-        self.file_upload_test_helper(job_id, pool_id, task_id, 'windows-2012-r2')
+        self.file_upload_helper(job_id, pool_id, task_id, 'windows-2012-r2')

@@ -54,7 +54,16 @@ def build_package(path_to_package, dist_dir):
     print_heading('Built {}'.format(path_to_package))
 
 
-def install_package(path_to_package, package_name, dist_dir):
+def install_pip_package(path_to_package, package_name, dist_dir):
+    print_heading('Installing {}'.format(package_name))
+    cmd = 'python -m pip install {}'.format(package_name)
+    cmd_success = exec_command(cmd)
+    if not cmd_success:
+        print_heading('Error installing {}!'.format(package_name), f=sys.stderr)
+        sys.exit(1)
+    print_heading('Installed {}'.format(package_name))
+
+def install_package(package_name):
     print_heading('Installing {}'.format(path_to_package))
     cmd = 'python -m pip install --upgrade {} --find-links file://{}'.format(package_name, dist_dir)
     cmd_success = exec_command(cmd)
@@ -71,17 +80,16 @@ def verify_packages():
     all_modules = automation_path.get_all_module_paths()
     all_command_modules = automation_path.get_command_modules_paths(include_prefix=True)
 
-    # STEP 1:: Build the packages
+    # STEP 1:: Install the CLI and dependencies by pip
+    install_pip_package('azure-cli')
+
+    # STEP 2:: Build the packages
     for name, path in all_modules:
         build_package(path, built_packages_dir)
 
-    # STEP 2:: Install the CLI and dependencies
-    azure_cli_modules_path = next(path for name, path in all_modules if name == 'azure-cli')
-    install_package(azure_cli_modules_path, 'azure-cli', built_packages_dir)
-
     # Install the remaining command modules
     for name, fullpath in all_command_modules:
-        install_package(fullpath, name, built_packages_dir)
+         install_package(fullpath, name, built_packages_dir)
 
     # STEP 3:: Validate the installation
     try:
