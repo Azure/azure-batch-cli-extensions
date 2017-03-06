@@ -13,7 +13,8 @@ from azure.storage.blob import BlobPermissions
 from azure.batch.models import BatchErrorException, AllocationState, ComputeNodeState, TaskState
 import azure.batch.batch_auth as batchauth
 import azure.batch.batch_service_client as batch
-from azure.cli.command_modules.batch_extensions.tests.vcr_test_base import VCRTestBase
+from azure.cli.command_modules.batch import _help
+from tests.vcr_test_base import VCRTestBase
 
 
 class TestFileUpload(VCRTestBase):
@@ -69,13 +70,15 @@ class TestBatchNCJLive(VCRTestBase):
         self.batch_client = batch.BatchServiceClient(credentials, base_url=self.account_endpoint)
 
         self.output_blob_container = 'aaatestcontainer'
-        sas_token = self.blob_client.generate_blob_shared_access_signature(
-            self.output_blob_container, '',
+        sas_token = self.blob_client.generate_container_shared_access_signature(
+            self.output_blob_container,
             permission=BlobPermissions(read=True, write=True),
             start=datetime.datetime.utcnow(),
             expiry=datetime.datetime.utcnow() + datetime.timedelta(days=1))
-        self.output_container_sas = self.blob_client.make_blob_url(
-            self.output_blob_container, '', sas_token=sas_token)
+        self.output_container_sas = 'https://{}.blob.core.windows.net/{}?{}'.format(
+            storage_account,
+            self.output_blob_container,
+            sas_token)
         print('Full container sas: {}'.format(self.output_container_sas))
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
@@ -100,10 +103,10 @@ class TestBatchNCJLive(VCRTestBase):
             tasks = self.batch_client.task.list(job_id)
             # Determine if the tasks are in completed state
             all_completed = True
-            print('determining if {} tasks are complete'.format(len(tasks)))
+            print('determining if {} tasks are complete'.format(len(list(tasks))))
             for task in tasks:
                 if task.state != TaskState.completed:
-                    print('state is {}'.task.state)
+                    print('state is {}'.format(task.state))
                     all_completed = False
             if all_completed:
                 print('Tasks in job {} are now completed.'.format(job_id))
@@ -326,7 +329,7 @@ class TestBatchNCJLive(VCRTestBase):
             self.assertIn('stderr.txt', blob_names)
             self.assertIn('uploadlog.txt', blob_names)
             stdout_blob = [x for x in blobs if x.name == 'stdout.txt'][0]
-            self.assertEqual(stdout_blob.content_length, 5)
+            self.assertEqual(stdout_blob.properties.content_length, 5)
         finally:
             print('Deleting job {}'.format(job_id))
             self.batch_client.job.delete(job_id)

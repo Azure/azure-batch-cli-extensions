@@ -27,14 +27,14 @@
   <ItemGroup>
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\commands.py" />
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\custom.py" />
-    <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\test_application_templates.py" />
-    <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\test_file_utils.py">
+    <Compile Include="command_modules\azure-cli-batch-extensions\tests\test_application_templates.py" />
+    <Compile Include="command_modules\azure-cli-batch-extensions\tests\test_file_utils.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\test_live_ncj.py" />
-    <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\test_template_utils.py" />
-    <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\vcr_test_base.py" />
-    <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\__init__.py" />
+    <Compile Include="command_modules\azure-cli-batch-extensions\tests\test_live_ncj.py" />
+    <Compile Include="command_modules\azure-cli-batch-extensions\tests\test_template_utils.py" />
+    <Compile Include="command_modules\azure-cli-batch-extensions\tests\vcr_test_base.py" />
+    <Compile Include="command_modules\azure-cli-batch-extensions\tests\__init__.py" />
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\_client_factory.py" />
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\_file_utils.py" />
     <Compile Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\_help.py" />
@@ -57,25 +57,25 @@
     <Folder Include="command_modules\azure-cli-batch-extensions\azure\cli\" />
     <Folder Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\" />
     <Folder Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\" />
-    <Folder Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\" />
-    <Folder Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\" />
+    <Folder Include="command_modules\azure-cli-batch-extensions\tests\data\" />
+    <Folder Include="command_modules\azure-cli-batch-extensions\tests\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch-applicationTemplate-parameters.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch-applicationTemplate-prohibitedApplicationTemplateInfo.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch-applicationTemplate-prohibitedId.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch-applicationTemplate-prohibitedPoolInfo.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch-applicationTemplate-prohibitedPriority.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch-applicationTemplate-static.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch-applicationTemplate-unsupportedProperty.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch-applicationTemplate-untypedParameter.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch.job.parameters.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch.job.parametricsweep.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch.job.simple.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch.pool.parameters.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch.pool.simple.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch.shipyard.job.json" />
-    <Content Include="command_modules\azure-cli-batch-extensions\azure\cli\command_modules\batch_extensions\tests\data\batch.shipyard.pool.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch-applicationTemplate-parameters.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch-applicationTemplate-prohibitedApplicationTemplateInfo.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch-applicationTemplate-prohibitedId.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch-applicationTemplate-prohibitedPoolInfo.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch-applicationTemplate-prohibitedPriority.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch-applicationTemplate-static.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch-applicationTemplate-unsupportedProperty.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch-applicationTemplate-untypedParameter.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch.job.parameters.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch.job.parametricsweep.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch.job.simple.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch.pool.parameters.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch.pool.simple.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch.shipyard.job.json" />
+    <Content Include="command_modules\azure-cli-batch-extensions\tests\data\batch.shipyard.pool.json" />
     <Content Include="command_modules\azure-cli-batch-extensions\HISTORY.rst" />
     <Content Include="command_modules\azure-cli-batch-extensions\MANIFEST.in" />
     <Content Include="command_modules\azure-cli-batch-extensions\README.rst" />
