@@ -35,7 +35,7 @@ def get_command_modules_paths(include_prefix=False):
 def get_command_modules_paths_with_tests():
     """List all the command modules and returns those have tests folder"""
     for name, module_path in get_command_modules_paths():
-        test_path = os.path.join(module_path, 'azure', 'cli', 'command_modules', name, 'tests')
+        test_path = os.path.join(module_path, 'tests')
         if os.path.exists(test_path):
             yield name, module_path, test_path
 
