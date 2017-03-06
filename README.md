@@ -1,26 +1,87 @@
+# Microsoft Azure Batch CLI Extensions for Windows, Mac and Linux
 
-# Contributing
+This project is a preview build of the Microsoft Azure command-line interface to demonstrate proposed features in Azure Batch.
+For further details on the Azure CLI, please check the [official documentation](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-=======
-# Microsoft Azure CLI 2.0
+The purpose of this project is to allow customers to try out proposed Batch features and provide feedback to help shape the direction of the Batch service.
+The features presented here may not be compatible with other Batch client SDKs and tools, nor will they necessarily be adopted into the core Batch service.
 
-[![Python](https://img.shields.io/pypi/pyversions/azure-cli.svg?maxAge=2592000)](https://pypi.python.org/pypi/azure-cli)
-[![Travis](https://travis-ci.org/Azure/azure-cli.svg?branch=master)](https://travis-ci.org/Azure/azure-cli)
+As these features are still in preview, they will be updated regularly, and refined based on customer feedback.
+Unfortunately this may result in occasional breaking changes, though every effort will be made to keep this to a minimum.
 
-A great cloud needs great tools; we're excited to introduce *Azure CLI 2.0*, our next generation multi-platform command line experience for Azure.
+## Features
+
+### [Input data upload to Batch linked storage accounts](doc/inputFiles.md#input-file-upload)
+
+A new command to allow a user to upload a set of files directly into the storage account linked to their Azure Batch account.
+
+### [Input data references using linked storage accounts](doc/inputFiles.md#referencing-input-data)
+
+Input data stored in linked storage under a file group can be simply referenced by a task by using some new ResourceFile properties. 
+
+### [Automatic persistence of task output files to Azure Storage](doc/outputFiles.md)
+
+When adding a task, you can now declare a list of output files to be automatically uploaded to an Azure Storage container of your choice when the task completes.
+
+### [Pool and job templates with parameterization](doc/templates.md)
+
+Templates allow pools and jobs to be defined in parameterized json files with a format inspired by ARM templates.
+
+### [Task factories for automatic task generation on job submission](doc/taskFactories.md)
+
+Task factories provide a way for a job and all its tasks to be created in one command instead
+of calling `azure batch task create` for each task. There are currently three kinds of task factory:
+
+* [Task Collection](doc/taskFactories.md#task-collection) - tasks are explicitly defined as a part of the job
+* [Parametric Sweep](doc/taskFactories.md#parametric-sweep) - a set of tasks are created by substituting a range or sequence of values into a template 
+* [Per File](doc/taskFactories.md#task-per-file) - a template task is replicated for each available input file 
+
+### [Split job configuration and management with reusable application templates](doc/application-templates.md)
+
+Application templates provide a way to partition the details of a job into two parts.
+
+All of the details about how the job should be processed are moved into the **application template**, creating a reusable definition that is independent of a particular account. Application templates are parameterized to allow the processing to be customized without requiring modification of the template itself.
+
+### [Easy software installation via package managers](doc/packages.md)
+
+Integration with existing 3rd party package managers to streamline the installation of applications. Currently the following package managers are supported:
+
+* Chocolatey - for Windows
+* APT - as used by some Linux distros including Ubuntu, Debian, and Fedora. 
+* Yum - a package manager used by some Linux distros including  Red Hat Enterprise Linux, Fedora, CentOS. 
+
+## Limitations
+
+At this point, the following features will only work with Batch IaaS VMs using Linux (excluding Oracle Linux). IaaS VMs in Batch
+are created with a VirtualMachineConfiguration as documented in the [Batch API documentation](https://msdn.microsoft.com/library/azure/dn820174.aspx#bk_vmconf).
+- Automatic task output-file persistence
+
+## Samples
+
+Samples for all of the preview features can be found in [samples](samples).
 
 ## Installation
 
-```bash
-$ curl -L https://aka.ms/InstallAzureCli | bash
-```
+In order to make use of these features, you must have the Azure CLI installed.
+You can find futher instructions in the [official documentation](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and in the
+[Azure CLI GitHub repository](https://github.com/azure/azure-cli).
 
-Please refer to the [install guide](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2) for detailed install instructions.
+This extension package can be installed to supplement the existing Azure CLI Batch commands.
+It can be installed directly via pip:
+``` bash
+pip install --user azure-cli-batch-extensions
+``` 
 
-A list of common install issues and their resolutions are available at [install troubleshooting](https://github.com/Azure/azure-cli/blob/master/doc/install_troubleshooting.md).
+## Azure Batch account requirements
 
-### Developer Installation (see below)
+In order to make use of the new features previewed here, you will need an Azure Batch account with a linked storage account.
+For more information on this, see [Create an Azure Batch account using the Azure Portal](https://azure.microsoft.com/documentation/articles/batch-account-create-portal).
+
+## Contributing
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## Developer Installation
 
 ### Preparing your machine
 1.	Install Python 3.5.x from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. 
@@ -50,163 +111,3 @@ A list of common install issues and their resolutions are available at [install 
   ```Shell
   python scripts/dev_setup.py
   ```
-
-## Usage
-
-```bash
-$ az [ group ] [ subgroup ] [ command ] {parameters}
-```
-
-### Get Started
-
-Please refer to the ["get started" guide](https://docs.microsoft.com/en-us/cli/azure/get-started-with-az-cli2) for in-depth instructions.
-
-For usage and help content, pass in the `-h` parameter, for example:
-
-```bash
-$ az storage -h
-$ az vm create -h
-```
-
-### Highlights
-
-Here are a few features and concepts that can help you get the most out of the Azure CLI 2.0 Preview
-
-![Azure CLI 2.0 Highlight Reel](doc/assets/AzBlogAnimation4.gif)
-
-The following examples are showing using the `--output table` format, you can change your default using the `az configure` command.
-
-#### Tab Completion
-
-We support tab-completion for groups, commands, and some parameters
-
-```bash
-# looking up resource group and name
-$ az vm show -g [tab][tab]
-AccountingGroup   RGOne  WebPropertiesRG
-
-$ az vm show -g WebPropertiesRG -n [tab][tab]
-StoreVM  Bizlogic
-
-$ az vm show -g WebPropertiesRG -n Bizlogic
-```
-
-#### Query
-
-You can use the `--query` parameter and the [JMESPath](http://jmespath.org/) query syntax to customize your output.
-
-```bash
-$ az vm list --query "[?provisioningState=='Succeeded'].{ name: name, os: storageProfile.osDisk.osType }"
-Name                    Os
-----------------------  -------
-storevm                 Linux
-bizlogic                Linux
-demo32111vm             Windows
-dcos-master-39DB807E-0  Linux
-```
-
-#### Creating a VM
-The following block creates a new resource group in the 'westus' region, then creates a new Ubuntu VM.  We automatically provide a series of smart defaults, such as setting up SSH with your  `~/.ssh/id_rsa.pub` key.  For more details, try `az vm create -h`.
-
-```bash
-$ az group create -l westus -n MyGroup
-Name     Location
--------  ----------
-MyGroup  westus
-
-$ az vm create -g MyGroup -n MyVM --image ubuntults
-MacAddress         ResourceGroup    PublicIpAddress    PrivateIpAddress
------------------  ---------------  -----------------  ------------------
-00-0D-3A-30-B2-D7  MyGroup          52.160.111.118     10.0.0.4
-
-$ ssh 52.160.111.118
-Welcome to Ubuntu 14.04.4 LTS (GNU/Linux 3.19.0-65-generic x86_64)
-
-System information as of Thu Sep 15 20:47:31 UTC 2016
-
-System load: 0.39              Memory usage: 2%   Processes:       80
-Usage of /:  39.6% of 1.94GB   Swap usage:   0%   Users logged in: 0
-
-jasonsha@MyVM:~$
-```
-
-#### More Samples and Snippets
-For more usage examples, take a look at our [GitHub samples repo](http://github.com/Azure/azure-cli-samples) or [https://docs.microsoft.com/en-us/cli/azure/overview](https://docs.microsoft.com/en-us/cli/azure/overview).
-
-## Reporting issues and feedback
-
-If you encounter any bugs with the tool please file an issue in the [Issues](https://github.com/Azure/azure-cli/issues) section of our GitHub repo.
-
-To provide feedback from the command line, try the `az feedback` command!
-
-## Developer Installation
-
-### Docker
-
-**This install does not support the component feature.**
-
-We maintain a Docker image preconfigured with the Azure CLI.  Run the latest automated Docker build with the command below.
-
-```bash
-$ docker run -v ${HOME}:/root -it azuresdk/azure-cli-python:latest
-```
-
-All command modules are included in this version as the image is built directly from the Git repository.  
-You can also get a specific version of Azure CLI 2.0 via Docker.
-
-```bash
-$ docker run -v ${HOME}:/root -it azuresdk/azure-cli-python:<version>
-```
-
-See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
-
-### Nightly Builds
-
-Install nightly builds with pip in a virtual environment.
-
-```bash
-$ pip install --pre azure-cli --extra-index-url https://azureclinightly.blob.core.windows.net/packages
-```
-
-- Builds happen at 21:00:00 PDT each night. They are published shortly afterwards.
-- Whilst all command modules are built each night, not all are included on install.
-- Install additional components with:  
-    ```
-    $ export AZURE_COMPONENT_PACKAGE_INDEX_URL=https://azureclinightly.blob.core.windows.net/packages
-    ```  
-    ```
-    $ az component update --add <component_name> --private
-    ```
-- To view the list of installed packages, run ``az component list``
-
-## Developer Setup
-If you would like to setup a development environment and contribute to the CLI, see 
-[Configuring Your Machine](https://github.com/Azure/azure-cli/blob/master/doc/configuring_your_machine.md).
-
-## Contribute Code
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-If you would like to become an active contributor to this project please
-follow the instructions provided in [Microsoft Azure Projects Contribution Guidelines](http://azure.github.io/guidelines.html).
-
-## License
-
-```
-Azure CLI
-
-Copyright (c) Microsoft Corporation
-
-All rights reserved. 
-
-MIT License
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ""Software""), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-```
->>>>>>> b74a47282b203bc484a07045a987b44bf758e08f
