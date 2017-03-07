@@ -211,8 +211,8 @@ def _merge_metadata(base_metadata, more_metadata):
     if base_metadata:
         result.extend(base_metadata)
     if more_metadata:
-        conflicts = [k for k in [m['name'] for m in more_metadata] \
-            if k in [m['name'] for m in result]]
+        conflicts = [k for k in [m['name'] for m in more_metadata]
+                     if k in [m['name'] for m in result]]
         if conflicts:
             raise ValueError("May not have multiple definitions for metadata "
                              "value(s) '{}'".format(', '.join(conflicts)))
@@ -740,6 +740,7 @@ def _transform_sweep_str(data, parameters):
     """
     # Handle {n} or {n:m} scenario
     reg = re.compile(r'\{(\d+)(:(\d+))?\}')
+
     def replace(match):
         r, r1, _, r3 = [data[start:end] for start, end in match.regs]
         n = int(r1)
@@ -903,8 +904,8 @@ def _expand_parametric_sweep(factory):
         repeat_task = _parse_repeat_task(factory['repeatTask'])
     except (KeyError, TypeError):
         raise ValueError('No repeat task is defined in parametric sweep task factory.')
-    task_objs = [_transform_repeat_task(repeat_task, p, i, _transform_sweep_str) \
-        for i, p in enumerate(permutations)]
+    task_objs = [_transform_repeat_task(repeat_task, p, i, _transform_sweep_str)
+                 for i, p in enumerate(permutations)]
     try:
         merge_task = _parse_repeat_task(factory['mergeTask'])
         merge_task['id'] = 'merge'
@@ -952,8 +953,8 @@ def _expand_task_per_file(factory, fileutils):
         repeat_task = _parse_repeat_task(factory['repeatTask'])
     except (KeyError, TypeError):
         raise ValueError('No repeat task is defined in file iteration task factory.')
-    task_objs = [_transform_repeat_task(repeat_task, f, i, _transform_file_str) \
-        for i, f in enumerate(files)]
+    task_objs = [_transform_repeat_task(repeat_task, f, i, _transform_file_str)
+                 for i, f in enumerate(files)]
     try:
         merge_task = _parse_repeat_task(factory['mergeTask'])
         merge_task['id'] = 'merge'
@@ -1118,8 +1119,8 @@ def process_job_for_output_files(job, tasks, os_flavor):
             raise ValueError("Unknown pool OS flavor: " + os_flavor)
         # TODO: If we have any issues with this being hosted in GITHUB we'll have to
         # move it elsewhere (local and then upload to their storage?)
-        resources = [{'blobSource': _get_output_source_url(f), 'filePath': os.path.split(f)[1]} \
-                        for f in resource_files]
+        resources = [{'blobSource': _get_output_source_url(f), 'filePath': os.path.split(f)[1]}
+                     for f in resource_files]
         return {'cmdLine': setup_cmd, 'resourceFiles': resources, 'isWindows': is_windows}
     return None
 

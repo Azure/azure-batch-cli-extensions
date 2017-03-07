@@ -9,6 +9,7 @@ from azure.cli.core._util import CLIError
 
 # pylint: disable=too-few-public-methods
 
+
 def _handle_batch_exception(action):
     try:
         return action()
@@ -41,9 +42,9 @@ def deploy_tasks(client, job_id, tasks):
 
 def get_task_counts(client, job_id):
     task_counts = {
-        'active' : 0,
-        'running' : 0,
-        'completed' : 0
+        'active': 0,
+        'running': 0,
+        'completed': 0
     }
 
     def action():
@@ -70,7 +71,7 @@ def get_target_pool(client, job):
     if 'poolId' in job['poolInfo']:
         pool = _handle_batch_exception(action)
     elif 'autoPoolSpecification' in job['poolInfo'] \
-        and job['poolInfo']['autoPoolSpecification'].get('pool'):
+            and job['poolInfo']['autoPoolSpecification'].get('pool'):
         pool = job['poolInfo']['autoPoolSpecification']['pool']
     else:
         raise ValueError('Missing required poolId or autoPoolSpecification.pool.')

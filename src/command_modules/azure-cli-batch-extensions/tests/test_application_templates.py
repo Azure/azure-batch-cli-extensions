@@ -20,11 +20,11 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
 
         # File path to an application template with no parameters - a static
         # template that always does exactly the same thing
-        self.static_apptemplate_path = os.path.join(self.data_dir,\
+        self.static_apptemplate_path = os.path.join(self.data_dir,
             'batch-applicationTemplate-static.json')
 
         # File path to an application path with parameters
-        self.apptemplate_with_params_path = os.path.join(self.data_dir,\
+        self.apptemplate_with_params_path = os.path.join(self.data_dir,
             'batch-applicationTemplate-parameters.json')
         return super(TestBatchNCJAppTemplates, self).setUp()
 
@@ -44,8 +44,8 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
             'id': 'jobid',
             'applicationTemplateInfo': {
                 'filePath': self.static_apptemplate_path + '.notfound'
-                }
             }
+        }
         with self.assertRaises(ValueError):
             utils._validate_job_requesting_app_template(job, '.')  # pylint: disable=protected-access
 
@@ -59,13 +59,12 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         with self.assertRaises(ValueError):
             utils._validate_job_requesting_app_template(job, '.')  # pylint: disable=protected-access
 
-
     def test_batch_ncj_validate_application_template(self):
         # should throw an error if the template uses a property reserved for
         # use by the job
         template = {
-            'usesTaskDependencies' : True,
-            'displayName' : 'display this name'
+            'usesTaskDependencies': True,
+            'displayName': 'display this name'
         }
         with self.assertRaises(ValueError) as ve:
             utils._validate_application_template(template)  # pylint: disable=protected-access
@@ -74,8 +73,8 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
 
         # should throw an error if the template uses a property not recognized
         template = {
-            'usesTaskDependencies' : True,
-            'vendor' : 'origin'
+            'usesTaskDependencies': True,
+            'vendor': 'origin'
         }
         with self.assertRaises(ValueError) as ve:
             utils._validate_application_template(template)  # pylint: disable=protected-access
@@ -84,10 +83,10 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
 
         # should throw an error if a parameter does not declare a specific type
         template = {
-            'usesTaskDependencies' : True,
-            'parameters' : {
-                'name' : {
-                    'defaultValue' : 'Mouse'
+            'usesTaskDependencies': True,
+            'parameters': {
+                'name': {
+                    'defaultValue': 'Mouse'
                 }
             }
         }
@@ -99,11 +98,11 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # should throw an error if a parameter does not declare a supported
         # type
         template = {
-            'usesTaskDependencies' : True,
-            'parameters' : {
-                'name' : {
-                    'defaultValue' : 'Mouse',
-                    'type' : 'dateTime'
+            'usesTaskDependencies': True,
+            'parameters': {
+                'name': {
+                    'defaultValue': 'Mouse',
+                    'type': 'dateTime'
                 }
             }
         }
@@ -112,14 +111,13 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         self.assertIn('name', ve.exception.args[0],
                       'Expect parameter \'name\' to be mentioned')
 
-
     def test_batch_ncj_validate_parameter_usage(self):
         # should throw an error if no value is provided for a parameter without
         # a default
         parameters = {}
         definitions = {
-            'name' : {
-                'type' : 'string'
+            'name': {
+                'type': 'string'
             }
         }
         with self.assertRaises(ValueError) as ve:
@@ -130,11 +128,11 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # should throw an error if the value provided for an int parameter is
         # not type compatible
         parameters = {
-            'age' : 'eleven'
+            'age': 'eleven'
         }
         definitions = {
-            'age' : {
-                'type' : 'int'
+            'age': {
+                'type': 'int'
             }
         }
         with self.assertRaises(ValueError) as ve:
@@ -146,7 +144,7 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # parameter is used
         parameters = {}
         definitions = {
-            'age' : {
+            'age': {
                 'type': 'int',
                 'defaultValue': 11
             }
@@ -157,7 +155,7 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # parameter is not an integer
         parameters = {}
         definitions = {
-            'age' : {
+            'age': {
                 'type': 'int',
                 'defaultValue': 'eleven'
             }
@@ -169,11 +167,11 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # should throw an error if the value provided for an bool parameter is
         # not type compatible
         parameters = {
-            'isMember' : 'frog'
+            'isMember': 'frog'
         }
         definitions = {
-            'isMember' : {
-                'type' : 'bool'
+            'isMember': {
+                'type': 'bool'
             }
         }
         with self.assertRaises(ValueError) as ve:
@@ -184,11 +182,11 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # should throw an error if a value is provided for a non-existing
         # parameter
         parameters = {
-            'membership' : 'Gold'
+            'membership': 'Gold'
         }
         definitions = {
-            'customerType' : {
-                'type' : 'string',
+            'customerType': {
+                'type': 'string',
                 'defaultValue': 'peasant'
             }
         }
@@ -208,14 +206,13 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # have defaults
         parameters = None
         definitions = {
-            'customerType' : {
-                'type' : 'string',
+            'customerType': {
+                'type': 'string',
                 'defaultValue': 'peasant'
             }
         }
         utils._validate_parameter_usage(parameters, definitions)  # pylint: disable=protected-access
         # Pass implied by no Error
-
 
     def test_batch_ncj_merge_metadata(self):
         # should return empty metadata when no metadata supplied
@@ -227,12 +224,12 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # should return base metadata when only base metadata supplied
         alpha = [
             {
-                'name' : 'name',
-                'value' : 'Adam'
+                'name': 'name',
+                'value': 'Adam'
             },
             {
-                'name' : 'age',
-                'value' : 'old'
+                'name': 'age',
+                'value': 'old'
             }]
         beta = None
         result = utils._merge_metadata(alpha, beta)  # pylint: disable=protected-access
@@ -241,8 +238,8 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # should return more metadata when only more metadata supplied
         alpha = None
         beta = [{
-            'name' : 'gender',
-            'value' : 'unspecified'
+            'name': 'gender',
+            'value': 'unspecified'
         }]
         result = utils._merge_metadata(alpha, beta)  # pylint: disable=protected-access
         self.assertEqual(result, beta)
@@ -250,21 +247,21 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # should throw an error if the two collections overlap
         alpha = [
             {
-                'name' : 'name',
-                'value' : 'Adam'
+                'name': 'name',
+                'value': 'Adam'
             },
             {
-                'name' : 'age',
-                'value' : 'old'
+                'name': 'age',
+                'value': 'old'
             }]
         beta = [
             {
-                'name' : 'name',
-                'value' : 'Brian'
+                'name': 'name',
+                'value': 'Brian'
             },
             {
-                'name' : 'gender',
-                'value' : 'unspecified'
+                'name': 'gender',
+                'value': 'unspecified'
             }]
         with self.assertRaises(ValueError) as ve:
             utils._merge_metadata(alpha, beta)  # pylint: disable=protected-access
@@ -274,63 +271,61 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         # should return merged metadata when there is no overlap
         alpha = [
             {
-                'name' : 'name',
-                'value' : 'Adam'
+                'name': 'name',
+                'value': 'Adam'
             },
             {
-                'name' : 'age',
-                'value' : 'old'
+                'name': 'age',
+                'value': 'old'
             }]
         beta = [
             {
-                'name' : 'gender',
-                'value' : 'unspecified'
+                'name': 'gender',
+                'value': 'unspecified'
             }]
         expected = [
             {
-                'name' : 'name',
-                'value' : 'Adam'
+                'name': 'name',
+                'value': 'Adam'
             },
             {
-                'name' : 'age',
-                'value' : 'old'
+                'name': 'age',
+                'value': 'old'
             },
             {
-                'name' : 'gender',
-                'value' : 'unspecified'
+                'name': 'gender',
+                'value': 'unspecified'
             }]
         result = utils._merge_metadata(alpha, beta)  # pylint: disable=protected-access
         self.assertEqual(result, expected)
 
-
     def test_batch_ncj_generate_job(self):
         # should throw an error if the generated job uses a property reserved for template use
         job = {
-            'id' : 'jobid',
-            'applicationTemplateInfo' : {
-                'filePath' : self.static_apptemplate_path
+            'id': 'jobid',
+            'applicationTemplateInfo': {
+                'filePath': self.static_apptemplate_path
             },
-            'usesTaskDependencies' : True
+            'usesTaskDependencies': True
         }
         with self.assertRaises(ValueError) as ve:
             utils._validate_generated_job(job)  # pylint: disable=protected-access
         self.assertIn('applicationTemplateInfo', ve.exception.args[0],
                       'Expect property \'applicationTemplateInfo\' to be mentioned')
 
-
     def test_batch_ncj_template_merging(self):
         # pylint: disable=too-many-statements
         # should do nothing when no application template is required
         job = {
-            'id' : "jobid"
+            'id': "jobid"
         }
         result = utils.expand_application_template(job, '.')
         self.assertEqual(result, job)
 
         # should throw error if no filePath supplied for application template
         job = {
-            'id' : "jobid",
-            'applicationTemplateInfo' : {
+            'id': "jobid",
+            'applicationTemplateInfo': {
             }
         }
         with self.assertRaises(ValueError):
@@ -338,23 +333,23 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
 
         # should merge a template with no parameters
         job = {
-            'id' : "jobid",
-            'applicationTemplateInfo' : {
-                'filePath' : self.static_apptemplate_path
+            'id': "jobid",
+            'applicationTemplateInfo': {
+                'filePath': self.static_apptemplate_path
             }
         }
         result = utils.expand_application_template(job, '.')
-        self.assertIsNotNone(result['jobManagerTask'],\
+        self.assertIsNotNone(result['jobManagerTask'],
             "expect the template to have provided jobManagerTask.")
 
         # should preserve properties on the job when expanding the template
         job_id = "importantjob"
         priority = 500
         job = {
-            'id' : job_id,
+            'id': job_id,
             'priority': priority,
-            'applicationTemplateInfo' : {
-                'filePath' : self.static_apptemplate_path
+            'applicationTemplateInfo': {
+                'filePath': self.static_apptemplate_path
             }
         }
         result = utils.expand_application_template(job, '.')
@@ -363,33 +358,33 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
 
         # should use parameters from the job to expand the template
         job = {
-            'id' : "parameterJob",
-            'applicationTemplateInfo' : {
-                'filePath' : self.apptemplate_with_params_path,
-                'parameters' : {
-                    'blobName' : "music.mp3",
-                    'keyValue' : "yale"
+            'id': "parameterJob",
+            'applicationTemplateInfo': {
+                'filePath': self.apptemplate_with_params_path,
+                'parameters': {
+                    'blobName': "music.mp3",
+                    'keyValue': "yale"
                 }
             }
         }
         job1 = copy.deepcopy(job)
         result = utils.expand_application_template(job, '.')
-        self.assertEqual(\
+        self.assertEqual(
             result['jobManagerTask']['resourceFiles'][1]['filePath'],
             job1['applicationTemplateInfo']['parameters']['blobName'])
-        self.assertEqual(result['metadata'][0]['value'],\
+        self.assertEqual(result['metadata'][0]['value'],
             job1['applicationTemplateInfo']['parameters']['keyValue'])
 
         # should throw an error if any parameter has an undefined type
-        untyped_parameter_path = os.path.join(self.data_dir,\
+        untyped_parameter_path = os.path.join(self.data_dir,
             'batch-applicationTemplate-untypedParameter.json')
         job = {
-            'id' : "parameterJob",
-            'applicationTemplateInfo' : {
-                'filePath' : untyped_parameter_path,
-                'parameters' : {
-                    'blobName' : "music.mp3",
-                    'keyValue' : "yale"
+            'id': "parameterJob",
+            'applicationTemplateInfo': {
+                'filePath': untyped_parameter_path,
+                'parameters': {
+                    'blobName': "music.mp3",
+                    'keyValue': "yale"
                 }
             }
         }
@@ -402,10 +397,10 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         job_id = "importantjob"
         priority = 500
         job = {
-            'id' : job_id,
+            'id': job_id,
             'priority': priority,
-            'applicationTemplateInfo' : {
-                'filePath' : self.static_apptemplate_path
+            'applicationTemplateInfo': {
+                'filePath': self.static_apptemplate_path
             }
         }
         result = utils.expand_application_template(job, '.')
@@ -414,10 +409,10 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
 
         # should not copy templateMetadata to the expanded job
         job = {
-            'id' : 'importantjob',
+            'id': 'importantjob',
             'priority': 500,
-            'applicationTemplateInfo' : {
-                'filePath' : self.static_apptemplate_path
+            'applicationTemplateInfo': {
+                'filePath': self.static_apptemplate_path
             }
         }
         result = utils.expand_application_template(job, '.')
@@ -428,11 +423,11 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         job_id = 'importantjob'
         priority = 500
         job = {
-            'id' : job_id,
+            'id': job_id,
             'priority': priority,
-            'applicationTemplateInfo' : {
-                'filePath' : self.apptemplate_with_params_path,
-                'parameters' : {
+            'applicationTemplateInfo': {
+                'filePath': self.apptemplate_with_params_path,
+                'parameters': {
                     'blobName': "Blob",
                     'keyValue': "Key"
                 }
@@ -443,12 +438,12 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
                          'Expect parameters from template to not be present.')
 
         # should throw error if application template specifies \'id\' property
-        templateFilePath = os.path.join(self.data_dir,\
+        templateFilePath = os.path.join(self.data_dir,
             'batch-applicationTemplate-prohibitedId.json')
         job = {
-            'id' : "jobid",
-            'applicationTemplateInfo' : {
-                'filePath' : templateFilePath
+            'id': "jobid",
+            'applicationTemplateInfo': {
+                'filePath': templateFilePath
             }
         }
         with self.assertRaises(ValueError) as ve:
@@ -456,12 +451,12 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
         self.assertIn('id', ve.exception.args[0], 'Expect property \'id\' to be mentioned')
 
         # should throw error if application template specifies \'poolInfo\' property
-        templateFilePath = os.path.join(self.data_dir,\
+        templateFilePath = os.path.join(self.data_dir,
             'batch-applicationTemplate-prohibitedPoolInfo.json')
         job = {
-            'id' : "jobid",
-            'applicationTemplateInfo' : {
-                'filePath' : templateFilePath
+            'id': "jobid",
+            'applicationTemplateInfo': {
+                'filePath': templateFilePath
             }
         }
         with self.assertRaises(ValueError) as ve:
@@ -470,26 +465,26 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
                       'Expect property \'poolInfo\' to be mentioned')
 
         # should throw error if application template specifies \'applicationTemplateInfo\' property
-        templateFilePath = os.path.join(self.data_dir,\
+        templateFilePath = os.path.join(self.data_dir,
             'batch-applicationTemplate-prohibitedApplicationTemplateInfo.json')
         job = {
-            'id' : "jobid",
-            'applicationTemplateInfo' : {
-                'filePath' : templateFilePath
+            'id': "jobid",
+            'applicationTemplateInfo': {
+                'filePath': templateFilePath
             }
         }
         with self.assertRaises(ValueError) as ve:
             utils.expand_application_template(job, '.')
-        self.assertIn('applicationTemplateInfo', ve.exception.args[0],\
+        self.assertIn('applicationTemplateInfo', ve.exception.args[0],
                       'Expect property \'applicationTemplateInfo\' to be mentioned')
 
         # should throw error if application template specifies \'priority\' property', function(_){
-        templateFilePath = os.path.join(self.data_dir,\
+        templateFilePath = os.path.join(self.data_dir,
             'batch-applicationTemplate-prohibitedPriority.json')
         job = {
-            'id' : "jobid",
-            'applicationTemplateInfo' : {
-                'filePath' : templateFilePath
+            'id': "jobid",
+            'applicationTemplateInfo': {
+                'filePath': templateFilePath
             }
         }
         with self.assertRaises(ValueError) as ve:
@@ -498,12 +493,12 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
                       'Expect property \'priority\' to be mentioned')
 
         # should throw error if application template specifies unrecognized property
-        templateFilePath = os.path.join(self.data_dir,\
+        templateFilePath = os.path.join(self.data_dir,
             'batch-applicationTemplate-unsupportedProperty.json')
         job = {
-            'id' : "jobid",
-            'applicationTemplateInfo' : {
-                'filePath' : templateFilePath
+            'id': "jobid",
+            'applicationTemplateInfo': {
+                'filePath': templateFilePath
             }
         }
         with self.assertRaises(ValueError) as ve:
@@ -513,74 +508,74 @@ class TestBatchNCJAppTemplates(unittest.TestCase):
 
         # should include metadata from original job on generated job
         job = {
-            'id' : 'importantjob',
+            'id': 'importantjob',
             'priority': 500,
-            'applicationTemplateInfo' : {
-                'filePath' : self.apptemplate_with_params_path,
-                'parameters' : {
-                    'blobName' : 'henry',
-                    'keyValue' : 'yale'
+            'applicationTemplateInfo': {
+                'filePath': self.apptemplate_with_params_path,
+                'parameters': {
+                    'blobName': 'henry',
+                    'keyValue': 'yale'
                 }
             },
-            'metadata' : [
+            'metadata': [
                 {
-                    'name' : 'author',
-                    'value' : 'batman'
+                    'name': 'author',
+                    'value': 'batman'
                 }]
         }
         result = utils.expand_application_template(job, '.')
         self.assertIn('metadata', result, 'Expect to have metadata.')
-        self.assertIn({'name' : 'author', 'value' : 'batman'},
+        self.assertIn({'name': 'author', 'value': 'batman'},
                       result['metadata'])
 
         # should include metadata from template on generated job
         job = {
-            'id' : 'importantjob',
+            'id': 'importantjob',
             'priority': 500,
-            'applicationTemplateInfo' : {
-                'filePath' : self.apptemplate_with_params_path,
-                'parameters' : {
-                    'blobName' : 'henry',
-                    'keyValue' : 'yale'
+            'applicationTemplateInfo': {
+                'filePath': self.apptemplate_with_params_path,
+                'parameters': {
+                    'blobName': 'henry',
+                    'keyValue': 'yale'
                 }
             },
-            'metadata' : [
+            'metadata': [
                 {
-                    'name' : 'author',
-                    'value' : 'batman'
+                    'name': 'author',
+                    'value': 'batman'
                 }
             ]
         }
         result = utils.expand_application_template(job, '.')
         self.assertIn('metadata', result, 'Expect to have metadata.')
-        self.assertIn({'name' : 'myproperty', 'value' : 'yale'},
+        self.assertIn({'name': 'myproperty', 'value': 'yale'},
                       result['metadata'])
 
         # should add a metadata property with the template location
         job = {
-            'id' : 'importantjob',
+            'id': 'importantjob',
             'priority': 500,
             'applicationTemplateInfo': {
-                'filePath' : self.static_apptemplate_path
+                'filePath': self.static_apptemplate_path
             }
         }
         result = utils.expand_application_template(job, '.')
         self.assertIn('metadata', result, 'Expect to have metadata.')
-        self.assertIn({'name' : 'az_batch:template_filepath',
-                       'value' : self.static_apptemplate_path},
+        self.assertIn({'name': 'az_batch:template_filepath',
+                       'value': self.static_apptemplate_path},
                       result['metadata'])
 
         # should not allow the job to use a metadata property with our reserved prefix
         job = {
-            'id' : 'importantjob',
+            'id': 'importantjob',
             'priority': 500,
-            'applicationTemplateInfo' : {
-                'filePath' : self.static_apptemplate_path
+            'applicationTemplateInfo': {
+                'filePath': self.static_apptemplate_path
             },
-            'metadata' : [
+            'metadata': [
                 {
-                    'name' : 'az_batch:property',
-                    'value' : 'something'
+                    'name': 'az_batch:property',
+                    'value': 'something'
                 }
             ]
         }

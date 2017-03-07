@@ -13,6 +13,8 @@ from azure.cli.command_modules.batch_extensions import _pool_utils
 from azure.cli.command_modules.batch_extensions import _file_utils
 
 # pylint: disable=too-many-lines
+
+
 class TestBatchNCJTemplates(unittest.TestCase):
     # pylint: disable=attribute-defined-outside-init,no-member,too-many-public-methods
 
@@ -354,17 +356,17 @@ class TestBatchNCJTemplates(unittest.TestCase):
                                          test_input, "value", file_info)
 
     def test_batch_ncj_parse_parameter_sets(self):
-        parsed = utils._parse_parameter_sets([{'start':1, 'end':2}])  # pylint:disable=protected-access
+        parsed = utils._parse_parameter_sets([{'start': 1, 'end': 2}])  # pylint:disable=protected-access
         self.assertEqual(list(parsed), [(1,), (2,)])
-        parsed = utils._parse_parameter_sets([{'start':1, 'end':1}])  # pylint:disable=protected-access
+        parsed = utils._parse_parameter_sets([{'start': 1, 'end': 1}])  # pylint:disable=protected-access
         self.assertEqual(list(parsed), [(1,)])
         parsed = utils._parse_parameter_sets([  # pylint:disable=protected-access
-            {'start':1, 'end':2},
-            {'start':-1, 'end':-3, 'step': -1}])
+            {'start': 1, 'end': 2},
+            {'start': -1, 'end': -3, 'step': -1}])
         self.assertEqual(list(parsed), [(1, -1), (1, -2), (1, -3), (2, -1), (2, -2), (2, -3)])
         parsed = utils._parse_parameter_sets([  # pylint:disable=protected-access
-            {'start':1, 'end':2},
-            {'start':-1, 'end':-3, 'step': -1},
+            {'start': 1, 'end': 2},
+            {'start': -1, 'end': -3, 'step': -1},
             {'start': -5, 'end': 5, 'step': 3}])
         self.assertEqual(list(parsed), [(1, -1, -5), (1, -1, -2), (1, -1, 1), (1, -1, 4),
                                         (1, -2, -5), (1, -2, -2), (1, -2, 1), (1, -2, 4),
@@ -373,13 +375,13 @@ class TestBatchNCJTemplates(unittest.TestCase):
                                         (2, -2, -5), (2, -2, -2), (2, -2, 1), (2, -2, 4),
                                         (2, -3, -5), (2, -3, -2), (2, -3, 1), (2, -3, 4)])
         parsed = utils._parse_parameter_sets([  # pylint:disable=protected-access
-            {'start':1, 'end':2, 'step': 2000},
-            {'start':-1, 'end':-3, 'step': -1},
+            {'start': 1, 'end': 2, 'step': 2000},
+            {'start': -1, 'end': -3, 'step': -1},
             {'start': -5, 'end': 5, 'step': 3}])
         self.assertEqual(list(parsed), [(1, -1, -5), (1, -1, -2), (1, -1, 1), (1, -1, 4),
                                         (1, -2, -5), (1, -2, -2), (1, -2, 1), (1, -2, 4),
                                         (1, -3, -5), (1, -3, -2), (1, -3, 1), (1, -3, 4)])
-        parsed = list(utils._parse_parameter_sets([{'start':1, 'end':2000}]))  # pylint:disable=protected-access,redefined-variable-type
+        parsed = list(utils._parse_parameter_sets([{'start': 1, 'end': 2000}]))  # pylint:disable=protected-access,redefined-variable-type
         self.assertEqual(len(parsed), 2000)
         self.assertEqual(len(parsed[0]), 1)
 
@@ -387,24 +389,24 @@ class TestBatchNCJTemplates(unittest.TestCase):
         with self.assertRaises(ValueError):
             utils._parse_parameter_sets([])  # pylint:disable=protected-access
         with self.assertRaises(ValueError):
-            utils._parse_parameter_sets([{'start':2, 'end':1}])  # pylint:disable=protected-access
+            utils._parse_parameter_sets([{'start': 2, 'end': 1}])  # pylint:disable=protected-access
         with self.assertRaises(ValueError):
-            utils._parse_parameter_sets([{'start':1, 'end':3, 'step': -1}])  # pylint:disable=protected-access
+            utils._parse_parameter_sets([{'start': 1, 'end': 3, 'step': -1}])  # pylint:disable=protected-access
         with self.assertRaises(ValueError):
-            utils._parse_parameter_sets([{'start':1, 'end':3, 'step': 0}])  # pylint:disable=protected-access
+            utils._parse_parameter_sets([{'start': 1, 'end': 3, 'step': 0}])  # pylint:disable=protected-access
         with self.assertRaises(ValueError):
-            utils._parse_parameter_sets([{'end':3, 'step': 1}])  # pylint:disable=protected-access
+            utils._parse_parameter_sets([{'end': 3, 'step': 1}])  # pylint:disable=protected-access
         with self.assertRaises(ValueError):
-            utils._parse_parameter_sets([{'start':3, 'step': 1}])  # pylint:disable=protected-access
+            utils._parse_parameter_sets([{'start': 3, 'step': 1}])  # pylint:disable=protected-access
         with self.assertRaises(ValueError):
-            utils._parse_parameter_sets([{'start':1, 'end':2}, {}])  # pylint:disable=protected-access
+            utils._parse_parameter_sets([{'start': 1, 'end': 2}, {}])  # pylint:disable=protected-access
 
     def test_batch_ncj_parse_taskcollection_factory(self):
         template = {
             "type": "taskCollection",
             "tasks": [
                 {
-                    "id" : "mytask1",
+                    "id": "mytask1",
                     "commandLine": "ffmpeg -i sampleVideo1.mkv"
                                    " -vcodec copy -acodec copy output.mp4 -y",
                     "resourceFiles": [
@@ -433,7 +435,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         result = utils._expand_task_collection(template)  # pylint: disable=protected-access
         expected = [
             {
-                "id" : "mytask1",
+                "id": "mytask1",
                 "commandLine": "ffmpeg -i sampleVideo1.mkv -vcodec copy -acodec copy output.mp4 -y",
                 "resourceFiles": [
                     {
@@ -629,7 +631,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
                 {"start": 1, "end": 3}
             ],
             "repeatTask": {
-                "resourceFiles" : [
+                "resourceFiles": [
                     {
                         "filePath": "run.exe",
                         "blobSource": "http://account.blob/run.exe"
@@ -649,7 +651,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
             ],
             "repeatTask": {
                 "commandLine": "cmd {0}.mp3",
-                "resourceFiles" : [
+                "resourceFiles": [
                     {
                         "filePath": "run.exe",
                         "blobSource": "http://account.blob/run.exe"
@@ -932,8 +934,8 @@ class TestBatchNCJTemplates(unittest.TestCase):
         pool['startTask'] = utils.construct_setup_task(
             pool.get('startTask'), commands,
             _pool_utils.PoolOperatingSystemFlavor.LINUX)
-        #TODO shell escape
-        #self.assertEqual(
+        # TODO shell escape
+        # self.assertEqual(
         #    pool['startTask']['commandLine'],
         #    "/bin/bash -c 'apt-get update;apt-get install -y "
         #    "ffmpeg;apt-get install -y apache2=12.34'")
@@ -1028,8 +1030,8 @@ class TestBatchNCJTemplates(unittest.TestCase):
             pool['startTask'], commands,
             _pool_utils.PoolOperatingSystemFlavor.LINUX)
         self.assertEqual(pool['vmSize'], '10')
-        #TODO: Shell escape
-        #self.assertEqual(
+        # TODO: Shell escape
+        # self.assertEqual(
         #    pool['startTask']['commandLine'],
         #    "/bin/bash -c 'apt-get update;apt-get install -y "
         #    "ffmpeg;apt-get install -y apache2=12.34;/bin/bash -c "
@@ -1069,7 +1071,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
             _pool_utils.PoolOperatingSystemFlavor.LINUX)
         self.assertFalse('taskFactory' in job)
         # TODO: Shell escape
-        #self.assertEqual(job['jobPreparationTask']['commandLine'],
+        # self.assertEqual(job['jobPreparationTask']['commandLine'],
         #                 '/bin/bash -c \'apt-get update;apt-get install '
         #                 '-y ffmpeg;apt-get install -y apache2=12.34\'')
         self.assertEqual(job['jobPreparationTask']['runElevated'], True)

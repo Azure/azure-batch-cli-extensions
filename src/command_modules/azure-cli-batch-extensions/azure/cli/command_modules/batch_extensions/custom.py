@@ -21,6 +21,7 @@ logger = azlogging.get_az_logger(__name__)
 
 # NCJ custom commands
 
+
 def create_pool(client, account_name=None, account_endpoint=None,  # pylint:disable=too-many-arguments, too-many-locals
                 template=None, parameters=None, json_file=None,
                 id=None, vm_size=None, target_dedicated=None, auto_scale_formula=None,  # pylint: disable=redefined-builtin
@@ -34,9 +35,9 @@ def create_pool(client, account_name=None, account_endpoint=None,  # pylint:disa
         if template:
             logger.warning('You are using an experimental feature {Pool Template}.')
             expanded_pool_object = template_utils.expand_template(template, parameters)
-            if not 'pool' in expanded_pool_object:
+            if 'pool' not in expanded_pool_object:
                 raise ValueError('Missing pool element in the template.')
-            if not 'properties' in expanded_pool_object['pool']:
+            if 'properties' not in expanded_pool_object['pool']:
                 raise ValueError('Missing pool properties element in the template.')
             # bulid up the jsonFile object to hand to the batch service.
             json_obj = expanded_pool_object['pool']['properties']
@@ -122,13 +123,14 @@ def create_pool(client, account_name=None, account_endpoint=None,  # pylint:disa
 
     add_option = PoolAddOptions()
     job_utils._handle_batch_exception(lambda: client.pool.add(pool, add_option))  # pylint: disable=protected-access
-    #return client.pool.get(pool.id)
+    # return client.pool.get(pool.id)
+
 
 create_pool.__doc__ = PoolAddParameter.__doc__
 
 
 def create_job(client, account_name=None, account_endpoint=None,  # pylint:disable=too-many-arguments, too-many-locals
-               template=None, parameters=None, json_file=None, id=None,  #pylint:disable=redefined-builtin
+               template=None, parameters=None, json_file=None, id=None,  # pylint:disable=redefined-builtin
                pool_id=None, priority=None, uses_task_dependencies=False, metadata=None,
                job_max_wall_clock_time=None, job_max_task_retry_count=None,
                job_manager_task_command_line=None, job_manager_task_environment_settings=None,
@@ -140,9 +142,9 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
         if template:
             logger.warning('You are using an experimental feature {Job Template}.')
             expanded_job_object = template_utils.expand_template(template, parameters)
-            if not 'job' in expanded_job_object:
+            if 'job' not in expanded_job_object:
                 raise ValueError('Missing job element in the template.')
-            if not 'properties' in expanded_job_object['job']:
+            if 'properties' not in expanded_job_object['job']:
                 raise ValueError('Missing job properties element in the template.')
             # bulid up the jsonFile object to hand to the batch service.
             json_obj = expanded_job_object['job']['properties']
@@ -182,8 +184,8 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
 
         # Handle package management on autopool
         if 'poolInfo' in json_obj and 'autoPoolSpecification' in json_obj['poolInfo'] \
-            and 'pool' in json_obj['poolInfo']['autoPoolSpecification'] \
-            and 'packageReferences' in json_obj['poolInfo']['autoPoolSpecification']['pool']:
+                and 'pool' in json_obj['poolInfo']['autoPoolSpecification'] \
+                and 'packageReferences' in json_obj['poolInfo']['autoPoolSpecification']['pool']:
 
             logger.warning('You are using an experimental feature {Package Management}.')
             pool = json_obj['poolInfo']['autoPoolSpecification']['pool']
@@ -220,7 +222,7 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
             # return
 
         # We deal all NCJ work with pool, now convert back to original type
-        job = client._deserialize('JobAddParameter', json_obj)  #pylint:disable=W0212
+        job = client._deserialize('JobAddParameter', json_obj)  # pylint:disable=W0212
 
     else:
         if not id:
@@ -242,8 +244,7 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
                                               job_manager_task_command_line,
                                               resource_files=job_manager_task_resource_files,
                                               run_elevated=job_manager_task_run_elevated,
-                                              environment_settings=\
-                                                job_manager_task_environment_settings)
+                                              environment_settings=job_manager_task_environment_settings)  # pylint: disable=line-too-long
             job.job_manager_task = job_manager_task
 
     def add_job_and_tasks():
@@ -257,9 +258,10 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
                 # now that the tasks have been added.
                 client.job.patch(job.id, {'on_all_tasks_complete': auto_complete})
 
-        #return client.job.get(job.id)
+        # return client.job.get(job.id)
 
     return job_utils._handle_batch_exception(add_job_and_tasks)  # pylint: disable=protected-access
+
 
 create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__
 

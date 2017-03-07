@@ -24,17 +24,14 @@ class TestFileUpload(VCRTestBase):
         self.resource_name = 'batchexp'
         self.testPrefix = 'cli-batch-ncj-live-tests'
 
-
     def cmd(self, command, checks=None, allowed_exceptions=None,
             debug=False):
         command = '{} --resource-group {} --name {}'.\
             format(command, self.resource_name, self.account_name)
         return super(TestFileUpload, self).cmd(command, checks, allowed_exceptions, debug)
 
-
     def test_batch_upload_live(self):
         self.execute()
-
 
     def body(self):
         # should upload a local file to auto-storage
@@ -90,11 +87,9 @@ class TestBatchNCJLive(VCRTestBase):
     def test_batch_ncj_live(self):
         self.execute()
 
-
     def submit_job_wrapper(self, file_name):
         result = self.cmd('batch job create --template "{}"'.format(file_name))
         print('Result text:{}'.format(result))
-
 
     def wait_for_tasks_complete(self, job_id, timeout):
         print('waiting for tasks to be complete')
@@ -119,7 +114,6 @@ class TestBatchNCJLive(VCRTestBase):
                 import time
                 time.sleep(wait_for)
 
-
     def wait_for_pool_steady(self, pool_id, timeout):
         print('waiting for pool to reach steady state')
 
@@ -136,7 +130,6 @@ class TestBatchNCJLive(VCRTestBase):
                 else:
                     import time
                     time.sleep(wait_for)
-
 
     def wait_for_vms_idle(self, pool_id, timeout):
         print('waiting for vms to be idle')
@@ -160,14 +153,12 @@ class TestBatchNCJLive(VCRTestBase):
                     import time
                     time.sleep(wait_for)
 
-
     def clear_container(self, container_name):
         print('clearing container {}'.format(container_name))
         blobs = self.blob_client.list_blobs(container_name)
         blobs = [b.name for b in blobs]
         for blob in blobs:
             self.blob_client.delete_blob(container_name, blob)
-
 
     def create_basic_spec(self, job_id, pool_id, task_id, text, is_windows):  # pylint: disable=too-many-arguments
         cmd_line = None
@@ -214,7 +205,6 @@ class TestBatchNCJLive(VCRTestBase):
             }
         }
 
-
     def create_pool_if_not_exist(self, pool_id, flavor):
         print('Creating pool: {}'.format(pool_id))
         sku_results = self.batch_client.account.list_node_agent_skus()
@@ -226,8 +216,8 @@ class TestBatchNCJLive(VCRTestBase):
 
         def sku_filter_function(skus):
             for sku in skus:
-                result = [x for x in sku.verified_image_references \
-                    if x.publisher == publisher and x.offer == offer and x.sku == sku_id]
+                result = [x for x in sku.verified_image_references
+                          if x.publisher == publisher and x.offer == offer and x.sku == sku_id]
                 if len(result) > 0:
                     return sku.id
             return None
@@ -298,7 +288,6 @@ class TestBatchNCJLive(VCRTestBase):
         self.wait_for_vms_idle(pool_id, 5 * 60)
         return is_windows
 
-
     def file_upload_helper(self, job_id, pool_id, task_id, pool_flavor):
         is_windows = self.create_pool_if_not_exist(pool_id, pool_flavor)
         text = 'test'
@@ -333,7 +322,6 @@ class TestBatchNCJLive(VCRTestBase):
         finally:
             print('Deleting job {}'.format(job_id))
             self.batch_client.job.delete(job_id)
-
 
     def body(self):
         # file egress should work on ubuntu 14.04

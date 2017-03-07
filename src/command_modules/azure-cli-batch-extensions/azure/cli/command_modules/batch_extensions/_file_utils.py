@@ -175,7 +175,7 @@ def upload_blob(source, destination, file_name,  # pylint: disable=too-many-argu
         progress_callback=lambda c, t: None,
         metadata={'lastmodified': file_time},
         # We want to validate the file as we upload, and only complete the operation
-        #if all the data transfers successfully
+        # if all the data transfers successfully
         validate_content=True,
         max_connections=FileUtils.PARALLEL_OPERATION_THREAD_COUNT)
 
@@ -203,7 +203,6 @@ class FileUtils(object):
             self.batch_account_endpoint = az_config.get('batch', 'endpoint', None)
         self.batch_resource_group = resource_group_name
 
-
     def filter_resource_cache(self, container, prefix):
         """Return all blob refeferences in a container cache that meet a prefix requirement."""
         filtered = []
@@ -214,25 +213,23 @@ class FileUtils(object):
                 filtered.append(blob)
         return filtered
 
-
     def list_container_contents(self, source, container, blob_service):
         """List blob references in container."""
-        if not container in  self.resource_file_cache:
+        if container not in self.resource_file_cache:
             self.resource_file_cache[container] = []
             blobs = blob_service.list_blobs(container)
             for blob in blobs:
                 blob_sas = self.generate_sas_token(blob, container, blob_service) \
                     if 'fileGroup' in source else \
-                        construct_sas_url(blob, urlsplit(source['containerUrl']))
+                    construct_sas_url(blob, urlsplit(source['containerUrl']))
                 file_name = os.path.basename(blob.name)
                 file_name_only = os.path.splitext(file_name)[0]
                 self.resource_file_cache[container].append(
-                    {'url' : blob_sas,
-                     'filePath' : blob.name,
-                     'fileName' : file_name,
-                     'fileNameWithoutExtension' : file_name_only})
+                    {'url': blob_sas,
+                     'filePath': blob.name,
+                     'fileName': file_name,
+                     'fileNameWithoutExtension': file_name_only})
         return self.filter_resource_cache(container, source.get('prefix'))
-
 
     def generate_sas_token(self, blob, container, blob_service):
         """Generate a blob URL with SAS token."""
@@ -242,7 +239,6 @@ class FileUtils(object):
             start=datetime.datetime.utcnow(),
             expiry=datetime.datetime.utcnow() + datetime.timedelta(days=FileUtils.SAS_EXPIRY_DAYS))
         return blob_service.make_blob_url(container, quote(blob.name), sas_token=sas_token)
-
 
     def get_container_list(self, source):
         """List blob references in container."""
@@ -267,17 +263,16 @@ class FileUtils(object):
 
         return self.list_container_contents(source, container, storage_client)
 
-
     def resolve_resource_file(self, resource_file):
         """Convert new resourceFile reference to server-supported reference"""
         if 'blobSource' in resource_file:
             # Support original resourceFile reference
-            if not 'filePath' in resource_file:
+            if 'filePath' not in resource_file:
                 raise ValueError('Malformed ResourceFile: \'blobSource\' must '
                                  'also have \'filePath\' attribute')
             return [dict(resource_file)]
 
-        if not 'source' in resource_file:
+        if 'source' not in resource_file:
             raise ValueError('Malformed ResourceFile: Must have either '
                              ' \'source\' or \'blobSource\'')
 
@@ -301,7 +296,6 @@ class FileUtils(object):
             raise ValueError('Not implemented')
         else:
             raise ValueError('Malformed ResourceFile')
-
 
     def resolve_storage_account(self):
         """Resolve Auto-Storage account from supplied Batch Account"""
@@ -329,8 +323,8 @@ class FileUtils(object):
             # the Batch account in the subscription
             # Example URL: https://batchaccount.westus.batch.azure.com
             region = urlsplit(self.batch_account_endpoint).netloc.split('.', 2)[1]
-            accounts = [x for x in client.list() \
-                if x.name == self.batch_account_name and x.location == region]
+            accounts = [x for x in client.list()
+                        if x.name == self.batch_account_name and x.location == region]
             try:
                 account = accounts[0]
             except IndexError:
@@ -353,4 +347,3 @@ class FileUtils(object):
         self.resolved_storage_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
         return self.resolved_storage_client
-
