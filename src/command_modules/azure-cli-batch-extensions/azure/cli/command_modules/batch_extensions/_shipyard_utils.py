@@ -8,6 +8,7 @@ import datetime
 
 AZURE_FILE_VOLUME_TYPE = 'azurefile'
 
+
 def _get_autostorage_credentials_label():
     """Gets the label of the AutoStorage account to use in the credentials.json file.
     :returns: The label of the AutoStorage account to use in the credentials.json file.

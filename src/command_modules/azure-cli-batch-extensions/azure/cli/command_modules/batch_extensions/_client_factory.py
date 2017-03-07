@@ -10,6 +10,7 @@ import azure.batch.batch_auth as batchauth
 
 from azure.cli.core.commands.client_factory import get_mgmt_service_client
 
+
 def account_mgmt_client_factory(kwargs):
     return batch_client_factory(**kwargs).batch_account
 

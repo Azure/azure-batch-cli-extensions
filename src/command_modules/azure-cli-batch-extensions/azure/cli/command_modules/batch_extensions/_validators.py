@@ -8,7 +8,7 @@ import json
 try:
     from urllib.parse import urlsplit
 except ImportError:
-    from urlparse import urlsplit # pylint: disable=import-error
+    from urlparse import urlsplit  # pylint: disable=import-error
 
 from msrest.serialization import Deserializer
 from msrest.exceptions import DeserializationError
@@ -126,7 +126,7 @@ def application_enabled(namespace):
     acc = client.batch_account.get(namespace.resource_group, namespace.account_name)
     if not acc:
         raise ValueError("Batch account '{}' not found.".format(namespace.account_name))
-    if not acc.auto_storage or not acc.auto_storage.storage_account_id: #pylint: disable=no-member
+    if not acc.auto_storage or not acc.auto_storage.storage_account_id:  # pylint: disable=no-member
         raise ValueError("Batch account '{}' needs auto-storage enabled.".
                          format(namespace.account_name))
 
@@ -204,13 +204,13 @@ def validate_client_parameters(namespace):
         endpoint = urlsplit(namespace.account_endpoint)
         host = endpoint.netloc
         client = get_mgmt_service_client(BatchManagementClient)
-        acc = next((x for x in client.batch_account.list() \
-            if x.name == namespace.account_name and x.account_endpoint == host), None)
+        acc = next((x for x in client.batch_account.list()
+                    if x.name == namespace.account_name and x.account_endpoint == host), None)
         if acc:
             from azure.cli.core.commands.arm import parse_resource_id
             rg = parse_resource_id(acc.id)['resource_group']
             namespace.account_key = \
-                client.batch_account.get_keys(rg, namespace.account_name).primary #pylint: disable=no-member
+                client.batch_account.get_keys(rg, namespace.account_name).primary  # pylint: disable=no-member
         else:
             raise ValueError("Batch account '{}' not found.".format(namespace.account_name))
     else:
@@ -220,6 +220,7 @@ def validate_client_parameters(namespace):
             raise ValueError("Need specifiy batch endpoint in command line or enviroment variable.")
 
 # CUSTOM REQUEST VALIDATORS
+
 
 def validate_mutually_exclusive(namespace, required, param1, param2):
     """Validate whether two or more mutually exclusive arguments or
