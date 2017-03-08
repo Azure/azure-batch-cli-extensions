@@ -5,7 +5,7 @@
   "testData": {
     "value": "<Auto-storage group name>"
   },
-  "outputFileStorageUrl": {
-    "value": "<Blob url with sas>"
+  "outputData": {
+    "value": "<Auto-storage group name>"
   }  
 }

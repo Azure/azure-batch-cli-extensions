@@ -120,9 +120,35 @@ def generate_container_name(file_group):
         return new_group
 
 
-def get_container_name(file_group):
+def _get_container_name(file_group):
     """Get valid container name from file group name with prefix."""
     return '{}{}'.format(FileUtils.GROUP_PREFIX, generate_container_name(file_group))
+
+
+def _generate_blob_sas_token(blob, container, blob_service, permission=BlobPermissions.READ):
+    """Generate a blob URL with SAS token."""
+    sas_token = blob_service.generate_blob_shared_access_signature(
+        container, blob.name,
+        permission=permission,
+        start=datetime.datetime.utcnow(),
+        expiry=datetime.datetime.utcnow() + datetime.timedelta(days=FileUtils.SAS_EXPIRY_DAYS))
+    return blob_service.make_blob_url(container, quote(blob.name), sas_token=sas_token)
+
+
+def _generate_container_sas_token(container, blob_service, permission=BlobPermissions.WRITE):
+    """Generate a container URL with SAS token."""
+    blob_service.create_container(container)
+    sas_token = blob_service.generate_container_shared_access_signature(
+        container,
+        permission=permission,
+        start=datetime.datetime.utcnow(),
+        expiry=datetime.datetime.utcnow() + datetime.timedelta(days=FileUtils.SAS_EXPIRY_DAYS))
+    url = '{}://{}/{}?{}'.format(
+        blob_service.protocol,
+        blob_service.primary_endpoint,
+        container,
+        sas_token)
+    return url
 
 
 def upload_blob(source, destination, file_name,  # pylint: disable=too-many-arguments
@@ -140,7 +166,7 @@ def upload_blob(source, destination, file_name,  # pylint: disable=too-many-argu
         file_name = os.path.basename(file_name)
 
     # Create upload container with sanitized file group name
-    container_name = get_container_name(destination)
+    container_name = _get_container_name(destination)
     blob_service.create_container(container_name)
 
     blob_name = file_name
@@ -187,7 +213,6 @@ class FileUtils(object):
     MAX_GROUP_LENGTH = 63 - len(GROUP_PREFIX)
     MAX_FILE_SIZE = 50000 * 4 * 1024 * 1024
     PARALLEL_OPERATION_THREAD_COUNT = 5
-    SAS_PERMISSIONS = BlobPermissions.READ  # Read permission
     SAS_EXPIRY_DAYS = 7  # 7 days
     ROUND_DATE = 2 * 60 * 1000  # Round to nearest 2 minutes
 
@@ -219,7 +244,7 @@ class FileUtils(object):
             self.resource_file_cache[container] = []
             blobs = blob_service.list_blobs(container)
             for blob in blobs:
-                blob_sas = self.generate_sas_token(blob, container, blob_service) \
+                blob_sas = _generate_blob_sas_token(blob, container, blob_service) \
                     if 'fileGroup' in source else \
                     construct_sas_url(blob, urlsplit(source['containerUrl']))
                 file_name = os.path.basename(blob.name)
@@ -231,14 +256,10 @@ class FileUtils(object):
                      'fileNameWithoutExtension': file_name_only})
         return self.filter_resource_cache(container, source.get('prefix'))
 
-    def generate_sas_token(self, blob, container, blob_service):
-        """Generate a blob URL with SAS token."""
-        sas_token = blob_service.generate_blob_shared_access_signature(
-            container, blob.name,
-            permission=self.SAS_PERMISSIONS,
-            start=datetime.datetime.utcnow(),
-            expiry=datetime.datetime.utcnow() + datetime.timedelta(days=FileUtils.SAS_EXPIRY_DAYS))
-        return blob_service.make_blob_url(container, quote(blob.name), sas_token=sas_token)
+    def get_container_sas(self, file_group_name):
+        storage_client = self.resolve_storage_account()
+        container = _get_container_name(file_group_name)
+        return _generate_container_sas_token(container, storage_client)
 
     def get_container_list(self, source):
         """List blob references in container."""
@@ -248,7 +269,7 @@ class FileUtils(object):
         if 'fileGroup' in source:
             # Input data stored in auto-storage
             storage_client = self.resolve_storage_account()
-            container = get_container_name(source['fileGroup'])
+            container = _get_container_name(source['fileGroup'])
         elif 'containerUrl' in source:
             uri = urlsplit(source['containerUrl'])
             if not uri.query:
@@ -282,7 +303,7 @@ class FileUtils(object):
 
         if 'fileGroup' in resource_file['source']:
             # Input data stored in auto-storage
-            container = get_container_name(resource_file['source']['fileGroup'])
+            container = _get_container_name(resource_file['source']['fileGroup'])
             blobs = self.list_container_contents(resource_file['source'], container, storage_client)
             return convert_blobs_to_resource_files(blobs, resource_file)
         elif 'containerUrl' in resource_file['source']:

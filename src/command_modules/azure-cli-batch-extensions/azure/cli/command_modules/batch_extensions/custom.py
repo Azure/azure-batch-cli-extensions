@@ -209,7 +209,7 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
             task_collection = template_utils.post_processing(task_collection, file_utils)
 
         commands.append(template_utils.process_job_for_output_files(
-            json_obj, task_collection, pool_os_flavor))
+            json_obj, task_collection, pool_os_flavor, file_utils))
         json_obj['jobPreparationTask'] = template_utils.construct_setup_task(
             json_obj.get('jobPreparationTask'), commands, pool_os_flavor)
 

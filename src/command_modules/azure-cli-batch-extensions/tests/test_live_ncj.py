@@ -205,6 +205,51 @@ class TestBatchNCJLive(VCRTestBase):
             }
         }
 
+    def create_basic_spec_alt(self, job_id, pool_id, task_id, text, is_windows):  # pylint: disable=too-many-arguments
+        cmd_line = None
+        if is_windows:
+            # Strip pesky newline from echo
+            cmd_line = 'cmd /c echo | set /p dummy={}'.format(text)
+        else:
+            cmd_line = '/bin/bash -c "echo {}"'.format(text)
+        return {
+            'job': {
+                'type': 'Microsoft.Batch/batchAccounts/jobs',
+                'apiVersion': '2016-12-01',
+                'properties': {
+                    'id': job_id,
+                    'poolInfo': {
+                        'poolId': pool_id
+                    },
+                    'taskFactory': {
+                        'type': 'taskCollection',
+                        'tasks': [
+                            {
+                                'id': task_id,
+                                'commandLine': cmd_line,
+                                'constraints': {
+                                    'retentionTime': "PT1H"
+                                },
+                                'outputFiles': [
+                                    {
+                                        'filePattern': '$AZ_BATCH_TASK_DIR/*.txt',
+                                        'destination': {
+                                            'container': {
+                                                'fileGroup': 'output'
+                                            }
+                                        },
+                                        'uploadDetails': {
+                                            'taskStatus': 'TaskSuccess'
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+
     def create_pool_if_not_exist(self, pool_id, flavor):
         print('Creating pool: {}'.format(pool_id))
         sku_results = self.batch_client.account.list_node_agent_skus()
@@ -288,10 +333,12 @@ class TestBatchNCJLive(VCRTestBase):
         self.wait_for_vms_idle(pool_id, 5 * 60)
         return is_windows
 
-    def file_upload_helper(self, job_id, pool_id, task_id, pool_flavor):
+    def file_upload_helper(self, job_id, pool_id, task_id, pool_flavor, using_file_group):
         is_windows = self.create_pool_if_not_exist(pool_id, pool_flavor)
         text = 'test'
-        spec = self.create_basic_spec(job_id, pool_id, task_id, text, is_windows)
+        spec = self.create_basic_spec_alt(job_id, pool_id, task_id, text, is_windows) \
+                if using_file_group else \
+                self.create_basic_spec(job_id, pool_id, task_id, text, is_windows)
 
         file_name = os.path.join(tempfile.mkdtemp(), 'uploadTest.json')
         fs = open(file_name, "w")
@@ -312,7 +359,8 @@ class TestBatchNCJLive(VCRTestBase):
             self.assertIsNone(task.execution_info.scheduling_error)
             self.assertEqual(task.execution_info.exit_code, 0)
 
-            blobs = self.blob_client.list_blobs(self.output_blob_container)
+            container_name = 'fgrp-output' if using_file_group else self.output_blob_container
+            blobs = self.blob_client.list_blobs(container_name)
             blob_names = [x.name for x in blobs]
             self.assertIn('stdout.txt', blob_names)
             self.assertIn('stderr.txt', blob_names)
@@ -329,11 +377,25 @@ class TestBatchNCJLive(VCRTestBase):
         job_id = 'ncj-ubuntu1404'
         pool_id = 'ncj-ubuntu1404'
         task_id = 'myTask'
-        self.file_upload_helper(job_id, pool_id, task_id, 'ubuntu14')
+        self.file_upload_helper(job_id, pool_id, task_id, 'ubuntu14', False)
 
         # should work on Windows 2012 R2
         self.clear_container(self.output_blob_container)
         job_id = 'ncj-windows-2012-r2'
         pool_id = 'ncj-windows-2012-r2'
         task_id = 'myTask'
-        self.file_upload_helper(job_id, pool_id, task_id, 'windows-2012-r2')
+        self.file_upload_helper(job_id, pool_id, task_id, 'windows-2012-r2', False)
+
+        # file egress should work on ubuntu 14.04
+        self.clear_container('fgrp-output')
+        job_id = 'ncj-ubuntu1404'
+        pool_id = 'ncj-ubuntu1404'
+        task_id = 'myTask'
+        self.file_upload_helper(job_id, pool_id, task_id, 'ubuntu14', True)
+
+        # should work on Windows 2012 R2
+        self.clear_container('fgrp-output')
+        job_id = 'ncj-windows-2012-r2'
+        pool_id = 'ncj-windows-2012-r2'
+        task_id = 'myTask'
+        self.file_upload_helper(job_id, pool_id, task_id, 'windows-2012-r2', True)

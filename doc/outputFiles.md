@@ -60,7 +60,8 @@ otherwise the error logs are uploaded for debugging.
 | Property     | Required  | Type   | Description                                                                                                                                                                                                                                        |
 | ------------ | --------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | path         | Optional  | String | Path within the container to which data will be uploaded. If `filePath` refers to multiple files, `path` will be considered a virtual directory within the container. Otherwise `path` will be considered to include the filename used in storage. |
-| containerSas | Mandatory | String | The SAS URL to the storage container used to hold the output data. The SAS must have write permissions. <br/> Note: A SAS URL to your entire storage account will not work, nor will one that has expired.                                         |
+| containerSas | Optional  | String | The SAS URL to the storage container used to hold the output data. The SAS must have write permissions. <br/> Note: A SAS URL to your entire storage account will not work, nor will one that has expired.                                         |
+| fileGroup    | Optional  | String | The file group stored in linked storage. <br> The 'fileGroup' property is mutually exclusive with 'containerSas' property.                                                                                                                         |
 
 ### uploadDetails 
 
