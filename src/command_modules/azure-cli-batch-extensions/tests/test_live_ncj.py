@@ -234,7 +234,7 @@ class TestBatchNCJLive(VCRTestBase):
                                     {
                                         'filePattern': '$AZ_BATCH_TASK_DIR/*.txt',
                                         'destination': {
-                                            'container': {
+                                            'autoStorage': {
                                                 'fileGroup': 'output'
                                             }
                                         },

@@ -1288,7 +1288,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         outputFiles = [{
             'filePattern': '*.txt',
             'destination': {
-                'container': {
+                'autoStorage': {
                     'fileGroup': 'output'
                 }
             },
@@ -1318,7 +1318,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         outputFiles = [{
             'filePattern': '*.txt',
             'destination': {
-                'container': {
+                'autoStorage': {
                     'fileGroup': 'output'
                 }
             },
@@ -1355,7 +1355,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         outputFiles = [{
             'filePattern': '*.txt',
             'destination': {
-                'container': {
+                'autoStorage': {
                     'fileGroup': 'output'
                 }
             },

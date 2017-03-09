@@ -86,7 +86,7 @@
                         {
                             "filePattern": "$AZ_BATCH_TASK_DIR/stdout.txt",
                             "destination": {
-                                "container": {
+                                "autoStorage": {
                                     "path": "output-{fileName}",
                                     "fileGroup": "[parameters('outputData')]"
                                 }

@@ -706,19 +706,20 @@ def _parse_task_output_files(task, os_flavor, file_utils):
         for prop in ['filePattern', 'destination', 'uploadDetails']:
             if prop not in output_file:
                 raise ValueError("outputFile must include '{}'".format(prop))
-        if 'container' not in output_file['destination']:
-            raise ValueError("outputFile must include 'container' property.")
-        if 'fileGroup' in output_file['destination']['container']:
-            if 'containerSas' in output_file['destination']['container']:
-                raise ValueError("'container' of 'outputFile' can only have only one of "
-                                 "'containerSas' and 'fileGroup' properties.")
-            else:
-                file_group = output_file['destination']['container'].pop('fileGroup')
-                output_file['destination']['container']['containerSas'] = \
-                    file_utils.get_container_sas(file_group)
-        if 'containerSas' not in output_file['destination']['container']:
-            raise ValueError("'container' of 'outputFile' must has with "
-                             "'containerSas' or 'fileGroup' property.")
+        destination = output_file['destination']
+        if 'container' not in destination and 'autoStorage' not in destination:
+            raise ValueError("outputFile must include 'container' or 'autoStorage' property.")
+        if 'container' in destination and 'autoStorage' in destination:
+            raise ValueError("outputFile can not have both 'container' "
+                             "and 'autoStorage' properties.")
+        if 'autoStorage' in destination:
+            if 'fileGroup' not in destination['autoStorage']:
+                raise ValueError("'autoStorage' of 'destination' must have 'fileGroup' property.")
+            destination['container'] = {'containerSas': \
+                    file_utils.get_container_sas(destination['autoStorage']['fileGroup'])}
+            if 'path' in destination['autoStorage']:
+                destination['container']['path'] = destination['autoStorage']['path']
+            destination.pop('autoStorage')
         if not output_file['uploadDetails'].get('taskStatus'):
             raise ValueError("outputFile.uploadDetails must include taskStatus.")
     # Edit the command line to run the upload
