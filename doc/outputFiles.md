@@ -51,16 +51,24 @@ otherwise the error logs are uploaded for debugging.
 
 ### destination
 
-| Property  | Required  | Type         | Description                          |
-| --------- | --------- | ------------ | ------------------------------------ |
-| container | Mandatory | Complex Type | Details of the destination container |
+| Property    | Required | Type         | Description                                                                                                                |
+| ----------- | -------- | ------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| container   | Optional | Complex Type | Details of the destination container. The `container` property is mutually exclusive with `autoStorage` property.          |
+| autoStorage | OPtional | Complex Type | Details of the destination under auto-storage. The `autoStorage` property is mutually exclusive with `container` property. |
 
 ### container
 
 | Property     | Required  | Type   | Description                                                                                                                                                                                                                                        |
 | ------------ | --------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | path         | Optional  | String | Path within the container to which data will be uploaded. If `filePath` refers to multiple files, `path` will be considered a virtual directory within the container. Otherwise `path` will be considered to include the filename used in storage. |
-| containerSas | Mandatory | String | The SAS URL to the storage container used to hold the output data. The SAS must have write permissions. <br/> Note: A SAS URL to your entire storage account will not work, nor will one that has expired.                                         |
+| containerSas | Optional  | String | The SAS URL to the storage container used to hold the output data. The SAS must have write permissions. <br/> Note: A SAS URL to your entire storage account will not work, nor will one that has expired.                                         |
+
+### autoStorage
+
+| Property     | Required  | Type   | Description                                                                                                                                                                                                                                           |
+| ------------ | --------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| path         | Optional  | String | Path within the file group to which data will be uploaded. If `filePath` refers to multiple files, `path` will be considered a virtual directory within the file group. Otherwise `path` will be considered to include the filename used in storage. |
+| fileGroup    | Optional  | String | The file group stored in linked storage.                                                                                                                                                                                                              |
 
 ### uploadDetails 
 

@@ -7,6 +7,9 @@ import json
 import os
 import unittest
 
+from mock import patch, Mock
+from azure.storage import CloudStorageAccount
+from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.cli.command_modules.batch import _help
 from azure.cli.command_modules.batch_extensions import _template_utils as utils
 from azure.cli.command_modules.batch_extensions import _pool_utils
@@ -1198,7 +1201,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
             'commandLine': 'foo.exe && /bin/bash -c "echo test"',
             'outputFiles': outputFiles
         }
-        new_task = utils._parse_task_output_files(task, _pool_utils.PoolOperatingSystemFlavor.LINUX)  # pylint: disable=protected-access
+        new_task = utils._parse_task_output_files(task, _pool_utils.PoolOperatingSystemFlavor.LINUX, None)  # pylint: disable=protected-access
         expected_command_line = ("/bin/bash -c 'foo.exe && /bin/bash -c \"echo test\";err=$?;"
                                  "$AZ_BATCH_JOB_PREP_WORKING_DIR/uploadfiles.py $err;exit $err'")
         self.assertEqual(new_task['commandLine'], expected_command_line)
@@ -1228,7 +1231,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         job = {'id': 'myJob'}
         commands = [None]
         commands.append(utils.process_job_for_output_files(
-            job, taskList, _pool_utils.PoolOperatingSystemFlavor.LINUX))
+            job, taskList, _pool_utils.PoolOperatingSystemFlavor.LINUX, None))
         job['jobPreparationTask'] = utils.construct_setup_task(
             job.get('jobPreparationTask'), commands, _pool_utils.PoolOperatingSystemFlavor.LINUX)
         self.assertFalse('outputFiles' in taskList[0])
@@ -1262,7 +1265,115 @@ class TestBatchNCJTemplates(unittest.TestCase):
         job = {'id': 'myJob', 'jobManagerTask': task}
         commands = [None]
         commands.append(utils.process_job_for_output_files(
-            job, None, _pool_utils.PoolOperatingSystemFlavor.LINUX))
+            job, None, _pool_utils.PoolOperatingSystemFlavor.LINUX, None))
+        job['jobPreparationTask'] = utils.construct_setup_task(
+            job.get('jobPreparationTask'), commands, _pool_utils.PoolOperatingSystemFlavor.LINUX)
+        expected_command_line = ("/bin/bash -c 'foo.exe;err=$?;$AZ_BATCH_JOB_PREP_WORKING_DIR/"
+                                 "uploadfiles.py $err;exit $err'")
+        self.assertFalse('outputFiles' in job['jobManagerTask'])
+        self.assertTrue('environmentSettings' in job['jobManagerTask'])
+        self.assertEqual(job['jobManagerTask']['commandLine'], expected_command_line)
+        self.assertEqual(len(job['jobManagerTask']['environmentSettings']), 1)
+        self.assertEqual(job['jobManagerTask']['environmentSettings'][0]['name'],
+                         utils._FILE_EGRESS_ENV_NAME)  # pylint: disable=protected-access
+        self.assertTrue('filePattern' in job['jobManagerTask']['environmentSettings'][0]['value'])
+        self.assertTrue('jobPreparationTask' in job)
+        self.assertEqual(job['jobPreparationTask']['commandLine'],
+                         "/bin/bash -c 'setup_uploader.py > setuplog.txt 2>&1'")
+        self.assertTrue('resourceFiles' in job['jobPreparationTask'])
+        self.assertEqual(len(job['jobPreparationTask']['resourceFiles']), 7)
+
+    @patch.object(BlockBlobService, 'create_container')
+    def test_batch_ncj_simple_outputfiles_file_group_configuration(self, mock_create_container):
+        outputFiles = [{
+            'filePattern': '*.txt',
+            'destination': {
+                'autoStorage': {
+                    'fileGroup': 'output'
+                }
+            },
+            'uploadDetails': {
+                'taskStatus': 'TaskSuccess'
+            }
+        }]
+        task = {
+            'id': 'test',
+            'commandLine': 'foo.exe && /bin/bash -c "echo test"',
+            'outputFiles': outputFiles
+        }
+        mock_file_utils = _file_utils.FileUtils(None, 'account', 'resource', None)
+        mock_file_utils.resolved_storage_client = CloudStorageAccount('storgeaccount', 'VGhpcyBpcyBrZXkgMQ==').create_block_blob_service()
+        new_task = utils._parse_task_output_files(task, _pool_utils.PoolOperatingSystemFlavor.LINUX, mock_file_utils)  # pylint: disable=protected-access
+        expected_command_line = ("/bin/bash -c 'foo.exe && /bin/bash -c \"echo test\";err=$?;"
+                                 "$AZ_BATCH_JOB_PREP_WORKING_DIR/uploadfiles.py $err;exit $err'")
+        self.assertEqual(new_task['commandLine'], expected_command_line)
+        self.assertFalse('outputFiles' in new_task)
+        self.assertTrue('environmentSettings' in new_task)
+        self.assertEqual(len(new_task['environmentSettings']), 1)
+        self.assertEqual(new_task['environmentSettings'][0]['name'], utils._FILE_EGRESS_ENV_NAME)  # pylint: disable=protected-access
+        self.assertTrue('filePattern' in new_task['environmentSettings'][0]['value'])
+
+    @patch.object(BlockBlobService, 'create_container')
+    def test_batch_ncj_construct_jobprep_for_file_group_outputfiles(self, mock_create_container):
+        outputFiles = [{
+            'filePattern': '*.txt',
+            'destination': {
+                'autoStorage': {
+                    'fileGroup': 'output'
+                }
+            },
+            'uploadDetails': {
+                'taskStatus': 'TaskSuccess'
+            }
+        }]
+        taskList = [{
+            'id': 'test',
+            'commandLine': 'foo.exe',
+            'outputFiles': outputFiles
+        }]
+        job = {'id': 'myJob'}
+        commands = [None]
+        mock_file_utils = _file_utils.FileUtils(None, 'account', 'resource', None)
+        mock_file_utils.resolved_storage_client = CloudStorageAccount('storgeaccount', 'VGhpcyBpcyBrZXkgMQ==').create_block_blob_service()
+        commands.append(utils.process_job_for_output_files(
+            job, taskList, _pool_utils.PoolOperatingSystemFlavor.LINUX, mock_file_utils))
+        job['jobPreparationTask'] = utils.construct_setup_task(
+            job.get('jobPreparationTask'), commands, _pool_utils.PoolOperatingSystemFlavor.LINUX)
+        self.assertFalse('outputFiles' in taskList[0])
+        self.assertTrue('environmentSettings' in taskList[0])
+        self.assertEqual(len(taskList[0]['environmentSettings']), 1)
+        self.assertEqual(taskList[0]['environmentSettings'][0]['name'], utils._FILE_EGRESS_ENV_NAME)  # pylint: disable=protected-access
+        self.assertTrue('filePattern' in taskList[0]['environmentSettings'][0]['value'])
+        self.assertTrue('jobPreparationTask' in job)
+        self.assertEqual(job['jobPreparationTask']['commandLine'],
+                         "/bin/bash -c 'setup_uploader.py > setuplog.txt 2>&1'")
+        self.assertTrue('resourceFiles' in job['jobPreparationTask'])
+        self.assertEqual(len(job['jobPreparationTask']['resourceFiles']), 7)
+
+    @patch.object(BlockBlobService, 'create_container')
+    def test_batch_ncj_jobmanagertask_with_file_group_outputfiles(self, mock_create_container):
+        outputFiles = [{
+            'filePattern': '*.txt',
+            'destination': {
+                'autoStorage': {
+                    'fileGroup': 'output'
+                }
+            },
+            'uploadDetails': {
+                'taskStatus': 'TaskSuccess'
+            }
+        }]
+        task = {
+            'id': 'test',
+            'commandLine': 'foo.exe',
+            'outputFiles': outputFiles
+        }
+        job = {'id': 'myJob', 'jobManagerTask': task}
+        commands = [None]
+        mock_file_utils = _file_utils.FileUtils(None, 'account', 'resource', None)
+        mock_file_utils.resolved_storage_client = CloudStorageAccount('storgeaccount', 'VGhpcyBpcyBrZXkgMQ==').create_block_blob_service()
+        commands.append(utils.process_job_for_output_files(
+            job, None, _pool_utils.PoolOperatingSystemFlavor.LINUX, mock_file_utils))
         job['jobPreparationTask'] = utils.construct_setup_task(
             job.get('jobPreparationTask'), commands, _pool_utils.PoolOperatingSystemFlavor.LINUX)
         expected_command_line = ("/bin/bash -c 'foo.exe;err=$?;$AZ_BATCH_JOB_PREP_WORKING_DIR/"

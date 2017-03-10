@@ -692,7 +692,7 @@ def _process_resource_files(request, fileutils):
     return request
 
 
-def _parse_task_output_files(task, os_flavor):
+def _parse_task_output_files(task, os_flavor, file_utils):
     """Process a task's outputFiles section and update the task accordingly.
     :param dict task: A task specification.
     :param str os_flavor: The OS flavor of the pool.
@@ -706,9 +706,20 @@ def _parse_task_output_files(task, os_flavor):
         for prop in ['filePattern', 'destination', 'uploadDetails']:
             if prop not in output_file:
                 raise ValueError("outputFile must include '{}'".format(prop))
-        if not output_file['destination'].get('container', {}).get('containerSas'):
-            raise ValueError("outputFile must include 'container' with "
-                             "'containerSas' property.")
+        destination = output_file['destination']
+        if 'container' not in destination and 'autoStorage' not in destination:
+            raise ValueError("outputFile must include 'container' or 'autoStorage' property.")
+        if 'container' in destination and 'autoStorage' in destination:
+            raise ValueError("outputFile can not have both 'container' "
+                             "and 'autoStorage' properties.")
+        if 'autoStorage' in destination:
+            if 'fileGroup' not in destination['autoStorage']:
+                raise ValueError("'autoStorage' of 'destination' must have 'fileGroup' property.")
+            destination['container'] = {'containerSas': \
+                    file_utils.get_container_sas(destination['autoStorage']['fileGroup'])}
+            if 'path' in destination['autoStorage']:
+                destination['container']['path'] = destination['autoStorage']['path']
+            destination.pop('autoStorage')
         if not output_file['uploadDetails'].get('taskStatus'):
             raise ValueError("outputFile.uploadDetails must include taskStatus.")
     # Edit the command line to run the upload
@@ -1085,7 +1096,7 @@ def construct_setup_task(existing_task, command_info, os_flavor):
     return result
 
 
-def process_job_for_output_files(job, tasks, os_flavor):
+def process_job_for_output_files(job, tasks, os_flavor, file_utils):
     """Process a job and its collection of tasks for any tasks which use outputFiles.
     If a task does use outputFiles, we add to the jobs jobPrepTask for the install step.
     NOTE: This edits the task collection and job in-line!
@@ -1098,12 +1109,14 @@ def process_job_for_output_files(job, tasks, os_flavor):
     is_windows = True
     if job.get('jobManagerTask'):
         original_task = copy.deepcopy(job['jobManagerTask'])
-        job['jobManagerTask'] = _parse_task_output_files(job['jobManagerTask'], os_flavor)
+        job['jobManagerTask'] = _parse_task_output_files(job['jobManagerTask'],
+                                                         os_flavor,
+                                                         file_utils)
         if original_task != job['jobManagerTask']:
             must_edit_job = True
     if tasks:
         for index, task in enumerate(tasks):
-            tasks[index] = _parse_task_output_files(task, os_flavor)
+            tasks[index] = _parse_task_output_files(task, os_flavor, file_utils)
             if task != tasks[index]:
                 must_edit_job = True
     if must_edit_job:

@@ -33,10 +33,10 @@
                 "description": "The auto-storage group where the input data is stored"
             }
         },
-        "outputFileStorageUrl": {
+        "outputData": {
             "type": "string",
             "metadata": {
-                "description": "A storage SAS URL to a container with write access"
+                "description": "The auto-storage group where the output data is uploaded"
             }
         }
     },
@@ -86,9 +86,9 @@
                         {
                             "filePattern": "$AZ_BATCH_TASK_DIR/stdout.txt",
                             "destination": {
-                                "container": {
+                                "autoStorage": {
                                     "path": "output-{fileName}",
-                                    "containerSas": "[parameters('outputFileStorageUrl')]"
+                                    "fileGroup": "[parameters('outputData')]"
                                 }
                             },
                             "uploadDetails": {

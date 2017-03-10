@@ -19,15 +19,15 @@ class TestBatchNCJFiles(unittest.TestCase):
         return super(TestBatchNCJFiles, self).setUp()
 
     def test_batch_ncj_generate_container_from_filegroup(self):
-        self.assertEqual(utils.get_container_name("data"), 'fgrp-data')
-        self.assertEqual(utils.get_container_name("Data"), 'fgrp-data')
-        self.assertEqual(utils.get_container_name("data__test--"),
+        self.assertEqual(utils._get_container_name("data"), 'fgrp-data')
+        self.assertEqual(utils._get_container_name("Data"), 'fgrp-data')
+        self.assertEqual(utils._get_container_name("data__test--"),
                          "fgrp-data-test-6640b0b7acfec6867ab146c9cf185206b5f0bdcb")
-        self.assertEqual(utils.get_container_name("data-test-really-long-name-with-no-"
+        self.assertEqual(utils._get_container_name("data-test-really-long-name-with-no-"
                                                   "special-characters-o8724578o2476"),
                          "fgrp-data-test-reall-cc5bdae242ec8cee81a2b85a35a0f538991472c2")
         with self.assertRaises(ValueError):
-            utils.get_container_name("data-#$%")
+            utils._get_container_name("data-#$%")
 
     def test_batch_ncj_resolve_filepaths(self):  # pylint: disable=too-many-statements
         if os.name == 'nt':
