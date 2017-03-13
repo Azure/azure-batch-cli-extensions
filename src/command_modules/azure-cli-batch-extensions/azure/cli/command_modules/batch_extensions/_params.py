@@ -58,4 +58,3 @@ register_cli_argument('batch file download', 'account_name', batch_name_type, op
 register_cli_argument('batch file download', 'local_path', type=file_type, help='Path to a local file or directory to be uploaded - can include wildcard patterns.')
 register_cli_argument('batch file download', 'file_group', help='Name of a file group under which the files will be stored.')
 register_cli_argument('batch file download', 'remote_path', help='Group subdirectory under which files will be uploaded.')
-register_cli_argument('batch file download', 'flatten', action='store_true', help='If set, will not retain local directory structure in storage.')
