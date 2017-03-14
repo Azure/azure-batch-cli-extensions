@@ -93,6 +93,10 @@ def resolve_file_paths(local_path):
     return local_path, files
 
 
+def resolve_remote_paths(blob_service, file_group, remote_path):
+    blobs = blob_service.list_blobs(_get_container_name(file_group), prefix=remote_path)
+    return list(blobs)
+
 def generate_container_name(file_group):
     """Generate valid container name from file group name."""
     file_group = file_group.lower()
@@ -150,6 +154,9 @@ def _generate_container_sas_token(container, blob_service, permission=BlobPermis
         sas_token)
     return url
 
+def download_blob(blob, file_group, destination, blob_service):
+    """Download the specified file to the specified container"""
+    blob_service.get_blob_to_path(_get_container_name(file_group), blob, destination)
 
 def upload_blob(source, destination, file_name,  # pylint: disable=too-many-arguments
                 blob_service, remote_path=None, flatten=None):
