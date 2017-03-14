@@ -28,9 +28,8 @@ def create_pool(client, account_name=None, account_endpoint=None,  # pylint:disa
                 id=None, vm_size=None, target_dedicated=None, auto_scale_formula=None,  # pylint: disable=redefined-builtin
                 enable_inter_node_communication=False, os_family=None, image=None,
                 node_agent_sku_id=None, resize_timeout=None, start_task_command_line=None,
-                start_task_resource_files=None, start_task_run_elevated=False,
-                start_task_wait_for_success=False, certificate_references=None,
-                application_package_references=None, metadata=None):
+                start_task_resource_files=None, start_task_wait_for_success=False,
+                certificate_references=None, application_package_references=None, metadata=None):
     # pylint: disable=too-many-branches, too-many-statements
     if template or json_file:
         if template:
@@ -109,7 +108,6 @@ def create_pool(client, account_name=None, account_endpoint=None,  # pylint:disa
 
         if start_task_command_line:
             pool.start_task = StartTask(start_task_command_line)
-            pool.start_task.run_elevated = start_task_run_elevated
             pool.start_task.wait_for_success = start_task_wait_for_success
             pool.start_task.resource_files = start_task_resource_files
         if resize_timeout:
@@ -135,8 +133,7 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
                pool_id=None, priority=None, uses_task_dependencies=False, metadata=None,
                job_max_wall_clock_time=None, job_max_task_retry_count=None,
                job_manager_task_command_line=None, job_manager_task_environment_settings=None,
-               job_manager_task_id=None, job_manager_task_resource_files=None,
-               job_manager_task_run_elevated=False):
+               job_manager_task_id=None, job_manager_task_resource_files=None):
     # pylint: disable=too-many-branches, too-many-statements
     if template or json_file:
         working_folder = '.'
@@ -244,7 +241,6 @@ def create_job(client, account_name=None, account_endpoint=None,  # pylint:disab
             job_manager_task = JobManagerTask(job_manager_task_id,
                                               job_manager_task_command_line,
                                               resource_files=job_manager_task_resource_files,
-                                              run_elevated=job_manager_task_run_elevated,
                                               environment_settings=job_manager_task_environment_settings)  # pylint: disable=line-too-long
             job.job_manager_task = job_manager_task
 
