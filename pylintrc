@@ -17,4 +17,4 @@ max-branches=20
 [SIMILARITIES]
 min-similarity-lines=10
 [Master]
-init-hook='import sys; import os.path; root_dir = os.path.abspath('.'); root_dir = os.path.dirname(root_dir) if not os.path.exists(os.path.join(root_dir, 'CONTRIBUTING.rst')) else root_dir; sys.path.extend([os.path.join(root_dir, "src/command_modules/azure-cli-batch-extensions/azure"), os.path.join(root_dir, "env/Lib/site-packages/azure")])'
+init-hook='import sys; import site; import os.path; root_dir = os.path.abspath('.'); root_dir = os.path.dirname(root_dir) if not os.path.exists(os.path.join(root_dir, 'CONTRIBUTING.rst')) else root_dir; sys.path.append(os.path.join(root_dir, "src/command_modules/azure-cli-batch-extensions/azure")); sys.path.extend([os.path.join(p, "azure") for p in site.getsitepackages()])'
