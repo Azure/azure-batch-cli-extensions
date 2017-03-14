@@ -282,19 +282,19 @@ def upload_file(client, resource_group, account_name,  # pylint: disable=too-man
         raise ValueError('No files or directories found matching local path {}'.format(local_path))
 
 
-def download_file(client, resource_group, account_name,  # pylint: disable=too-many-arguments, unused-argument
-                  local_path, file_group, remote_path=None, over_write=False):  # pylint: disable=unused-argument
+def download_file(client, resource_group, account_name,  # pylint: disable=too-many-arguments
+                  local_path, file_group, remote_path=None, overwrite=False):
     """Download auto-storage file or directory of files to local"""
     file_utils = FileUtils(client, account_name, resource_group, None)
     blob_client = file_utils.resolve_storage_account()
-    if remote_path and remote_path[-1:] != '/':
+    if remote_path and not remote_path.endswith('/'):
         remote_path += '/'
     files = resolve_remote_paths(blob_client, file_group, remote_path)
     if len(files) > 0:
         for f in files:
             file_name = os.path.realpath(\
                 os.path.join(local_path, f.name[len(remote_path):] if remote_path else f.name))
-            if not os.path.exists(file_name) or over_write:
+            if not os.path.exists(file_name) or overwrite:
                 if not os.path.exists(os.path.dirname(file_name)):
                     try:
                         os.makedirs(os.path.dirname(file_name))
