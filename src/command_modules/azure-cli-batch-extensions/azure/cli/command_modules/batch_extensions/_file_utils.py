@@ -5,10 +5,10 @@
 
 import os
 import re
-import pathlib
 import hashlib
 import datetime
 import copy
+import pathlib
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
 from six.moves.urllib.parse import quote  # pylint: disable=import-error
 

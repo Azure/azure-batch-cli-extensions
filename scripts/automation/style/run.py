@@ -5,9 +5,11 @@
 
 import argparse
 import multiprocessing
+import os
 import os.path
 import sys
 from subprocess import call
+from distutils.sysconfig import get_python_lib
 
 import automation.utilities.path as automation_path
 
