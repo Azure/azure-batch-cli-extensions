@@ -65,7 +65,7 @@ _PROPS_ON_REPEAT_TASK = {
     'resourceFiles',
     'environmentSettings',
     'constraints',
-    'runElevated',
+    'userIdentity',
     'exitConditions',
     'clientExtensions',
     'outputFiles',
@@ -1091,7 +1091,7 @@ def construct_setup_task(existing_task, command_info, os_flavor):
     if resources:
         result['resourceFiles'] = resources
     # Must run elevated and wait for success for the setup step
-    result['runElevated'] = True
+    result['userIdentity'] = {'autoUser': {"elevationLevel": "admin"}}
     result['waitForSuccess'] = True
     return result
 

@@ -942,7 +942,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         #    pool['startTask']['commandLine'],
         #    "/bin/bash -c 'apt-get update;apt-get install -y "
         #    "ffmpeg;apt-get install -y apache2=12.34'")
-        self.assertTrue(pool['startTask']['runElevated'])
+        self.assertEqual(pool['startTask']['userIdentity']['autoUser']['elevationLevel'], 'admin')
         self.assertTrue(pool['startTask']['waitForSuccess'])
 
     def test_batch_ncj_simple_windows_package_manager(self):
@@ -985,7 +985,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
             '%ALLUSERSPROFILE%\\chocolatey\\bin" && choco feature enable '
             '-n=allowGlobalConfirmation & choco install ffmpeg & choco install testpkg '
             '--version 12.34 --allow-empty-checksums"')
-        self.assertTrue(pool['startTask']['runElevated'])
+        self.assertEqual(pool['startTask']['userIdentity']['autoUser']['elevationLevel'], 'admin')
         self.assertTrue(pool['startTask']['waitForSuccess'])
 
     def test_batch_ncj_packagemanager_with_existing_starttask(self):
@@ -1005,7 +1005,11 @@ class TestBatchNCJTemplates(unittest.TestCase):
             "enableAutoScale": False,
             "startTask": {
                 "commandLine": "/bin/bash -c 'set -e; set -o pipefail; nodeprep-cmd' ; wait",
-                "runElevated": True,
+                "userIdentity": {
+                    "autoUser": {
+                        "elevationLevel": "admin"
+                    }
+                },
                 "waitForSuccess": True,
                 "resourceFiles": [
                     {
@@ -1039,7 +1043,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         #    "/bin/bash -c 'apt-get update;apt-get install -y "
         #    "ffmpeg;apt-get install -y apache2=12.34;/bin/bash -c "
         #    "'\\''set -e; set -o pipefail; nodeprep-cmd'\\'' ; wait'")
-        self.assertTrue(pool['startTask']['runElevated'])
+        self.assertEqual(pool['startTask']['userIdentity']['autoUser']['elevationLevel'], 'admin')
         self.assertTrue(pool['startTask']['waitForSuccess'])
         self.assertEqual(len(pool['startTask']['resourceFiles']), 1)
 
@@ -1077,7 +1081,7 @@ class TestBatchNCJTemplates(unittest.TestCase):
         # self.assertEqual(job['jobPreparationTask']['commandLine'],
         #                 '/bin/bash -c \'apt-get update;apt-get install '
         #                 '-y ffmpeg;apt-get install -y apache2=12.34\'')
-        self.assertEqual(job['jobPreparationTask']['runElevated'], True)
+        self.assertEqual(job['jobPreparationTask']['userIdentity']['autoUser']['elevationLevel'], 'admin')
         self.assertEqual(job['jobPreparationTask']['waitForSuccess'], True)
 
     def test_batch_ncj_starttask_without_packagemanager(self):

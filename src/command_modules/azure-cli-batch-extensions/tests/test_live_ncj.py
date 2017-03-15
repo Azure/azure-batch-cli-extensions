@@ -388,14 +388,14 @@ class TestBatchNCJLive(VCRTestBase):
 
         # file egress should work on ubuntu 14.04
         self.clear_container('fgrp-output')
-        job_id = 'ncj-ubuntu1404'
+        job_id = 'ncj-ubuntu1404-1'
         pool_id = 'ncj-ubuntu1404'
         task_id = 'myTask'
         self.file_upload_helper(job_id, pool_id, task_id, 'ubuntu14', True)
 
         # should work on Windows 2012 R2
         self.clear_container('fgrp-output')
-        job_id = 'ncj-windows-2012-r2'
+        job_id = 'ncj-windows-2012-r2-1'
         pool_id = 'ncj-windows-2012-r2'
         task_id = 'myTask'
         self.file_upload_helper(job_id, pool_id, task_id, 'windows-2012-r2', True)

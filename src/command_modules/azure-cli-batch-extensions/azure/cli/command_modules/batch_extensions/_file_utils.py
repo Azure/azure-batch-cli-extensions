@@ -215,7 +215,7 @@ def upload_blob(source, destination, file_name,  # pylint: disable=too-many-argu
 
 class FileUtils(object):
 
-    STRIP_PATH = re.compile(r"^[/\\]+|[/\\]+$")
+    STRIP_PATH = re.compile(r"[/\\]+$")
     GROUP_PREFIX = 'fgrp-'
     MAX_GROUP_LENGTH = 63 - len(GROUP_PREFIX)
     MAX_FILE_SIZE = 50000 * 4 * 1024 * 1024

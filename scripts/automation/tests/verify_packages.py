@@ -54,7 +54,7 @@ def build_package(path_to_package, dist_dir):
     print_heading('Built {}'.format(path_to_package))
 
 
-def install_pip_package(path_to_package, package_name, dist_dir):
+def install_pip_package(package_name):
     print_heading('Installing {}'.format(package_name))
     cmd = 'python -m pip install {}'.format(package_name)
     cmd_success = exec_command(cmd)
@@ -63,7 +63,7 @@ def install_pip_package(path_to_package, package_name, dist_dir):
         sys.exit(1)
     print_heading('Installed {}'.format(package_name))
 
-def install_package(package_name):
+def install_package(path_to_package, package_name, dist_dir):
     print_heading('Installing {}'.format(path_to_package))
     cmd = 'python -m pip install --upgrade {} --find-links file://{}'.format(package_name, dist_dir)
     cmd_success = exec_command(cmd)

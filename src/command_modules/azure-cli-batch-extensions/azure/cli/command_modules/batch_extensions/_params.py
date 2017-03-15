@@ -58,4 +58,4 @@ register_cli_argument('batch file download', 'account_name', batch_name_type, op
 register_cli_argument('batch file download', 'local_path', type=file_type, help='Path to a local file or directory to be stored the download files.')
 register_cli_argument('batch file download', 'file_group', help='Name of a file group under which the files will be download.')
 register_cli_argument('batch file download', 'remote_path', help='The subdirectory under which files will be download.')
-register_cli_argument('batch file download', 'overwrite', action='store_true', help='If set, an existing file in the local path will be overwritten.')
+register_cli_argument('batch file download', 'overwrite', action='store_true', help='If set, an existing file in the local path will be overwritten.')
