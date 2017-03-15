@@ -33,6 +33,10 @@ DEPENDENCIES = [
     'azure-cli-core',
     'azure-cli-batch'
 ]
+DEPENDENCIES_27 = {
+    ":python_version<'3.4'": ['pathlib>=1.0.1']
+}
+
 
 with open('README.rst', 'r', encoding='utf-8') as f:
     README = f.read()
@@ -58,4 +62,5 @@ setup(
         'azure.cli.command_modules.batch_extensions'
     ],
     install_requires=DEPENDENCIES,
+    extras_require=DEPENDENCIES_27,
 )

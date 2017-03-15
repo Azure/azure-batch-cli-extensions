@@ -802,8 +802,8 @@ def _replacement_transform(transformer, source_obj, source_key, context):
         return {}
     # Handle '{' and '}' escape scenario : replace '{{' to LEFT_BRACKET_REPLACE_CHAR,
     # and '}}' to RIGHT_BRACKET_REPLACE_CHAR. The reverse function is used to handle {{{0}}}.
-    LEFT_BRACKET_REPLACE_CHAR = '\uE800'  # pylint: disable=anomalous-unicode-escape-in-string
-    RIGHT_BRACKET_REPLACE_CHAR = '\uE801'  # pylint: disable=anomalous-unicode-escape-in-string
+    LEFT_BRACKET_REPLACE_CHAR = u'\uE800'  # pylint: disable=anomalous-unicode-escape-in-string
+    RIGHT_BRACKET_REPLACE_CHAR = u'\uE801'  # pylint: disable=anomalous-unicode-escape-in-string
     transformed = re.sub(r'\{\{', LEFT_BRACKET_REPLACE_CHAR, source_str)[::-1]
     transformed = re.sub(r'\}\}', RIGHT_BRACKET_REPLACE_CHAR, transformed)[::-1]
     transformed = transformer(transformed, context)
