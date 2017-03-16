@@ -64,6 +64,9 @@ def install_pip_package(package_name):
     print_heading('Installed {}'.format(package_name))
 
 def install_package(path_to_package, package_name, dist_dir):
+    sys.path.remove(path_to_package)
+    print("SYSTEMPATH")
+    print(sys.path)
     print_heading('Installing {}'.format(path_to_package))
     cmd = 'python -m pip install --upgrade {} --find-links file://{}'.format(package_name, dist_dir)
     cmd_success = exec_command(cmd)
@@ -76,6 +79,7 @@ def install_package(path_to_package, package_name, dist_dir):
 def verify_packages():
     print("SYSTEMPATH")
     print(sys.path)
+    
     # tmp dir to store all the built packages
     built_packages_dir = tempfile.mkdtemp()
 
