@@ -74,6 +74,8 @@ def install_package(path_to_package, package_name, dist_dir):
 
 
 def verify_packages():
+    print("SYSTEMPATH")
+    print(sys.path)
     # tmp dir to store all the built packages
     built_packages_dir = tempfile.mkdtemp()
 
