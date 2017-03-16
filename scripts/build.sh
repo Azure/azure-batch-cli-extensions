@@ -23,7 +23,9 @@ fi
 run_tests
 
 if [[ "$CI" == "true" ]]; then
-    $scripts_root/package_verify.sh
+    cd $scripts_root
+    ./package_verify.sh
+    cd ..
 fi
 
 python $scripts_root/license/verify.py
