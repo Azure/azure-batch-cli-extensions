@@ -25,11 +25,9 @@ def get_all_module_paths():
 def get_command_modules_paths(include_prefix=False):
     """List all the command modules"""
     root = get_repo_root()
-
-    modules_paths = ((name if include_prefix else name[len(COMMAND_MODULE_PREFIX):],
-                      os.path.join(root, name))
-                     for name in os.listdir(root) if name.startswith(COMMAND_MODULE_PREFIX))
-    return list([path for path in modules_paths if os.path.isfile(os.path.join(path[1], 'setup.py'))])
+    name = 'batch-extensions'
+    name = COMMAND_MODULE_PREFIX + name if include_prefix else name
+    return [(name, root)]
 
 
 def get_command_modules_paths_with_tests():
