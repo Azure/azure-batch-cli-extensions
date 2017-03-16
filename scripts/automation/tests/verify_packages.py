@@ -61,7 +61,7 @@ def build_package(path_to_package, dist_dir):
         print_heading('Error building {}!'.format(path_to_package), f=sys.stderr)
         sys.exit(1)
     print_heading('Built {}'.format(path_to_package))
-    undo_version(path_to_setup)
+    os.remove(path_to_setup)
 
 
 def install_pip_package(package_name):
@@ -79,8 +79,7 @@ def install_package(path_to_package, package_name, dist_dir):
     print(sys.path)
     print(os.environ['PYTHONPATH'])
     print_heading('Installing {}'.format(path_to_package))
-    cmd = ('python -m pip install --upgrade {}==1000.0.0 --find-links file://{} '
-           '--ignore-installed'.format(package_name, dist_dir))
+    cmd = 'python -m pip install --upgrade {} --find-links file://{}'.format(package_name, dist_dir)
     cmd_success = exec_command(cmd)
     if not cmd_success:
         print_heading('Error installing {}!'.format(path_to_package), f=sys.stderr)
