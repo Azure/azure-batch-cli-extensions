@@ -117,19 +117,19 @@ Preparing your machine
     .. code-block:: bash
 
         python -m venv <clone root>\env
-      
+
     **OSX/Ubuntu (bash)**
 
     .. code-block:: bash
 
         python –m venv <clone root>/env
-  
-4.  Activate the env virtual environment by running:
+
+4.	Activate the env virtual environment by running:
 
     **Windows**
 
     .. code-block:: bash
-    
+
       <clone root>\env\scripts\activate.bat
 
     **OSX/Ubuntu (bash)**
