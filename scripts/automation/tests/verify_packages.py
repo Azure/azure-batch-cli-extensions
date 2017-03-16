@@ -106,6 +106,8 @@ def verify_packages():
         sys.exit(1)
 
     pip.utils.pkg_resources = imp.reload(pip.utils.pkg_resources)
+    print(dist.key for dist in pip.get_installed_distributions(local_only=True))
+    print(dist.key for dist in pip.get_installed_distributions())
     installed_command_modules = [dist.key for dist in
                                  pip.get_installed_distributions(local_only=True)
                                  if dist.key.startswith(COMMAND_MODULE_PREFIX)]
