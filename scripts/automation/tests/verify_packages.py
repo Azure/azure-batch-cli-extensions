@@ -7,6 +7,7 @@
 
 from __future__ import print_function
 
+import os
 import os.path
 import tempfile
 import subprocess
@@ -67,8 +68,10 @@ def install_package(path_to_package, package_name, dist_dir):
     sys.path.remove(path_to_package)
     print("SYSTEMPATH")
     print(sys.path)
+    print(os.environ['PYTHONPATH'])
     print_heading('Installing {}'.format(path_to_package))
-    cmd = 'python -m pip install --upgrade {} --find-links file://{}'.format(package_name, dist_dir)
+    cmd = ('python -m pip install --upgrade {} --find-links file://{} '
+           '--force-reinstall'.format(package_name, dist_dir))
     cmd_success = exec_command(cmd)
     if not cmd_success:
         print_heading('Error installing {}!'.format(path_to_package), f=sys.stderr)
