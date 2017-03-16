@@ -75,7 +75,7 @@ To check these URLs with the Azure Batch Portal, select the *Preparation Tasks* 
 If any of these files return a 404, you will need to point your installation to the correct files from github.com, as follows:
 
 1. Go to [the github repository](https://github.com/Azure/azure-batch-cli-extensions) (`https://github.com/Azure/azure-batch-cli-extensions`)
-2. Check the following branches (in order) to find one that contains the file `src/azure-cli-batch-extensions/azure/cli/command_modules/batch_extensions/fileegress/batchfileuploader.py`. 
+2. Check the following branches (in order) to find one that contains the file `azure/cli/command_modules/batch_extensions/fileegress/batchfileuploader.py`. 
     * master
     * dev
 3. Browse your installation of the Azure CLI and open the file `azure/cli/command_modules/batch_extensions/_template_utils.py` in a Unicode-aware developers' text editor (such as [Visual Studio Code](https://code.visualstudio.com/), [Notepad++](https://notepad-plus-plus.org/) or [Vim](http://www.vim.org/)). 

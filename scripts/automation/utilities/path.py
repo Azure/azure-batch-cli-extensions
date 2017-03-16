@@ -24,7 +24,7 @@ def get_all_module_paths():
 
 def get_command_modules_paths(include_prefix=False):
     """List all the command modules"""
-    root = os.path.join(get_repo_root(), 'src', 'command_modules')
+    root = get_repo_root()
 
     modules_paths = ((name if include_prefix else name[len(COMMAND_MODULE_PREFIX):],
                       os.path.join(root, name))
