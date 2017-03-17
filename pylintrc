@@ -17,4 +17,4 @@ max-branches=20
 [SIMILARITIES]
 min-similarity-lines=10
 [Master]
-init-hook='import sys; from distutils.sysconfig import get_python_lib; import os.path; root_dir = os.path.abspath('.'); root_dir = os.path.dirname(root_dir) if not os.path.exists(os.path.join(root_dir, 'CONTRIBUTING.rst')) else root_dir; sys.path.append(os.path.join(root_dir, "azure")); sys.path.insert(0, os.path.join(get_python_lib(), 'azure'); print(sys.path))'
+init-hook='import sys; from distutils.sysconfig import get_python_lib; import os.path; root_dir = os.path.abspath('.'); root_dir = os.path.dirname(root_dir) if not os.path.exists(os.path.join(root_dir, 'CONTRIBUTING.rst')) else root_dir; sys.path.append(os.path.join(root_dir, "azure")); sys.path.insert(0, os.path.join(get_python_lib(), 'azure'); print(sys.path)'
