@@ -108,11 +108,12 @@ def verify_packages():
     install_pip_package('azure-cli')
 
     # STEP 2:: Build the packages
-    for name, path in all_modules:
-        build_package(path, built_packages_dir)
+    #for name, path in all_modules:
+    #    build_package(path, built_packages_dir)
 
     # Revert version
     # Install the remaining command modules
+    built_packages_dir = os.path.join(automation_path.get_repo_root(), 'testbuild')
     for name, fullpath in all_modules:
          install_package(fullpath, name, built_packages_dir)
 
