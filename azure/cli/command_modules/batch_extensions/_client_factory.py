@@ -16,10 +16,14 @@ def account_mgmt_client_factory(kwargs):
 
 
 def batch_client_factory(**_):
-    return get_mgmt_service_client(BatchManagementClient)
+    from azure.cli.command_modules.batch_extensions.version import VERSION
+    client = get_mgmt_service_client(BatchManagementClient)
+    client.config.add_user_agent('batch-extensions:v{}'.format(VERSION))
+    return client
 
 
 def batch_data_service_factory(kwargs):
+    from azure.cli.command_modules.batch_extensions.version import VERSION
     account_name = kwargs['account_name']
     account_key = kwargs.pop('account_key', None)
     account_endpoint = kwargs['account_endpoint']
@@ -32,4 +36,6 @@ def batch_data_service_factory(kwargs):
             resource=CLOUD.endpoints.batch_resource_id)
     else:
         credentials = batchauth.SharedKeyCredentials(account_name, account_key)
-    return batch.BatchServiceClient(credentials, base_url=account_endpoint)
+    client = batch.BatchServiceClient(credentials, base_url=account_endpoint)
+    client.config.add_user_agent('batch-extensions:v{}'.format(VERSION))
+    return client

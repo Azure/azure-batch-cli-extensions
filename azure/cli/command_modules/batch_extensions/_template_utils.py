@@ -25,15 +25,15 @@ logger = azlogging.get_az_logger(__name__)
 _ROOT_FILE_UPLOAD_URL = 'https://raw.githubusercontent.com/Azure/azure-batch-cli-extensions/master'
 _FILE_EGRESS_OVERRIDE = 'FILE_EGRESS_OVERRIDE_URL'
 _FILE_EGRESS_ENV_NAME = 'AZ_BATCH_FILE_UPLOAD_CONFIG'
-_FILE_EGRESS_PREFIX = 'src/command_modules/azure-cli-batch-extensions/azure/cli/command_modules/'
+_FILE_EGRESS_PREFIX = 'azure/cli/command_modules/batch_extensions/fileegress/'
 _FILE_EGRESS_RESOURCES = {
-    _FILE_EGRESS_PREFIX + 'batch_extensions/fileegress/batchfileuploader.py',
-    _FILE_EGRESS_PREFIX + 'batch_extensions/fileegress/configuration.py',
-    _FILE_EGRESS_PREFIX + 'batch_extensions/fileegress/requirements.txt',
-    _FILE_EGRESS_PREFIX + 'batch_extensions/fileegress/setup_uploader.py',
-    _FILE_EGRESS_PREFIX + 'batch_extensions/fileegress/uploader.py',
-    _FILE_EGRESS_PREFIX + 'batch_extensions/fileegress/util.py',
-    _FILE_EGRESS_PREFIX + 'batch_extensions/fileegress/uploadfiles.py'}
+    _FILE_EGRESS_PREFIX + 'batchfileuploader.py',
+    _FILE_EGRESS_PREFIX + 'configuration.py',
+    _FILE_EGRESS_PREFIX + 'requirements.txt',
+    _FILE_EGRESS_PREFIX + 'setup_uploader.py',
+    _FILE_EGRESS_PREFIX + 'uploader.py',
+    _FILE_EGRESS_PREFIX + 'util.py',
+    _FILE_EGRESS_PREFIX + 'uploadfiles.py'}
 # These properties are reserved for application template use
 # and may not be used on jobs using an application template
 _PROPS_RESERVED_FOR_TEMPLATES = {
@@ -1124,7 +1124,7 @@ def process_job_for_output_files(job, tasks, os_flavor, file_utils):
         if os_flavor == pool_utils.PoolOperatingSystemFlavor.WINDOWS:
             setup_cmd = '(bootstrap.cmd && setup_uploader.py) > setuplog.txt 2>&1'
             resource_files.append(
-                _FILE_EGRESS_PREFIX + 'batch_extensions/fileegress/bootstrap.cmd')
+                _FILE_EGRESS_PREFIX + 'bootstrap.cmd')
         elif os_flavor == pool_utils.PoolOperatingSystemFlavor.LINUX:
             setup_cmd = 'setup_uploader.py > setuplog.txt 2>&1'
             is_windows = False

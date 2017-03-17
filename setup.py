@@ -9,7 +9,7 @@
 from codecs import open
 from setuptools import setup
 
-VERSION = '0.1.1b1+dev'
+VERSION = '1.0.0RC+dev'
 
 # The full list of classifiers is available at
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -50,7 +50,7 @@ setup(
     long_description=README + '\n\n' + HISTORY,
     license='MIT',
     author='Microsoft Corporation',
-    author_email='azpycli@microsoft.com',
+    author_email='askwabatch@microsoft.com',
     url='https://github.com/Azure/azure-cli',
     classifiers=CLASSIFIERS,
     namespace_packages=[

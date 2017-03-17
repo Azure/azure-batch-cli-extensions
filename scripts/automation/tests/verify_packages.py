@@ -7,6 +7,8 @@
 
 from __future__ import print_function
 
+import os
+import shutil
 import os.path
 import tempfile
 import subprocess
@@ -64,6 +66,11 @@ def install_pip_package(package_name):
     print_heading('Installed {}'.format(package_name))
 
 def install_package(path_to_package, package_name, dist_dir):
+    #sys.path.remove(path_to_package)
+    print("deleting {}".format(os.path.join(path_to_package, 'azure_cli_batch_extensions.egg-info')))
+    shutil.rmtree(os.path.join(path_to_package, 'azure_cli_batch_extensions.egg-info'))
+    print("deleting {}".format(os.path.join(path_to_package, 'build')))
+    shutil.rmtree(os.path.join(path_to_package, 'build'))
     print_heading('Installing {}'.format(path_to_package))
     cmd = 'python -m pip install --upgrade {} --find-links file://{}'.format(package_name, dist_dir)
     cmd_success = exec_command(cmd)
@@ -78,7 +85,6 @@ def verify_packages():
     built_packages_dir = tempfile.mkdtemp()
 
     all_modules = automation_path.get_all_module_paths()
-    all_command_modules = automation_path.get_command_modules_paths(include_prefix=True)
 
     # STEP 1:: Install the CLI and dependencies by pip
     install_pip_package('azure-cli')
@@ -87,8 +93,9 @@ def verify_packages():
     for name, path in all_modules:
         build_package(path, built_packages_dir)
 
+    # Revert version
     # Install the remaining command modules
-    for name, fullpath in all_command_modules:
+    for name, fullpath in all_modules:
          install_package(fullpath, name, built_packages_dir)
 
     # STEP 3:: Validate the installation
@@ -113,7 +120,7 @@ def verify_packages():
     print('Installed command modules', installed_command_modules)
 
     missing_modules = \
-        set([name for name, fullpath in all_command_modules]) - set(installed_command_modules)
+        set([name for name, fullpath in all_modules]) - set(installed_command_modules)
 
     if missing_modules:
         print_heading('Error: The following modules were not installed successfully', f=sys.stderr)
