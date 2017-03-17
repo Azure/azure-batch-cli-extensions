@@ -65,7 +65,7 @@ if __name__ == '__main__':
         sys.exit(return_code_sum)
 
     if not args.suites or not any(args.suites):
-        return_code_sum = run_pylint()
+        return_code_sum = run_pep8()
     else:
         return_code_sum = 0
         if 'pep8' in args.suites:
