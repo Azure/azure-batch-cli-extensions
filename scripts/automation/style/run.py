@@ -11,7 +11,32 @@ import sys
 from subprocess import call
 from distutils.sysconfig import get_python_lib
 
+from automation.utilities.display import print_heading
 import automation.utilities.path as automation_path
+
+
+def exec_command(command, cwd=None, stdout=None, env=None):
+    """Returns True in the command was executed successfully"""
+    try:
+        command_list = command if isinstance(command, list) else command.split()
+        env_vars = os.environ.copy()
+        if env:
+            env_vars.update(env)
+        subprocess.check_call(command_list, stdout=stdout, cwd=cwd, env=env_vars)
+        return True
+    except subprocess.CalledProcessError as err:
+        print(err, file=sys.stderr)
+        return False
+        
+
+def install_pip_package(package_name):
+    print_heading('Installing {}'.format(package_name))
+    cmd = 'python -m pip install {}'.format(package_name)
+    cmd_success = exec_command(cmd)
+    if not cmd_success:
+        print_heading('Error installing {}!'.format(package_name), f=sys.stderr)
+        sys.exit(1)
+    print_heading('Installed {}'.format(package_name))
 
 
 def run_pylint():
@@ -57,6 +82,7 @@ if __name__ == '__main__':
     parser.add_argument('--pylint', dest='suites', action='append_const', const='pylint',
                         help='Run pylint')
     args = parser.parse_args()
+    install_pip_package('azure-cli')
 
     if args.ci:
         # Run pylint on all modules
