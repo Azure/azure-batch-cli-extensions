@@ -9,11 +9,11 @@ set -e
 
 scripts_root=$(cd $(dirname $0); pwd)
 
-python -m azure.cli -h
-
 if [[ "$CI" == "true" ]]; then
     $scripts_root/package_verify.sh
 fi
+
+python -m azure.cli -h
 
 # PyLint does not yet support Python 3.6 https://github.com/PyCQA/pylint/issues/1241
 
