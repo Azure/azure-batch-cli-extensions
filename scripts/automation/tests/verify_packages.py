@@ -82,7 +82,7 @@ def install_pip_package(package_name):
     print_heading('Installed {}'.format(package_name))
 
 def install_package(path_to_package, package_name, dist_dir):
-    sys.path.remove(path_to_package)
+    #sys.path.remove(path_to_package)
     print("SYSTEMPATH")
     print(sys.path)
     print(os.environ['PYTHONPATH'])
