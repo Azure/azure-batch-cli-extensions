@@ -100,7 +100,7 @@ def verify_packages():
     all_command_modules = automation_path.get_command_modules_paths(include_prefix=True)
 
     # STEP 1:: Install the CLI and dependencies by pip
-    install_pip_package('azure-cli')
+    #install_pip_package('azure-cli')
 
     # STEP 2:: Build the packages
     for name, path in all_modules:
