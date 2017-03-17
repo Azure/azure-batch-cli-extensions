@@ -10,7 +10,7 @@ import datetime
 import copy
 import pathlib
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
-from six.moves.urllib.parse import quote  # pylint: disable=import-error
+from six.moves.urllib.parse import quote  # pylint: disable=import-error,no-name-in-module
 
 from msrestazure.azure_exceptions import CloudError
 from azure.mgmt.storage import StorageManagementClient
