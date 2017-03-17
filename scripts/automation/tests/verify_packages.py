@@ -26,8 +26,10 @@ def exec_command(command, cwd=None, stdout=None, env=None):
     try:
         command_list = command if isinstance(command, list) else command.split()
         env_vars = os.environ.copy()
+        print(cwd)
         if env:
             env_vars.update(env)
+        print(env)
         subprocess.check_call(command_list, stdout=stdout, cwd=cwd, env=env_vars)
         return True
     except subprocess.CalledProcessError as err:
