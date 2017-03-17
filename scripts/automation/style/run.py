@@ -8,6 +8,7 @@ import multiprocessing
 import os
 import os.path
 import sys
+import subprocess
 from subprocess import call
 from distutils.sysconfig import get_python_lib
 
