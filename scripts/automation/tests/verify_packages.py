@@ -61,9 +61,13 @@ def build_package(path_to_package, dist_dir):
         print_heading('Error building {}!'.format(path_to_package), f=sys.stderr)
         sys.exit(1)
     print_heading('Built {}'.format(path_to_package))
-    #import shutil
-    #shutil.rmtree(os.path.join(path_to_package, 'azure'))
-    #os.remove(path_to_setup)
+    import shutil
+    print("deleting /home/travis/.cache/pip")
+    shutil.rmtree("/home/travis/.cache/pip")
+    print("deleting {}".format(os.path.join(path_to_package, 'azure')))
+    shutil.rmtree(os.path.join(path_to_package, 'azure'))
+    print("deleting {}".format(path_to_setup))
+    os.remove(path_to_setup)
 
 
 def install_pip_package(package_name):
