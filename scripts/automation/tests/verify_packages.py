@@ -29,7 +29,7 @@ def exec_command(command, cwd=None, stdout=None, env=None):
         print(cwd)
         if env:
             env_vars.update(env)
-        print(env)
+        print(env_vars)
         subprocess.check_call(command_list, stdout=stdout, cwd=cwd, env=env_vars)
         return True
     except subprocess.CalledProcessError as err:
@@ -86,6 +86,13 @@ def install_package(path_to_package, package_name, dist_dir):
     print("SYSTEMPATH")
     print(sys.path)
     print(os.environ['PYTHONPATH'])
+    import shutil
+    print("deleting /home/travis/.cache/pip")
+    shutil.rmtree("/home/travis/.cache/pip")
+    print("deleting {}".format(os.path.join(path_to_package, 'azure_cli_batch_extensions.egg-info')))
+    shutil.rmtree(os.path.join(path_to_package, 'azure_cli_batch_extensions.egg-info'))
+    print("deleting {}".format(os.path.join(path_to_package, 'build')))
+    shutil.rmtree(os.path.join(path_to_package, 'build'))
     print_heading('Installing {}'.format(path_to_package))
     cmd = 'python -m pip install --isolated --upgrade {} --find-links file://{}'.format(package_name, dist_dir)
     cmd_success = exec_command(cmd)
