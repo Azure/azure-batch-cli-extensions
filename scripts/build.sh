@@ -9,10 +9,7 @@ set -e
 
 scripts_root=$(cd $(dirname $0); pwd)
 
-if [[ "$CI" == "true" ]]; then
-    $scripts_root/package_verify.sh
-fi
-
+export PYTHONPATH=$PATHONPATH:./src
 python -m azure.cli -h
 
 # PyLint does not yet support Python 3.6 https://github.com/PyCQA/pylint/issues/1241
@@ -25,5 +22,9 @@ else
 fi
 
 run_tests
-python $scripts_root/license/verify.py
 
+if [[ "$CI" == "true" ]]; then
+    $scripts_root/package_verify.sh
+fi
+
+python $scripts_root/license/verify.py

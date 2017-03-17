@@ -6,5 +6,6 @@ python:
   - "3.6"
 install:
   - pip install -qqq virtualenv # used by package_verify script
+  - python scripts/dev_setup.py
 script: 
   - ./scripts/build.sh

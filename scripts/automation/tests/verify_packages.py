@@ -8,6 +8,7 @@
 from __future__ import print_function
 
 import os
+import shutil
 import os.path
 import tempfile
 import subprocess
@@ -26,10 +27,8 @@ def exec_command(command, cwd=None, stdout=None, env=None):
     try:
         command_list = command if isinstance(command, list) else command.split()
         env_vars = os.environ.copy()
-        print(cwd)
         if env:
             env_vars.update(env)
-        print(env_vars)
         subprocess.check_call(command_list, stdout=stdout, cwd=cwd, env=env_vars)
         return True
     except subprocess.CalledProcessError as err:
@@ -45,14 +44,6 @@ def set_version(path_to_setup):
     for _, line in enumerate(fileinput.input(path_to_setup, inplace=1)):
         sys.stdout.write(line.replace('version=VERSION', "version='1000.0.0'"))
 
-def undo_version(path_to_setup):
-    """
-    Give package a high version no. so when we install, we install this one and not a version from
-    PyPI
-    """
-    for _, line in enumerate(fileinput.input(path_to_setup, inplace=1)):
-        sys.stdout.write(line.replace("version='1000.0.0'", 'version=VERSION'))
-
 
 def build_package(path_to_package, dist_dir):
     print_heading('Building {}'.format(path_to_package))
@@ -63,13 +54,6 @@ def build_package(path_to_package, dist_dir):
         print_heading('Error building {}!'.format(path_to_package), f=sys.stderr)
         sys.exit(1)
     print_heading('Built {}'.format(path_to_package))
-    import shutil
-    print("deleting /home/travis/.cache/pip")
-    shutil.rmtree("/home/travis/.cache/pip")
-    print("deleting {}".format(os.path.join(path_to_package, 'azure')))
-    shutil.rmtree(os.path.join(path_to_package, 'azure'))
-    print("deleting {}".format(path_to_setup))
-    os.remove(path_to_setup)
 
 
 def install_pip_package(package_name):
@@ -83,18 +67,12 @@ def install_pip_package(package_name):
 
 def install_package(path_to_package, package_name, dist_dir):
     #sys.path.remove(path_to_package)
-    print("SYSTEMPATH")
-    print(sys.path)
-    print(os.environ['PYTHONPATH'])
-    import shutil
-    print("deleting /home/travis/.cache/pip")
-    shutil.rmtree("/home/travis/.cache/pip")
     print("deleting {}".format(os.path.join(path_to_package, 'azure_cli_batch_extensions.egg-info')))
     shutil.rmtree(os.path.join(path_to_package, 'azure_cli_batch_extensions.egg-info'))
     print("deleting {}".format(os.path.join(path_to_package, 'build')))
     shutil.rmtree(os.path.join(path_to_package, 'build'))
     print_heading('Installing {}'.format(path_to_package))
-    cmd = 'python -m pip install --isolated --upgrade {} --find-links file://{}'.format(package_name, dist_dir)
+    cmd = 'python -m pip install --upgrade {} --find-links file://{}'.format(package_name, dist_dir)
     cmd_success = exec_command(cmd)
     if not cmd_success:
         print_heading('Error installing {}!'.format(path_to_package), f=sys.stderr)
@@ -103,9 +81,6 @@ def install_package(path_to_package, package_name, dist_dir):
 
 
 def verify_packages():
-    print("SYSTEMPATH")
-    print(sys.path)
-    
     # tmp dir to store all the built packages
     built_packages_dir = tempfile.mkdtemp()
 
@@ -115,8 +90,8 @@ def verify_packages():
     install_pip_package('azure-cli')
 
     # STEP 2:: Build the packages
-    #for name, path in all_modules:
-    #    build_package(path, built_packages_dir)
+    for name, path in all_modules:
+        build_package(path, built_packages_dir)
 
     # Revert version
     # Install the remaining command modules
@@ -139,8 +114,6 @@ def verify_packages():
         sys.exit(1)
 
     pip.utils.pkg_resources = imp.reload(pip.utils.pkg_resources)
-    print([dist.key for dist in pip.get_installed_distributions(local_only=True)])
-    print([dist.key for dist in pip.get_installed_distributions()])
     installed_command_modules = [dist.key for dist in
                                  pip.get_installed_distributions(local_only=True)
                                  if dist.key.startswith(COMMAND_MODULE_PREFIX)]
