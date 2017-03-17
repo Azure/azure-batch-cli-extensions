@@ -5,10 +5,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{938454f7-93bd-41a7-84b2-3c89d64b969d}</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>azure-cli\azure\cli\__main__.py</StartupFile>
+    <StartupFile>env\Lib\site-packages\azure\cli\__main__.py</StartupFile>
     <SearchPath>.</SearchPath>
-    <WorkingDirectory>
-    </WorkingDirectory>
+    <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
@@ -17,6 +16,7 @@
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <CommandLineArguments>
     </CommandLineArguments>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -27,6 +27,9 @@
   <ItemGroup>
     <Compile Include="azure\cli\command_modules\batch_extensions\commands.py" />
     <Compile Include="azure\cli\command_modules\batch_extensions\custom.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\version.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_application_templates.py" />
     <Compile Include="tests\test_file_utils.py" />
     <Compile Include="tests\test_live_ncj.py" />
@@ -74,7 +77,7 @@
     <Content Include="doc\readme.md" />
     <Content Include="doc\taskFactories.md" />
     <Content Include="doc\templates.md" />
-    <Content Include="README.md" />
+    <Content Include="README.rst" />
     <Content Include="samples\blender-appTemplate\pool.json" />
     <Content Include="samples\blender-appTemplate\readme.md" />
     <Content Include="samples\blender-appTemplate\render-job.json" />
