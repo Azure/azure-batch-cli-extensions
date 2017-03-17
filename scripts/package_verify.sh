@@ -1,8 +1,10 @@
 #!/bin/bash
 set -e
 export PYTHONPATH=
+python setup.py sdist bdist_wheel
 virtualenv package-verify-env
 . package-verify-env/bin/activate
+
 pip install -e scripts
 python -m automation.tests.verify_packages
 deactivate

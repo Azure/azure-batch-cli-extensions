@@ -113,7 +113,7 @@ def verify_packages():
 
     # Revert version
     # Install the remaining command modules
-    built_packages_dir = os.path.join(automation_path.get_repo_root(), 'testbuild')
+    built_packages_dir = os.path.join(automation_path.get_repo_root(), 'dist')
     for name, fullpath in all_modules:
          install_package(fullpath, name, built_packages_dir)
 
