@@ -24,9 +24,9 @@ An output file description can be added to a task or Job Manager task (or the ta
       {
         "filePattern": "../stderr.txt",
         "destination": {
-          "container": {
-            "path": "2_error.log",
-            "containerSas": "https://storage.blob.core.windows.net/container?sv=2015-04-05sig=tAp0r3I3SV5PbjpZ5CIjvuo1jdUs5xW"
+          "autoStorage": {
+            "path": "ffmpeg/2_error.log",
+            "fileGroup": "job-logs"
           }
         },
         "uploadDetails": {
@@ -81,6 +81,26 @@ Available options for `taskStatus` are:
 * `TaskSuccess` - Upload if the task completed with an exit code of zero.
 * `TaskFailure` - Upload if the task completed with a nonzero exit code.
 * `TaskComplete` - Uploaded always (irrespective of the exit code of the task).
+
+## Output File Download
+
+Output files that have been persisted to auto-storage using a file group can be downloaded using an additional CLI command:
+
+```bash
+az batch file download --local-path C:\job_outputs\logs --file-group job-logs
+
+az batch file download --local-path /home/job_outputs/logs --file-group job-logs
+```
+
+If output files were persisted into a subfolder in the file group, this can be specified using the
+`--remote-path` flag. If a file of the same name already exists locally, it will not be overwritten by
+default. To overwrite any existing files, use the `--overwrite` flag.
+
+```bash
+az batch file download --local-path C:\job_outputs\logs --file-group job-logs --remote-path ffmpeg --overwrite
+
+az batch file download --local-path /home/job_outputs/logs --file-group job-logs --remote-path ffmpeg --overwrite
+```
 
 ## Samples
 
