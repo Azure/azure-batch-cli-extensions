@@ -1909,7 +1909,7 @@ interactions:
     method: POST
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test1_resource_group/providers/Microsoft.Storage/storageAccounts/testaccountforbatch/listKeys?api-version=2016-12-01
   response:
-    body: {string: '{"keys":[{"keyName":"key1","permissions":"Full","value":"vSMr7El5xPC+Z0QcNo/mJQweQh32EEes9bM+8oWr7QMuOiv+m8xqvR3UOYIpBCnJdiq42XZnXBV1lnkxzvYGKg=="},{"keyName":"key2","permissions":"Full","value":"EQgXfno8pUsLDUxySmuqToarHs8K3qr36TBF/qmCScgoqSkAimpZ7UykidmluL70O3TYBybiHEjg0FN9kQ0rhw=="}]}
+    body: {string: '{"keys":[{"keyName":"key1","permissions":"Full","value":"xxx=="},{"keyName":"key2","permissions":"Full","value":"xxx=="}]}
 
         '}
     headers:
