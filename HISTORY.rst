@@ -3,7 +3,7 @@
 Release History
 ===============
 
-1.0.0RC (2017-03-20)
+1.0.0RC1 (2017-03-20)
 +++++++++++++++++++++
 
 * Initial preview release.
