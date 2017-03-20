@@ -12,8 +12,8 @@ from azure.cli.core.commands.parameters import \
      get_resource_name_completion_list, file_type)
 
 from azure.cli.command_modules.batch_extensions._validators import \
-    (application_enabled, validate_client_parameters, metadata_item_format,
-     certificate_reference_format, validate_json_file, load_node_agent_skus, validate_pool_settings)
+    (validate_pool_settings, validate_client_parameters, metadata_item_format,
+     certificate_reference_format, validate_json_file, load_node_agent_skus)
 
 # pylint: disable=line-too-long
 # ARGUMENT DEFINITIONS
