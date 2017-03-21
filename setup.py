@@ -50,8 +50,8 @@ setup(
     long_description=README + '\n\n' + HISTORY,
     license='MIT',
     author='Microsoft Corporation',
-    author_email='askwabatch@microsoft.com',
-    url='https://github.com/Azure/azure-cli',
+    author_email='azpycli@microsoft.com',
+    url='https://github.com/Azure/azure-batch-cli-extensions',
     classifiers=CLASSIFIERS,
     namespace_packages=[
         'azure',
