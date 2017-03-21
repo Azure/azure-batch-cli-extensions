@@ -90,11 +90,11 @@ You can find futher instructions in the `official documentation <https://docs.mi
 `Azure CLI GitHub repository <https://github.com/azure/azure-cli>`_.
 
 This extension package can be installed to supplement the existing Azure CLI Batch commands.
-It can be installed directly via pip:
+It can be installed using the CLI component tools:
 
 .. code-block:: bash
 
-    $ pip install --user azure-cli-batch-extensions
+    $ az component update -add batch-extensions --allow-third-party
 
 
 Azure Batch account requirements
