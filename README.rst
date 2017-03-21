@@ -32,6 +32,11 @@ Input data stored in linked storage under a file group can be simply referenced 
 
 When adding a task, you can now declare a list of output files to be automatically uploaded to an Azure Storage container of your choice when the task completes.
 
+`Download job outputs from directly from storage <https://github.com/Azure/azure-batch-cli-extensions/blob/master/doc/outputFiles.md#output-file-download>`_
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+A new command to allow a user to download job output files from a file group in the storage account linked to their Azure Batch account.
+
 `Pool and job templates with parameterization <https://github.com/Azure/azure-batch-cli-extensions/blob/master/doc/templates.md>`_
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -85,11 +90,11 @@ You can find futher instructions in the `official documentation <https://docs.mi
 `Azure CLI GitHub repository <https://github.com/azure/azure-cli>`_.
 
 This extension package can be installed to supplement the existing Azure CLI Batch commands.
-It can be installed directly via pip:
+It can be installed using the CLI component tools:
 
 .. code-block:: bash
 
-    $ pip install --user azure-cli-batch-extensions
+    $ az component update -add batch-extensions --allow-third-party
 
 
 Azure Batch account requirements

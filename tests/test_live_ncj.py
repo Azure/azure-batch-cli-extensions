@@ -250,6 +250,30 @@ class TestBatchNCJLive(VCRTestBase):
             }
         }
 
+    def create_paas_pool_if_not_exist(self, pool_id):
+        print('Creating pool: {}'.format(pool_id))
+        pool = {
+            'id': pool_id,
+            'vmSize': 'STANDARD_D1_V2',
+            'cloudServiceConfiguration': {
+                'osFamily': '4'
+            },
+            'targetDedicated': 1
+        }
+        try:
+            add_pool = self.batch_client._deserialize('PoolAddParameter', pool)  # pylint:disable=protected-access
+            self.batch_client.pool.add(add_pool)
+            print('Successfully created pool {}'.format(pool_id))
+        except BatchErrorException as ex:
+            if ex.error.code == 'PoolExists':
+                print('Pool already exists')
+            else:
+                raise ex
+
+        self.wait_for_pool_steady(pool_id, 5 * 60)
+        self.wait_for_vms_idle(pool_id, 5 * 60)
+        return True
+
     def create_pool_if_not_exist(self, pool_id, flavor):
         print('Creating pool: {}'.format(pool_id))
         sku_results = self.batch_client.account.list_node_agent_skus()
@@ -333,8 +357,12 @@ class TestBatchNCJLive(VCRTestBase):
         self.wait_for_vms_idle(pool_id, 5 * 60)
         return is_windows
 
-    def file_upload_helper(self, job_id, pool_id, task_id, pool_flavor, using_file_group):
-        is_windows = self.create_pool_if_not_exist(pool_id, pool_flavor)
+    def file_upload_helper(self, job_id, pool_id, task_id, pool_flavor,
+                           using_file_group, paas=False):
+        if paas:
+            is_windows = self.create_paas_pool_if_not_exist(pool_id)
+        else:
+            is_windows = self.create_pool_if_not_exist(pool_id, pool_flavor)
         text = 'test'
         spec = self.create_basic_spec_alt(job_id, pool_id, task_id, text, is_windows) \
                 if using_file_group else \
@@ -399,3 +427,17 @@ class TestBatchNCJLive(VCRTestBase):
         pool_id = 'ncj-windows-2012-r2'
         task_id = 'myTask'
         self.file_upload_helper(job_id, pool_id, task_id, 'windows-2012-r2', True)
+
+        # should work on Windows PaaS
+        self.clear_container(self.output_blob_container)
+        job_id = 'ncj-windows-paas'
+        pool_id = 'ncj-windows-paas'
+        task_id = 'myTask'
+        self.file_upload_helper(job_id, pool_id, task_id, None, False, True)
+
+        # should work on Windows PaaS with fileGroup
+        self.clear_container('fgrp-output')
+        job_id = 'ncj-windows-paas-fgrp'
+        pool_id = 'ncj-windows-paas-fgrp'
+        task_id = 'myTask'
+        self.file_upload_helper(job_id, pool_id, task_id, None, True, True)

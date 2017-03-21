@@ -9,7 +9,7 @@
 from codecs import open
 from setuptools import setup
 
-VERSION = '1.0.0RC+dev'
+VERSION = '1.0.0rc1'
 
 # The full list of classifiers is available at
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -51,7 +51,7 @@ setup(
     license='MIT',
     author='Microsoft Corporation',
     author_email='askwabatch@microsoft.com',
-    url='https://github.com/Azure/azure-cli',
+    url='https://github.com/Azure/azure-batch-cli-extensions',
     classifiers=CLASSIFIERS,
     namespace_packages=[
         'azure',

@@ -27,6 +27,21 @@
   <ItemGroup>
     <Compile Include="azure\cli\command_modules\batch_extensions\commands.py" />
     <Compile Include="azure\cli\command_modules\batch_extensions\custom.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\batchfileuploader.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\configuration.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\setup_uploader.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\perf.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_aggregate_exception.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_argparse.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_end_to_end.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_error_mappings.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_extractpathinfo.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_load_specification.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_normalizeblobname.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\__init__.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\uploader.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\uploadfiles.py" />
+    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\util.py" />
     <Compile Include="azure\cli\command_modules\batch_extensions\version.py">
       <SubType>Code</SubType>
     </Compile>
@@ -54,6 +69,8 @@
     <Folder Include="azure\cli\" />
     <Folder Include="azure\cli\command_modules\" />
     <Folder Include="azure\cli\command_modules\batch_extensions\" />
+    <Folder Include="azure\cli\command_modules\batch_extensions\fileegress\" />
+    <Folder Include="azure\cli\command_modules\batch_extensions\fileegress\test\" />
     <Folder Include="doc\" />
     <Folder Include="samples\" />
     <Folder Include="samples\blender-appTemplate\" />
@@ -70,6 +87,9 @@
     <Folder Include="tests\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="azure\cli\command_modules\batch_extensions\fileegress\bootstrap.cmd" />
+    <Content Include="azure\cli\command_modules\batch_extensions\fileegress\requirements.txt" />
+    <Content Include="azure\cli\command_modules\batch_extensions\fileegress\test\requirements.txt" />
     <Content Include="doc\application-templates.md" />
     <Content Include="doc\inputFiles.md" />
     <Content Include="doc\outputFiles.md" />

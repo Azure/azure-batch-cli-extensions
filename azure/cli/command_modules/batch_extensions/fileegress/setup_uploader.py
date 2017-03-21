@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     subprocess.check_call(['pip', 'install', 'virtualenv'])
 
-    venv_loc = os.path.join(os.environ['AZ_BATCH_JOB_PREP_DIR'], 'batch-upload-venv')
+    venv_loc = os.path.join(os.environ['AZ_BATCH_TASK_DIR'], 'batch-upload-venv')
     print('Creating virtual env at {}'.format(venv_loc))
     if not os.path.isdir(venv_loc):
         os.makedirs(venv_loc)
