@@ -9,6 +9,8 @@ disable=C0111,C0103,I0011,W0511,R0401
 [VARIABLES]
 # Tells whether we should check for unused import in __init__ files.
 init-import=yes
+[TYPECHECK]
+ignored-modules=azure,azure.cli,six,six.moves,_MovedItems
 [DESIGN]
 # Maximum number of locals for function / method body
 max-locals=25
