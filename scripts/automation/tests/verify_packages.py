@@ -44,6 +44,13 @@ def set_version(path_to_setup):
     for _, line in enumerate(fileinput.input(path_to_setup, inplace=1)):
         sys.stdout.write(line.replace('version=VERSION', "version='1000.0.0'"))
 
+def reset_version(path_to_setup):
+    """
+    Revert package to original version no. for PyPI package and deploy.
+    """
+    for _, line in enumerate(fileinput.input(path_to_setup, inplace=1)):
+        sys.stdout.write(line.replace("version='1000.0.0'", 'version=VERSION'))
+
 
 def build_package(path_to_package, dist_dir):
     print_heading('Building {}'.format(path_to_package))
@@ -54,6 +61,7 @@ def build_package(path_to_package, dist_dir):
         print_heading('Error building {}!'.format(path_to_package), f=sys.stderr)
         sys.exit(1)
     print_heading('Built {}'.format(path_to_package))
+    reset_version(path_to_setup)
 
 
 def install_pip_package(package_name):
