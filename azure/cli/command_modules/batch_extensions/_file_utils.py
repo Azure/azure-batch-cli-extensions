@@ -363,6 +363,10 @@ class FileUtils(object):
                                  'in region {}'.format(
                                      self.batch_account_name,
                                      client.config.subscription_id, region))
+        else:
+            raise ValueError("Insufficient account information. Please supply the account "
+                             "name and resource group, or log in to the account with the "
+                             "'az batch account login' command.")
         if not account.auto_storage:  # pylint: disable=no-member
             raise ValueError('No linked auto-storage for account {}'
                              .format(self.batch_account_name))  # pylint: disable=no-member

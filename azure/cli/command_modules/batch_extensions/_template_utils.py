@@ -847,6 +847,13 @@ def _transform_repeat_task(task, context, index, transformer):
                         transformer, output['destination']['container'], param, context))
         except KeyError:
             pass
+        try:
+            for param in ['path', 'fileGroup']:
+                output['destination']['autoStorage'].update(
+                    _replacement_transform(
+                        transformer, output['destination']['autoStorage'], param, context))
+        except KeyError:
+            pass
     docker_options = new_task.get('clientExtensions', {}).get('dockerOptions', {})
     docker_options.update(_replacement_transform(transformer, docker_options, 'image', context))
     for volume in docker_options.get('dataVolumes', []):
