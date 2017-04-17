@@ -94,7 +94,7 @@ It can be installed using the CLI component tools:
 
 .. code-block:: bash
 
-    $ az component update -add batch-extensions --allow-third-party
+    $ az component update --add batch-extensions --allow-third-party
 
 
 Azure Batch account requirements
