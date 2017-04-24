@@ -14,13 +14,17 @@ from six.moves.urllib.parse import quote  # pylint: disable=import-error
 
 from msrestazure.azure_exceptions import CloudError
 from azure.mgmt.storage import StorageManagementClient
-from azure.storage import CloudStorageAccount
-from azure.storage.blob import BlobPermissions, BlockBlobService
 from azure.mgmt.batch import BatchManagementClient
 
 from azure.cli.core.commands.client_factory import get_mgmt_service_client
 import azure.cli.core.azlogging as azlogging
 from azure.cli.core._config import az_config
+from azure.cli.core.profiles import get_sdk, ResourceType
+
+CloudStorageAccount = get_sdk(ResourceType.DATA_STORAGE, '#CloudStorageAccount')
+BlockBlobService = get_sdk(ResourceType.DATA_STORAGE, 'blob#BlockBlobService')
+BlobPermissions = get_sdk(ResourceType.DATA_STORAGE, 'blob.models#BlobPermissions')
+
 
 logger = azlogging.get_az_logger(__name__)
 
