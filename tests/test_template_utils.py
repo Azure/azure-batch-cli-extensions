@@ -8,12 +8,15 @@ import os
 import unittest
 
 from mock import patch, Mock
-from azure.storage import CloudStorageAccount
-from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.cli.command_modules.batch import _help
 from azure.cli.command_modules.batch_extensions import _template_utils as utils
 from azure.cli.command_modules.batch_extensions import _pool_utils
 from azure.cli.command_modules.batch_extensions import _file_utils
+from azure.cli.core.profiles import get_sdk, ResourceType
+
+CloudStorageAccount = get_sdk(ResourceType.DATA_STORAGE, '#CloudStorageAccount')
+BlockBlobService = get_sdk(ResourceType.DATA_STORAGE, 'blob#BlockBlobService')
+
 
 # pylint: disable=too-many-lines
 

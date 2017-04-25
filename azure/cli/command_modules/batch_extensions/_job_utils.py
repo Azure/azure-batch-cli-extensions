@@ -5,7 +5,7 @@
 
 from msrest.exceptions import ValidationError, ClientRequestError
 from azure.batch.models import BatchErrorException
-from azure.cli.core._util import CLIError
+from azure.cli.core.util import CLIError
 
 # pylint: disable=too-few-public-methods
 

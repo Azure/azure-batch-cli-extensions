@@ -8,13 +8,16 @@ import tempfile
 import json
 import datetime
 
-from azure.storage import CloudStorageAccount
-from azure.storage.blob import BlobPermissions
 from azure.batch.models import BatchErrorException, AllocationState, ComputeNodeState, TaskState
 import azure.batch.batch_auth as batchauth
 import azure.batch.batch_service_client as batch
 from azure.cli.command_modules.batch import _help
 from tests.vcr_test_base import VCRTestBase
+from azure.cli.core.profiles import get_sdk, ResourceType
+
+CloudStorageAccount = get_sdk(ResourceType.DATA_STORAGE, '#CloudStorageAccount')
+BlobPermissions = get_sdk(ResourceType.DATA_STORAGE, 'blob.models#BlobPermissions')
+
 
 
 class TestFileUpload(VCRTestBase):

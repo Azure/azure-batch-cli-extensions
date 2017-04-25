@@ -36,7 +36,7 @@ from azure.cli.main import main as cli_main
 from azure.cli.core import __version__ as core_version
 import azure.cli.core._debug as _debug
 from azure.cli.core._profile import Profile
-from azure.cli.core._util import CLIError, random_string
+from azure.cli.core.util import CLIError, random_string
 
 LIVE_TEST_CONTROL_ENV = 'AZURE_CLI_TEST_RUN_LIVE'
 COMMAND_COVERAGE_CONTROL_ENV = 'AZURE_CLI_TEST_COMMAND_COVERAGE'
@@ -71,7 +71,7 @@ def _mock_get_mgmt_service_client(client_type, subscription_bound=True, subscrip
         client = client_type(cred, api_version=api_version) \
             if api_version else client_type(cred)
 
-    client = _debug.allow_debug_connection(client)
+    client = _debug.change_ssl_cert_verification(client)
 
     client.config.add_user_agent("AZURECLI/TEST/{}".format(core_version))
 
