@@ -55,10 +55,10 @@
                 "description": "The last frame to render"
             }
         },
-        "outputFileStorageUrl": {
+        "outputFileGroup": {
             "type": "string",
             "metadata": {
-                "description": "The SAS URL for a container where outputs will be stored"
+                "description": "The file group where outputs will be stored"
             }
         }
     },
@@ -122,8 +122,8 @@
                         {
                             "filePattern": "[parameters('jobName')]_*",
                             "destination": {
-                                "container": {
-                                    "containerSas": "[parameters('outputFileStorageUrl')]"
+                                "autoStorage": {
+                                    "fileGroup": "[parameters('outputFileGroup')]"
                                 }
                             },
                             "uploadDetails": {
