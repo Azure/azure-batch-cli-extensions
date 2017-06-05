@@ -24,7 +24,7 @@ A new command to allow a user to upload a set of files directly into the storage
 `Input data references using linked storage accounts <https://github.com/Azure/azure-batch-cli-extensions/blob/master/doc/inputFiles.md#referencing-input-data>`_
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-When adding a task, you can now declare a list of output files to be automatically uploaded to an Azure Storage container of your choice when the task completes.
+Input data stored in linked storage under a file group can be simply referenced by a task by using some new ResourceFile properties. 
 
 `Download job outputs from directly from storage <https://github.com/Azure/azure-batch-cli-extensions/blob/master/doc/outputFiles.md#output-file-download>`_
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
