@@ -24,7 +24,7 @@
                   },
                   "nodeAgentSKUId": "batch.node.ubuntu 16.04"
               },
-              "targetDedicated": 3
+              "targetDedicatedNodes": 3
           }
       }
   }

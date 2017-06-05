@@ -55,11 +55,11 @@
                             "destination": {
                                 "container": {
                                     "path": "text",
-                                    "containerSas": "[parameters('outputFileStorageUrl')]"
+                                    "containerUrl": "[parameters('outputFileStorageUrl')]"
                                 }
                             },
-                            "uploadDetails": {
-                                "taskStatus": "TaskSuccess"
+                            "uploadOptions": {
+                                "uploadCondition": "TaskSuccess"
                             }
                         },
                         {
@@ -67,11 +67,11 @@
                             "destination": {
                                 "container": {
                                     "path": "output",
-                                    "containerSas": "[parameters('outputFileStorageUrl')]"
+                                    "containerUrl": "[parameters('outputFileStorageUrl')]"
                                 }
                             },
-                            "uploadDetails": {
-                                "taskStatus": "TaskFailure"
+                            "uploadOptions": {
+                                "uploadCondition": "TaskFailure"
                             }
                         }
                     ],

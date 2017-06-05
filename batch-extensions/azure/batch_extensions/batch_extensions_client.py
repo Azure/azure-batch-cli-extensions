@@ -23,6 +23,7 @@ from azure.batch.operations.task_operations import TaskOperations
 from azure.batch.operations.compute_node_operations import ComputeNodeOperations
 from . import models
 
+from azure.common.credentials import get_cli_profile
 from azure.batch import BatchServiceClient
 from azure.mgmt.batch import BatchManagementClient
 from azure.mgmt.storage import StorageManagementClient
@@ -62,8 +63,19 @@ class BatchExtensionsClient(BatchServiceClient):
     :param str base_url: Service URL
     """
 
-    def __init__(self, credentials, base_url, subscription_id=None,
+    def __init__(self, credentials=None, base_url=None, subscription_id=None,
             resource_group=None, batch_account=None, storage_client=None):
+        if not credentials:
+            try:
+                profile = get_cli_profile()
+                subscription = profile.get_expanded_subscription_info(
+                    subscription_id=subscription_id)
+                resource = subscription['endpoints'].batch_resource_id
+                credentials, subscription_id, _ = profile.get_login_credentials(
+                    resource=resource, subscription_id=subscription['subscriptionId'])
+            except ImportError:
+                raise ValueError('Unable to load Azure CLI authenticated session. Please '
+                                 'supply credentials.')
         super(BatchExtensionsClient, self).__init__(credentials, base_url=base_url)
         self.config.add_user_agent('batchextensionsclient/{}'.format(VERSION))
         self._mgmt_client = None

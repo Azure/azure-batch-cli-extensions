@@ -36,11 +36,11 @@
                     "destination": {
                         "container": {
                             "path": "output-{fileNameWithoutExtension}.txt",
-                            "containerSas": "[parameters('outputFileStorageUrl')]"
+                            "containerUrl": "[parameters('outputFileStorageUrl')]"
                         }
                     },
-                    "uploadDetails": {
-                        "taskStatus": "TaskSuccess"
+                    "uploadOptions": {
+                        "uploadCondition": "TaskSuccess"
                     }
                 }
             ]

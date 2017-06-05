@@ -65,7 +65,7 @@
                             "imageReference": "[variables('osType')]",
                             "nodeAgentSKUId": "batch.node.ubuntu 16.04"
                         },
-                        "targetDedicated": "[parameters('vmCount')]"
+                        "targetDedicatedNodes": "[parameters('vmCount')]"
                     }
                 }
             },

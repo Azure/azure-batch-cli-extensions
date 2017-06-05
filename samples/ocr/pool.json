@@ -36,7 +36,7 @@
                 "nodeAgentSKUId": "batch.node.ubuntu 16.04"
             },
             "vmSize": "[parameters('vmSize')]",
-            "targetDedicated": "[parameters('vmCount')]",
+            "targetDedicatedNodes": "[parameters('vmCount')]",
             "enableAutoScale": false
         }
     }

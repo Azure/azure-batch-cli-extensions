@@ -81,13 +81,15 @@
     <Compile Include="batch-extensions\azure\batch_extensions\__init__.py" />
     <Compile Include="batch-extensions\azure\__init__.py" />
     <Compile Include="batch-extensions\setup.py" />
+    <Compile Include="samples\sdk\blender.py" />
+    <Compile Include="samples\sdk\blender_with_app_template.py" />
+    <Compile Include="samples\sdk\ffmpeg.py" />
     <Compile Include="tests\test_extensions.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\test_live.py" />
     <Compile Include="tests\vcr_test_base.py" />
     <Compile Include="tests\__init__.py" />
-    <Compile Include="setup.py" />
     <Folder Include="batch-cli-extensions\" />
     <Folder Include="batch-cli-extensions\azure\" />
     <Folder Include="batch-cli-extensions\azure\cli\" />
@@ -109,6 +111,7 @@
     <Folder Include="samples\hello-world\task-per-file-with-app-template\" />
     <Folder Include="samples\hello-world\task-per-file\" />
     <Folder Include="samples\mpi\" />
+    <Folder Include="samples\sdk\" />
     <Folder Include="samples\ocr\" />
     <Folder Include="tests\data\" />
     <Folder Include="tests\" />
@@ -170,11 +173,8 @@
     <Content Include="tests\data\batch.job.simple.json" />
     <Content Include="tests\data\batch.pool.parameters.json" />
     <Content Include="tests\data\batch.pool.simple.json" />
-    <Content Include="tests\data\batch.shipyard.job.json" />
-    <Content Include="tests\data\batch.shipyard.pool.json" />
     <Content Include="HISTORY.rst" />
     <Content Include="MANIFEST.in" />
-    <Content Include="setup.cfg" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">

@@ -17,13 +17,7 @@ def batch_extensions_client(kwargs):
     account_key = kwargs.pop('account_key', None)
     account_endpoint = kwargs.pop('account_endpoint', None)
     resource_group = kwargs.pop('resource_group', None)
-
-    profile = Profile()
-    credentials, _, _ = profile.get_login_credentials(
-        resource=CLOUD.endpoints.batch_resource_id)
-    client = batch.BatchExtensionsClient(credentials, account_endpoint,
-                subscription_id=profile.get_subscription()['id'])
-
+    client = batch.BatchExtensionsClient(base_url=account_endpoint)
     client.resource_group = resource_group
     client.batch_account = account_name
     return client

@@ -53,7 +53,7 @@
                 "osFamily": "4" 
             },            
             "vmSize": "[parameters('vmSize')]",
-            "targetDedicated": "[parameters('vmCount')]",
+            "targetDedicatedNodes": "[parameters('vmCount')]",
             "enableInterNodeCommunication": true,
             "maxTasksPerNode": 1,
             "applicationPackageReferences": [
