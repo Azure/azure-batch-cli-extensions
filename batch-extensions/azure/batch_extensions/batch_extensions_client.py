@@ -5,10 +5,13 @@
 # license information.
 # --------------------------------------------------------------------------
 
+from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
+
 from msrest.service_client import ServiceClient
 from msrest import Serializer, Deserializer
 from msrestazure import AzureConfiguration
 from .version import VERSION
+from .batch_auth import SharedKeyCredentials
 from .operations.pool_operations import ExtendedPoolOperations
 from .operations.job_operations import ExtendedJobOperations
 from .operations.file_operations import ExtendedFileOperations
@@ -24,6 +27,14 @@ from azure.batch import BatchServiceClient
 from azure.mgmt.batch import BatchManagementClient
 from azure.mgmt.storage import StorageManagementClient
 from azure.storage import CloudStorageAccount
+
+
+_MGMT_RESOURCE_IDS = {
+    'https://batch.core.windows.net/': 'https://management.core.windows.net/',
+    'https://batch.chinacloudapi.cn/': 'https://management.core.chinacloudapi.cn/',
+    'https://batch.core.usgovcloudapi.net/': 'https://management.core.usgovcloudapi.net/',
+    'https://batch.cloudapi.de/': 'https://management.core.cloudapi.de/',
+}
 
 
 class BatchExtensionsClient(BatchServiceClient):
@@ -51,14 +62,16 @@ class BatchExtensionsClient(BatchServiceClient):
     :param str base_url: Service URL
     """
 
-    def __init__(self, credentials, base_url, subscription_id=None, resource_group=None, storage_client=None):
+    def __init__(self, credentials, base_url, subscription_id=None,
+            resource_group=None, batch_account=None, storage_client=None):
         super(BatchExtensionsClient, self).__init__(credentials, base_url=base_url)
         self.config.add_user_agent('batchextensionsclient/{}'.format(VERSION))
         self._mgmt_client = None
         self._resolved_storage_client = storage_client
-        self._account = credentials.auth._account_name
         self._subscription = subscription_id
-        self._resource_group = resource_group
+
+        self.batch_account = batch_account
+        self.resource_group = resource_group
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
         self._serialize = Serializer(client_models)
@@ -87,41 +100,61 @@ class BatchExtensionsClient(BatchServiceClient):
         """Resolve Auto-Storage account from supplied Batch Account"""
         if self._resolved_storage_client:
             return self._resolved_storage_client
-        if not self._subscription:
-            raise ValueError("Unable to resolve auto-storage account without subscription ID.")
+        if not self._subscription or not self.batch_account:
+            raise ValueError("Unable to resolve auto-storage account without "
+                             "subscription ID and Batch account name.")
 
-        client = self._mgmt_client if self._mgmt_client else BatchManagementClient(
-            self.config._creds, self._subscription)
+        if self._mgmt_client:
+            client = self._mgmt_client
+            credentials = client.config.credentials
+        else:
+            try:
+                from azure.common.client_factory import get_client_from_cli_profile
+                client = get_client_from_cli_profile(BatchManagementClient, 
+                    subscription_id=self._subscription)
+                self._mgmt_client = client
+                credentials = client.config.credentials
+            except ImportError:
+                try:
+                    credentials = self.config.credentials
+                    credentials._resource = _MGMT_RESOURCE_IDS.get(credentials._resource)
+                    client = BatchManagementClient(credentials, self._subscription)
+                except AttributeError:
+                    raise ValueError("Unable to resolve auto-storage account because the"
+                                     "client is not authenticated using a AAD credentials.")
+                except KeyError:
+                    raise ValueError("Unable to resolve auto-storage account because the"
+                                     "client is authenticated with an unknown resource: "
+                                     "{}".format(self.config.credentials._resource))
 
-        if self._resource_group:
+        if self.resource_group:
             # If a resource group was supplied, we can use that to query the Batch Account
             try:
-                account = client.batch_account.get(self._resource_group, self._account)
-            except CloudError:
+                account = client.batch_account.get(self.resource_group, self.batch_account)
+            except Exception:
                 raise ValueError('Couldn\'t find the account named {} in subscription {} '
                                  'with resource group {}'.format(
-                                     self._account, self._subscription, self._resource_group))
+                                     self.batch_account, self._subscription, self.resource_group))
         else:
             # Otherwise, we need to parse the URL for a region in order to identify
             # the Batch account in the subscription
             # Example URL: https://batchaccount.westus.batch.azure.com
             region = urlsplit(self.config.base_url).netloc.split('.', 2)[1]
             accounts = [x for x in client.batch_account.list()
-                        if x.name == self._account and x.location == region]
+                        if x.name == self.batch_account and x.location == region]
             try:
                 account = accounts[0]
             except IndexError:
                 raise ValueError('Couldn\'t find the account named {} in subscription {} '
                                  'in region {}'.format(
-                                     self._account, self._subscription, region))
+                                     self.batch_account, self._subscription, region))
         if not account.auto_storage:
-            raise ValueError('No linked auto-storage for account {}'.format(self._account))
+            raise ValueError('No linked auto-storage for account {}'.format(self.batch_account))
 
         storage_account_info = account.auto_storage.storage_account_id.split('/')  # pylint: disable=no-member
         storage_resource_group = storage_account_info[4]
         storage_account = storage_account_info[8]
-
-        storage_client = StorageManagementClient(self.config._creds, self._subscription)
+        storage_client = StorageManagementClient(credentials, self._subscription)
         keys = storage_client.storage_accounts.list_keys(storage_resource_group, storage_account)
         storage_key = keys.keys[0].value  # pylint: disable=no-member
 

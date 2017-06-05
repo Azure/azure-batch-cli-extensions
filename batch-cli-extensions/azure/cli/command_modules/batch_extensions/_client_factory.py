@@ -5,37 +5,25 @@
 
 from azure.mgmt.batch import BatchManagementClient
 
-import azure.batch.batch_service_client as batch
-import azure.batch.batch_auth as batchauth
+import azure.batch_extensions.batch_extensions_client as batch
+import azure.batch_extensions.batch_auth as batchauth
 
 from azure.cli.core.commands.client_factory import get_mgmt_service_client
 
 
-def account_mgmt_client_factory(kwargs):
-    return batch_client_factory(**kwargs).batch_account
-
-
-def batch_client_factory(**_):
-    from azure.cli.command_modules.batch_extensions.version import VERSION
-    client = get_mgmt_service_client(BatchManagementClient)
-    client.config.add_user_agent('batch-extensions/v{}'.format(VERSION))
-    return client
-
-
-def batch_data_service_factory(kwargs):
-    from azure.cli.command_modules.batch_extensions.version import VERSION
-    account_name = kwargs['account_name']
+def batch_extensions_client(kwargs):
+    from azure.cli.core._profile import Profile, CLOUD
+    account_name = kwargs.pop('account_name', None)
     account_key = kwargs.pop('account_key', None)
-    account_endpoint = kwargs['account_endpoint']
+    account_endpoint = kwargs.pop('account_endpoint', None)
+    resource_group = kwargs.pop('resource_group', None)
 
-    credentials = None
-    if not account_key:
-        from azure.cli.core._profile import Profile, CLOUD
-        profile = Profile()
-        credentials, _, _ = profile.get_login_credentials(
-            resource=CLOUD.endpoints.batch_resource_id)
-    else:
-        credentials = batchauth.SharedKeyCredentials(account_name, account_key)
-    client = batch.BatchServiceClient(credentials, base_url=account_endpoint)
-    client.config.add_user_agent('batch-extensions/v{}'.format(VERSION))
+    profile = Profile()
+    credentials, _, _ = profile.get_login_credentials(
+        resource=CLOUD.endpoints.batch_resource_id)
+    client = batch.BatchExtensionsClient(credentials, account_endpoint,
+                subscription_id=profile.get_subscription()['id'])
+
+    client.resource_group = resource_group
+    client.batch_account = account_name
     return client

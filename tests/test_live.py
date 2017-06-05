@@ -19,17 +19,20 @@ CloudStorageAccount = get_sdk(ResourceType.DATA_STORAGE, '#CloudStorageAccount')
 BlobPermissions = get_sdk(ResourceType.DATA_STORAGE, 'blob.models#BlobPermissions')
 
 
-
 class TestFileUpload(VCRTestBase):
     def __init__(self, test_method):
         super(TestFileUpload, self).__init__(__file__, test_method)
-        self.account_name = 'test1'
-        self.resource_name = 'batchexp'
-        self.testPrefix = 'cli-batch-ncj-live-tests'
+        if self.playback:
+            self.account_name = 'test1'
+            self.resource_name = 'test_rg'
+        else:
+            self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
+            self.resource_name =  os.environ.get('AZURE_BATCH_RESORCE_GROUP', 'test_rg')
+        self.testPrefix = 'cli-batch-extensions-live-tests'
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
             debug=False):
-        command = '{} --resource-group {} --name {}'.\
+        command = '{} --resource-group {} --account-name {}'.\
             format(command, self.resource_name, self.account_name)
         return super(TestFileUpload, self).cmd(command, checks, allowed_exceptions, debug)
 
@@ -49,21 +52,23 @@ class TestFileUpload(VCRTestBase):
         print('Result text:{}'.format(result))
 
 
-class TestBatchNCJLive(VCRTestBase):
+class TestBatchExtensionsLive(VCRTestBase):
     # pylint: disable=attribute-defined-outside-init,no-member
     def __init__(self, test_method):
-        super(TestBatchNCJLive, self).__init__(__file__, test_method)
-        self.account_name = 'test1'
-        if not self.playback:
-            self.account_key = os.environ['AZURE_BATCH_ACCESS_KEY']
-        else:
+        super(TestBatchExtensionsLive, self).__init__(__file__, test_method)
+        if self.playback:
+            self.account_name = 'test1'
+            self.account_endpoint = 'https://test1.westus.batch.azure.com/'
             self.account_key = 'ZmFrZV9hY29jdW50X2tleQ=='
-        self.account_endpoint = 'https://test1.westus.batch.azure.com/'
-        storage_account = 'testaccountforbatch'
-        if not self.playback:
-            storage_key = os.environ['AZURE_STORAGE_ACCESS_KEY']
-        else:
+            storage_account = 'testaccountforbatch'
             storage_key = '1234'
+        else:
+            self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
+            self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
+            self.account_key = os.environ['AZURE_BATCH_ACCESS_KEY']
+            storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'testaccountforbatch')
+            storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'ZmFrZV9hY29jdW50X2tleQ==')
+
         self.blob_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
         credentials = batchauth.SharedKeyCredentials(self.account_name, self.account_key)
@@ -79,29 +84,33 @@ class TestBatchNCJLive(VCRTestBase):
             storage_account,
             self.output_blob_container,
             sas_token)
+        self.output_container_sas = 'https://pythonsdkteststorage.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=WLwDhL8y%2BVxzMhAMvNiBhT01Je%2FhVbpWpK4QA%2FOmJgo%3D&se=2017-06-07T01%3A03%3A37Z&sp=rwdl'
         print('Full container sas: {}'.format(self.output_container_sas))
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
             debug=False):
         command = '{} --account-name {} --account-key "{}" --account-endpoint {}'.\
             format(command, self.account_name, self.account_key, self.account_endpoint)
-        return super(TestBatchNCJLive, self).cmd(command, checks, allowed_exceptions, debug)
+        return super(TestBatchExtensionsLive, self).cmd(command, checks, allowed_exceptions, debug)
 
-    def test_batch_ncj_live(self):
+    def test_batch_extensions_live(self):
         self.execute()
 
     def submit_job_wrapper(self, file_name):
-        result = self.cmd('batch job create --template "{}"'.format(file_name))
+        try:
+            result = self.cmd('batch job create --template "{}"'.format(file_name))
+        except Exception as exp:
+            print(exp)
         print('Result text:{}'.format(result))
 
     def wait_for_tasks_complete(self, job_id, timeout):
         print('waiting for tasks to be complete')
 
         while True:
-            tasks = self.batch_client.task.list(job_id)
+            tasks = list(self.batch_client.task.list(job_id))
             # Determine if the tasks are in completed state
             all_completed = True
-            print('determining if {} tasks are complete'.format(len(list(tasks))))
+            print('determining if {} tasks are complete'.format(len(tasks)))
             for task in tasks:
                 if task.state != TaskState.completed:
                     print('state is {}'.format(task.state))
@@ -193,11 +202,11 @@ class TestBatchNCJLive(VCRTestBase):
                                         'filePattern': '$AZ_BATCH_TASK_DIR/*.txt',
                                         'destination': {
                                             'container': {
-                                                'containerSas': self.output_container_sas
+                                                'containerUrl': self.output_container_sas
                                             }
                                         },
-                                        'uploadDetails': {
-                                            'taskStatus': 'TaskSuccess'
+                                        'uploadOptions': {
+                                            'uploadCondition': 'TaskSuccess'
                                         }
                                     }
                                 ]
@@ -241,8 +250,8 @@ class TestBatchNCJLive(VCRTestBase):
                                                 'fileGroup': 'output'
                                             }
                                         },
-                                        'uploadDetails': {
-                                            'taskStatus': 'TaskSuccess'
+                                        'uploadOptions': {
+                                            'uploadCondition': 'TaskSuccess'
                                         }
                                     }
                                 ]
@@ -252,30 +261,6 @@ class TestBatchNCJLive(VCRTestBase):
                 }
             }
         }
-
-    def create_paas_pool_if_not_exist(self, pool_id):
-        print('Creating pool: {}'.format(pool_id))
-        pool = {
-            'id': pool_id,
-            'vmSize': 'STANDARD_D1_V2',
-            'cloudServiceConfiguration': {
-                'osFamily': '4'
-            },
-            'targetDedicated': 1
-        }
-        try:
-            add_pool = self.batch_client._deserialize('PoolAddParameter', pool)  # pylint:disable=protected-access
-            self.batch_client.pool.add(add_pool)
-            print('Successfully created pool {}'.format(pool_id))
-        except BatchErrorException as ex:
-            if ex.error.code == 'PoolExists':
-                print('Pool already exists')
-            else:
-                raise ex
-
-        self.wait_for_pool_steady(pool_id, 5 * 60)
-        self.wait_for_vms_idle(pool_id, 5 * 60)
-        return True
 
     def create_pool_if_not_exist(self, pool_id, flavor):
         print('Creating pool: {}'.format(pool_id))
@@ -343,7 +328,7 @@ class TestBatchNCJLive(VCRTestBase):
                 },
                 'nodeAgentSKUId': node_agent_sku_id
             },
-            'targetDedicated': 1
+            'targetDedicatedNodes': 1
         }
 
         try:
@@ -361,11 +346,8 @@ class TestBatchNCJLive(VCRTestBase):
         return is_windows
 
     def file_upload_helper(self, job_id, pool_id, task_id, pool_flavor,
-                           using_file_group, paas=False):
-        if paas:
-            is_windows = self.create_paas_pool_if_not_exist(pool_id)
-        else:
-            is_windows = self.create_pool_if_not_exist(pool_id, pool_flavor)
+                           using_file_group):
+        is_windows = self.create_pool_if_not_exist(pool_id, pool_flavor)
         text = 'test'
         spec = self.create_basic_spec_alt(job_id, pool_id, task_id, text, is_windows) \
                 if using_file_group else \
@@ -386,8 +368,9 @@ class TestBatchNCJLive(VCRTestBase):
 
             self.wait_for_tasks_complete(job_id, 120)
             task = self.batch_client.task.get(job_id, task_id)
+            print(task.state)
             self.assertIsNotNone(task.execution_info)
-            self.assertIsNone(task.execution_info.scheduling_error)
+            self.assertIsNone(task.execution_info.failure_info)
             self.assertEqual(task.execution_info.exit_code, 0)
 
             container_name = 'fgrp-output' if using_file_group else self.output_blob_container
@@ -395,9 +378,10 @@ class TestBatchNCJLive(VCRTestBase):
             blob_names = [x.name for x in blobs]
             self.assertIn('stdout.txt', blob_names)
             self.assertIn('stderr.txt', blob_names)
-            self.assertIn('uploadlog.txt', blob_names)
+            self.assertIn('fileuploadout.txt', blob_names)
+            self.assertIn('fileuploaderr.txt', blob_names)
             stdout_blob = [x for x in blobs if x.name == 'stdout.txt'][0]
-            self.assertEqual(stdout_blob.properties.content_length, 5)
+            self.assertTrue(stdout_blob.properties.content_length>=4)
         finally:
             print('Deleting job {}'.format(job_id))
             self.batch_client.job.delete(job_id)
@@ -430,17 +414,3 @@ class TestBatchNCJLive(VCRTestBase):
         pool_id = 'ncj-windows-2012-r2'
         task_id = 'myTask'
         self.file_upload_helper(job_id, pool_id, task_id, 'windows-2012-r2', True)
-
-        # should work on Windows PaaS
-        self.clear_container(self.output_blob_container)
-        job_id = 'ncj-windows-paas'
-        pool_id = 'ncj-windows-paas'
-        task_id = 'myTask'
-        self.file_upload_helper(job_id, pool_id, task_id, None, False, True)
-
-        # should work on Windows PaaS with fileGroup
-        self.clear_container('fgrp-output')
-        job_id = 'ncj-windows-paas-fgrp'
-        pool_id = 'ncj-windows-paas-fgrp'
-        task_id = 'myTask'
-        self.file_upload_helper(job_id, pool_id, task_id, None, True, True)

@@ -83,11 +83,11 @@
                             "destination": {
                                 "container": {
                                     "path": "audio{0}.mp3",
-                                    "containerSas": "[parameters('outputFileStorageUrl')]"
+                                    "containerUrl": "[parameters('outputFileStorageUrl')]"
                                 }
                             },
-                            "uploadDetails": {
-                                "taskStatus": "TaskSuccess"
+                            "uploadOptionsa": {
+                                "uploadCondition": "TaskSuccess"
                             }
                         }
                     ],

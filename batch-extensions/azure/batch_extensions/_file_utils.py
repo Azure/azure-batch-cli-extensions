@@ -68,13 +68,12 @@ def convert_blobs_to_resource_files(blobs, resource_properties):
 
 def resolve_file_paths(local_path):
     """Generate list of files to upload and the relative directory"""
-    #local_path = FileUtils.STRIP_PATH.sub("", local_path) #TODO
+    local_path = os.path.abspath(local_path)
     files = []
     if local_path.find('*') > -1:
         # Supplied path is a pattern - relative directory will be the
         # path up to the first wildcard
-        ref_dir_str = local_path.split('*')[0]
-        #ref_dir_str = FileUtils.STRIP_PATH.sub("", ref_dir_str) #TODO
+        ref_dir_str = local_path.split('*')[0].rstrip('/\\')
         if not os.path.isdir(ref_dir_str):
             ref_dir_str = os.path.dirname(ref_dir_str)
         ref_dir = pathlib.Path(ref_dir_str)

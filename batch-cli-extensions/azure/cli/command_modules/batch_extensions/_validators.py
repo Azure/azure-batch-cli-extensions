@@ -164,6 +164,17 @@ def validate_options(namespace):
             namespace.ocp_range = "bytes={}-{}".format(start, end)
 
 
+def resource_file_format(value):
+    """Space separated resource references in filename=blobsource format."""
+    try:
+        file_name, blob_source = value.split('=')
+    except ValueError:
+        message = ("Incorrectly formatted resource reference. "
+                   "Argmuent values should be in the format filename=blobsource")
+        raise ValueError(message)
+    return {'file_path': file_name, 'blob_source': blob_source}
+
+
 def validate_file_destination(namespace):
     """Validate the destination path for a file download."""
     try:
@@ -194,30 +205,13 @@ def validate_client_parameters(namespace):
     # simply try to retrieve the remaining variables from environment variables
     if not namespace.account_name:
         namespace.account_name = az_config.get('batch', 'account', None)
-    if not namespace.account_key:
-        namespace.account_key = az_config.get('batch', 'access_key', None)
     if not namespace.account_endpoint:
         namespace.account_endpoint = az_config.get('batch', 'endpoint', None)
 
-    # if account name is specified but no key, attempt to query
-    if namespace.account_name and namespace.account_endpoint and not namespace.account_key:
-        endpoint = urlsplit(namespace.account_endpoint)
-        host = endpoint.netloc
-        client = get_mgmt_service_client(BatchManagementClient)
-        acc = next((x for x in client.batch_account.list()
-                    if x.name == namespace.account_name and x.account_endpoint == host), None)
-        if acc:
-            from azure.cli.core.commands.arm import parse_resource_id
-            rg = parse_resource_id(acc.id)['resource_group']
-            namespace.account_key = \
-                client.batch_account.get_keys(rg, namespace.account_name).primary  # pylint: disable=no-member
-        else:
-            raise ValueError("Batch account '{}' not found.".format(namespace.account_name))
-    else:
-        if not namespace.account_name:
-            raise ValueError("Need specifiy batch account in command line or enviroment variable.")
-        if not namespace.account_endpoint:
-            raise ValueError("Need specifiy batch endpoint in command line or enviroment variable.")
+    if not namespace.account_name:
+        raise ValueError("Need specifiy batch account in command line or enviroment variable.")
+    if not namespace.account_endpoint:
+        raise ValueError("Need specifiy batch endpoint in command line or enviroment variable.")
 
 # CUSTOM REQUEST VALIDATORS
 
@@ -256,5 +250,5 @@ def validate_pool_settings(ns):
         if not ns.vm_size:
             raise ValueError("The --vm-size is required")
 
-        validate_mutually_exclusive(ns, False, 'target_dedicated', 'auto_scale_formula')
+        validate_mutually_exclusive(ns, False, 'target_dedicated_nodes', 'auto_scale_formula')
         validate_mutually_exclusive(ns, True, 'os_family', 'image')

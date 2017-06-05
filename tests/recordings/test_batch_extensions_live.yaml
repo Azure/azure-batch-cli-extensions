@@ -1,0 +1,2109 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [e1f607e6-4994-11e7-8a49-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:15:45 GMT']
+      x-ms-version: ['2016-05-31']
+    method: GET
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer?comp=list&restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults
+        ServiceEndpoint=\"https://testaccountforbatch.blob.core.windows.net/\" ContainerName=\"aaatestcontainer\"><Blobs><Blob><Name>fileuploaderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:02:20 GMT</Last-Modified><Etag>0x8D4ABB6E69CAE2C</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>fileuploadout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:02:20 GMT</Last-Modified><Etag>0x8D4ABB6E69E835D</Etag><Content-Length>856</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>YWD/a8PTAwRSP+ba+e7GKg==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:02:20 GMT</Last-Modified><Etag>0x8D4ABB6E6A07FAB</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stdout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:02:20 GMT</Last-Modified><Etag>0x8D4ABB6E6A206B7</Etag><Content-Length>4</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>CY9rzUYh03PK3k6DJie09g==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob></Blobs><NextMarker
+        /></EnumerationResults>"}
+    headers:
+      Content-Type: [application/xml]
+      Date: ['Mon, 05 Jun 2017 02:15:49 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [e367fa42-4994-11e7-b1d3-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:15:47 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer/fileuploaderr.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:15:50 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [e4b880f4-4994-11e7-9940-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:15:49 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer/fileuploadout.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:15:52 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [e4d8b3ba-4994-11e7-ac63-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:15:50 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer/stderr.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:15:52 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [e4f11df6-4994-11e7-b4c3-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:15:50 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer/stdout.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:15:52 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [e50b0efe-4994-11e7-a981-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:15:50 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodeagentskus\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"batch.node.centos 7\",\"verifiedImageReferences\":[\r\n
+        \       {\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.3\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.0\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS-HPC\",\"sku\":\"7.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Oracle\",\"offer\":\"Oracle-Linux\",\"sku\":\"7.2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Oracle\",\"offer\":\"Oracle-Linux\",\"sku\":\"7.0\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"microsoft-ads\",\"offer\":\"linux-data-science-vm\",\"sku\":\"linuxdsvm\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.debian
+        8\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Credativ\",\"offer\":\"Debian\",\"sku\":\"8\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.opensuse
+        13.2\",\"verifiedImageReferences\":[\r\n        \r\n      ],\"osType\":\"linux\"\r\n
+        \   },{\r\n      \"id\":\"batch.node.opensuse 42.1\",\"verifiedImageReferences\":[\r\n
+        \       {\r\n          \"publisher\":\"SUSE\",\"offer\":\"openSUSE-Leap\",\"sku\":\"42.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES\",\"sku\":\"12-SP2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES\",\"sku\":\"12-SP1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES-HPC\",\"sku\":\"12-SP1\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.ubuntu
+        14.04\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"14.04.5-LTS\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.ubuntu
+        16.04\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"16.04-LTS\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"16.10\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.windows
+        amd64\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2012-R2-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2012-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2008-R2-SP1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2016-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2016-Datacenter-with-Containers\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"microsoft-ads\",\"offer\":\"standard-data-science-vm\",\"sku\":\"standard-data-science-vm\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"windows\"\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:15:52 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [33307484-b45f-4416-993b-06f8184cd250]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"id": "ncj-ubuntu1404", "targetDedicatedNodes": 1, "vmSize": "STANDARD_D1_V2",
+      "virtualMachineConfiguration": {"nodeAgentSKUId": "batch.node.ubuntu 14.04",
+      "imageReference": {"publisher": "Canonical", "sku": "14.04.5-LTS", "offer":
+      "UbuntuServer"}}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['250']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [e589960a-4994-11e7-9498-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:15:51 GMT']
+    method: POST
+    uri: https://test1.westus.batch.azure.com/pools?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#Microsoft.Azure.Batch.Protocol.Entities.Container.errors/@Element\",\"code\":\"PoolExists\",\"message\":{\r\n
+        \   \"lang\":\"en-US\",\"value\":\"The specified pool already exists.\\nRequestId:b53ed149-de56-4da6-a69e-e17019af408a\\nTime:2017-06-05T02:15:53.4485026Z\"\r\n
+        \ }\r\n}"}
+    headers:
+      Content-Length: ['337']
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:15:52 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      X-Content-Type-Options: [nosniff]
+      request-id: [b53ed149-de56-4da6-a69e-e17019af408a]
+    status: {code: 409, message: The specified pool already exists.}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [e6102136-4994-11e7-8591-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:15:52 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#pools/@Element\",\"id\":\"ncj-ubuntu1404\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404\",\"eTag\":\"0x8D4ABB2F6EA8C59\",\"lastModified\":\"2017-06-05T01:34:10.1177433Z\",\"creationTime\":\"2017-06-05T01:34:10.1177433Z\",\"state\":\"active\",\"stateTransitionTime\":\"2017-06-05T01:34:10.1177433Z\",\"allocationState\":\"steady\",\"allocationStateTransitionTime\":\"2017-06-05T01:35:26.3374541Z\",\"vmSize\":\"standard_d1_v2\",\"resizeTimeout\":\"PT15M\",\"currentDedicatedNodes\":1,\"targetDedicatedNodes\":1,\"currentLowPriorityNodes\":0,\"targetLowPriorityNodes\":0,\"enableAutoScale\":false,\"enableInterNodeCommunication\":false,\"maxTasksPerNode\":1,\"taskSchedulingPolicy\":{\r\n
+        \   \"nodeFillType\":\"Spread\"\r\n  },\"virtualMachineConfiguration\":{\r\n
+        \   \"imageReference\":{\r\n      \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"14.04.5-LTS\",\"version\":\"latest\"\r\n
+        \   },\"nodeAgentSKUId\":\"batch.node.ubuntu 14.04\"\r\n  }\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:15:53 GMT']
+      ETag: ['0x8D4ABB2F6EA8C59']
+      Last-Modified: ['Mon, 05 Jun 2017 01:34:10 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [af6a0dee-a40b-4356-b980-aaafc9f13dd9]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [e67614cc-4994-11e7-bba2-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:15:52 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodes\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"tvm-3426989531_1-20170605t013524z\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes/tvm-3426989531_1-20170605t013524z\",\"state\":\"idle\",\"schedulingState\":\"enabled\",\"stateTransitionTime\":\"2017-06-05T02:02:12.637454Z\",\"lastBootTime\":\"2017-06-05T01:36:54.243075Z\",\"allocationTime\":\"2017-06-05T01:35:24.3838816Z\",\"ipAddress\":\"10.0.0.4\",\"affinityId\":\"TVM:tvm-3426989531_1-20170605t013524z\",\"vmSize\":\"standard_d1_v2\",\"totalTasksRun\":5,\"totalTasksSucceeded\":5,\"runningTasksCount\":0,\"recentTasks\":[\r\n
+        \       {\r\n          \"taskUrl\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/mytask\",\"jobId\":\"ncj-ubuntu1404\",\"taskId\":\"mytask\",\"taskState\":\"completed\",\"executionInfo\":{\r\n
+        \           \"startTime\":\"2017-06-05T02:02:11.913923Z\",\"endTime\":\"2017-06-05T02:02:12.540731Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \         }\r\n        }\r\n      ],\"isDedicated\":true\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:15:53 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [c270941d-ced8-48a4-a3ba-74dc35dab4da]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"id": "ncj-ubuntu1404", "poolInfo": {"poolId": "ncj-ubuntu1404"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['66']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python batchextensionsclient/0.0.1]
+      accept-language: [en-US]
+      client-request-id: [e6f4210c-4994-11e7-84e9-54ee750f2fc7]
+      return-client-request-id: ['false']
+    method: POST
+    uri: https://test1.westus.batch.azure.com/jobs?timeout=30&api-version=2017-05-01.5.0
+  response:
+    body: {string: ''}
+    headers:
+      DataServiceId: ['https://test1.westus.batch.azure.com/jobs/job-1']
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:15:55 GMT']
+      ETag: ['0x8D4ABB8CC8F202B']
+      Last-Modified: ['Mon, 05 Jun 2017 02:15:56 GMT']
+      Location: ['https://test1.westus.batch.azure.com/jobs/job-1']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [17c974a7-24f1-47e2-9935-487baaf37ed0]
+    status: {code: 201, message: Created}
+- request:
+    body: '{"value": [{"id": "myTask", "constraints": {"retentionTime": "PT1H"}, "outputFiles":
+      [{"destination": {"container": {"containerUrl": "https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=WLwDhL8y%2BVxzMhAMvNiBhT01Je%2FhVbpWpK4QA%2FOmJgo%3D&se=2017-06-07T01%3A03%3A37Z&sp=rwdl"}},
+      "uploadOptions": {"uploadCondition": "taskSuccess"}, "filePattern": "$AZ_BATCH_TASK_DIR/*.txt"}],
+      "commandLine": "/bin/bash -c \"echo test\""}]}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['466']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python batchextensionsclient/0.0.1]
+      accept-language: [en-US]
+      client-request-id: [e7ad06dc-4994-11e7-a4e2-54ee750f2fc7]
+    method: POST
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/addtaskcollection?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#taskaddresult\",\"value\":[\r\n
+        \   {\r\n      \"status\":\"Success\",\"taskId\":\"myTask\",\"eTag\":\"0x8D4ABB8CCE66AD5\",\"lastModified\":\"2017-06-05T02:15:56.6067413Z\",\"location\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/myTask\"\r\n
+        \   }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:15:56 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [e0de224f-9cfe-4440-bb67-743fc95ad368]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [e7eea4c8-4994-11e7-a294-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:15:55 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#jobs/@Element\",\"id\":\"ncj-ubuntu1404\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404\",\"eTag\":\"0x8D4ABB8CC8F202B\",\"lastModified\":\"2017-06-05T02:15:56.0346667Z\",\"creationTime\":\"2017-06-05T02:15:56.0157477Z\",\"state\":\"active\",\"stateTransitionTime\":\"2017-06-05T02:15:56.0346667Z\",\"priority\":0,\"usesTaskDependencies\":false,\"constraints\":{\r\n
+        \   \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"maxTaskRetryCount\":0\r\n
+        \ },\"poolInfo\":{\r\n    \"poolId\":\"ncj-ubuntu1404\"\r\n  },\"executionInfo\":{\r\n
+        \   \"startTime\":\"2017-06-05T02:15:56.0346667Z\",\"poolId\":\"ncj-ubuntu1404\"\r\n
+        \ },\"onAllTasksComplete\":\"noaction\",\"onTaskFailure\":\"noaction\"\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:15:56 GMT']
+      ETag: ['0x8D4ABB8CC8F202B']
+      Last-Modified: ['Mon, 05 Jun 2017 02:15:56 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [a92646e0-1530-4c6d-9695-83ec2c483102]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [e8644b9c-4994-11e7-b49a-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:15:56 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/myTask\",\"eTag\":\"0x8D4ABB8CCE66AD5\",\"creationTime\":\"2017-06-05T02:15:56.6067413Z\",\"lastModified\":\"2017-06-05T02:15:56.6067413Z\",\"state\":\"active\",\"stateTransitionTime\":\"2017-06-05T02:15:56.6067413Z\",\"commandLine\":\"/bin/bash
+        -c \\\"echo test\\\"\",\"outputFiles\":[\r\n        {\r\n          \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \           \"container\":{\r\n              \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=WLwDhL8y%2BVxzMhAMvNiBhT01Je%2FhVbpWpK4QA%2FOmJgo%3D&se=2017-06-07T01%3A03%3A37Z&sp=rwdl\"\r\n
+        \           }\r\n          },\"uploadOptions\":{\r\n            \"uploadCondition\":\"TaskSuccess\"\r\n
+        \         }\r\n        }\r\n      ],\"userIdentity\":{\r\n        \"autoUser\":{\r\n
+        \         \"elevationLevel\":\"nonadmin\"\r\n        }\r\n      },\"constraints\":{\r\n
+        \       \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \     },\"executionInfo\":{\r\n        \"retryCount\":0,\"requeueCount\":0\r\n
+        \     }\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:15:57 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [e0cb9c5f-b72a-44ae-b470-a87e767aa226]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [ea8d79e6-4994-11e7-8453-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:15:59 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/myTask\",\"eTag\":\"0x8D4ABB8CCE66AD5\",\"creationTime\":\"2017-06-05T02:15:56.6067413Z\",\"lastModified\":\"2017-06-05T02:15:56.6067413Z\",\"state\":\"completed\",\"stateTransitionTime\":\"2017-06-05T02:15:59.3233Z\",\"previousState\":\"running\",\"previousStateTransitionTime\":\"2017-06-05T02:15:58.662214Z\",\"commandLine\":\"/bin/bash
+        -c \\\"echo test\\\"\",\"outputFiles\":[\r\n        {\r\n          \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \           \"container\":{\r\n              \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=WLwDhL8y%2BVxzMhAMvNiBhT01Je%2FhVbpWpK4QA%2FOmJgo%3D&se=2017-06-07T01%3A03%3A37Z&sp=rwdl\"\r\n
+        \           }\r\n          },\"uploadOptions\":{\r\n            \"uploadCondition\":\"TaskSuccess\"\r\n
+        \         }\r\n        }\r\n      ],\"userIdentity\":{\r\n        \"autoUser\":{\r\n
+        \         \"elevationLevel\":\"nonadmin\"\r\n        }\r\n      },\"constraints\":{\r\n
+        \       \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \     },\"executionInfo\":{\r\n        \"startTime\":\"2017-06-05T02:15:58.662315Z\",\"endTime\":\"2017-06-05T02:15:59.3233Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \     },\"nodeInfo\":{\r\n        \"affinityId\":\"TVM:tvm-3426989531_1-20170605t013524z\",\"nodeUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes/tvm-3426989531_1-20170605t013524z\",\"poolId\":\"ncj-ubuntu1404\",\"nodeId\":\"tvm-3426989531_1-20170605t013524z\",\"taskRootDirectory\":\"workitems/ncj-ubuntu1404/job-1/myTask\",\"taskRootDirectoryUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes/tvm-3426989531_1-20170605t013524z/files/workitems/ncj-ubuntu1404/job-1/myTask\"\r\n
+        \     }\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:00 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [02c3658f-4da5-4f77-82aa-9ea1f4c21981]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [eabc5262-4994-11e7-beed-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:00 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/myTask?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks/@Element\",\"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/myTask\",\"eTag\":\"0x8D4ABB8CCE66AD5\",\"creationTime\":\"2017-06-05T02:15:56.6067413Z\",\"lastModified\":\"2017-06-05T02:15:56.6067413Z\",\"state\":\"completed\",\"stateTransitionTime\":\"2017-06-05T02:15:59.3233Z\",\"previousState\":\"running\",\"previousStateTransitionTime\":\"2017-06-05T02:15:58.662214Z\",\"commandLine\":\"/bin/bash
+        -c \\\"echo test\\\"\",\"outputFiles\":[\r\n    {\r\n      \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \       \"container\":{\r\n          \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=WLwDhL8y%2BVxzMhAMvNiBhT01Je%2FhVbpWpK4QA%2FOmJgo%3D&se=2017-06-07T01%3A03%3A37Z&sp=rwdl\"\r\n
+        \       }\r\n      },\"uploadOptions\":{\r\n        \"uploadCondition\":\"TaskSuccess\"\r\n
+        \     }\r\n    }\r\n  ],\"userIdentity\":{\r\n    \"autoUser\":{\r\n      \"elevationLevel\":\"nonadmin\"\r\n
+        \   }\r\n  },\"constraints\":{\r\n    \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \ },\"executionInfo\":{\r\n    \"startTime\":\"2017-06-05T02:15:58.662315Z\",\"endTime\":\"2017-06-05T02:15:59.3233Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \ },\"nodeInfo\":{\r\n    \"affinityId\":\"TVM:tvm-3426989531_1-20170605t013524z\",\"nodeUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes/tvm-3426989531_1-20170605t013524z\",\"poolId\":\"ncj-ubuntu1404\",\"nodeId\":\"tvm-3426989531_1-20170605t013524z\",\"taskRootDirectory\":\"workitems/ncj-ubuntu1404/job-1/myTask\",\"taskRootDirectoryUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes/tvm-3426989531_1-20170605t013524z/files/workitems/ncj-ubuntu1404/job-1/myTask\"\r\n
+        \ }\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:01 GMT']
+      ETag: ['0x8D4ABB8CCE66AD5']
+      Last-Modified: ['Mon, 05 Jun 2017 02:15:56 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [19cc2e0b-6def-47f5-b0f7-31b2da0ed022]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [eb77b7e4-4994-11e7-8e74-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:01 GMT']
+      x-ms-version: ['2016-05-31']
+    method: GET
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer?comp=list&restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults
+        ServiceEndpoint=\"https://testaccountforbatch.blob.core.windows.net/\" ContainerName=\"aaatestcontainer\"><Blobs><Blob><Name>fileuploaderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:00 GMT</Last-Modified><Etag>0x8D4ABB8CF3A2EEE</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>fileuploadout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:00 GMT</Last-Modified><Etag>0x8D4ABB8CF3E27B8</Etag><Content-Length>1387</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>IJRLB89H5LXcLbumvXBI7Q==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:00 GMT</Last-Modified><Etag>0x8D4ABB8CF34AF4B</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stdout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:00 GMT</Last-Modified><Etag>0x8D4ABB8CF374803</Etag><Content-Length>5</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>2Oj8otwPiW/Xy0ywAxuiSQ==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob></Blobs><NextMarker
+        /></EnumerationResults>"}
+    headers:
+      Content-Type: [application/xml]
+      Date: ['Mon, 05 Jun 2017 02:16:03 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [ec05580a-4994-11e7-8d39-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:02 GMT']
+    method: DELETE
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404?api-version=2017-05-01.5.0
+  response:
+    body: {string: ''}
+    headers:
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:03 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [633e1608-5d0c-4a0b-8bec-cc0707c8ec7c]
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [ec512f5e-4994-11e7-a083-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:02 GMT']
+      x-ms-version: ['2016-05-31']
+    method: GET
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer?comp=list&restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults
+        ServiceEndpoint=\"https://testaccountforbatch.blob.core.windows.net/\" ContainerName=\"aaatestcontainer\"><Blobs><Blob><Name>fileuploaderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:00 GMT</Last-Modified><Etag>0x8D4ABB8CF3A2EEE</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>fileuploadout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:00 GMT</Last-Modified><Etag>0x8D4ABB8CF3E27B8</Etag><Content-Length>1387</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>IJRLB89H5LXcLbumvXBI7Q==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:00 GMT</Last-Modified><Etag>0x8D4ABB8CF34AF4B</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stdout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:00 GMT</Last-Modified><Etag>0x8D4ABB8CF374803</Etag><Content-Length>5</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>2Oj8otwPiW/Xy0ywAxuiSQ==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob></Blobs><NextMarker
+        /></EnumerationResults>"}
+    headers:
+      Content-Type: [application/xml]
+      Date: ['Mon, 05 Jun 2017 02:16:05 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [ecb76efe-4994-11e7-8f36-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:03 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer/fileuploaderr.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:16:05 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [ecd9fb22-4994-11e7-b157-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:03 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer/fileuploadout.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:16:05 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [ece2add8-4994-11e7-91ce-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:03 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer/stderr.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:16:06 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [ecf13130-4994-11e7-bdf3-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:03 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer/stdout.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:16:06 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [ecfaceec-4994-11e7-a534-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:03 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodeagentskus\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"batch.node.centos 7\",\"verifiedImageReferences\":[\r\n
+        \       {\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.3\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.0\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS-HPC\",\"sku\":\"7.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Oracle\",\"offer\":\"Oracle-Linux\",\"sku\":\"7.2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Oracle\",\"offer\":\"Oracle-Linux\",\"sku\":\"7.0\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"microsoft-ads\",\"offer\":\"linux-data-science-vm\",\"sku\":\"linuxdsvm\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.debian
+        8\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Credativ\",\"offer\":\"Debian\",\"sku\":\"8\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.opensuse
+        13.2\",\"verifiedImageReferences\":[\r\n        \r\n      ],\"osType\":\"linux\"\r\n
+        \   },{\r\n      \"id\":\"batch.node.opensuse 42.1\",\"verifiedImageReferences\":[\r\n
+        \       {\r\n          \"publisher\":\"SUSE\",\"offer\":\"openSUSE-Leap\",\"sku\":\"42.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES\",\"sku\":\"12-SP2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES\",\"sku\":\"12-SP1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES-HPC\",\"sku\":\"12-SP1\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.ubuntu
+        14.04\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"14.04.5-LTS\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.ubuntu
+        16.04\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"16.04-LTS\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"16.10\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.windows
+        amd64\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2012-R2-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2012-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2008-R2-SP1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2016-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2016-Datacenter-with-Containers\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"microsoft-ads\",\"offer\":\"standard-data-science-vm\",\"sku\":\"standard-data-science-vm\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"windows\"\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:06 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [3ba5ce16-f9a5-47b3-90e4-21f39d05da6c]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"id": "ncj-windows-2012-r2", "targetDedicatedNodes": 1, "vmSize": "STANDARD_D1_V2",
+      "virtualMachineConfiguration": {"nodeAgentSKUId": "batch.node.windows amd64",
+      "imageReference": {"publisher": "MicrosoftWindowsServer", "sku": "2012-R2-Datacenter",
+      "offer": "WindowsServer"}}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['277']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [edc93506-4994-11e7-9171-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:05 GMT']
+    method: POST
+    uri: https://test1.westus.batch.azure.com/pools?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#Microsoft.Azure.Batch.Protocol.Entities.Container.errors/@Element\",\"code\":\"PoolExists\",\"message\":{\r\n
+        \   \"lang\":\"en-US\",\"value\":\"The specified pool already exists.\\nRequestId:8d39e7b0-d9ca-4b38-a76d-2f91d3747f95\\nTime:2017-06-05T02:16:06.9921622Z\"\r\n
+        \ }\r\n}"}
+    headers:
+      Content-Length: ['337']
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:06 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      X-Content-Type-Options: [nosniff]
+      request-id: [8d39e7b0-d9ca-4b38-a76d-2f91d3747f95]
+    status: {code: 409, message: The specified pool already exists.}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [ee444466-4994-11e7-8259-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:05 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#pools/@Element\",\"id\":\"ncj-windows-2012-r2\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2\",\"eTag\":\"0x8D4ABB453155DA4\",\"lastModified\":\"2017-06-05T01:43:54.2454692Z\",\"creationTime\":\"2017-06-05T01:43:54.2454692Z\",\"state\":\"active\",\"stateTransitionTime\":\"2017-06-05T01:43:54.2454692Z\",\"allocationState\":\"steady\",\"allocationStateTransitionTime\":\"2017-06-05T01:45:29.7557995Z\",\"vmSize\":\"standard_d1_v2\",\"resizeTimeout\":\"PT15M\",\"currentDedicatedNodes\":1,\"targetDedicatedNodes\":1,\"currentLowPriorityNodes\":0,\"targetLowPriorityNodes\":0,\"enableAutoScale\":false,\"enableInterNodeCommunication\":false,\"maxTasksPerNode\":1,\"taskSchedulingPolicy\":{\r\n
+        \   \"nodeFillType\":\"Spread\"\r\n  },\"virtualMachineConfiguration\":{\r\n
+        \   \"imageReference\":{\r\n      \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2012-R2-Datacenter\",\"version\":\"latest\"\r\n
+        \   },\"nodeAgentSKUId\":\"batch.node.windows amd64\"\r\n  }\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:08 GMT']
+      ETag: ['0x8D4ABB453155DA4']
+      Last-Modified: ['Mon, 05 Jun 2017 01:43:54 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [62060e08-c618-4f6e-8447-7b5d7800bb84]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [ef6d7ffe-4994-11e7-a519-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:07 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodes\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"tvm-3426989531_1-20170605t014527z\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z\",\"state\":\"idle\",\"schedulingState\":\"enabled\",\"stateTransitionTime\":\"2017-06-05T02:02:20.228364Z\",\"lastBootTime\":\"2017-06-05T01:48:43.117264Z\",\"allocationTime\":\"2017-06-05T01:45:27.7394174Z\",\"ipAddress\":\"10.0.0.4\",\"affinityId\":\"TVM:tvm-3426989531_1-20170605t014527z\",\"vmSize\":\"standard_d1_v2\",\"totalTasksRun\":2,\"totalTasksSucceeded\":2,\"runningTasksCount\":0,\"recentTasks\":[\r\n
+        \       {\r\n          \"taskUrl\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/mytask\",\"jobId\":\"ncj-windows-2012-r2\",\"taskId\":\"mytask\",\"taskState\":\"completed\",\"executionInfo\":{\r\n
+        \           \"startTime\":\"2017-06-05T02:02:17.837723Z\",\"endTime\":\"2017-06-05T02:02:19.993966Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \         }\r\n        }\r\n      ],\"isDedicated\":true\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:09 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [987c8e1b-3cbe-4f29-9d57-0b8cfb20bc58]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"id": "ncj-windows-2012-r2", "poolInfo": {"poolId": "ncj-windows-2012-r2"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['76']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python batchextensionsclient/0.0.1]
+      accept-language: [en-US]
+      client-request-id: [f0292cac-4994-11e7-b1c8-54ee750f2fc7]
+      return-client-request-id: ['false']
+    method: POST
+    uri: https://test1.westus.batch.azure.com/jobs?timeout=30&api-version=2017-05-01.5.0
+  response:
+    body: {string: ''}
+    headers:
+      DataServiceId: ['https://test1.westus.batch.azure.com/jobs/job-1']
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:13 GMT']
+      ETag: ['0x8D4ABB8D77D72EB']
+      Last-Modified: ['Mon, 05 Jun 2017 02:16:14 GMT']
+      Location: ['https://test1.westus.batch.azure.com/jobs/job-1']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [159c0175-02b7-46d5-8f80-0e1709d98240]
+    status: {code: 201, message: Created}
+- request:
+    body: '{"value": [{"id": "myTask", "constraints": {"retentionTime": "PT1H"}, "outputFiles":
+      [{"destination": {"container": {"containerUrl": "https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=WLwDhL8y%2BVxzMhAMvNiBhT01Je%2FhVbpWpK4QA%2FOmJgo%3D&se=2017-06-07T01%3A03%3A37Z&sp=rwdl"}},
+      "uploadOptions": {"uploadCondition": "taskSuccess"}, "filePattern": "$AZ_BATCH_TASK_DIR/*.txt"}],
+      "commandLine": "cmd /c echo | set /p dummy=test"}]}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['471']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python batchextensionsclient/0.0.1]
+      accept-language: [en-US]
+      client-request-id: [f299c3d8-4994-11e7-84d4-54ee750f2fc7]
+    method: POST
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/addtaskcollection?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#taskaddresult\",\"value\":[\r\n
+        \   {\r\n      \"status\":\"Success\",\"taskId\":\"myTask\",\"eTag\":\"0x8D4ABB8D7DCA553\",\"lastModified\":\"2017-06-05T02:16:14.9976403Z\",\"location\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/myTask\"\r\n
+        \   }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:14 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [a86c6055-ed9b-4fb3-8292-6c06ae14d150]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [f32303d4-4994-11e7-bc2c-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:14 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#jobs/@Element\",\"id\":\"ncj-windows-2012-r2\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2\",\"eTag\":\"0x8D4ABB8D77D72EB\",\"lastModified\":\"2017-06-05T02:16:14.3737579Z\",\"creationTime\":\"2017-06-05T02:16:14.3487354Z\",\"state\":\"active\",\"stateTransitionTime\":\"2017-06-05T02:16:14.3737579Z\",\"priority\":0,\"usesTaskDependencies\":false,\"constraints\":{\r\n
+        \   \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"maxTaskRetryCount\":0\r\n
+        \ },\"poolInfo\":{\r\n    \"poolId\":\"ncj-windows-2012-r2\"\r\n  },\"executionInfo\":{\r\n
+        \   \"startTime\":\"2017-06-05T02:16:14.3737579Z\",\"poolId\":\"ncj-windows-2012-r2\"\r\n
+        \ },\"onAllTasksComplete\":\"noaction\",\"onTaskFailure\":\"noaction\"\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:16 GMT']
+      ETag: ['0x8D4ABB8D77D72EB']
+      Last-Modified: ['Mon, 05 Jun 2017 02:16:14 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [359f69cc-b1cf-4be2-ac4f-a1e86efd6ea3]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [f383569c-4994-11e7-a7f6-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:14 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/myTask\",\"eTag\":\"0x8D4ABB8D7DCA553\",\"creationTime\":\"2017-06-05T02:16:14.9976403Z\",\"lastModified\":\"2017-06-05T02:16:14.9976403Z\",\"state\":\"running\",\"stateTransitionTime\":\"2017-06-05T02:16:16.452337Z\",\"previousState\":\"active\",\"previousStateTransitionTime\":\"2017-06-05T02:16:14.9976403Z\",\"commandLine\":\"cmd
+        /c echo | set /p dummy=test\",\"outputFiles\":[\r\n        {\r\n          \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \           \"container\":{\r\n              \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=WLwDhL8y%2BVxzMhAMvNiBhT01Je%2FhVbpWpK4QA%2FOmJgo%3D&se=2017-06-07T01%3A03%3A37Z&sp=rwdl\"\r\n
+        \           }\r\n          },\"uploadOptions\":{\r\n            \"uploadCondition\":\"TaskSuccess\"\r\n
+        \         }\r\n        }\r\n      ],\"userIdentity\":{\r\n        \"autoUser\":{\r\n
+        \         \"elevationLevel\":\"nonadmin\"\r\n        }\r\n      },\"constraints\":{\r\n
+        \       \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \     },\"executionInfo\":{\r\n        \"startTime\":\"2017-06-05T02:16:16.452337Z\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \     },\"nodeInfo\":{\r\n        \"affinityId\":\"TVM:tvm-3426989531_1-20170605t014527z\",\"nodeUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z\",\"poolId\":\"ncj-windows-2012-r2\",\"nodeId\":\"tvm-3426989531_1-20170605t014527z\"\r\n
+        \     }\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:16 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [d17cf0d7-16bd-4ceb-a0e0-77af67824698]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [f582e802-4994-11e7-8162-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:18 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/myTask\",\"eTag\":\"0x8D4ABB8D7DCA553\",\"creationTime\":\"2017-06-05T02:16:14.9976403Z\",\"lastModified\":\"2017-06-05T02:16:14.9976403Z\",\"state\":\"completed\",\"stateTransitionTime\":\"2017-06-05T02:16:18.577337Z\",\"previousState\":\"running\",\"previousStateTransitionTime\":\"2017-06-05T02:16:16.452337Z\",\"commandLine\":\"cmd
+        /c echo | set /p dummy=test\",\"outputFiles\":[\r\n        {\r\n          \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \           \"container\":{\r\n              \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=WLwDhL8y%2BVxzMhAMvNiBhT01Je%2FhVbpWpK4QA%2FOmJgo%3D&se=2017-06-07T01%3A03%3A37Z&sp=rwdl\"\r\n
+        \           }\r\n          },\"uploadOptions\":{\r\n            \"uploadCondition\":\"TaskSuccess\"\r\n
+        \         }\r\n        }\r\n      ],\"userIdentity\":{\r\n        \"autoUser\":{\r\n
+        \         \"elevationLevel\":\"nonadmin\"\r\n        }\r\n      },\"constraints\":{\r\n
+        \       \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \     },\"executionInfo\":{\r\n        \"startTime\":\"2017-06-05T02:16:16.452337Z\",\"endTime\":\"2017-06-05T02:16:18.577337Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \     },\"nodeInfo\":{\r\n        \"affinityId\":\"TVM:tvm-3426989531_1-20170605t014527z\",\"nodeUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z\",\"poolId\":\"ncj-windows-2012-r2\",\"nodeId\":\"tvm-3426989531_1-20170605t014527z\",\"taskRootDirectory\":\"workitems\\\\ncj-windows-2012-r2\\\\job-1\\\\myTask\",\"taskRootDirectoryUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z/files/workitems/ncj-windows-2012-r2/job-1/myTask\"\r\n
+        \     }\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:18 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [5226c61a-4f79-447f-90ef-8ed38ab32f42]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [f5aeacec-4994-11e7-83d5-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:18 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/myTask?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks/@Element\",\"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/myTask\",\"eTag\":\"0x8D4ABB8D7DCA553\",\"creationTime\":\"2017-06-05T02:16:14.9976403Z\",\"lastModified\":\"2017-06-05T02:16:14.9976403Z\",\"state\":\"completed\",\"stateTransitionTime\":\"2017-06-05T02:16:18.577337Z\",\"previousState\":\"running\",\"previousStateTransitionTime\":\"2017-06-05T02:16:16.452337Z\",\"commandLine\":\"cmd
+        /c echo | set /p dummy=test\",\"outputFiles\":[\r\n    {\r\n      \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \       \"container\":{\r\n          \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=WLwDhL8y%2BVxzMhAMvNiBhT01Je%2FhVbpWpK4QA%2FOmJgo%3D&se=2017-06-07T01%3A03%3A37Z&sp=rwdl\"\r\n
+        \       }\r\n      },\"uploadOptions\":{\r\n        \"uploadCondition\":\"TaskSuccess\"\r\n
+        \     }\r\n    }\r\n  ],\"userIdentity\":{\r\n    \"autoUser\":{\r\n      \"elevationLevel\":\"nonadmin\"\r\n
+        \   }\r\n  },\"constraints\":{\r\n    \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \ },\"executionInfo\":{\r\n    \"startTime\":\"2017-06-05T02:16:16.452337Z\",\"endTime\":\"2017-06-05T02:16:18.577337Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \ },\"nodeInfo\":{\r\n    \"affinityId\":\"TVM:tvm-3426989531_1-20170605t014527z\",\"nodeUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z\",\"poolId\":\"ncj-windows-2012-r2\",\"nodeId\":\"tvm-3426989531_1-20170605t014527z\",\"taskRootDirectory\":\"workitems\\\\ncj-windows-2012-r2\\\\job-1\\\\myTask\",\"taskRootDirectoryUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z/files/workitems/ncj-windows-2012-r2/job-1/myTask\"\r\n
+        \ }\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:19 GMT']
+      ETag: ['0x8D4ABB8D7DCA553']
+      Last-Modified: ['Mon, 05 Jun 2017 02:16:14 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [0c48da9d-3223-4a51-ac2a-f5282bd60959]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [f5d9dc3a-4994-11e7-a982-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:18 GMT']
+      x-ms-version: ['2016-05-31']
+    method: GET
+    uri: https://testaccountforbatch.blob.core.windows.net/aaatestcontainer?comp=list&restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults
+        ServiceEndpoint=\"https://testaccountforbatch.blob.core.windows.net/\" ContainerName=\"aaatestcontainer\"><Blobs><Blob><Name>fileuploaderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:19 GMT</Last-Modified><Etag>0x8D4ABB8DA7A1AB7</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>fileuploadout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:19 GMT</Last-Modified><Etag>0x8D4ABB8DA7C1704</Etag><Content-Length>856</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>htyZbTHu/2Iao1q6nzYJmQ==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:19 GMT</Last-Modified><Etag>0x8D4ABB8DA7E1364</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stdout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:19 GMT</Last-Modified><Etag>0x8D4ABB8DA800F9A</Etag><Content-Length>4</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>CY9rzUYh03PK3k6DJie09g==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob></Blobs><NextMarker
+        /></EnumerationResults>"}
+    headers:
+      Content-Type: [application/xml]
+      Date: ['Mon, 05 Jun 2017 02:16:20 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [f65612ca-4994-11e7-8a71-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:19 GMT']
+    method: DELETE
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2?api-version=2017-05-01.5.0
+  response:
+    body: {string: ''}
+    headers:
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:24 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [5604dcdf-09f8-4537-a680-3af394c6c34a]
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [f9457894-4994-11e7-a8bc-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:24 GMT']
+      x-ms-version: ['2016-05-31']
+    method: GET
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-output?comp=list&restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults
+        ServiceEndpoint=\"https://testaccountforbatch.blob.core.windows.net/\" ContainerName=\"fgrp-output\"><Blobs
+        /><NextMarker /></EnumerationResults>"}
+    headers:
+      Content-Type: [application/xml]
+      Date: ['Mon, 05 Jun 2017 02:16:26 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [f96f9652-4994-11e7-b5f7-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:24 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodeagentskus\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"batch.node.centos 7\",\"verifiedImageReferences\":[\r\n
+        \       {\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.3\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.0\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS-HPC\",\"sku\":\"7.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Oracle\",\"offer\":\"Oracle-Linux\",\"sku\":\"7.2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Oracle\",\"offer\":\"Oracle-Linux\",\"sku\":\"7.0\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"microsoft-ads\",\"offer\":\"linux-data-science-vm\",\"sku\":\"linuxdsvm\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.debian
+        8\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Credativ\",\"offer\":\"Debian\",\"sku\":\"8\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.opensuse
+        13.2\",\"verifiedImageReferences\":[\r\n        \r\n      ],\"osType\":\"linux\"\r\n
+        \   },{\r\n      \"id\":\"batch.node.opensuse 42.1\",\"verifiedImageReferences\":[\r\n
+        \       {\r\n          \"publisher\":\"SUSE\",\"offer\":\"openSUSE-Leap\",\"sku\":\"42.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES\",\"sku\":\"12-SP2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES\",\"sku\":\"12-SP1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES-HPC\",\"sku\":\"12-SP1\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.ubuntu
+        14.04\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"14.04.5-LTS\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.ubuntu
+        16.04\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"16.04-LTS\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"16.10\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.windows
+        amd64\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2012-R2-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2012-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2008-R2-SP1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2016-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2016-Datacenter-with-Containers\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"microsoft-ads\",\"offer\":\"standard-data-science-vm\",\"sku\":\"standard-data-science-vm\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"windows\"\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:27 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [4c4ca70b-96cf-4b18-b085-22734f716a7a]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"id": "ncj-ubuntu1404", "targetDedicatedNodes": 1, "vmSize": "STANDARD_D1_V2",
+      "virtualMachineConfiguration": {"nodeAgentSKUId": "batch.node.ubuntu 14.04",
+      "imageReference": {"publisher": "Canonical", "sku": "14.04.5-LTS", "offer":
+      "UbuntuServer"}}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['250']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [fad7c51a-4994-11e7-95cb-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:27 GMT']
+    method: POST
+    uri: https://test1.westus.batch.azure.com/pools?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#Microsoft.Azure.Batch.Protocol.Entities.Container.errors/@Element\",\"code\":\"PoolExists\",\"message\":{\r\n
+        \   \"lang\":\"en-US\",\"value\":\"The specified pool already exists.\\nRequestId:42eef7c5-fae2-4a31-9aca-fb9cc9f5b856\\nTime:2017-06-05T02:16:28.9556947Z\"\r\n
+        \ }\r\n}"}
+    headers:
+      Content-Length: ['337']
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:28 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      X-Content-Type-Options: [nosniff]
+      request-id: [42eef7c5-fae2-4a31-9aca-fb9cc9f5b856]
+    status: {code: 409, message: The specified pool already exists.}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [fb280ca4-4994-11e7-9da5-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:27 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#pools/@Element\",\"id\":\"ncj-ubuntu1404\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404\",\"eTag\":\"0x8D4ABB2F6EA8C59\",\"lastModified\":\"2017-06-05T01:34:10.1177433Z\",\"creationTime\":\"2017-06-05T01:34:10.1177433Z\",\"state\":\"active\",\"stateTransitionTime\":\"2017-06-05T01:34:10.1177433Z\",\"allocationState\":\"steady\",\"allocationStateTransitionTime\":\"2017-06-05T01:35:26.3374541Z\",\"vmSize\":\"standard_d1_v2\",\"resizeTimeout\":\"PT15M\",\"currentDedicatedNodes\":1,\"targetDedicatedNodes\":1,\"currentLowPriorityNodes\":0,\"targetLowPriorityNodes\":0,\"enableAutoScale\":false,\"enableInterNodeCommunication\":false,\"maxTasksPerNode\":1,\"taskSchedulingPolicy\":{\r\n
+        \   \"nodeFillType\":\"Spread\"\r\n  },\"virtualMachineConfiguration\":{\r\n
+        \   \"imageReference\":{\r\n      \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"14.04.5-LTS\",\"version\":\"latest\"\r\n
+        \   },\"nodeAgentSKUId\":\"batch.node.ubuntu 14.04\"\r\n  }\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:29 GMT']
+      ETag: ['0x8D4ABB2F6EA8C59']
+      Last-Modified: ['Mon, 05 Jun 2017 01:34:10 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [20c6d797-ea96-4a75-8fa3-194badde3add]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [fbd2af08-4994-11e7-b811-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:28 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodes\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"tvm-3426989531_1-20170605t013524z\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes/tvm-3426989531_1-20170605t013524z\",\"state\":\"idle\",\"schedulingState\":\"enabled\",\"stateTransitionTime\":\"2017-06-05T02:15:59.410721Z\",\"lastBootTime\":\"2017-06-05T01:36:54.243075Z\",\"allocationTime\":\"2017-06-05T01:35:24.3838816Z\",\"ipAddress\":\"10.0.0.4\",\"affinityId\":\"TVM:tvm-3426989531_1-20170605t013524z\",\"vmSize\":\"standard_d1_v2\",\"totalTasksRun\":6,\"totalTasksSucceeded\":6,\"runningTasksCount\":0,\"recentTasks\":[\r\n
+        \       {\r\n          \"taskUrl\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/mytask\",\"jobId\":\"ncj-ubuntu1404\",\"taskId\":\"mytask\",\"taskState\":\"completed\",\"executionInfo\":{\r\n
+        \           \"startTime\":\"2017-06-05T02:15:58.662315Z\",\"endTime\":\"2017-06-05T02:15:59.3233Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \         }\r\n        }\r\n      ],\"isDedicated\":true\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:32 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [069cbee7-572f-428a-adc6-d4924c84a8fe]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchmanagementclient/4.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      x-ms-client-request-id: [fdfe24d2-4994-11e7-8d5e-54ee750f2fc7]
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Batch/batchAccounts?api-version=2017-05-01
+  response:
+    body: {string: '{"value":[{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_rg/providers/Microsoft.Batch/batchAccounts/test1","name":"test1","type":"Microsoft.Batch/batchAccounts","location":"westus","properties":{"accountEndpoint":"test1.westus.batch.azure.com","provisioningState":"Succeeded","dedicatedCoreQuota":800,"lowPriorityCoreQuota":20,"poolQuota":20,"activeJobAndJobScheduleQuota":20,"autoStorage":{"storageAccountId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_rg/providers/Microsoft.Storage/storageAccounts/testaccountforbatch","lastKeySync":"2017-03-21T21:22:01.4426554Z"},"poolAllocationMode":"batchservice"},"tags":{"Value":"tagValue","test":"test1","Name":"tagName"}}]}'}
+    headers:
+      Cache-Control: [no-cache]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 05 Jun 2017 02:16:37 GMT']
+      Expires: ['-1']
+      Pragma: [no-cache]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Vary: [Accept-Encoding]
+      content-length: ['3185']
+      x-ms-original-request-ids: ['', '', '', '', '']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 storagemanagementclient/1.0.0rc1 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      x-ms-client-request-id: [0179110c-4995-11e7-8bbd-54ee750f2fc7]
+    method: POST
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_rg/providers/Microsoft.Storage/storageAccounts/testaccountforbatch/listKeys?api-version=2016-12-01
+  response:
+    body: {string: '{"keys":[{"keyName":"key1","permissions":"Full","value":"abc=="},{"keyName":"key2","permissions":"Full","value":"xyz=="}]}
+
+'}
+    headers:
+      Cache-Control: [no-cache]
+      Content-Type: [application/json]
+      Date: ['Mon, 05 Jun 2017 02:16:39 GMT']
+      Expires: ['-1']
+      Pragma: [no-cache]
+      Server: [Microsoft-Azure-Storage-Resource-Provider/1.0, Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+      content-length: ['289']
+      x-ms-ratelimit-remaining-subscription-writes: ['1199']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.2 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [02a35a28-4995-11e7-beaa-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:40 GMT']
+      x-ms-version: ['2016-05-31']
+    method: PUT
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-output?restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The
+        specified container already exists.\nRequestId:53350a6d-0001-00b3-6ba1-dd4063000000\nTime:2017-06-05T02:16:45.7329449Z</Message></Error>"}
+    headers:
+      Content-Length: ['230']
+      Content-Type: [application/xml]
+      Date: ['Mon, 05 Jun 2017 02:16:45 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      x-ms-version: ['2016-05-31']
+    status: {code: 409, message: The specified container already exists.}
+- request:
+    body: '{"id": "ncj-ubuntu1404-1", "poolInfo": {"poolId": "ncj-ubuntu1404"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['68']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python batchextensionsclient/0.0.1]
+      accept-language: [en-US]
+      client-request-id: [048b717a-4995-11e7-af69-54ee750f2fc7]
+      return-client-request-id: ['false']
+    method: POST
+    uri: https://test1.westus.batch.azure.com/jobs?timeout=30&api-version=2017-05-01.5.0
+  response:
+    body: {string: ''}
+    headers:
+      DataServiceId: ['https://test1.westus.batch.azure.com/jobs/job-1']
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:44 GMT']
+      ETag: ['0x8D4ABB8E9CFBF64']
+      Last-Modified: ['Mon, 05 Jun 2017 02:16:45 GMT']
+      Location: ['https://test1.westus.batch.azure.com/jobs/job-1']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [3241fb33-b0f8-4ce2-a09a-b31372dd1588]
+    status: {code: 201, message: Created}
+- request:
+    body: '{"value": [{"id": "myTask", "constraints": {"retentionTime": "PT1H"}, "outputFiles":
+      [{"destination": {"container": {"containerUrl": "https://testaccountforbatch.blob.core.windows.net/fgrp-output?sp=w&st=2017-06-05T02%3A16%3A43Z&sv=2016-05-31&se=2017-06-12T02%3A16%3A43Z&sig=t%2BiGnWkcdFjHT/fOsHeczuV7%2Bqj1sqZJ4q1OtbN2AVk%3D&sr=c"}},
+      "uploadOptions": {"uploadCondition": "taskSuccess"}, "filePattern": "$AZ_BATCH_TASK_DIR/*.txt"}],
+      "commandLine": "/bin/bash -c \"echo test\""}]}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['480']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python batchextensionsclient/0.0.1]
+      accept-language: [en-US]
+      client-request-id: [04fbccd0-4995-11e7-baf2-54ee750f2fc7]
+    method: POST
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/addtaskcollection?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#taskaddresult\",\"value\":[\r\n
+        \   {\r\n      \"status\":\"Success\",\"taskId\":\"myTask\",\"eTag\":\"0x8D4ABB8EB310A38\",\"lastModified\":\"2017-06-05T02:16:47.427436Z\",\"location\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks/myTask\"\r\n
+        \   }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:47 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [aa172890-6c91-4480-87d7-c0f479a90d97]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [0643c30c-4995-11e7-bdc2-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:46 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#jobs/@Element\",\"id\":\"ncj-ubuntu1404-1\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1\",\"eTag\":\"0x8D4ABB8E9CFBF64\",\"lastModified\":\"2017-06-05T02:16:45.1120996Z\",\"creationTime\":\"2017-06-05T02:16:45.0930746Z\",\"state\":\"active\",\"stateTransitionTime\":\"2017-06-05T02:16:45.1120996Z\",\"priority\":0,\"usesTaskDependencies\":false,\"constraints\":{\r\n
+        \   \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"maxTaskRetryCount\":0\r\n
+        \ },\"poolInfo\":{\r\n    \"poolId\":\"ncj-ubuntu1404\"\r\n  },\"executionInfo\":{\r\n
+        \   \"startTime\":\"2017-06-05T02:16:45.1120996Z\",\"poolId\":\"ncj-ubuntu1404\"\r\n
+        \ },\"onAllTasksComplete\":\"noaction\",\"onTaskFailure\":\"noaction\"\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:48 GMT']
+      ETag: ['0x8D4ABB8E9CFBF64']
+      Last-Modified: ['Mon, 05 Jun 2017 02:16:45 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [491b8824-2a14-465f-8c1f-3c4d883e4e0d]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [07b1d500-4995-11e7-867d-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:48 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks/myTask\",\"eTag\":\"0x8D4ABB8EB310A38\",\"creationTime\":\"2017-06-05T02:16:47.427436Z\",\"lastModified\":\"2017-06-05T02:16:47.427436Z\",\"state\":\"completed\",\"stateTransitionTime\":\"2017-06-05T02:16:49.304776Z\",\"previousState\":\"running\",\"previousStateTransitionTime\":\"2017-06-05T02:16:48.737289Z\",\"commandLine\":\"/bin/bash
+        -c \\\"echo test\\\"\",\"outputFiles\":[\r\n        {\r\n          \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \           \"container\":{\r\n              \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net/fgrp-output?sp=w&st=2017-06-05T02%3A16%3A43Z&sv=2016-05-31&se=2017-06-12T02%3A16%3A43Z&sig=t%2BiGnWkcdFjHT/fOsHeczuV7%2Bqj1sqZJ4q1OtbN2AVk%3D&sr=c\"\r\n
+        \           }\r\n          },\"uploadOptions\":{\r\n            \"uploadCondition\":\"TaskSuccess\"\r\n
+        \         }\r\n        }\r\n      ],\"userIdentity\":{\r\n        \"autoUser\":{\r\n
+        \         \"elevationLevel\":\"nonadmin\"\r\n        }\r\n      },\"constraints\":{\r\n
+        \       \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \     },\"executionInfo\":{\r\n        \"startTime\":\"2017-06-05T02:16:48.737396Z\",\"endTime\":\"2017-06-05T02:16:49.304776Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \     },\"nodeInfo\":{\r\n        \"affinityId\":\"TVM:tvm-3426989531_1-20170605t013524z\",\"nodeUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes/tvm-3426989531_1-20170605t013524z\",\"poolId\":\"ncj-ubuntu1404\",\"nodeId\":\"tvm-3426989531_1-20170605t013524z\",\"taskRootDirectory\":\"workitems/ncj-ubuntu1404-1/job-1/myTask\",\"taskRootDirectoryUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes/tvm-3426989531_1-20170605t013524z/files/workitems/ncj-ubuntu1404-1/job-1/myTask\"\r\n
+        \     }\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:50 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [ef11c9fd-b580-44b0-8a32-a1a048c918ba]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [089539ba-4995-11e7-9d1d-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:50 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks/myTask?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks/@Element\",\"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks/myTask\",\"eTag\":\"0x8D4ABB8EB310A38\",\"creationTime\":\"2017-06-05T02:16:47.427436Z\",\"lastModified\":\"2017-06-05T02:16:47.427436Z\",\"state\":\"completed\",\"stateTransitionTime\":\"2017-06-05T02:16:49.304776Z\",\"previousState\":\"running\",\"previousStateTransitionTime\":\"2017-06-05T02:16:48.737289Z\",\"commandLine\":\"/bin/bash
+        -c \\\"echo test\\\"\",\"outputFiles\":[\r\n    {\r\n      \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \       \"container\":{\r\n          \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net/fgrp-output?sp=w&st=2017-06-05T02%3A16%3A43Z&sv=2016-05-31&se=2017-06-12T02%3A16%3A43Z&sig=t%2BiGnWkcdFjHT/fOsHeczuV7%2Bqj1sqZJ4q1OtbN2AVk%3D&sr=c\"\r\n
+        \       }\r\n      },\"uploadOptions\":{\r\n        \"uploadCondition\":\"TaskSuccess\"\r\n
+        \     }\r\n    }\r\n  ],\"userIdentity\":{\r\n    \"autoUser\":{\r\n      \"elevationLevel\":\"nonadmin\"\r\n
+        \   }\r\n  },\"constraints\":{\r\n    \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \ },\"executionInfo\":{\r\n    \"startTime\":\"2017-06-05T02:16:48.737396Z\",\"endTime\":\"2017-06-05T02:16:49.304776Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \ },\"nodeInfo\":{\r\n    \"affinityId\":\"TVM:tvm-3426989531_1-20170605t013524z\",\"nodeUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes/tvm-3426989531_1-20170605t013524z\",\"poolId\":\"ncj-ubuntu1404\",\"nodeId\":\"tvm-3426989531_1-20170605t013524z\",\"taskRootDirectory\":\"workitems/ncj-ubuntu1404-1/job-1/myTask\",\"taskRootDirectoryUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes/tvm-3426989531_1-20170605t013524z/files/workitems/ncj-ubuntu1404-1/job-1/myTask\"\r\n
+        \ }\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:52 GMT']
+      ETag: ['0x8D4ABB8EB310A38']
+      Last-Modified: ['Mon, 05 Jun 2017 02:16:47 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [7f1077ee-d0d3-468e-92ec-63cac0af7ea7]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [0a8d7bb0-4995-11e7-911c-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:53 GMT']
+      x-ms-version: ['2016-05-31']
+    method: GET
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-output?comp=list&restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults
+        ServiceEndpoint=\"https://testaccountforbatch.blob.core.windows.net/\" ContainerName=\"fgrp-output\"><Blobs><Blob><Name>fileuploaderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:50 GMT</Last-Modified><Etag>0x8D4ABB8ED061864</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>fileuploadout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:50 GMT</Last-Modified><Etag>0x8D4ABB8ED0862D2</Etag><Content-Length>1387</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>346w1w5iEO46pCBmEBsBFQ==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:50 GMT</Last-Modified><Etag>0x8D4ABB8ECFFD536</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stdout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:50 GMT</Last-Modified><Etag>0x8D4ABB8ED02E32F</Etag><Content-Length>5</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>2Oj8otwPiW/Xy0ywAxuiSQ==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob></Blobs><NextMarker
+        /></EnumerationResults>"}
+    headers:
+      Content-Type: [application/xml]
+      Date: ['Mon, 05 Jun 2017 02:16:55 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [0ab17f10-4995-11e7-8831-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:53 GMT']
+    method: DELETE
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1?api-version=2017-05-01.5.0
+  response:
+    body: {string: ''}
+    headers:
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:54 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [5c90c3f2-38fc-426d-a1ae-ddad63a79b4e]
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [0af05da6-4995-11e7-b597-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:54 GMT']
+      x-ms-version: ['2016-05-31']
+    method: GET
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-output?comp=list&restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults
+        ServiceEndpoint=\"https://testaccountforbatch.blob.core.windows.net/\" ContainerName=\"fgrp-output\"><Blobs><Blob><Name>fileuploaderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:50 GMT</Last-Modified><Etag>0x8D4ABB8ED061864</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>fileuploadout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:50 GMT</Last-Modified><Etag>0x8D4ABB8ED0862D2</Etag><Content-Length>1387</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>346w1w5iEO46pCBmEBsBFQ==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:50 GMT</Last-Modified><Etag>0x8D4ABB8ECFFD536</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stdout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:16:50 GMT</Last-Modified><Etag>0x8D4ABB8ED02E32F</Etag><Content-Length>5</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>2Oj8otwPiW/Xy0ywAxuiSQ==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob></Blobs><NextMarker
+        /></EnumerationResults>"}
+    headers:
+      Content-Type: [application/xml]
+      Date: ['Mon, 05 Jun 2017 02:16:56 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [0afb4cae-4995-11e7-a20c-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:54 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-output/fileuploaderr.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:16:56 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [0b03b134-4995-11e7-ba05-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:54 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-output/fileuploadout.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:16:56 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [0b0c63e8-4995-11e7-93e4-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:54 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-output/stderr.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:16:56 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [0b138ff0-4995-11e7-afce-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:54 GMT']
+      x-ms-version: ['2016-05-31']
+    method: DELETE
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-output/stdout.txt
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Mon, 05 Jun 2017 02:16:56 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [0b1b3136-4995-11e7-b737-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:54 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodeagentskus\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"batch.node.centos 7\",\"verifiedImageReferences\":[\r\n
+        \       {\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.3\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS\",\"sku\":\"7.0\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"OpenLogic\",\"offer\":\"CentOS-HPC\",\"sku\":\"7.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Oracle\",\"offer\":\"Oracle-Linux\",\"sku\":\"7.2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Oracle\",\"offer\":\"Oracle-Linux\",\"sku\":\"7.0\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"microsoft-ads\",\"offer\":\"linux-data-science-vm\",\"sku\":\"linuxdsvm\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.debian
+        8\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Credativ\",\"offer\":\"Debian\",\"sku\":\"8\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.opensuse
+        13.2\",\"verifiedImageReferences\":[\r\n        \r\n      ],\"osType\":\"linux\"\r\n
+        \   },{\r\n      \"id\":\"batch.node.opensuse 42.1\",\"verifiedImageReferences\":[\r\n
+        \       {\r\n          \"publisher\":\"SUSE\",\"offer\":\"openSUSE-Leap\",\"sku\":\"42.1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES\",\"sku\":\"12-SP2\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES\",\"sku\":\"12-SP1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"SUSE\",\"offer\":\"SLES-HPC\",\"sku\":\"12-SP1\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.ubuntu
+        14.04\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"14.04.5-LTS\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.ubuntu
+        16.04\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"16.04-LTS\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"Canonical\",\"offer\":\"UbuntuServer\",\"sku\":\"16.10\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"linux\"\r\n    },{\r\n      \"id\":\"batch.node.windows
+        amd64\",\"verifiedImageReferences\":[\r\n        {\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2012-R2-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2012-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2008-R2-SP1\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2016-Datacenter\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2016-Datacenter-with-Containers\",\"version\":\"latest\"\r\n
+        \       },{\r\n          \"publisher\":\"microsoft-ads\",\"offer\":\"standard-data-science-vm\",\"sku\":\"standard-data-science-vm\",\"version\":\"latest\"\r\n
+        \       }\r\n      ],\"osType\":\"windows\"\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:55 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [6b174a17-390e-4abf-acaf-ec4122e81d0c]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"id": "ncj-windows-2012-r2", "targetDedicatedNodes": 1, "vmSize": "STANDARD_D1_V2",
+      "virtualMachineConfiguration": {"nodeAgentSKUId": "batch.node.windows amd64",
+      "imageReference": {"publisher": "MicrosoftWindowsServer", "sku": "2012-R2-Datacenter",
+      "offer": "WindowsServer"}}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['277']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [0b3c4e38-4995-11e7-a324-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:54 GMT']
+    method: POST
+    uri: https://test1.westus.batch.azure.com/pools?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#Microsoft.Azure.Batch.Protocol.Entities.Container.errors/@Element\",\"code\":\"PoolExists\",\"message\":{\r\n
+        \   \"lang\":\"en-US\",\"value\":\"The specified pool already exists.\\nRequestId:f97e58fa-deb6-46a0-b294-8414e8b0207b\\nTime:2017-06-05T02:16:56.1239168Z\"\r\n
+        \ }\r\n}"}
+    headers:
+      Content-Length: ['337']
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:55 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      X-Content-Type-Options: [nosniff]
+      request-id: [f97e58fa-deb6-46a0-b294-8414e8b0207b]
+    status: {code: 409, message: The specified pool already exists.}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [0b5a5dfa-4995-11e7-9c07-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:54 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#pools/@Element\",\"id\":\"ncj-windows-2012-r2\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2\",\"eTag\":\"0x8D4ABB453155DA4\",\"lastModified\":\"2017-06-05T01:43:54.2454692Z\",\"creationTime\":\"2017-06-05T01:43:54.2454692Z\",\"state\":\"active\",\"stateTransitionTime\":\"2017-06-05T01:43:54.2454692Z\",\"allocationState\":\"steady\",\"allocationStateTransitionTime\":\"2017-06-05T01:45:29.7557995Z\",\"vmSize\":\"standard_d1_v2\",\"resizeTimeout\":\"PT15M\",\"currentDedicatedNodes\":1,\"targetDedicatedNodes\":1,\"currentLowPriorityNodes\":0,\"targetLowPriorityNodes\":0,\"enableAutoScale\":false,\"enableInterNodeCommunication\":false,\"maxTasksPerNode\":1,\"taskSchedulingPolicy\":{\r\n
+        \   \"nodeFillType\":\"Spread\"\r\n  },\"virtualMachineConfiguration\":{\r\n
+        \   \"imageReference\":{\r\n      \"publisher\":\"MicrosoftWindowsServer\",\"offer\":\"WindowsServer\",\"sku\":\"2012-R2-Datacenter\",\"version\":\"latest\"\r\n
+        \   },\"nodeAgentSKUId\":\"batch.node.windows amd64\"\r\n  }\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:55 GMT']
+      ETag: ['0x8D4ABB453155DA4']
+      Last-Modified: ['Mon, 05 Jun 2017 01:43:54 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [94cfbb68-e8fc-44b0-adb5-a157545b3730]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [0b83434a-4995-11e7-8999-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:16:55 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodes\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"tvm-3426989531_1-20170605t014527z\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z\",\"state\":\"idle\",\"schedulingState\":\"enabled\",\"stateTransitionTime\":\"2017-06-05T02:16:18.905464Z\",\"lastBootTime\":\"2017-06-05T01:48:43.117264Z\",\"allocationTime\":\"2017-06-05T01:45:27.7394174Z\",\"ipAddress\":\"10.0.0.4\",\"affinityId\":\"TVM:tvm-3426989531_1-20170605t014527z\",\"vmSize\":\"standard_d1_v2\",\"totalTasksRun\":3,\"totalTasksSucceeded\":3,\"runningTasksCount\":0,\"recentTasks\":[\r\n
+        \       {\r\n          \"taskUrl\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/mytask\",\"jobId\":\"ncj-windows-2012-r2\",\"taskId\":\"mytask\",\"taskState\":\"completed\",\"executionInfo\":{\r\n
+        \           \"startTime\":\"2017-06-05T02:16:16.452337Z\",\"endTime\":\"2017-06-05T02:16:18.577337Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \         }\r\n        }\r\n      ],\"isDedicated\":true\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:55 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [c0f2d428-79fa-4bff-a15b-0b39ab5c81e2]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchmanagementclient/4.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      x-ms-client-request-id: [0bb06e90-4995-11e7-8a10-54ee750f2fc7]
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Batch/batchAccounts?api-version=2017-05-01
+  response:
+    body: {string: '{"value":[{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_rg/providers/Microsoft.Batch/batchAccounts/test1","name":"test1","type":"Microsoft.Batch/batchAccounts","location":"westus","properties":{"accountEndpoint":"test1.westus.batch.azure.com","provisioningState":"Succeeded","dedicatedCoreQuota":800,"lowPriorityCoreQuota":20,"poolQuota":20,"activeJobAndJobScheduleQuota":20,"autoStorage":{"storageAccountId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_rg/providers/Microsoft.Storage/storageAccounts/testaccountforbatch","lastKeySync":"2017-03-21T21:22:01.4426554Z"},"poolAllocationMode":"batchservice"},"tags":{"Value":"tagValue","test":"test1","Name":"tagName"}}]}'}
+    headers:
+      Cache-Control: [no-cache]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 05 Jun 2017 02:16:57 GMT']
+      Expires: ['-1']
+      Pragma: [no-cache]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Vary: [Accept-Encoding]
+      content-length: ['3185']
+      x-ms-original-request-ids: ['', '', '', '', '']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 storagemanagementclient/1.0.0rc1 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      x-ms-client-request-id: [0c86fb7a-4995-11e7-955f-54ee750f2fc7]
+    method: POST
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_rg/providers/Microsoft.Storage/storageAccounts/testaccountforbatch/listKeys?api-version=2016-12-01
+  response:
+    body: {string: '{"keys":[{"keyName":"key1","permissions":"Full","value":"abc=="},{"keyName":"key2","permissions":"Full","value":"xyz=="}]}
+
+'}
+    headers:
+      Cache-Control: [no-cache]
+      Content-Type: [application/json]
+      Date: ['Mon, 05 Jun 2017 02:16:57 GMT']
+      Expires: ['-1']
+      Pragma: [no-cache]
+      Server: [Microsoft-Azure-Storage-Resource-Provider/1.0, Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+      content-length: ['289']
+      x-ms-ratelimit-remaining-subscription-writes: ['1199']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [Azure-Storage/0.34.2 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [0cf1579a-4995-11e7-a12c-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:16:57 GMT']
+      x-ms-version: ['2016-05-31']
+    method: PUT
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-output?restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The
+        specified container already exists.\nRequestId:6ca78888-0001-00a7-17a1-dd8307000000\nTime:2017-06-05T02:17:00.0850075Z</Message></Error>"}
+    headers:
+      Content-Length: ['230']
+      Content-Type: [application/xml]
+      Date: ['Mon, 05 Jun 2017 02:16:59 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      x-ms-version: ['2016-05-31']
+    status: {code: 409, message: The specified container already exists.}
+- request:
+    body: '{"id": "ncj-windows-2012-r2-1", "poolInfo": {"poolId": "ncj-windows-2012-r2"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['78']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python batchextensionsclient/0.0.1]
+      accept-language: [en-US]
+      client-request-id: [0d0ccf3e-4995-11e7-9fc5-54ee750f2fc7]
+      return-client-request-id: ['false']
+    method: POST
+    uri: https://test1.westus.batch.azure.com/jobs?timeout=30&api-version=2017-05-01.5.0
+  response:
+    body: {string: ''}
+    headers:
+      DataServiceId: ['https://test1.westus.batch.azure.com/jobs/job-1']
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:16:59 GMT']
+      ETag: ['0x8D4ABB8F30CACC0']
+      Last-Modified: ['Mon, 05 Jun 2017 02:17:00 GMT']
+      Location: ['https://test1.westus.batch.azure.com/jobs/job-1']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [f8e4eca3-2c90-4d17-b4ec-05c822e12f73]
+    status: {code: 201, message: Created}
+- request:
+    body: '{"value": [{"id": "myTask", "constraints": {"retentionTime": "PT1H"}, "outputFiles":
+      [{"destination": {"container": {"containerUrl": "https://testaccountforbatch.blob.core.windows.net/fgrp-output?sp=w&st=2017-06-05T02%3A16%3A57Z&sv=2016-05-31&se=2017-06-12T02%3A16%3A57Z&sig=EKtMmMjrcx3GpbceznYLRkzr8br03nZsjSRvdknsGCA%3D&sr=c"}},
+      "uploadOptions": {"uploadCondition": "taskSuccess"}, "filePattern": "$AZ_BATCH_TASK_DIR/*.txt"}],
+      "commandLine": "cmd /c echo | set /p dummy=test"}]}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['481']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python batchextensionsclient/0.0.1]
+      accept-language: [en-US]
+      client-request-id: [0ec5f75c-4995-11e7-b676-54ee750f2fc7]
+    method: POST
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/addtaskcollection?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#taskaddresult\",\"value\":[\r\n
+        \   {\r\n      \"status\":\"Success\",\"taskId\":\"myTask\",\"eTag\":\"0x8D4ABB8F4A22C9C\",\"lastModified\":\"2017-06-05T02:17:03.2683676Z\",\"location\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks/myTask\"\r\n
+        \   }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:17:02 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [4f32aa4d-3ba3-4077-b07d-b2000e93254e]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [0fa07d08-4995-11e7-9a85-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:17:01 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#jobs/@Element\",\"id\":\"ncj-windows-2012-r2-1\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1\",\"eTag\":\"0x8D4ABB8F30CACC0\",\"lastModified\":\"2017-06-05T02:17:00.6108864Z\",\"creationTime\":\"2017-06-05T02:17:00.591882Z\",\"state\":\"active\",\"stateTransitionTime\":\"2017-06-05T02:17:00.6108864Z\",\"priority\":0,\"usesTaskDependencies\":false,\"constraints\":{\r\n
+        \   \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"maxTaskRetryCount\":0\r\n
+        \ },\"poolInfo\":{\r\n    \"poolId\":\"ncj-windows-2012-r2\"\r\n  },\"executionInfo\":{\r\n
+        \   \"startTime\":\"2017-06-05T02:17:00.6108864Z\",\"poolId\":\"ncj-windows-2012-r2\"\r\n
+        \ },\"onAllTasksComplete\":\"noaction\",\"onTaskFailure\":\"noaction\"\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:17:03 GMT']
+      ETag: ['0x8D4ABB8F30CACC0']
+      Last-Modified: ['Mon, 05 Jun 2017 02:17:00 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [2fa06086-e3ac-43c9-9808-35351953f9d6]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [0fb9f85e-4995-11e7-a2da-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:17:02 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks/myTask\",\"eTag\":\"0x8D4ABB8F4A22C9C\",\"creationTime\":\"2017-06-05T02:17:03.2683676Z\",\"lastModified\":\"2017-06-05T02:17:03.2683676Z\",\"state\":\"running\",\"stateTransitionTime\":\"2017-06-05T02:17:04.438441Z\",\"previousState\":\"active\",\"previousStateTransitionTime\":\"2017-06-05T02:17:03.2683676Z\",\"commandLine\":\"cmd
+        /c echo | set /p dummy=test\",\"outputFiles\":[\r\n        {\r\n          \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \           \"container\":{\r\n              \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net/fgrp-output?sp=w&st=2017-06-05T02%3A16%3A57Z&sv=2016-05-31&se=2017-06-12T02%3A16%3A57Z&sig=EKtMmMjrcx3GpbceznYLRkzr8br03nZsjSRvdknsGCA%3D&sr=c\"\r\n
+        \           }\r\n          },\"uploadOptions\":{\r\n            \"uploadCondition\":\"TaskSuccess\"\r\n
+        \         }\r\n        }\r\n      ],\"userIdentity\":{\r\n        \"autoUser\":{\r\n
+        \         \"elevationLevel\":\"nonadmin\"\r\n        }\r\n      },\"constraints\":{\r\n
+        \       \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \     },\"executionInfo\":{\r\n        \"startTime\":\"2017-06-05T02:17:04.438441Z\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \     },\"nodeInfo\":{\r\n        \"affinityId\":\"TVM:tvm-3426989531_1-20170605t014527z\",\"nodeUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z\",\"poolId\":\"ncj-windows-2012-r2\",\"nodeId\":\"tvm-3426989531_1-20170605t014527z\"\r\n
+        \     }\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:17:04 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [e0e0c35b-8ba2-43e3-8b81-23bacf8c1343]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [127a52f8-4995-11e7-9359-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:17:06 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\",\"value\":[\r\n
+        \   {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks/myTask\",\"eTag\":\"0x8D4ABB8F4A22C9C\",\"creationTime\":\"2017-06-05T02:17:03.2683676Z\",\"lastModified\":\"2017-06-05T02:17:03.2683676Z\",\"state\":\"completed\",\"stateTransitionTime\":\"2017-06-05T02:17:06.594688Z\",\"previousState\":\"running\",\"previousStateTransitionTime\":\"2017-06-05T02:17:04.438441Z\",\"commandLine\":\"cmd
+        /c echo | set /p dummy=test\",\"outputFiles\":[\r\n        {\r\n          \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \           \"container\":{\r\n              \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net/fgrp-output?sp=w&st=2017-06-05T02%3A16%3A57Z&sv=2016-05-31&se=2017-06-12T02%3A16%3A57Z&sig=EKtMmMjrcx3GpbceznYLRkzr8br03nZsjSRvdknsGCA%3D&sr=c\"\r\n
+        \           }\r\n          },\"uploadOptions\":{\r\n            \"uploadCondition\":\"TaskSuccess\"\r\n
+        \         }\r\n        }\r\n      ],\"userIdentity\":{\r\n        \"autoUser\":{\r\n
+        \         \"elevationLevel\":\"nonadmin\"\r\n        }\r\n      },\"constraints\":{\r\n
+        \       \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \     },\"executionInfo\":{\r\n        \"startTime\":\"2017-06-05T02:17:04.438441Z\",\"endTime\":\"2017-06-05T02:17:06.594688Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \     },\"nodeInfo\":{\r\n        \"affinityId\":\"TVM:tvm-3426989531_1-20170605t014527z\",\"nodeUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z\",\"poolId\":\"ncj-windows-2012-r2\",\"nodeId\":\"tvm-3426989531_1-20170605t014527z\",\"taskRootDirectory\":\"workitems\\\\ncj-windows-2012-r2-1\\\\job-1\\\\myTask\",\"taskRootDirectoryUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z/files/workitems/ncj-windows-2012-r2-1/job-1/myTask\"\r\n
+        \     }\r\n    }\r\n  ]\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:17:07 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [badb1067-57d9-416b-b366-aa337bb9dc39]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [1297ed0a-4995-11e7-a491-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:17:06 GMT']
+    method: GET
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks/myTask?api-version=2017-05-01.5.0
+  response:
+    body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks/@Element\",\"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks/myTask\",\"eTag\":\"0x8D4ABB8F4A22C9C\",\"creationTime\":\"2017-06-05T02:17:03.2683676Z\",\"lastModified\":\"2017-06-05T02:17:03.2683676Z\",\"state\":\"completed\",\"stateTransitionTime\":\"2017-06-05T02:17:06.594688Z\",\"previousState\":\"running\",\"previousStateTransitionTime\":\"2017-06-05T02:17:04.438441Z\",\"commandLine\":\"cmd
+        /c echo | set /p dummy=test\",\"outputFiles\":[\r\n    {\r\n      \"filePattern\":\"$AZ_BATCH_TASK_DIR/*.txt\",\"destination\":{\r\n
+        \       \"container\":{\r\n          \"containerUrl\":\"https://testaccountforbatch.blob.core.windows.net/fgrp-output?sp=w&st=2017-06-05T02%3A16%3A57Z&sv=2016-05-31&se=2017-06-12T02%3A16%3A57Z&sig=EKtMmMjrcx3GpbceznYLRkzr8br03nZsjSRvdknsGCA%3D&sr=c\"\r\n
+        \       }\r\n      },\"uploadOptions\":{\r\n        \"uploadCondition\":\"TaskSuccess\"\r\n
+        \     }\r\n    }\r\n  ],\"userIdentity\":{\r\n    \"autoUser\":{\r\n      \"elevationLevel\":\"nonadmin\"\r\n
+        \   }\r\n  },\"constraints\":{\r\n    \"maxWallClockTime\":\"P10675199DT2H48M5.4775807S\",\"retentionTime\":\"PT1H\",\"maxTaskRetryCount\":0\r\n
+        \ },\"executionInfo\":{\r\n    \"startTime\":\"2017-06-05T02:17:04.438441Z\",\"endTime\":\"2017-06-05T02:17:06.594688Z\",\"exitCode\":0,\"result\":\"Success\",\"retryCount\":0,\"requeueCount\":0\r\n
+        \ },\"nodeInfo\":{\r\n    \"affinityId\":\"TVM:tvm-3426989531_1-20170605t014527z\",\"nodeUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z\",\"poolId\":\"ncj-windows-2012-r2\",\"nodeId\":\"tvm-3426989531_1-20170605t014527z\",\"taskRootDirectory\":\"workitems\\\\ncj-windows-2012-r2-1\\\\job-1\\\\myTask\",\"taskRootDirectoryUrl\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes/tvm-3426989531_1-20170605t014527z/files/workitems/ncj-windows-2012-r2-1/job-1/myTask\"\r\n
+        \ }\r\n}"}
+    headers:
+      Content-Type: [application/json;odata=minimalmetadata]
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:17:08 GMT']
+      ETag: ['0x8D4ABB8F4A22C9C']
+      Last-Modified: ['Mon, 05 Jun 2017 02:17:03 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [f5e3584a-abac-4847-8cac-1d9a33720c4f]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Connection: [keep-alive]
+      User-Agent: [Azure-Storage/0.34.0 (Python CPython 3.5.1; Windows 8.1)]
+      x-ms-client-request-id: [12b4f382-4995-11e7-aa81-54ee750f2fc7]
+      x-ms-date: ['Mon, 05 Jun 2017 02:17:07 GMT']
+      x-ms-version: ['2016-05-31']
+    method: GET
+    uri: https://testaccountforbatch.blob.core.windows.net/fgrp-output?comp=list&restype=container
+  response:
+    body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults
+        ServiceEndpoint=\"https://testaccountforbatch.blob.core.windows.net/\" ContainerName=\"fgrp-output\"><Blobs><Blob><Name>fileuploaderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:17:07 GMT</Last-Modified><Etag>0x8D4ABB8F7177405</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>fileuploadout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:17:07 GMT</Last-Modified><Etag>0x8D4ABB8F7197052</Etag><Content-Length>858</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>DIokl0ozxuxyxLCOYlht2w==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stderr.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:17:07 GMT</Last-Modified><Etag>0x8D4ABB8F71B6C9B</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5 /><Cache-Control /><Content-Disposition
+        /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob><Blob><Name>stdout.txt</Name><Properties><Last-Modified>Mon,
+        05 Jun 2017 02:17:07 GMT</Last-Modified><Etag>0x8D4ABB8F71D41D1</Etag><Content-Length>4</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding
+        /><Content-Language /><Content-MD5>CY9rzUYh03PK3k6DJie09g==</Content-MD5><Cache-Control
+        /><Content-Disposition /><BlobType>BlockBlob</BlobType><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>false</ServerEncrypted></Properties></Blob></Blobs><NextMarker
+        /></EnumerationResults>"}
+    headers:
+      Content-Type: [application/xml]
+      Date: ['Mon, 05 Jun 2017 02:17:09 GMT']
+      Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
+      Transfer-Encoding: [chunked]
+      x-ms-version: ['2016-05-31']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json; odata=minimalmetadata; charset=utf-8]
+      User-Agent: [python/3.5.1 (Windows-8.1-6.3.9600-SP0) requests/2.14.2 msrest/0.4.7
+          msrest_azure/0.4.7 batchserviceclient/3.0.0 Azure-SDK-For-Python]
+      accept-language: [en-US]
+      client-request-id: [12c17642-4995-11e7-920e-54ee750f2fc7]
+      ocp-date: ['Mon, 05 Jun 2017 02:17:07 GMT']
+    method: DELETE
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1?api-version=2017-05-01.5.0
+  response:
+    body: {string: ''}
+    headers:
+      DataServiceVersion: ['3.0']
+      Date: ['Mon, 05 Jun 2017 02:17:08 GMT']
+      Server: [Microsoft-HTTPAPI/2.0]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      request-id: [3bf55422-b74f-4b30-a701-3b8a0443f6ff]
+    status: {code: 202, message: Accepted}
+version: 1

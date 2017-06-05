@@ -163,9 +163,10 @@ class ExtendedJobOperations(JobOperations):
         # Handle package management on tasks.
         commands.append(templates.process_task_package_references(
             task_collection, pool_os_flavor))
-        job.job_preparation_task = models.JobPreparationTask(
-            **templates.construct_setup_task(job.job_preparation_task,
-                                             commands, pool_os_flavor))
+        job_prep_task_parameters = templates.construct_setup_task(
+            job.job_preparation_task, commands, pool_os_flavor)
+        if job_prep_task_parameters:
+            job.job_preparation_task = models.JobPreparationTask(**job_prep_task_parameters)
 
         # Handle any extended resource file references.
         templates.post_processing(job, file_utils, pool_os_flavor)
