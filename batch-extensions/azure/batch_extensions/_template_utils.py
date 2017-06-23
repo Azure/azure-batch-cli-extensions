@@ -30,9 +30,9 @@ def _validate_int(value, content):
     try:
         value = int(value)
     except ValueError:
-        raise TypeError()
+        raise TypeError("'{}' is not a valid integer.".format(value))
     if str(value) != original:
-        raise TypeError()
+        raise TypeError("'{}' is not a valid integer.".format(value))
     try:
         if value < int(content['minValue']):
             raise ValueError("Minimum value: {}".format(content['minValue']))
@@ -436,8 +436,11 @@ def _parse_arm_parameter(name, template_obj, parameters):
             user_value = user_value['value']
         except TypeError:
             pass
-    if not user_value:
-        raise ValueError("No value supplied for parameter '{}' and no default value".format(name))
+    if user_value is None:
+        raise models.MissingParameterValue(
+            "No value supplied for parameter '{}' and no default value".format(name),
+            parameter_name=name,
+            parameter_description=param_def.get('metadata', {}).get('description'))
     if isinstance(user_value, dict):
         # If substitute value is a complex object - it may require
         # additional parameter substitutions
@@ -640,9 +643,6 @@ def _parse_task_output_files(task, os_flavor, file_utils):
     """
     # Validate the output file configuration
     for output_file in task.output_files:
-        for prop in ['file_pattern', 'destination', 'upload_options']:
-            if not getattr(output_file, prop):
-                raise ValueError("outputFile must include '{}'".format(prop))
         destination = output_file.destination
         if not destination.container and not destination.auto_storage:
             raise ValueError("outputFile must include 'container' or 'auto_storage' property.")
@@ -657,8 +657,6 @@ def _parse_task_output_files(task, os_flavor, file_utils):
             if destination.auto_storage.path:
                 destination.container.path = destination.auto_storage.path
             destination.auto_storage = None
-        if not output_file.upload_options.upload_condition:
-            raise ValueError("outputFile.upload_options must include upload_condition.")
 
 
 def _transform_sweep_str(data, parameters):
@@ -1039,7 +1037,6 @@ def should_get_pool(job, tasks):
     :param list tasks: A collection of tasks to be added to the job.
     :returns: bool
     """
-    # TODO: Ideally this could share code with the package reference and output files methods
     if not tasks:
         return False
     for task in tasks:
@@ -1056,4 +1053,8 @@ def should_get_pool(job, tasks):
     if job.job_manager_task:
         if not _is_prefixed(job.job_manager_task.command_line):
             return True
+    if job.pool_info.auto_pool_specification \
+            and job.pool_info.auto_pool_specification.pool \
+            and job.pool_info.auto_pool_specification.pool.package_references:
+        return True
     return False
