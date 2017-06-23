@@ -16,7 +16,6 @@ import json
 from msrest.exceptions import DeserializationError
 from .. import models
 from .. import _template_utils as templates
-from .. import _job_utils as job_utils
 from .. import _pool_utils as pool_utils
 from .._file_utils import FileUtils
 
@@ -53,6 +52,25 @@ class ExtendedJobOperations(JobOperations):
             raise ValueError("Invalid JSON file: {}".format(error))
         else:
             return template_json
+    
+    def _get_target_pool(self, job):
+        """Retrieve the pool information associated with a job. If the job
+        is an auto-pool, this will be the pool specification. Otherwise
+        we will do a GET call on the pool ID.
+        :param job: The job we want to extract the pool info from.
+        :type job: :class:`JobAddParameter<azure.batch.models.JobAddParameter>` or
+         :class:`ExtendedJobParameter<azure.batch_extensions.models.ExtendedJobParameter>`
+        :returns: :class:`CloudPool<azure.batch.models.CloudPool>`
+        """
+        if not job.pool_info:
+            raise ValueError('Missing required poolInfo.')
+        if job.pool_info.pool_id:
+            return self._parent.pool.get(job.pool_info.pool_id)
+        elif job.pool_info.auto_pool_specification \
+                and job.pool_info.auto_pool_specification.pool:
+            return job.pool_info.auto_pool_specification.pool
+        else:
+            raise ValueError('Missing required poolId or autoPoolSpecification.pool.')
 
     def expand_template(self, template, parameters=None):
         """Expand a JSON template, substituting in optional parameters.
@@ -71,23 +89,23 @@ class ExtendedJobOperations(JobOperations):
             parameters = {}
         expanded_job_object = templates.expand_template(template, parameters)
         try:
-            return expanded_job_object['job']['properties']
-        except KeyError as err:
-            raise ValueError("Template missing required element: {}".format(
-                err.args[0]))        
+            return expanded_job_object['job']
+        except KeyError:
+            raise ValueError("Template missing required 'job' element")
 
     def jobparameter_from_json(self, json_data):
         """Create an ExtendedJobParameter object from a JSON specification.
         :param dict json_data: The JSON specification of an AddJobParameter or an
-         ExtendedJobParameter.
+         ExtendedJobParameter or a JobTemplate
         """
+        result = 'JobTemplate' if json_data.get('properties') else 'ExtendedJobParameter'
         try:
-            job = self._deserialize('ExtendedJobParameter', json_data)
+            job = self._deserialize(result, json_data)
             if job is None:
                 raise ValueError("JSON file is not in correct format.")
             return job
         except Exception as exp:
-            raise ValueError("Unable to deserialize to ExtendedJobParameter: {}".format(exp))
+            raise ValueError("Unable to deserialize to {}: {}".format(result, exp))
 
     def add(self, job, job_add_options=None, custom_headers=None, raw=False, **operation_config):
         """Adds a job to the specified account.
@@ -105,7 +123,8 @@ class ExtendedJobOperations(JobOperations):
 
         :param job: The job to be added.
         :type job: :class:`JobAddParameter<azure.batch.models.JobAddParameter>` or
-            :class:`ExtendedJobParameter<azure.batch_extensions.models.ExtendedJobParameter>`
+         :class:`ExtendedJobParameter<azure.batch_extensions.models.ExtendedJobParameter>`
+         or :class:`JobTemplate<azure.batch.models.JobTemplate>`
         :param job_add_options: Additional parameters for the operation
         :type job_add_options: :class:`JobAddOptions
          <azure.batch.models.JobAddOptions>`
@@ -114,12 +133,16 @@ class ExtendedJobOperations(JobOperations):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: None
+        :rtype: :class:`TaskAddCollectionResult
+         <azure.batch.models.TaskAddCollectionResult>` if task_factory used otherwise
+         None
         :rtype: :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
          if raw=true
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
+        if isinstance(job, models.JobTemplate):
+            job = job.properties
         # Process an application template reference.
         if hasattr(job, 'application_template_info') and job.application_template_info:
             try:
@@ -145,7 +168,7 @@ class ExtendedJobOperations(JobOperations):
         should_get_pool = templates.should_get_pool(job, task_collection)
         pool_os_flavor = None
         if should_get_pool:
-            pool = job_utils.get_target_pool(self._parent.pool, job)
+            pool = self._get_target_pool(job)
             pool_os_flavor = pool_utils.get_pool_target_os_type(pool)
 
         # Handle package management on autopool
@@ -155,7 +178,6 @@ class ExtendedJobOperations(JobOperations):
 
             pool = job.pool_info.auto_pool_specification.pool
             cmds = [templates.process_pool_package_references(pool)]
-            pool_os_flavor = pool_utils.get_pool_target_os_type(pool)
             pool.start_task = models.StartTask(
                 **templates.construct_setup_task(pool.start_task, cmds, pool_os_flavor))
 
@@ -177,9 +199,10 @@ class ExtendedJobOperations(JobOperations):
         # Begin original job add process
         result = super(ExtendedJobOperations, self).add(job, job_add_options, custom_headers, raw, **operation_config)
         if task_collection:
-            job_utils.deploy_tasks(self._parent.task, job.id, task_collection)
+            tasks = self._parent.task.add_collection(job.id, task_collection)
             if auto_complete:
                 # If the option to terminate the job was set, we need to reapply it with a patch
                 # now that the tasks have been added.
                 self.patch(job.id, {'on_all_tasks_complete': auto_complete})
+            return tasks
         return result

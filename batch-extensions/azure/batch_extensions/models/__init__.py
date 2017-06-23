@@ -37,6 +37,9 @@ from .job_release_task import JobReleaseTask
 from .job_manager_task import JobManagerTask
 from .start_task import StartTask
 from .application_template import ApplicationTemplate
+from .job_template import JobTemplate
+from .pool_template import PoolTemplate
+from .missing_parameter_value import MissingParameterValue
 
 
 from .constants import (

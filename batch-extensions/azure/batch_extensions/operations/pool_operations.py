@@ -67,26 +67,25 @@ class ExtendedPoolOperations(PoolOperations):
             parameters = self._load_template_file(parameters)
         elif not parameters:
             parameters = {}
-        expanded_job_object = templates.expand_template(template, parameters)
-        if 'pool' not in expanded_job_object:
-            raise ValueError('Missing pool element in the template.')
-        if 'properties' not in expanded_job_object['pool']:
-            raise ValueError('Missing pool properties element in the template.')
-        # bulid up the jsonFile object to hand to the batch service.
-        return expanded_job_object['pool']['properties']
+        expanded_pool_object = templates.expand_template(template, parameters)
+        try:
+            return expanded_pool_object['pool']
+        except KeyError:
+            raise ValueError("Template missing required 'pool' element")
 
     def poolparameter_from_json(self, json_data):
         """Create an ExtendedPoolParameter object from a JSON specification.
         :param dict json_data: The JSON specification of an AddPoolParameter or an
-         ExtendedPoolParameter.
+         ExtendedPoolParameter or a PoolTemplate.
         """
+        result = 'PoolTemplate' if json_data.get('properties') else 'ExtendedPoolParameter'
         try:
-            pool = self._deserialize('ExtendedPoolParameter', json_data)
+            pool = self._deserialize(result, json_data)
             if pool is None:
                 raise ValueError("JSON data is not in correct format.")
             return pool
         except Exception as exp:
-            raise ValueError("Unable to deserialize to ExtendedPoolParameter: {}".format(exp))
+            raise ValueError("Unable to deserialize to {}: {}".format(result, exp))
 
     def add(
             self, pool, pool_add_options=None, custom_headers=None, raw=False, **operation_config):
@@ -97,7 +96,8 @@ class ExtendedPoolOperations(PoolOperations):
 
         :param pool: The pool to be added.
         :type pool: :class:`PoolAddParameter<azure.batch.models.PoolAddParameter>` or
-            :class:`ExtendedPoolParameter<azure.batch_extensions.models.ExtendedPoolParameter>`
+         :class:`ExtendedPoolParameter<azure.batch_extensions.models.ExtendedPoolParameter>`
+         or :class:`PoolTemplate<azure.batch.models.PoolTemplate>`
         :param pool_add_options: Additional parameters for the operation
         :type pool_add_options: :class:`PoolAddOptions
          <azure.batch.models.PoolAddOptions>`
@@ -112,6 +112,8 @@ class ExtendedPoolOperations(PoolOperations):
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
+        if isinstance(pool, models.PoolTemplate):
+            pool = pool.properties
         pool_os_flavor=None
         # Handle package manangement
         if hasattr(pool, 'package_references') and pool.package_references:
