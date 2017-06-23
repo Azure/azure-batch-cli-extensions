@@ -9,6 +9,16 @@ from msrest.serialization import Model
 
 
 class JobTemplate(Model):
+    """A Job Template.
+
+    :ivar type: The type of object described by the template. Must be:
+     "Microsoft.Batch/batchAccounts/jobs"
+    :type type: str
+    :param api_version: The API version that the template conforms to.
+    :type api_version: str
+    :param properties: The specificaton of the job.
+    :type properties: :class:`ExtendedJobParameter<azure.batch_extensions.models.ExtendedJobParameter>`
+    """
 
     _validation = {
         'type': {'required': True, 'constant': True},

@@ -9,6 +9,16 @@ from msrest.serialization import Model
 
 
 class PoolTemplate(Model):
+    """A Pool Template.
+
+    :ivar type: The type of object described by the template. Must be:
+     "Microsoft.Batch/batchAccounts/pools"
+    :type type: str
+    :param api_version: The API version that the template conforms to.
+    :type api_version: str
+    :param properties: The specificaton of the pool.
+    :type properties: :class:`ExtendedPoolParameter<azure.batch_extensions.models.ExtendedPoolParameter>`
+    """
 
     _validation = {
         'type': {'required': True, 'constant': True},

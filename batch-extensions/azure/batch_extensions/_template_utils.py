@@ -53,7 +53,7 @@ def _validate_string(value, content):
     :returns: str
     """
     if value in [None, ""]:
-        raise TypeError()
+        raise TypeError("Empty string value is invalid: {}".format(value))
     value = str(value)
     try:
         if len(value) < int(content['minLength']):
@@ -81,7 +81,7 @@ def _validate_bool(value):
     elif str(value).lower() == 'false':
         return False
     else:
-        raise TypeError()
+        raise TypeError("'{}' is not a valid bool".format(value))
 
 
 def _is_substitution(content, start, end):
