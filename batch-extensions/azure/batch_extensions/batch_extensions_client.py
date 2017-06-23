@@ -15,11 +15,11 @@ from .batch_auth import SharedKeyCredentials
 from .operations.pool_operations import ExtendedPoolOperations
 from .operations.job_operations import ExtendedJobOperations
 from .operations.file_operations import ExtendedFileOperations
+from .operations.task_operations import ExtendedTaskOperations
 from azure.batch.operations.application_operations import ApplicationOperations
 from azure.batch.operations.account_operations import AccountOperations
 from azure.batch.operations.certificate_operations import CertificateOperations
 from azure.batch.operations.job_schedule_operations import JobScheduleOperations
-from azure.batch.operations.task_operations import TaskOperations
 from azure.batch.operations.compute_node_operations import ComputeNodeOperations
 from . import models
 
@@ -95,6 +95,8 @@ class BatchExtensionsClient(BatchServiceClient):
             self, self._client, self.config, self._serialize, self._deserialize, self._storage_account)
         self.file = ExtendedFileOperations(
             self, self._client, self.config, self._serialize, self._deserialize, self._storage_account)
+        self.task = ExtendedTaskOperations(
+            self, self._client, self.config, self._serialize, self._deserialize, self._storage_account)
         self.application = ApplicationOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.account = AccountOperations(
@@ -102,8 +104,6 @@ class BatchExtensionsClient(BatchServiceClient):
         self.certificate = CertificateOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.job_schedule = JobScheduleOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.task = TaskOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.compute_node = ComputeNodeOperations(
             self._client, self.config, self._serialize, self._deserialize)
@@ -152,11 +152,11 @@ class BatchExtensionsClient(BatchServiceClient):
             # the Batch account in the subscription
             # Example URL: https://batchaccount.westus.batch.azure.com
             region = urlsplit(self.config.base_url).netloc.split('.', 2)[1]
-            accounts = [x for x in client.batch_account.list()
-                        if x.name == self.batch_account and x.location == region]
+            accounts = (x for x in client.batch_account.list()
+                        if x.name == self.batch_account and x.location == region)
             try:
-                account = accounts[0]
-            except IndexError:
+                account = next(accounts)
+            except StopIteration:
                 raise ValueError('Couldn\'t find the account named {} in subscription {} '
                                  'in region {}'.format(
                                      self.batch_account, self._subscription, region))
@@ -170,7 +170,7 @@ class BatchExtensionsClient(BatchServiceClient):
         keys = storage_client.storage_accounts.list_keys(storage_resource_group, storage_account)
         storage_key = keys.keys[0].value  # pylint: disable=no-member
 
-        self.resolved_storage_client = CloudStorageAccount(storage_account, storage_key)\
+        self._resolved_storage_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
-        return self.resolved_storage_client
+        return self._resolved_storage_client
 
