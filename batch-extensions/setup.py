@@ -9,7 +9,7 @@
 from codecs import open
 from setuptools import setup
 
-VERSION = '1.0.0rc2'
+VERSION = '1.0.0rc3'
 
 # The full list of classifiers is available at
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -28,10 +28,10 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-    'azure-batch==2.0.0',
-    'azure-mgmt-batch==3.0.0',
-    'azure-cli-core',
-    'azure-cli-batch'
+    'azure-batch==3.0.0',
+    'azure-mgmt-batch==4.0.0',
+    'azure-storage==0.34.3',
+    'azure-mgmt-storage==1.0.0'
 ]
 DEPENDENCIES_27 = {
     ":python_version<'3.4'": ['pathlib>=1.0.1']
@@ -57,7 +57,9 @@ setup(
         'azure'
     ],
     packages=[
-        'azure.batch_extensions'
+        'azure.batch_extensions',
+        'azure.batch_extensions.operations',
+        'azure.batch_extensions.models'
     ],
     install_requires=DEPENDENCIES,
     extras_require=DEPENDENCIES_27,

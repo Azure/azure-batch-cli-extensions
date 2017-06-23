@@ -9,7 +9,7 @@
 from codecs import open
 from setuptools import setup
 
-VERSION = '1.0.0rc2'
+VERSION = '1.0.0rc3'
 
 # The full list of classifiers is available at
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
