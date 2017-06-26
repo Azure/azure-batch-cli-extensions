@@ -9,14 +9,32 @@ import errno
 
 from azure.batch_extensions.models import (
     PoolAddParameter, CloudServiceConfiguration, VirtualMachineConfiguration,
-    ImageReference, PoolInformation, JobAddParameter, JobManagerTask,
-    JobConstraints, StartTask, JobAddOptions, PoolAddOptions)
-import azure.batch_extensions._job_utils as job_utils
+    ImageReference, PoolInformation, JobAddParameter, JobManagerTask, BatchErrorException,
+    JobConstraints, StartTask, JobAddOptions, PoolAddOptions, MissingParameterValue)
+from msrest.exceptions import ValidationError, ClientRequestError
 import azure.cli.core.azlogging as azlogging
+from azure.cli.core.prompting import prompt
+from azure.cli.core.util import CLIError
 
 logger = azlogging.get_az_logger(__name__)
 
 # NCJ custom commands
+
+
+def _handle_batch_exception(action):
+    try:
+        return action()
+    except BatchErrorException as ex:
+        try:
+            message = ex.error.message.value
+            if ex.error.values:
+                for detail in ex.error.values:
+                    message += "\n{}: {}".format(detail.key, detail.value)
+            raise CLIError(message)
+        except AttributeError:
+            raise CLIError(ex)
+    except (ValidationError, ClientRequestError) as ex:
+        raise CLIError(ex)
 
 
 def create_pool(client, template=None, parameters=None, json_file=None, id=None, vm_size=None,  # pylint:disable=too-many-arguments, too-many-locals
@@ -29,7 +47,17 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
     if template or json_file:
         if template:
             logger.warning('You are using an experimental feature {Pool Template}.')
-            json_obj = client.pool.expand_template(template, parameters)
+            json_obj = None
+            parameters = parameters or {}
+            while json_obj is None:
+                try:
+                    json_obj = client.pool.expand_template(template, parameters)
+                except MissingParameterValue as error:
+                    param_prompt = error.parameter_name
+                    param_prompt += " ({}): ".format(error.parameter_description)
+                    parameters[error.parameter_name] = prompt(param_prompt)
+                else:
+                    json_obj = json_obj.get('properties', json_obj)
         else:
             with open(json_file) as f:
                 json_obj = json.load(f)
@@ -89,8 +117,7 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
             pool.application_package_references = application_package_references
 
     add_option = PoolAddOptions()
-    job_utils._handle_batch_exception(lambda: client.pool.add(pool, add_option))  # pylint: disable=protected-access
-    # return client.pool.get(pool.id)
+    _handle_batch_exception(lambda: client.pool.add(pool, add_option))
 
 
 create_pool.__doc__ = PoolAddParameter.__doc__
@@ -105,7 +132,17 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
     if template or json_file:
         if template:
             logger.warning('You are using an experimental feature {Job Template}.')
-            json_obj = client.job.expand_template(template, parameters)
+            json_obj = None
+            parameters = parameters or {}
+            while json_obj is None:
+                try:
+                    json_obj = client.job.expand_template(template, parameters)
+                except MissingParameterValue as error:
+                    param_prompt = error.parameter_name
+                    param_prompt += " ({}): ".format(error.parameter_description)
+                    parameters[error.parameter_name] = prompt(param_prompt)
+                else:
+                    json_obj = json_obj.get('properties', json_obj)
         else:
             with open(json_file) as f:
                 json_obj = json.load(f)
@@ -144,11 +181,8 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
                                               environment_settings=job_manager_task_environment_settings)  # pylint: disable=line-too-long
             job.job_manager_task = job_manager_task
 
-    def add_job_and_tasks():
-        add_option = JobAddOptions()
-        client.job.add(job, add_option)
-        # return client.job.get(job.id)
-    return job_utils._handle_batch_exception(add_job_and_tasks)  # pylint: disable=protected-access
+    add_option = JobAddOptions()
+    _handle_batch_exception(lambda: client.job.add(job, add_option))
 
 
 create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__
