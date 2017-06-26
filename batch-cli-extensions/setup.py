@@ -31,13 +31,15 @@ DEPENDENCIES = [
     'azure-batch==3.0.0',
     'azure-mgmt-batch==4.0.0',
     'azure-cli-core',
-    'azure-cli-batch'
+    'azure-cli-batch',
+    'azure-storage==0.34.3',
+    'azure-mgmt-storage==1.0.0'
 ]
 DEPENDENCIES_27 = {
     ":python_version<'3.4'": ['pathlib>=1.0.1']
 }
 
-root_dir = os.path.dirname(os.path.dirname(__file__))
+root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 with open(os.path.join(root_dir, 'README.rst'), 'r', encoding='utf-8') as f:
     README = f.read()
 with open(os.path.join(root_dir, 'HISTORY.rst'), 'r', encoding='utf-8') as f:

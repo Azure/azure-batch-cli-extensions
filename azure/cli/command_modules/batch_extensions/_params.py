@@ -83,7 +83,7 @@ register_extra_cli_argument('batch file upload', 'resource_group', arg_group='Ba
 
 # File Download
 register_cli_argument('batch file download', 'local_path', type=file_type, help='Path to a local file or directory to be stored the download files.')
-register_cli_argument('batch file download', 'file_group', help='Name of a file group under which the files will be download.')
+register_cli_argument('batch file download', 'file_group', help='Name of a file group from which the files will be downloaded.')
 register_cli_argument('batch file download', 'remote_path', help='The subdirectory under which files exist remotely.')
 register_cli_argument('batch file download', 'overwrite', action='store_true', help='If set, an existing file in the local path will be overwritten.')
 register_extra_cli_argument('batch file download', 'account_name', arg_group='Batch Account',validator=validate_client_parameters,

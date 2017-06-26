@@ -14,7 +14,7 @@
     <InterpreterId>{305dc1c7-e94b-442f-9516-643a6718b3eb}</InterpreterId>
     <InterpreterVersion>3.5</InterpreterVersion>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>batch file upload --file-group blahblah --local-path *.yml --debug --resource-group blahblah</CommandLineArguments>
+    <CommandLineArguments></CommandLineArguments>
     <IsWindowsApplication>False</IsWindowsApplication>
     <Environment>AZURE_BATCH_RESOURCE_GROUP=python_sdk_test</Environment>
   </PropertyGroup>

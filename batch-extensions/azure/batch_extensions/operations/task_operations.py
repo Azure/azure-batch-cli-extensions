@@ -12,19 +12,12 @@
 from msrest.pipeline import ClientRawResponse
 import uuid
 import json
-import threading
-try:
-    import queue
-except ImportError:
-    import Queue as queue
-
-from .. import models
 
 from azure.batch.operations.task_operations import TaskOperations
+from .. import models
 
 
-MAX_TASKS_COUNT_IN_BATCH = 100
-MAX_TASK_SUBMIT_THREADS = 10
+MAX_TASKS_PER_REQUEST = 100
 
 
 class ExtendedTaskOperations(TaskOperations):
@@ -81,26 +74,42 @@ class ExtendedTaskOperations(TaskOperations):
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
-        start = 0
-        task_queue = queue.Queue()
-        submitting_tasks = []
         submitted_tasks = []
-        while True:
-            end = min(start + MAX_TASKS_COUNT_IN_BATCH, len(value))
-            submitting_tasks.append(threading.Thread(
-                target=self._bulk_add_tasks,
-                args=(task_queue,
-                      job_id,
-                      value[start:end],
-                      task_add_collection_options,
-                      custom_headers,
-                      raw)))
-            submitting_tasks[-1].start()
-            start = end
-            if start >= len(value) or len(submitting_tasks) >= MAX_TASK_SUBMIT_THREADS:
-                while any(s for s in submitting_tasks if s.is_alive()) or not task_queue.empty():
-                    submitted_tasks.append(task_queue.get())
-                    task_queue.task_done()
-                if start >= len(value):
-                    break
+        if self.client.threads:
+            import threading
+            try:
+                import queue
+            except ImportError:
+                import Queue as queue
+            start = 0
+            task_queue = queue.Queue()
+            submitting_tasks = []
+            while True:
+                end = min(start + MAX_TASKS_PER_REQUEST, len(value))
+                submitting_tasks.append(threading.Thread(
+                    target=self._bulk_add_tasks,
+                    args=(task_queue,
+                        job_id,
+                        value[start:end],
+                        task_add_collection_options,
+                        custom_headers,
+                        raw)))
+                submitting_tasks[-1].start()
+                start = end
+                if start >= len(value) or len(submitting_tasks) >= self.client.threads:
+                    while any(s for s in submitting_tasks if s.is_alive()) or not task_queue.empty():
+                        submitted_tasks.append(task_queue.get())
+                        task_queue.task_done()
+                    if start >= len(value):
+                        break
+        else:
+            for i in range(0, len(value), MAX_TASKS_PER_REQUEST):
+                submission = super(ExtendedTaskOperations, self).add_collection(
+                    job_id,
+                    value[i:i + MAX_TASKS_PER_REQUEST],
+                    task_add_collection_options,
+                    custom_headers,
+                    raw)
+                submitted_tasks.extend(submission.value)
         return models.TaskAddCollectionResult(value=submitted_tasks)
+
