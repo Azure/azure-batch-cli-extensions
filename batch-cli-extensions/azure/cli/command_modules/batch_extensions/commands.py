@@ -15,7 +15,6 @@ from azure.mgmt.batch import __version__ as batch_mgmt_version
 
 from azure.cli.command_modules.batch_extensions._client_factory import (
     batch_extensions_client)
-    #account_mgmt_client_factory, batch_data_service_factory)
 
 
 logger = azlogging.get_az_logger(__name__)

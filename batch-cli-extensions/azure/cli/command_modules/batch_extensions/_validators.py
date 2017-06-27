@@ -5,10 +5,6 @@
 
 import os
 import json
-try:
-    from urllib.parse import urlsplit
-except ImportError:
-    from urlparse import urlsplit  # pylint: disable=import-error
 
 from msrest.serialization import Deserializer
 from msrest.exceptions import DeserializationError

@@ -97,15 +97,18 @@ class RepeatTask(Model):
         'affinity_info': {'key': 'affinityInfo', 'type': 'AffinityInformation'},
         'constraints': {'key': 'constraints', 'type': 'TaskConstraints'},
         'user_identity': {'key': 'userIdentity', 'type': 'UserIdentity'},
-        'application_package_references': {'key': 'applicationPackageReferences', 'type': '[ApplicationPackageReference]'},
-        'authentication_token_settings': {'key': 'authenticationTokenSettings', 'type': 'AuthenticationTokenSettings'},
+        'application_package_references': {'key': 'applicationPackageReferences',
+                                           'type': '[ApplicationPackageReference]'},
+        'authentication_token_settings': {'key': 'authenticationTokenSettings',
+                                          'type': 'AuthenticationTokenSettings'},
         'output_files': {'key': 'outputFiles', 'type': '[OutputFile]'},
         'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
     }
 
-    def __init__(self, command_line, display_name=None, exit_conditions=None, resource_files=None, environment_settings=None,
-                 affinity_info=None, constraints=None, user_identity=None, application_package_references=None,
-                 authentication_token_settings=None, output_files=None, package_references=None):
+    def __init__(self, command_line, display_name=None, exit_conditions=None, resource_files=None,
+                 environment_settings=None, affinity_info=None, constraints=None, user_identity=None,
+                 application_package_references=None, authentication_token_settings=None,
+                 output_files=None, package_references=None):
         self.display_name = display_name
         self.command_line = command_line
         self.exit_conditions = exit_conditions

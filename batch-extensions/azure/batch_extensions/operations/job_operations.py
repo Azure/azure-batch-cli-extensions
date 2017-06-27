@@ -9,17 +9,15 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.pipeline import ClientRawResponse
-import uuid
 import json
 
 from msrest.exceptions import DeserializationError
+from azure.batch.operations.job_operations import JobOperations
+
 from .. import models
 from .. import _template_utils as templates
 from .. import _pool_utils as pool_utils
 from .._file_utils import FileUtils
-
-from azure.batch.operations.job_operations import JobOperations
 
 
 class ExtendedJobOperations(JobOperations):
@@ -37,7 +35,7 @@ class ExtendedJobOperations(JobOperations):
         self._parent = parent
         self.get_storage_client = get_storage_account
 
-    def _load_template_file(self, json_file):
+    def _load_template_file(self, json_file):  # pylint:disable=no-self-use
         """Load the contents of a JSON file as a dict.
         :param str json_file: The path to the JSON file or a
         file-like object.
@@ -52,7 +50,7 @@ class ExtendedJobOperations(JobOperations):
             raise ValueError("Invalid JSON file: {}".format(error))
         else:
             return template_json
-    
+
     def _get_target_pool(self, job):
         """Retrieve the pool information associated with a job. If the job
         is an auto-pool, this will be the pool specification. Otherwise
@@ -194,10 +192,11 @@ class ExtendedJobOperations(JobOperations):
         templates.post_processing(job, file_utils, pool_os_flavor)
         if task_collection:
             templates.post_processing(task_collection, file_utils, pool_os_flavor)
-        templates.process_job_for_output_files(job, task_collection, pool_os_flavor, file_utils)
+        templates.process_job_for_output_files(job, task_collection, file_utils)
 
         # Begin original job add process
-        result = super(ExtendedJobOperations, self).add(job, job_add_options, custom_headers, raw, **operation_config)
+        result = super(ExtendedJobOperations, self).add(
+            job, job_add_options, custom_headers, raw, **operation_config)
         if task_collection:
             tasks = self._parent.task.add_collection(job.id, task_collection)
             if auto_complete:

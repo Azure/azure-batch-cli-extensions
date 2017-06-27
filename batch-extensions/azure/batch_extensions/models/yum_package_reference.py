@@ -5,6 +5,8 @@
 # license information.
 # --------------------------------------------------------------------------
 
+# pylint: disable=redefined-builtin
+
 from .package_reference_base import PackageReferenceBase
 
 

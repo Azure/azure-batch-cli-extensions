@@ -8,10 +8,9 @@ import tempfile
 import json
 import datetime
 
-from azure.batch.models import BatchErrorException, AllocationState, ComputeNodeState, TaskState
+from azure.batch_extensions.models import BatchErrorException, AllocationState, ComputeNodeState, TaskState
 import azure.batch.batch_auth as batchauth
-import azure.batch.batch_service_client as batch
-from azure.cli.command_modules.batch import _help
+import azure.batch_extensions as batch
 from tests.vcr_test_base import VCRTestBase
 from azure.cli.core.profiles import get_sdk, ResourceType
 
@@ -27,7 +26,7 @@ class TestFileUpload(VCRTestBase):
             self.resource_name = 'test_rg'
         else:
             self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
-            self.resource_name =  os.environ.get('AZURE_BATCH_RESORCE_GROUP', 'test_rg')
+            self.resource_name = os.environ.get('AZURE_BATCH_RESORCE_GROUP', 'test_rg')
         self.testPrefix = 'cli-batch-extensions-live-tests'
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
@@ -72,7 +71,7 @@ class TestBatchExtensionsLive(VCRTestBase):
         self.blob_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
         credentials = batchauth.SharedKeyCredentials(self.account_name, self.account_key)
-        self.batch_client = batch.BatchServiceClient(credentials, base_url=self.account_endpoint)
+        self.batch_client = batch.BatchExtensionsClient(credentials, base_url=self.account_endpoint)
 
         self.output_blob_container = 'aaatestcontainer'
         sas_token = self.blob_client.generate_container_shared_access_signature(
@@ -84,7 +83,7 @@ class TestBatchExtensionsLive(VCRTestBase):
             storage_account,
             self.output_blob_container,
             sas_token)
-        self.output_container_sas = 'https://pythonsdkteststorage.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=WLwDhL8y%2BVxzMhAMvNiBhT01Je%2FhVbpWpK4QA%2FOmJgo%3D&se=2017-06-07T01%3A03%3A37Z&sp=rwdl'
+        self.output_container_sas = 'https://pythonsdkteststorage.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=ATi60Em20tc2KTXRl4E5Tl2wrjM1I2roHs1BnZS4JXM%3D&se=2018-12-31T17%3A43%3A53Z&sp=rwdl'
         print('Full container sas: {}'.format(self.output_container_sas))
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
@@ -100,7 +99,7 @@ class TestBatchExtensionsLive(VCRTestBase):
         try:
             result = self.cmd('batch job create --template "{}"'.format(file_name))
         except Exception as exp:
-            print(exp)
+            result = exp
         print('Result text:{}'.format(result))
 
     def wait_for_tasks_complete(self, job_id, timeout):

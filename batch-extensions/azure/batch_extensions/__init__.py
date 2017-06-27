@@ -11,4 +11,3 @@ from .version import VERSION
 __all__ = ['BatchExtensionsClient']
 
 __version__ = VERSION
-

@@ -10,10 +10,8 @@
 # --------------------------------------------------------------------------
 
 from msrest.pipeline import ClientRawResponse
-import uuid
-import json
-
 from azure.batch.operations.task_operations import TaskOperations
+
 from .. import models
 
 
@@ -37,9 +35,13 @@ class ExtendedTaskOperations(TaskOperations):
 
     def _bulk_add_tasks(self, queue, *args, **kwargs):
         added_tasks = super(ExtendedTaskOperations, self).add_collection(*args, **kwargs)
-        for task in added_tasks.value:
-            queue.put(task)
-            
+        if isinstance(added_tasks, ClientRawResponse):
+            for task in added_tasks.output.value:
+                queue.put(task)
+        else:
+            for task in added_tasks.value:  # pylint: disable=no-member
+                queue.put(task)
+
     def add_collection(
             self, job_id, value, task_add_collection_options=None, custom_headers=None, raw=False):
         """Adds a collection of tasks to the specified job.
@@ -75,7 +77,7 @@ class ExtendedTaskOperations(TaskOperations):
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
         submitted_tasks = []
-        if self.client.threads:
+        if self._parent.threads:
             import threading
             try:
                 import queue
@@ -89,14 +91,14 @@ class ExtendedTaskOperations(TaskOperations):
                 submitting_tasks.append(threading.Thread(
                     target=self._bulk_add_tasks,
                     args=(task_queue,
-                        job_id,
-                        value[start:end],
-                        task_add_collection_options,
-                        custom_headers,
-                        raw)))
+                          job_id,
+                          value[start:end],
+                          task_add_collection_options,
+                          custom_headers,
+                          raw)))
                 submitting_tasks[-1].start()
                 start = end
-                if start >= len(value) or len(submitting_tasks) >= self.client.threads:
+                if start >= len(value) or len(submitting_tasks) >= self._parent.threads:
                     while any(s for s in submitting_tasks if s.is_alive()) or not task_queue.empty():
                         submitted_tasks.append(task_queue.get())
                         task_queue.task_done()
@@ -110,6 +112,8 @@ class ExtendedTaskOperations(TaskOperations):
                     task_add_collection_options,
                     custom_headers,
                     raw)
-                submitted_tasks.extend(submission.value)
+                if isinstance(submission, ClientRawResponse):
+                    submitted_tasks.extend(submission.output.value)
+                else:
+                    submitted_tasks.extend(submission.value)  # pylint: disable=no-member
         return models.TaskAddCollectionResult(value=submitted_tasks)
-

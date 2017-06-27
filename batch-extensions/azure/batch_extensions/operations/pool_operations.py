@@ -9,16 +9,14 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.pipeline import ClientRawResponse
-import uuid
 import json
+
+from azure.batch.operations.pool_operations import PoolOperations
 
 from .. import models
 from .. import _file_utils as file_utils
 from .. import _pool_utils as pool_utils
 from .. import _template_utils as templates
-
-from azure.batch.operations.pool_operations import PoolOperations
 
 
 class ExtendedPoolOperations(PoolOperations):
@@ -36,7 +34,7 @@ class ExtendedPoolOperations(PoolOperations):
         self._parent = parent
         self.get_storage_client = get_storage_account
 
-    def _load_template_file(self, json_file):
+    def _load_template_file(self, json_file):  # pylint:disable=no-self-use
         """Load the contents of a JSON file as a dict.
         :param str json_file: The path to the JSON file or a
         file-like object.
@@ -114,7 +112,7 @@ class ExtendedPoolOperations(PoolOperations):
         """
         if isinstance(pool, models.PoolTemplate):
             pool = pool.properties
-        pool_os_flavor=None
+        pool_os_flavor = None
         # Handle package manangement
         if hasattr(pool, 'package_references') and pool.package_references:
             pool_os_flavor = pool_utils.get_pool_target_os_type(pool)

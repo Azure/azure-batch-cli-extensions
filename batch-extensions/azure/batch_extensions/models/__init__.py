@@ -5,6 +5,8 @@
 # license information.
 # --------------------------------------------------------------------------
 
+# pylint: disable=wildcard-import,unused-import,unused-wildcard-import
+
 # Not ideal syntax - but savaes us having to check and repopulate this
 # list every time the SDK is regenerated.
 from azure.batch.models import *
@@ -39,14 +41,6 @@ from .start_task import StartTask
 from .application_template import ApplicationTemplate
 from .job_template import JobTemplate
 from .pool_template import PoolTemplate
-from .missing_parameter_value import MissingParameterValue
-
-
 from .constants import (
     PROPS_RESERVED_FOR_JOBS,
-    PROPS_PERMITTED_ON_TEMPLATES,
-    ROOT_FILE_UPLOAD_URL,
-    FILE_EGRESS_OVERRIDE,
-    FILE_EGRESS_ENV_NAME,
-    FILE_EGRESS_PREFIX,
-    FILE_EGRESS_RESOURCES)
+    PROPS_PERMITTED_ON_TEMPLATES)

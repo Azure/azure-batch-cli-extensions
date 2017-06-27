@@ -95,9 +95,9 @@ class ApplicationTemplate(Model):
         'task_factory': {'key': 'taskFactory', 'type': 'TaskFactoryBase'},
     }
 
-    def __init__(self, job_manager_task=None, job_preparation_task=None, job_release_task=None, common_environment_settings=None,
-                 on_all_tasks_complete=None, on_task_failure=None, metadata=None, uses_task_dependencies=None,
-                 task_factory=None):
+    def __init__(self, job_manager_task=None, job_preparation_task=None, job_release_task=None,
+                 common_environment_settings=None, on_all_tasks_complete=None, on_task_failure=None,
+                 metadata=None, uses_task_dependencies=None, task_factory=None):
         self.job_manager_task = job_manager_task
         self.job_preparation_task = job_preparation_task
         self.job_release_task = job_release_task
@@ -107,5 +107,3 @@ class ApplicationTemplate(Model):
         self.metadata = metadata
         self.uses_task_dependencies = uses_task_dependencies
         self.task_factory = task_factory
-
-

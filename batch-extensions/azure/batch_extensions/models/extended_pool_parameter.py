@@ -5,6 +5,8 @@
 # license information.
 # --------------------------------------------------------------------------
 
+# pylint: disable=redefined-builtin
+
 from azure.batch.models import PoolAddParameter
 
 
@@ -158,8 +160,10 @@ class ExtendedPoolParameter(PoolAddParameter):
         'id': {'key': 'id', 'type': 'str'},
         'display_name': {'key': 'displayName', 'type': 'str'},
         'vm_size': {'key': 'vmSize', 'type': 'str'},
-        'cloud_service_configuration': {'key': 'cloudServiceConfiguration', 'type': 'CloudServiceConfiguration'},
-        'virtual_machine_configuration': {'key': 'virtualMachineConfiguration', 'type': 'VirtualMachineConfiguration'},
+        'cloud_service_configuration': {'key': 'cloudServiceConfiguration',
+                                        'type': 'CloudServiceConfiguration'},
+        'virtual_machine_configuration': {'key': 'virtualMachineConfiguration',
+                                          'type': 'VirtualMachineConfiguration'},
         'resize_timeout': {'key': 'resizeTimeout', 'type': 'duration'},
         'target_dedicated_nodes': {'key': 'targetDedicatedNodes', 'type': 'int'},
         'target_low_priority_nodes': {'key': 'targetLowPriorityNodes', 'type': 'int'},
@@ -170,7 +174,8 @@ class ExtendedPoolParameter(PoolAddParameter):
         'network_configuration': {'key': 'networkConfiguration', 'type': 'NetworkConfiguration'},
         'start_task': {'key': 'startTask', 'type': 'StartTask'},
         'certificate_references': {'key': 'certificateReferences', 'type': '[CertificateReference]'},
-        'application_package_references': {'key': 'applicationPackageReferences', 'type': '[ApplicationPackageReference]'},
+        'application_package_references': {'key': 'applicationPackageReferences',
+                                           'type': '[ApplicationPackageReference]'},
         'application_licenses': {'key': 'applicationLicenses', 'type': '[str]'},
         'max_tasks_per_node': {'key': 'maxTasksPerNode', 'type': 'int'},
         'task_scheduling_policy': {'key': 'taskSchedulingPolicy', 'type': 'TaskSchedulingPolicy'},
@@ -179,11 +184,13 @@ class ExtendedPoolParameter(PoolAddParameter):
         'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
     }
 
-    def __init__(self, id, vm_size, display_name=None, cloud_service_configuration=None, virtual_machine_configuration=None,
-                 resize_timeout=None, target_dedicated_nodes=None, target_low_priority_nodes=None, enable_auto_scale=None,
-                 auto_scale_formula=None, auto_scale_evaluation_interval=None, enable_inter_node_communication=None, network_configuration=None,
-                 start_task=None, certificate_references=None, application_package_references=None, application_licenses=None,
-                 max_tasks_per_node=None, task_scheduling_policy=None, user_accounts=None, metadata=None, package_references=None):
+    def __init__(self, id, vm_size, display_name=None, cloud_service_configuration=None,
+                 virtual_machine_configuration=None, resize_timeout=None, target_dedicated_nodes=None,
+                 target_low_priority_nodes=None, enable_auto_scale=None, auto_scale_formula=None,
+                 auto_scale_evaluation_interval=None, enable_inter_node_communication=None,
+                 network_configuration=None, start_task=None, certificate_references=None,
+                 application_package_references=None, application_licenses=None, max_tasks_per_node=None,
+                 task_scheduling_policy=None, user_accounts=None, metadata=None, package_references=None):
         super(ExtendedPoolParameter, self).__init__(
             id=id,
             display_name=display_name,
@@ -191,8 +198,8 @@ class ExtendedPoolParameter(PoolAddParameter):
             cloud_service_configuration=cloud_service_configuration,
             virtual_machine_configuration=virtual_machine_configuration,
             resize_timeout=resize_timeout,
-            target_dedicated_nodes = target_dedicated_nodes,
-            target_low_priority_nodes = target_low_priority_nodes,
+            target_dedicated_nodes=target_dedicated_nodes,
+            target_low_priority_nodes=target_low_priority_nodes,
             enable_auto_scale=enable_auto_scale,
             auto_scale_formula=auto_scale_formula,
             auto_scale_evaluation_interval=auto_scale_evaluation_interval,
@@ -201,7 +208,7 @@ class ExtendedPoolParameter(PoolAddParameter):
             start_task=start_task,
             certificate_references=certificate_references,
             application_package_references=application_package_references,
-            application_licenses = application_licenses,
+            application_licenses=application_licenses,
             max_tasks_per_node=max_tasks_per_node,
             task_scheduling_policy=task_scheduling_policy,
             user_accounts=user_accounts,

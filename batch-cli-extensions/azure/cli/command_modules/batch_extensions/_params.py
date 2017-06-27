@@ -8,8 +8,7 @@ from argcomplete.completers import FilesCompleter
 from azure.cli.core.commands import \
     (register_cli_argument, CliArgumentType, register_extra_cli_argument)
 from azure.cli.core.commands.parameters import \
-    (resource_group_name_type,
-     get_resource_name_completion_list, file_type)
+    (get_resource_name_completion_list, file_type)
 
 from azure.cli.command_modules.batch_extensions._validators import \
     (validate_pool_settings, validate_client_parameters, metadata_item_format, environment_setting_format,
@@ -40,11 +39,11 @@ register_cli_argument('batch pool create', 'node_agent_sku_id', arg_group="Pool:
 register_cli_argument('batch pool create', 'image', completer=load_node_agent_skus, arg_group="Pool: Virtual Machine Configuration",
                       help="OS image URN in 'publisher:offer:sku[:version]' format. Version is optional and if omitted latest will be used.\n\tValues from 'az batch pool node-agent-skus list'.\n\tExample: 'MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest'")
 register_extra_cli_argument('batch pool create', 'account_name', arg_group='Batch Account', validator=validate_client_parameters,
-                      help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
+                            help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
 register_extra_cli_argument('batch pool create', 'account_key', arg_group='Batch Account',
                             help='The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY')
 register_extra_cli_argument('batch pool create', 'account_endpoint', arg_group='Batch Account',
-                      help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
+                            help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
 register_extra_cli_argument('batch pool create', 'resource_group', arg_group='Batch Account', help='The resource group of the Batch account')
 
 # Job Create
@@ -61,11 +60,11 @@ register_cli_argument('batch job create', 'job_manager_task_environment_settings
 register_cli_argument('batch job create', 'job_manager_task_resource_files', arg_group='Job: Job Manager Task', type=resource_file_format, help='A list of files that the Batch service will download to the compute node before running the command line. Files listed under this element are located in the task\'s working directory. Space separated resource references in filename=blobsource format.')
 register_cli_argument('batch job create', 'job_manager_task_id', arg_group='Job: Job Manager Task', help='A string that uniquely identifies the Job Manager task within the job. The id can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters.')
 register_extra_cli_argument('batch job create', 'account_name', arg_group='Batch Account', validator=validate_client_parameters,
-                      help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
+                            help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
 register_extra_cli_argument('batch job create', 'account_key', arg_group='Batch Account',
                             help='The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY')
 register_extra_cli_argument('batch job create', 'account_endpoint', arg_group='Batch Account',
-                      help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
+                            help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
 register_extra_cli_argument('batch job create', 'resource_group', arg_group='Batch Account', help='The resource group of the Batch account')
 
 # File Upload
@@ -74,11 +73,11 @@ register_cli_argument('batch file upload', 'file_group', help='Name of a file gr
 register_cli_argument('batch file upload', 'remote_path', help='Group subdirectory under which files will be uploaded.')
 register_cli_argument('batch file upload', 'flatten', action='store_true', help='If set, will not retain local directory structure in storage.')
 register_extra_cli_argument('batch file upload', 'account_name', arg_group='Batch Account', validator=validate_client_parameters,
-                      help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
+                            help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
 register_extra_cli_argument('batch file upload', 'account_key', arg_group='Batch Account',
                             help='The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY')
 register_extra_cli_argument('batch file upload', 'account_endpoint', arg_group='Batch Account',
-                      help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
+                            help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
 register_extra_cli_argument('batch file upload', 'resource_group', arg_group='Batch Account', help='The resource group of the Batch account')
 
 # File Download
@@ -86,10 +85,10 @@ register_cli_argument('batch file download', 'local_path', type=file_type, help=
 register_cli_argument('batch file download', 'file_group', help='Name of a file group from which the files will be downloaded.')
 register_cli_argument('batch file download', 'remote_path', help='The subdirectory under which files exist remotely.')
 register_cli_argument('batch file download', 'overwrite', action='store_true', help='If set, an existing file in the local path will be overwritten.')
-register_extra_cli_argument('batch file download', 'account_name', arg_group='Batch Account',validator=validate_client_parameters,
-                      help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
+register_extra_cli_argument('batch file download', 'account_name', arg_group='Batch Account', validator=validate_client_parameters,
+                            help='The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT')
 register_extra_cli_argument('batch file download', 'account_key', arg_group='Batch Account',
                             help='The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY')
 register_extra_cli_argument('batch file download', 'account_endpoint', arg_group='Batch Account',
-                      help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
+                            help='Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT')
 register_extra_cli_argument('batch file download', 'resource_group', arg_group='Batch Account', help='The resource group of the Batch account')

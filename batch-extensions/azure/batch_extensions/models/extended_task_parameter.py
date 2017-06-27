@@ -5,6 +5,8 @@
 # license information.
 # --------------------------------------------------------------------------
 
+# pylint: disable=redefined-builtin
+
 from azure.batch.models import TaskAddParameter
 
 
@@ -119,21 +121,26 @@ class ExtendedTaskParameter(TaskAddParameter):
         'user_identity': {'key': 'userIdentity', 'type': 'UserIdentity'},
         'multi_instance_settings': {'key': 'multiInstanceSettings', 'type': 'MultiInstanceSettings'},
         'depends_on': {'key': 'dependsOn', 'type': 'TaskDependencies'},
-        'application_package_references': {'key': 'applicationPackageReferences', 'type': '[ApplicationPackageReference]'},
-        'authentication_token_settings': {'key': 'authenticationTokenSettings', 'type': 'AuthenticationTokenSettings'},
+        'application_package_references': {'key': 'applicationPackageReferences',
+                                           'type': '[ApplicationPackageReference]'},
+        'authentication_token_settings': {'key': 'authenticationTokenSettings',
+                                          'type': 'AuthenticationTokenSettings'},
         'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
     }
 
-    def __init__(self, id, command_line, display_name=None, exit_conditions=None, resource_files=None, output_files=None,
-                 environment_settings=None, affinity_info=None, constraints=None, user_identity=None, multi_instance_settings=None,
-                 depends_on=None, application_package_references=None, authentication_token_settings=None, package_references=None):
+    def __init__(self, id, command_line, display_name=None, exit_conditions=None,
+                 resource_files=None, output_files=None, environment_settings=None,
+                 affinity_info=None, constraints=None, user_identity=None,
+                 multi_instance_settings=None, depends_on=None,
+                 application_package_references=None, authentication_token_settings=None,
+                 package_references=None):
         super(ExtendedTaskParameter, self).__init__(
             id=id,
             display_name=display_name,
             command_line=command_line,
             exit_conditions=exit_conditions,
             resource_files=resource_files,
-            output_files = output_files,
+            output_files=output_files,
             environment_settings=environment_settings,
             affinity_info=affinity_info,
             constraints=constraints,

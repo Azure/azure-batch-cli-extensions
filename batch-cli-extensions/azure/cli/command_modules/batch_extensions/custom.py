@@ -4,14 +4,13 @@
 # --------------------------------------------------------------------------------------------
 
 import json
-import os
-import errno
 
+from msrest.exceptions import ValidationError, ClientRequestError
+from azure.batch_extensions.errors import MissingParameterValue
 from azure.batch_extensions.models import (
     PoolAddParameter, CloudServiceConfiguration, VirtualMachineConfiguration,
     ImageReference, PoolInformation, JobAddParameter, JobManagerTask, BatchErrorException,
-    JobConstraints, StartTask, JobAddOptions, PoolAddOptions, MissingParameterValue)
-from msrest.exceptions import ValidationError, ClientRequestError
+    JobConstraints, StartTask, JobAddOptions, PoolAddOptions)
 import azure.cli.core.azlogging as azlogging
 from azure.cli.core.prompting import prompt
 from azure.cli.core.util import CLIError
@@ -19,6 +18,7 @@ from azure.cli.core.util import CLIError
 logger = azlogging.get_az_logger(__name__)
 
 # NCJ custom commands
+# pylint: disable=redefined-builtin
 
 
 def _handle_batch_exception(action):
@@ -113,6 +113,8 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
             pool.metadata = metadata
         if certificate_references:
             pool.certificate_references = certificate_references
+        if application_licenses:
+            pool.application_licenses = application_licenses
         if application_package_references:
             pool.application_package_references = application_package_references
 

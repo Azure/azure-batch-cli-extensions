@@ -7,15 +7,14 @@
 import copy
 import itertools
 import json
-import os
 import re
 from msrest.serialization import Model
 try:
     from shlex import quote as shell_escape
 except ImportError:
     from pipes import quote as shell_escape
-from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
 
+from . import errors
 from . import _pool_utils as pool_utils
 from . import models
 
@@ -135,16 +134,6 @@ def _find_nested(delimiter, content, start_index):
             index = _find('\'', content, index + 1)
         index += 1
     return index
-
-
-def _get_output_source_url(path):
-    """Determines the file URL for an OutputFiles dependency.
-    :param str path: The path to the file.
-    :returns: The URL to the file.
-    """
-    root_url = os.environ.get(models.FILE_EGRESS_OVERRIDE, models.ROOT_FILE_UPLOAD_URL)
-    root_url = root_url if root_url.endswith('/') else root_url + '/'
-    return urljoin(root_url, path)
 
 
 def _merge_metadata(base_metadata, more_metadata):
@@ -301,7 +290,7 @@ def _validate_parameter_usage(parameters, definitions):
         try:
             if definition['type'] not in supported_types:
                 raise ValueError("The parameter '{}' specifies an unsupported "
-                                    "type: {}".format(name, definition['type']))
+                                 "type: {}".format(name, definition['type']))
         except KeyError:
             raise ValueError("The parameter '{}' does not specify a type.".format(name))
         # Rule: If the parameter definition has no default value, the template must provide a value
@@ -380,13 +369,12 @@ def _validate_parameter(name, content, value):
         if value not in content.get('allowedValues', [value]):
             raise ValueError("Allowed values: {}".format(', '.join(content['allowedValues'])))
     except TypeError:
-        raise TypeError("The value '%s' of parameter '%s' is not a %s".format(
-                       name, value, content['type']))
-        return None
+        raise TypeError("The value '{}' of parameter '{}' is not a {}".format(
+            name, value, content['type']))
     except ValueError as value_error:
         raise ValueError(
-            "The value '%s' of parameter '%s' does not meet the requirement: %s".format(
-            name, value, str(value_error)))
+            "The value '{}' of parameter '{}' does not meet the requirement: {}".format(
+                name, value, str(value_error)))
     else:
         return value
 
@@ -437,7 +425,7 @@ def _parse_arm_parameter(name, template_obj, parameters):
         except TypeError:
             pass
     if user_value is None:
-        raise models.MissingParameterValue(
+        raise errors.MissingParameterValue(
             "No value supplied for parameter '{}' and no default value".format(name),
             parameter_name=name,
             parameter_description=param_def.get('metadata', {}).get('description'))
@@ -609,7 +597,7 @@ def _parse_template(template_str, template_obj, parameters):
         return json.loads(updated_json)
     except ValueError as exp:
         try:
-            return json.loads(updated_json.encode('string_escape').replace('\\\\','\\'))
+            return json.loads(updated_json.encode('string_escape').replace('\\\\', '\\'))
         except LookupError:
             raise ValueError("Unable to load JSON template {}, error: {}".format(
                 updated_json, str(exp)))
@@ -635,12 +623,13 @@ def _process_resource_files(request, fileutils):
     return request
 
 
-def _parse_task_output_files(task, os_flavor, file_utils):
+def _parse_task_output_files(task, file_utils):
     """Process a task's outputFiles section and update the task accordingly.
     :param dict task: A task specification.
-    :param str os_flavor: The OS flavor of the pool.
     :returns: A new task specification with modifications.
     """
+    if not task or not task.output_files:
+        return
     # Validate the output file configuration
     for output_file in task.output_files:
         destination = output_file.destination
@@ -835,7 +824,7 @@ def _expand_task_per_file(factory, fileutils):
         factory.merge_task.id = 'merge'
         factory.merge_task.depends_on = models.TaskDependencies(
             task_id_ranges=models.TaskIdRange(start=0, end=len(task_objs) - 1))
-        task_objs.append(merge_task)
+        task_objs.append(factory.merge_task)
     except AttributeError:  # No merge task
         pass
     return task_objs
@@ -851,19 +840,20 @@ def expand_application_template(job, deserialize):
             template_json = json.load(file_handle)
     except (EnvironmentError, ValueError, TypeError) as error:
         raise ValueError("Failed to load application template from '{}': {}".
-                            format(job.application_template_info.file_path, error))
+                         format(job.application_template_info.file_path, error))
     _validate_parameter_usage(job.application_template_info.parameters,
                               template_json.get('parameters'))
     job_from_template = _parse_template(json.dumps(template_json), template_json,
                                         job.application_template_info.parameters)
     _validate_generated_job(job_from_template)
     metadata = _merge_metadata(job_from_template.get('metadata'), job.metadata)
-    env_settings = _merge_environment_settings(job_from_template.get('commonEnvironmentSettings'), job.common_environment_settings)
+    env_settings = _merge_environment_settings(job_from_template.get('commonEnvironmentSettings'),
+                                               job.common_environment_settings)
     _validate_metadata(metadata)
     metadata.append({'name': 'az_batch:template_filepath', 'value': job.application_template_info.file_path})
     job_from_template['metadata'] = metadata
     job_from_template['commonEnvironmentSettings'] = env_settings
-    
+
     job_patch = deserialize('ApplicationTemplate', job_from_template)
     # Merge the job as defined by the application template with the original job we were given
     job.__dict__.update(job_patch.__dict__)
@@ -906,7 +896,7 @@ def construct_setup_task(existing_task, command_info, os_flavor):
     """
     if existing_task:
         result = dict(existing_task.__dict__)
-        
+
     else:
         result = {}
     commands = []
@@ -954,20 +944,17 @@ def construct_setup_task(existing_task, command_info, os_flavor):
     return result
 
 
-def process_job_for_output_files(job, tasks, os_flavor, file_utils):
+def process_job_for_output_files(job, tasks, file_utils):
     """Process a job and its collection of tasks for any tasks which use outputFiles.
     If a task does use outputFiles, we add to the jobs jobPrepTask for the install step.
     NOTE: This edits the task collection and job in-line!
     :param dict job: A job specification.
     :param list tasks: A list of task specifications.
-    :param string os_flavor: The OS flavor of the pool.
-    :returns: A dictionary with 'cmdLine' and 'resourceFiles'.
     """
     if job.job_manager_task:
-        _parse_task_output_files(job.job_manager_task, os_flavor, file_utils)
-    if tasks:
-        for index, task in enumerate(tasks):
-            _parse_task_output_files(tasks[index], os_flavor, file_utils)
+        _parse_task_output_files(job.job_manager_task, file_utils)
+    for task in tasks:
+        _parse_task_output_files(task, file_utils)
 
 
 def process_pool_package_references(pool):
@@ -1037,24 +1024,25 @@ def should_get_pool(job, tasks):
     :param list tasks: A collection of tasks to be added to the job.
     :returns: bool
     """
+    get_pool = False
     if not tasks:
-        return False
+        return get_pool
     for task in tasks:
         if not _is_prefixed(task.command_line):
-            return True
+            get_pool = True
         if task.package_references:
-            return True
+            get_pool = True
     if job.job_preparation_task:
         if not _is_prefixed(job.job_preparation_task.command_line):
-            return True
+            get_pool = True
     if job.job_release_task:
         if not _is_prefixed(job.job_release_task.command_line):
-            return True
+            get_pool = True
     if job.job_manager_task:
         if not _is_prefixed(job.job_manager_task.command_line):
-            return True
+            get_pool = True
     if job.pool_info.auto_pool_specification \
             and job.pool_info.auto_pool_specification.pool \
             and job.pool_info.auto_pool_specification.pool.package_references:
-        return True
-    return False
+        get_pool = True
+    return get_pool

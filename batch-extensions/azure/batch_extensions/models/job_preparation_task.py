@@ -5,6 +5,8 @@
 # license information.
 # --------------------------------------------------------------------------
 
+# pylint: disable=redefined-builtin
+
 from msrest.serialization import Model
 
 
@@ -85,7 +87,9 @@ class JobPreparationTask(Model):
         'rerun_on_node_reboot_after_success': {'key': 'rerunOnNodeRebootAfterSuccess', 'type': 'bool'},
     }
 
-    def __init__(self, command_line, id=None, resource_files=None, environment_settings=None, constraints=None, wait_for_success=None, user_identity=None, rerun_on_node_reboot_after_success=None):
+    def __init__(self, command_line, id=None, resource_files=None, environment_settings=None,
+                 constraints=None, wait_for_success=None, user_identity=None,
+                 rerun_on_node_reboot_after_success=None):
         self.id = id
         self.command_line = command_line
         self.resource_files = resource_files

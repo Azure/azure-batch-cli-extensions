@@ -11,8 +11,8 @@ from mock import patch, Mock
 from msrest import Serializer, Deserializer
 from azure.storage import CloudStorageAccount
 from azure.storage.blob.blockblobservice import BlockBlobService
+from azure.batch.batch_auth import SharedKeyCredentials
 import azure.batch_extensions as batch
-from azure.batch_extensions.batch_auth import SharedKeyCredentials
 from azure.batch_extensions import models
 from azure.batch_extensions import operations
 from azure.batch_extensions import _template_utils as utils
@@ -249,8 +249,8 @@ class TestBatchExtensions(unittest.TestCase):
         job_ops = operations.ExtendedJobOperations(None, None, None, self._serialize, self._deserialize, None)
         resolved = job_ops.expand_template(template_file, parameter_file)
         self.assertTrue(resolved)
-        self.assertEqual(resolved['id'], "helloworld")
-        self.assertEqual(resolved['poolInfo']['poolId'], "xplatTestPool")
+        self.assertEqual(resolved['properties']['id'], "helloworld")
+        self.assertEqual(resolved['properties']['poolInfo']['poolId'], "xplatTestPool")
         self.assertFalse('[parameters(' in json.dumps(resolved))
 
     def test_batch_extensions_replace_parametric_sweep_command(self):
@@ -1503,12 +1503,12 @@ class TestBatchExtensions(unittest.TestCase):
         self.assertEqual(len(resolved[1]), 2)
 
     def test_batch_extensions_generate_container_from_filegroup(self):
-        self.assertEqual(file_utils._get_container_name("data"), 'fgrp-data')
-        self.assertEqual(file_utils._get_container_name("Data"), 'fgrp-data')
-        self.assertEqual(file_utils._get_container_name("data__test--"),
+        self.assertEqual(file_utils.get_container_name("data"), 'fgrp-data')
+        self.assertEqual(file_utils.get_container_name("Data"), 'fgrp-data')
+        self.assertEqual(file_utils.get_container_name("data__test--"),
                          "fgrp-data-test-6640b0b7acfec6867ab146c9cf185206b5f0bdcb")
-        self.assertEqual(file_utils._get_container_name("data-test-really-long-name-with-no-"
+        self.assertEqual(file_utils.get_container_name("data-test-really-long-name-with-no-"
                                                   "special-characters-o8724578o2476"),
                          "fgrp-data-test-reall-cc5bdae242ec8cee81a2b85a35a0f538991472c2")
         with self.assertRaises(ValueError):
-            file_utils._get_container_name("data-#$%")
+            file_utils.get_container_name("data-#$%")

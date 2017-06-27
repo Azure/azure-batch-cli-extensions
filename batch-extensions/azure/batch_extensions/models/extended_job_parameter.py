@@ -5,6 +5,8 @@
 # license information.
 # --------------------------------------------------------------------------
 
+# pylint: disable=redefined-builtin
+
 from azure.batch.models import JobAddParameter
 from .constants import ATTRS_RESERVED_FOR_TEMPLATES
 
@@ -139,19 +141,19 @@ class ExtendedJobParameter(JobAddParameter):
                  on_all_tasks_complete=None, on_task_failure=None, metadata=None, uses_task_dependencies=None,
                  task_factory=None, application_template_info=None):
         super(ExtendedJobParameter, self).__init__(
-            id = id,
-            display_name = display_name,
-            priority = priority,
-            constraints = constraints,
-            job_manager_task = job_manager_task,
-            job_preparation_task = job_preparation_task,
-            job_release_task = job_release_task,
-            common_environment_settings = common_environment_settings,
-            pool_info = pool_info,
-            on_all_tasks_complete = on_all_tasks_complete,
-            on_task_failure = on_task_failure,
-            metadata = metadata,
-            uses_task_dependencies = uses_task_dependencies)
+            id=id,
+            display_name=display_name,
+            priority=priority,
+            constraints=constraints,
+            job_manager_task=job_manager_task,
+            job_preparation_task=job_preparation_task,
+            job_release_task=job_release_task,
+            common_environment_settings=common_environment_settings,
+            pool_info=pool_info,
+            on_all_tasks_complete=on_all_tasks_complete,
+            on_task_failure=on_task_failure,
+            metadata=metadata,
+            uses_task_dependencies=uses_task_dependencies)
         self.task_factory = task_factory
         self.application_template_info = application_template_info
         if self.application_template_info:

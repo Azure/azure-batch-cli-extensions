@@ -9,14 +9,12 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.pipeline import ClientRawResponse
-import uuid
+import errno
 import os
 
-from .. import models
-from .. import _file_utils as file_utils
-
 from azure.batch.operations.file_operations import FileOperations
+
+from .. import _file_utils as file_utils
 
 
 class ExtendedFileOperations(FileOperations):
@@ -42,7 +40,7 @@ class ExtendedFileOperations(FileOperations):
          was uploaded.
         :returns: The URL (str).
         """
-        container = file_utils._get_container_name(file_group)
+        container = file_utils.get_container_name(file_group)
         storage_client = self.get_storage_client()
         if remote_path:
             # Add any specified virtual directories
@@ -54,7 +52,7 @@ class ExtendedFileOperations(FileOperations):
             raise ValueError("Unable to locate blob '{}' in container '{}'. Error: {}".format(
                 file_name, container, exp))
         else:
-            return file_utils._generate_blob_sas_token(blob, container, storage_client)
+            return file_utils.generate_blob_sas_token(blob, container, storage_client)
 
     def upload(self, local_path, file_group, remote_path=None, flatten=None, progress_callback=None):
         """Upload local file or directory of files to storage
@@ -73,12 +71,13 @@ class ExtendedFileOperations(FileOperations):
             for f in files:  # TODO: Threaded pool.
                 file_name = os.path.relpath(f, path)
                 file_utils.upload_blob(f, file_group, file_name, self.get_storage_client(),
-                    remote_path=remote_path, flatten=flatten, progress_callback=progress_callback)
+                                       remote_path=remote_path, flatten=flatten,
+                                       progress_callback=progress_callback)
         else:
             raise ValueError('No files or directories found matching local path {}'.format(local_path))
 
     def download(self, local_path, file_group, remote_path=None,
-            overwrite=False, progress_callback=None):
+                 overwrite=False, progress_callback=None):
         """Download the contents of a file group, optionally relative to a subfolder.
         :param str local_path: The directory into which the files will be downloaded. If
          the files have a remote folder structure, this will be maintained relative to this
@@ -107,7 +106,7 @@ class ExtendedFileOperations(FileOperations):
                             if exc.errno != errno.EEXIST:
                                 raise
                     file_utils.download_blob(f.name, file_group, file_name,
-                        storage_client, progress_callback)
+                                             storage_client, progress_callback)
         else:
             raise ValueError('No files found in file group {} matching remote path {}'.format(
                 file_group, remote_path))
@@ -121,7 +120,7 @@ class ExtendedFileOperations(FileOperations):
     def list_from_group(self, file_group, remote_path=None, num_results=None):
         """List the files in the file group."""
         storage_client = self.get_storage_client()
-        container = file_utils._get_container_name(file_group)
+        container = file_utils.get_container_name(file_group)
         return storage_client.list_blobs(container, prefix=remote_path, num_results=num_results)
 
     def delete_group(self, file_group):
@@ -129,12 +128,5 @@ class ExtendedFileOperations(FileOperations):
         Will do nothing if the group does not exist.
         """
         storage_client = self.get_storage_client()
-        container = file_utils._get_container_name(file_group)
+        container = file_utils.get_container_name(file_group)
         return storage_client.delete_container(container, fail_not_exist=False)
-
-    def delete_from_group(self, file_group, remote_path):
-        """Delete one of more files from within a group."""
-        storage_client = self.get_storage_client()
-        container = file_utils._get_container_name(file_group)
-        blobs_to_delete = self.list_from_group(file_group)
-        

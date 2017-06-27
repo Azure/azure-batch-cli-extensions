@@ -6,29 +6,27 @@
 # --------------------------------------------------------------------------
 
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
-
-from msrest.service_client import ServiceClient
 from msrest import Serializer, Deserializer
-from msrestazure import AzureConfiguration
-from .version import VERSION
-from .batch_auth import SharedKeyCredentials
-from .operations.pool_operations import ExtendedPoolOperations
-from .operations.job_operations import ExtendedJobOperations
-from .operations.file_operations import ExtendedFileOperations
-from .operations.task_operations import ExtendedTaskOperations
+
+from azure.batch import BatchServiceClient
+from azure.mgmt.batch import BatchManagementClient
+from azure.mgmt.storage import StorageManagementClient
+from azure.storage import CloudStorageAccount
+from azure.common.credentials import get_cli_profile
 from azure.batch.operations.application_operations import ApplicationOperations
 from azure.batch.operations.account_operations import AccountOperations
 from azure.batch.operations.certificate_operations import CertificateOperations
 from azure.batch.operations.job_schedule_operations import JobScheduleOperations
 from azure.batch.operations.compute_node_operations import ComputeNodeOperations
+
+from .version import VERSION
+from .operations.pool_operations import ExtendedPoolOperations
+from .operations.job_operations import ExtendedJobOperations
+from .operations.file_operations import ExtendedFileOperations
+from .operations.task_operations import ExtendedTaskOperations
 from . import models
 
-from azure.common.credentials import get_cli_profile
-from azure.batch import BatchServiceClient
-from azure.mgmt.batch import BatchManagementClient
-from azure.mgmt.storage import StorageManagementClient
-from azure.storage import CloudStorageAccount
-
+# pylint: disable=protected-access
 
 _MGMT_RESOURCE_IDS = {
     'https://batch.core.windows.net/': 'https://management.core.windows.net/',
@@ -64,7 +62,7 @@ class BatchExtensionsClient(BatchServiceClient):
     """
 
     def __init__(self, credentials=None, base_url=None, subscription_id=None,
-            resource_group=None, batch_account=None, storage_client=None):
+                 resource_group=None, batch_account=None, storage_client=None):
         if not credentials:
             try:
                 profile = get_cli_profile()
@@ -123,14 +121,14 @@ class BatchExtensionsClient(BatchServiceClient):
         else:
             try:
                 from azure.common.client_factory import get_client_from_cli_profile
-                client = get_client_from_cli_profile(BatchManagementClient, 
-                    subscription_id=self._subscription)
+                client = get_client_from_cli_profile(BatchManagementClient,
+                                                     subscription_id=self._subscription)
                 self._mgmt_client = client
                 credentials = client.config.credentials
             except ImportError:
                 try:
                     credentials = self.config.credentials
-                    credentials._resource = _MGMT_RESOURCE_IDS.get(credentials._resource)
+                    credentials._resource = _MGMT_RESOURCE_IDS[credentials._resource]
                     client = BatchManagementClient(credentials, self._subscription)
                 except AttributeError:
                     raise ValueError("Unable to resolve auto-storage account because the"
@@ -174,4 +172,3 @@ class BatchExtensionsClient(BatchServiceClient):
         self._resolved_storage_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
         return self._resolved_storage_client
-

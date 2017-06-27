@@ -5,6 +5,8 @@
 # license information.
 # --------------------------------------------------------------------------
 
+# pylint: disable=redefined-builtin
+
 from msrest.serialization import Model
 
 
@@ -73,7 +75,8 @@ class JobReleaseTask(Model):
         'user_identity': {'key': 'userIdentity', 'type': 'UserIdentity'},
     }
 
-    def __init__(self, command_line, id=None, resource_files=None, environment_settings=None, max_wall_clock_time=None, retention_time=None, user_identity=None):
+    def __init__(self, command_line, id=None, resource_files=None, environment_settings=None,
+                 max_wall_clock_time=None, retention_time=None, user_identity=None):
         self.id = id
         self.command_line = command_line
         self.resource_files = resource_files

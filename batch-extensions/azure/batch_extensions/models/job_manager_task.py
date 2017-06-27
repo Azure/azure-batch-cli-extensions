@@ -5,6 +5,8 @@
 # license information.
 # --------------------------------------------------------------------------
 
+# pylint: disable=redefined-builtin
+
 from msrest.serialization import Model
 
 
@@ -119,12 +121,17 @@ class JobManagerTask(Model):
         'kill_job_on_completion': {'key': 'killJobOnCompletion', 'type': 'bool'},
         'user_identity': {'key': 'userIdentity', 'type': 'UserIdentity'},
         'run_exclusive': {'key': 'runExclusive', 'type': 'bool'},
-        'application_package_references': {'key': 'applicationPackageReferences', 'type': '[ApplicationPackageReference]'},
-        'authentication_token_settings': {'key': 'authenticationTokenSettings', 'type': 'AuthenticationTokenSettings'},
+        'application_package_references': {'key': 'applicationPackageReferences',
+                                           'type': '[ApplicationPackageReference]'},
+        'authentication_token_settings': {'key': 'authenticationTokenSettings',
+                                          'type': 'AuthenticationTokenSettings'},
         'allow_low_priority_node': {'key': 'allowLowPriorityNode', 'type': 'bool'},
     }
 
-    def __init__(self, id, command_line, display_name=None, resource_files=None, output_files=None, environment_settings=None, constraints=None, kill_job_on_completion=None, user_identity=None, run_exclusive=None, application_package_references=None, authentication_token_settings=None, allow_low_priority_node=None):
+    def __init__(self, id, command_line, display_name=None, resource_files=None, output_files=None,
+                 environment_settings=None, constraints=None, kill_job_on_completion=None, user_identity=None,
+                 run_exclusive=None, application_package_references=None, authentication_token_settings=None,
+                 allow_low_priority_node=None):
         self.id = id
         self.display_name = display_name
         self.command_line = command_line

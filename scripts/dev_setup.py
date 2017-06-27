@@ -11,6 +11,7 @@ import sys
 import os
 from subprocess import check_call, CalledProcessError
 
+modules = ['batch-cli-extensions', 'batch-extensions']
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', '..'))
 
 
@@ -32,7 +33,8 @@ exec_command('pip install -r requirements.txt')
 # install automation package
 exec_command('pip install -e ./scripts')
 
-# install reference to extension module package
-exec_command('pip install -e {}'.format(root_dir))
+for m in modules:
+  # install reference to extension module package
+  exec_command('pip install -e {}'.format(os.path.join(root_dir, m)))
 
 print('Finished dev setup.')

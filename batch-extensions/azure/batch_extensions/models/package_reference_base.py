@@ -5,11 +5,13 @@
 # license information.
 # --------------------------------------------------------------------------
 
+# pylint: disable=redefined-builtin
+
 from msrest.serialization import Model
 
 
 class PackageReferenceBase(Model):
-    """A reference to a package to be installed on the compute nodes using 
+    """A reference to a package to be installed on the compute nodes using
     a package manager.
 
     :param str id: The name of the package.

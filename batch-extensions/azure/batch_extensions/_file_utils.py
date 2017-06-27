@@ -12,11 +12,7 @@ import pathlib
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
 from six.moves.urllib.parse import quote  # pylint: disable=import-error
 
-from msrestazure.azure_exceptions import CloudError
-from azure.mgmt.storage import StorageManagementClient
-from azure.storage import CloudStorageAccount
 from azure.storage.blob import BlobPermissions, BlockBlobService
-from azure.mgmt.batch import BatchManagementClient
 from . import models
 
 
@@ -93,7 +89,7 @@ def resolve_file_paths(local_path):
 
 
 def resolve_remote_paths(blob_service, file_group, remote_path):
-    blobs = blob_service.list_blobs(_get_container_name(file_group), prefix=remote_path)
+    blobs = blob_service.list_blobs(get_container_name(file_group), prefix=remote_path)
     return list(blobs)
 
 def generate_container_name(file_group):
@@ -123,12 +119,12 @@ def generate_container_name(file_group):
         return new_group
 
 
-def _get_container_name(file_group):
+def get_container_name(file_group):
     """Get valid container name from file group name with prefix."""
     return '{}{}'.format(FileUtils.GROUP_PREFIX, generate_container_name(file_group))
 
 
-def _generate_blob_sas_token(blob, container, blob_service, permission=BlobPermissions.READ):
+def generate_blob_sas_token(blob, container, blob_service, permission=BlobPermissions.READ):
     """Generate a blob URL with SAS token."""
     sas_token = blob_service.generate_blob_shared_access_signature(
         container, blob.name,
@@ -138,7 +134,7 @@ def _generate_blob_sas_token(blob, container, blob_service, permission=BlobPermi
     return blob_service.make_blob_url(container, quote(blob.name), sas_token=sas_token)
 
 
-def _generate_container_sas_token(container, blob_service, permission=BlobPermissions.WRITE):
+def generate_container_sas_token(container, blob_service, permission=BlobPermissions.WRITE):
     """Generate a container URL with SAS token."""
     blob_service.create_container(container)
     sas_token = blob_service.generate_container_shared_access_signature(
@@ -156,7 +152,7 @@ def _generate_container_sas_token(container, blob_service, permission=BlobPermis
 def download_blob(blob, file_group, destination, blob_service, progress_callback):
     """Download the specified file to the specified container"""
     blob_service.get_blob_to_path(
-        _get_container_name(file_group), blob, destination,
+        get_container_name(file_group), blob, destination,
         progress_callback=progress_callback)
 
 def upload_blob(source, destination, file_name,  # pylint: disable=too-many-arguments
@@ -174,7 +170,7 @@ def upload_blob(source, destination, file_name,  # pylint: disable=too-many-argu
         file_name = os.path.basename(file_name)
 
     # Create upload container with sanitized file group name
-    container_name = _get_container_name(destination)
+    container_name = get_container_name(destination)
     blob_service.create_container(container_name)
 
     blob_name = file_name
@@ -245,7 +241,7 @@ class FileUtils(object):
             blobs = blob_service.list_blobs(container)
             for blob in blobs:
                 if source.file_group:
-                    blob_sas = _generate_blob_sas_token(blob, container, blob_service)
+                    blob_sas = generate_blob_sas_token(blob, container, blob_service)
                 elif source.container_url:
                     blob_sas = construct_sas_url(blob, urlsplit(source.container_url))
                 elif source.url:
@@ -263,19 +259,19 @@ class FileUtils(object):
 
     def get_container_sas(self, file_group_name):
         storage_client = self.resolve_storage_account()
-        container = _get_container_name(file_group_name)
+        container = get_container_name(file_group_name)
         try:
             return self.container_sas_cache[container]
         except KeyError:
-            self.container_sas_cache[container] = _generate_container_sas_token(container, storage_client)
+            self.container_sas_cache[container] = generate_container_sas_token(container, storage_client)
             return self.container_sas_cache[container]
 
     def get_container_list(self, source):
-        """List blob references in container."""   
+        """List blob references in container."""
         if source.file_group:
             # Input data stored in auto-storage
             storage_client = self.resolve_storage_account()
-            container = _get_container_name(source.file_group)
+            container = get_container_name(source.file_group)
         elif source.container_url:
             uri = urlsplit(source.container_url)
             if not uri.query:
@@ -309,7 +305,7 @@ class FileUtils(object):
 
         if resource_file.source.file_group:
             # Input data stored in auto-storage
-            container = _get_container_name(resource_file.source.file_group)
+            container = get_container_name(resource_file.source.file_group)
             blobs = self.list_container_contents(resource_file.source, container, storage_client)
             return convert_blobs_to_resource_files(blobs, resource_file)
         elif resource_file.source.container_url:
