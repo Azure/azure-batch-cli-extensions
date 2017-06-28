@@ -139,7 +139,7 @@ def _find_nested(delimiter, content, start_index):
 def _merge_metadata(base_metadata, more_metadata):
     """Merge metadata from two different sources.
     :param list base_metadata: A (possibly undefined) set of metadata.
-    :param list more_metadata: Metadata to add (also possible undefined).
+    :param list more_metadata: Metadata to add (also possibly undefined).
     """
     result = []
     if base_metadata:
@@ -158,7 +158,7 @@ def _merge_metadata(base_metadata, more_metadata):
 def _merge_environment_settings(base_env_settings, more_env_settings):
     """Merge environment settings from two different sources.
     :param list base_env_settings: A (possibly undefined) set of metadata.
-    :param list more_env_settings: Metadata to add (also possible undefined).
+    :param list more_env_settings: Metadata to add (also possibly undefined).
     """
     result = []
     if base_env_settings:

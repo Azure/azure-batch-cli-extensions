@@ -3,7 +3,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from distutils import version
+from distutils import version  # pylint: disable=no-name-in-module
 
 from azure.cli.core import __version__ as core_version
 from azure.cli.core.commands import cli_command
@@ -29,8 +29,8 @@ def confirm_version(current, supported, package):
     _supported = ".".join(supported.split('.')[0:-1])
     if version.StrictVersion(_current) > version.StrictVersion(_supported):
         logger.warning("This package of the Batch Extensions module supports "
-                       "{} up to version {}. The current version {} has not been "
-                       "tested for compatibility.".format(package, supported, current))
+                       "%s up to version %s. The current version %s has not been "
+                       "tested for compatibility.", package, supported, current)
 
 confirm_version(core_version, SUPPORTED_CORE_VERSION, "Azure CLI Core")
 confirm_version(batch_version, SUPPORTED_BATCH_VERSION, "Azure Batch")

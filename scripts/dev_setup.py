@@ -11,7 +11,7 @@ import sys
 import os
 from subprocess import check_call, CalledProcessError
 
-modules = ['batch-cli-extensions', 'batch-extensions']
+modules = ['batch-extensions', 'batch-cli-extensions']
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', '..'))
 
 

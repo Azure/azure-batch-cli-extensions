@@ -24,15 +24,17 @@ class TestFileUpload(VCRTestBase):
         if self.playback:
             self.account_name = 'test1'
             self.resource_name = 'test_rg'
+            self.account_endpoint = 'https://test1.westus.batch.azure.com/'
         else:
             self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
             self.resource_name = os.environ.get('AZURE_BATCH_RESORCE_GROUP', 'test_rg')
+            self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
         self.testPrefix = 'cli-batch-extensions-live-tests'
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
             debug=False):
-        command = '{} --resource-group {} --account-name {}'.\
-            format(command, self.resource_name, self.account_name)
+        command = '{} --resource-group {} --account-name {} --account-endpoint {}'.\
+            format(command, self.resource_name, self.account_name, self.account_endpoint)
         return super(TestFileUpload, self).cmd(command, checks, allowed_exceptions, debug)
 
     def test_batch_upload_live(self):

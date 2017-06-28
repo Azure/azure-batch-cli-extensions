@@ -205,9 +205,11 @@ def validate_client_parameters(namespace):
         namespace.account_endpoint = az_config.get('batch', 'endpoint', None)
 
     if not namespace.account_name:
-        raise ValueError("Need specifiy batch account in command line or enviroment variable.")
+        raise ValueError("Please specify the batch account name using --account-name "
+                         "or the AZURE_BATCH_ACCOUNT enviroment variable.")
     if not namespace.account_endpoint:
-        raise ValueError("Need specifiy batch endpoint in command line or enviroment variable.")
+        raise ValueError("Please specify the batch account endpoint using --account-endpoint "
+                         "or the AZURE_BATCH_ENDPOINT enviroment variable.")
 
 # CUSTOM REQUEST VALIDATORS
 

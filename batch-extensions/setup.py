@@ -28,10 +28,10 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-    'azure-batch==3.0.0',
-    'azure-mgmt-batch==4.0.0',
-    'azure-storage==0.34.3',
-    'azure-mgmt-storage==1.0.0'
+    'azure-batch>=3.0,<4',
+    'azure-mgmt-batch>=4.0,<5',
+    'azure-storage>=0.34,<0.35',
+    'azure-mgmt-storage>=1.0,<2'
 ]
 DEPENDENCIES_27 = {
     ":python_version<'3.4'": ['pathlib>=1.0.1']

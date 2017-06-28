@@ -16,7 +16,7 @@
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <CommandLineArguments></CommandLineArguments>
     <IsWindowsApplication>False</IsWindowsApplication>
-    <Environment>AZURE_BATCH_RESOURCE_GROUP=python_sdk_test</Environment>
+    <Environment></Environment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />

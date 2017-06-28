@@ -16,6 +16,7 @@ import sys
 import pip
 import imp
 import fileinput
+import importlib
 
 import automation.utilities.path as automation_path
 from automation.utilities.display import print_heading
@@ -42,14 +43,18 @@ def set_version(path_to_setup):
     PyPI
     """
     for _, line in enumerate(fileinput.input(path_to_setup, inplace=1)):
-        sys.stdout.write(line.replace('version=VERSION', "version='1000.0.0'"))
+        line = line.replace('version=VERSION', "version='1000.0.0'")
+        line = line.replace('azure-batch-extensions>=0.1,<1', 'azure-batch-extensions==1000.0.0')
+        sys.stdout.write(line)
 
 def reset_version(path_to_setup):
     """
     Revert package to original version no. for PyPI package and deploy.
     """
     for _, line in enumerate(fileinput.input(path_to_setup, inplace=1)):
-        sys.stdout.write(line.replace("version='1000.0.0'", 'version=VERSION'))
+        line = line.replace("version='1000.0.0'", 'version=VERSION')
+        line = line.replace('azure-batch-extensions==1000.0.0', 'azure-batch-extensions>=0.1,<1')
+        sys.stdout.write(line)
 
 
 def build_package(path_to_package, dist_dir):
@@ -74,11 +79,17 @@ def install_pip_package(package_name):
     print_heading('Installed {}'.format(package_name))
 
 def install_package(path_to_package, package_name, dist_dir):
-    #sys.path.remove(path_to_package)
-    print("deleting {}".format(os.path.join(path_to_package, 'azure_cli_batch_extensions.egg-info')))
-    shutil.rmtree(os.path.join(path_to_package, 'azure_cli_batch_extensions.egg-info'))
+    egg_path = os.path.join(path_to_package, '{}.egg-info'.format(package_name.replace('-', '_')))
+    print("deleting {}".format(egg_path))
+    try:
+        shutil.rmtree(egg_path)
+    except Exception as exp:
+        print("Couldn't delete: {}".format(exp))
     print("deleting {}".format(os.path.join(path_to_package, 'build')))
-    shutil.rmtree(os.path.join(path_to_package, 'build'))
+    try:
+        shutil.rmtree(os.path.join(path_to_package, 'build'))
+    except Exception as exp:
+        print("Couldn't delete: {}".format(exp))
     print_heading('Installing {}'.format(path_to_package))
     cmd = 'python -m pip install --upgrade {} --find-links file://{}'.format(package_name, dist_dir)
     cmd_success = exec_command(cmd)
@@ -104,9 +115,16 @@ def verify_packages():
     # Revert version
     # Install the remaining command modules
     for name, fullpath in all_modules:
-         install_package(fullpath, name, built_packages_dir)
+         install_package(fullpath, name, built_packages_dir) 
 
     # STEP 3:: Validate the installation
+    for name in ['azure.batch_extensions', 'azure.cli.command_modules.batch_extensions']:
+        try:
+            importlib.import_module(name)
+        except ImportError as err:
+            print("Unable to import {}".format(name))
+            print(err)
+            sys.exit(1)
     try:
         az_output = subprocess.check_output(['az', '--debug'], stderr=subprocess.STDOUT,
                                             universal_newlines=True)
@@ -121,14 +139,13 @@ def verify_packages():
         sys.exit(1)
 
     pip.utils.pkg_resources = imp.reload(pip.utils.pkg_resources)
-    installed_command_modules = [dist.key for dist in
-                                 pip.get_installed_distributions(local_only=True)
-                                 if dist.key.startswith(COMMAND_MODULE_PREFIX)]
+    installed_modules = [dist.key for dist in
+                         pip.get_installed_distributions(local_only=True)]
 
-    print('Installed command modules', installed_command_modules)
+    print('Installed command modules', installed_modules)
 
     missing_modules = \
-        set([name for name, fullpath in all_modules]) - set(installed_command_modules)
+        set([name for name, fullpath in all_modules]) - set(installed_modules)
 
     if missing_modules:
         print_heading('Error: The following modules were not installed successfully', f=sys.stderr)

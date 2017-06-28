@@ -1,9 +1,7 @@
-# coding=utf-8
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 # Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License. See License.txt in the project root for
-# license information.
-# --------------------------------------------------------------------------
+# Licensed under the MIT License. See License.txt in the project root for license information.
+# --------------------------------------------------------------------------------------------
 
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
 from msrest import Serializer, Deserializer
@@ -159,7 +157,7 @@ class BatchExtensionsClient(BatchServiceClient):
                 raise ValueError('Couldn\'t find the account named {} in subscription {} '
                                  'in region {}'.format(
                                      self.batch_account, self._subscription, region))
-        if not account.auto_storage:
+        if not account.auto_storage:  # pylint: disable=no-member
             raise ValueError('No linked auto-storage for account {}'.format(self.batch_account))
 
         storage_account_info = account.auto_storage.storage_account_id.split('/')  # pylint: disable=no-member

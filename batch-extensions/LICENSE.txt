@@ -1,4 +1,4 @@
-Azure CLI
+Azure Batch Extensions
 
 Copyright (c) Microsoft Corporation
 
