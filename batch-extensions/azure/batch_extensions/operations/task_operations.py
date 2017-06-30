@@ -30,7 +30,7 @@ class ExtendedTaskOperations(TaskOperations):
     def _bulk_add_tasks(self, queue, *args, **kwargs):
         try:
             added_tasks = super(ExtendedTaskOperations, self).add_collection(*args, **kwargs)
-        except Exception as exp:
+        except Exception as exp:  # pylint: disable=broad-except
             queue.put(exp)
         else:
             if isinstance(added_tasks, ClientRawResponse):
