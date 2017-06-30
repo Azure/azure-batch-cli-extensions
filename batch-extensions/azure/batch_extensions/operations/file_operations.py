@@ -7,6 +7,7 @@ import errno
 import os
 
 from azure.batch.operations.file_operations import FileOperations
+from azure.storage.blob.models import Include
 
 from .. import _file_utils as file_utils
 
@@ -105,21 +106,46 @@ class ExtendedFileOperations(FileOperations):
             raise ValueError('No files found in file group {} matching remote path {}'.format(
                 file_group, remote_path))
 
-    def list_groups(self, num_results=None, include_metadata=False):
-        """List the file group names in the storage account."""
+    def list_groups(self, num_results=None):
+        """List the file group names in the storage account.
+        :param int num_results: The max number of file group names to return.
+        :returns: A generator of file groups. Each file group is represented as a dictionary with
+         the following keys:
+         'name': The file group name.
+         'last_modified': The time stamp for when the file group was created (or last modified).
+        """
         storage_client = self.get_storage_client()
         prefix = file_utils.FileUtils.GROUP_PREFIX
-        return storage_client.list_containers(prefix=prefix, num_results=num_results, include_metadata=include_metadata)
+        return ({'name': c.name[len(prefix):], 'last_modified': c.properties.last_modified}
+                for c in storage_client.list_containers(prefix=prefix, num_results=num_results))
 
     def list_from_group(self, file_group, remote_path=None, num_results=None):
-        """List the files in the file group."""
+        """List the files in the file group.
+        :param str file_group: The file group from which to list the files.
+        :param str remote_path: The remote file prefix by which to filter results.
+        :param int num_results: The max number of files to return.
+        :returns: A generator of files. Each file is represented as a dictionary with
+         the following keys:
+         'name': The full remote file path.
+         'last_modified': The time stamp for when the file was last modified locally.
+         'size': The content length of the file.
+         'uploaded': The time stamp for whe the file was last modified remotely.
+        """
         storage_client = self.get_storage_client()
         container = file_utils.get_container_name(file_group)
-        return storage_client.list_blobs(container, prefix=remote_path, num_results=num_results)
+        properties = Include(metadata=True)
+        return ({'name': b.name,
+                 'last_modified': b.metadata.get('lastmodified'),
+                 'size': b.properties.content_length,
+                 'uploaded': b.properties.last_modified}
+                for b in storage_client.list_blobs(
+                    container, prefix=remote_path, num_results=num_results, include=properties))
 
     def delete_group(self, file_group):
         """Attempt to delete the file group and all of it's contents.
         Will do nothing if the group does not exist.
+        :param str file_group: The file group to delete.
+        :returns: True if file group deleted, otherwise False.
         """
         storage_client = self.get_storage_client()
         container = file_utils.get_container_name(file_group)
