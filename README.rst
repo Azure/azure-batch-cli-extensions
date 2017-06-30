@@ -26,6 +26,11 @@ A new command to allow a user to upload a set of files directly into the storage
 
 Input data stored in linked storage under a file group can be simply referenced by a task by using some new ResourceFile properties. 
 
+`Automatic persistence of task output files to a file group <https://github.com/Azure/azure-batch-cli-extensions/blob/master/doc/outputFiles.md>`_
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+When declaring task output files, you can now persist outputs to a named file group, without the need to generate a container SAS URL.
+
 `Download job outputs from directly from storage <https://github.com/Azure/azure-batch-cli-extensions/blob/master/doc/outputFiles.md#output-file-download>`_
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
