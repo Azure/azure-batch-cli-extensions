@@ -92,7 +92,7 @@ class BatchExtensionsClient(BatchServiceClient):
         self.compute_node = ComputeNodeOperations(
             self._client, self.config, self._serialize, self._deserialize)
 
-    def _get_cli_profile(self, profile, subscription_id):
+    def _get_cli_profile(self, profile, subscription_id):  # pylint:disable=no-self-use
         if profile:
             subscription = profile.get_expanded_subscription_info(subscription_id=subscription_id)
             return profile, subscription
