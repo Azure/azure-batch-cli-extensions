@@ -28,13 +28,17 @@ class ExtendedTaskOperations(TaskOperations):
         self.get_storage_client = get_storage_account
 
     def _bulk_add_tasks(self, queue, *args, **kwargs):
-        added_tasks = super(ExtendedTaskOperations, self).add_collection(*args, **kwargs)
-        if isinstance(added_tasks, ClientRawResponse):
-            for task in added_tasks.output.value:
-                queue.put(task)
+        try:
+            added_tasks = super(ExtendedTaskOperations, self).add_collection(*args, **kwargs)
+        except Exception as exp:
+            queue.put(exp)
         else:
-            for task in added_tasks.value:  # pylint: disable=no-member
-                queue.put(task)
+            if isinstance(added_tasks, ClientRawResponse):
+                for task in added_tasks.output.value:
+                    queue.put(task)
+            else:
+                for task in added_tasks.value:  # pylint: disable=no-member
+                    queue.put(task)
 
     def add_collection(
             self, job_id, value, task_add_collection_options=None, custom_headers=None, raw=False):
@@ -94,8 +98,11 @@ class ExtendedTaskOperations(TaskOperations):
                 start = end
                 if start >= len(value) or len(submitting_tasks) >= self._parent.threads:
                     while any(s for s in submitting_tasks if s.is_alive()) or not task_queue.empty():
-                        submitted_tasks.append(task_queue.get())
+                        queued = task_queue.get()
                         task_queue.task_done()
+                        if isinstance(queued, Exception):
+                            raise queued
+                        submitted_tasks.append(queued)
                     if start >= len(value):
                         break
         else:

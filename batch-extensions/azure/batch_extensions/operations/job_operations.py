@@ -192,7 +192,12 @@ class ExtendedJobOperations(JobOperations):
         result = super(ExtendedJobOperations, self).add(
             job, job_add_options, custom_headers, raw, **operation_config)
         if task_collection:
-            tasks = self._parent.task.add_collection(job.id, task_collection)
+            try:
+                tasks = self._parent.task.add_collection(job.id, task_collection)
+            except Exception:
+                # If task submission raises, we roll back the job
+                self.delete(job.id)
+                raise
             if auto_complete:
                 # If the option to terminate the job was set, we need to reapply it with a patch
                 # now that the tasks have been added.
