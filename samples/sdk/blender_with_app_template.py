@@ -9,16 +9,39 @@ import time
 
 import azure.batch_extensions as batch
 from azure.batch_extensions import models
+from azure.common.credentials import ServicePrincipalCredentials
 
 
-BATCH_ENDPOINT = os.environ['AZURE_BATCH_ENDPOINT']
-BATCH_ACCOUNT = os.environ['AZURE_BATCH_ACCOUNT']
 OUTPUT_CONTAINER_SAS = ""
-SAMPLE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+BATCH_ENDPOINT = ""
+BATCH_ACCOUNT = ""
+SUBSCRIPTION_ID = ""
+BATCH_CLIENT_ID = ""
+BATCH_SECRET = ""
+BATCH_TENANT = ""
+
+BATCH_RESOURCE = "https://batch.core.windows.net/"
+SAMPLE_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 if __name__ == '__main__':
+
+    # Authentication.
+    # Note that providing credentials and subscription ID is not required
+    # if the Azure CLI is installed and already authenticated.
+    creds = ServicePrincipalCredentials(
+        client_id=BATCH_CLIENT_ID,
+        secret=BATCH_SECRET,
+        tenant=BATCH_TENANT,
+        resource=BATCH_RESOURCE
+    )
+
     # Setup client
-    client = batch.BatchExtensionsClient(base_url=BATCH_ENDPOINT, batch_account=BATCH_ACCOUNT)
+    client = batch.BatchExtensionsClient(
+        credentials=creds,
+        base_url=BATCH_ENDPOINT,
+        batch_account=BATCH_ACCOUNT,
+        subscription_id=SUBSCRIPTION_ID)
     
     # Setup test render input data
     scene_file = os.path.join(SAMPLE_DIR, 'blender', 'scene.blend')

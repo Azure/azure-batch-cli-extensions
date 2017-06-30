@@ -9,17 +9,41 @@ import time
 import sys
 import datetime
 
+from azure.common.credentials import ServicePrincipalCredentials
 import azure.batch_extensions as batch
 from azure.batch_extensions import models
 
-BATCH_ENDPOINT = os.environ['AZURE_BATCH_ENDPOINT']
-BATCH_ACCOUNT = os.environ['AZURE_BATCH_ACCOUNT']
 OUTPUT_CONTAINER_SAS = ""
-SAMPLE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+BATCH_ENDPOINT = ""
+BATCH_ACCOUNT = ""
+SUBSCRIPTION_ID = ""
+BATCH_CLIENT_ID = ""
+BATCH_SECRET = ""
+BATCH_TENANT = ""
+
+BATCH_RESOURCE = "https://batch.core.windows.net/"
+SAMPLE_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+
 
 if __name__ == '__main__':
+
+    # Authentication.
+    # Note that providing credentials and subscription ID is not required
+    # if the Azure CLI is installed and already authenticated.
+    creds = ServicePrincipalCredentials(
+        client_id=BATCH_CLIENT_ID,
+        secret=BATCH_SECRET,
+        tenant=BATCH_TENANT,
+        resource=BATCH_RESOURCE
+    )
+    
     # Setup client
-    client = batch.BatchExtensionsClient(base_url=BATCH_ENDPOINT, batch_account=BATCH_ACCOUNT)
+    client = batch.BatchExtensionsClient(
+        credentials=creds,
+        base_url=BATCH_ENDPOINT,
+        batch_account=BATCH_ACCOUNT,
+        subscription_id=SUBSCRIPTION_ID)
 
     # Setup test input data
     input_data = os.path.join(SAMPLE_DIR, 'ffmpeg', 'data')
@@ -45,7 +69,7 @@ if __name__ == '__main__':
             "value": OUTPUT_CONTAINER_SAS
         },
         "poolId": {
-            "value": pool_param.id
+            "value": pool_param.properties.id
         }
     }
     job_def = client.job.expand_template(job_template, parameters)
@@ -59,15 +83,15 @@ if __name__ == '__main__':
         repeat_task=models.RepeatTask(
             command_line="ffmpeg -y -i sample{0}.mp3 -acodec libmp3lame output.mp3",
             resource_files=[models.ExtendedResourceFile(source=models.FileSource(file_group=filegroup))],
-            output_files=[models.TaskOutputFile(
+            output_files=[models.OutputFile(
                 "output.mp3",
-                destination=models.OutputFileDestination(
-                    auto_storage=models.AutoStorageDestination(job_id, path="audio{0}.mp3")),
-                upload_details=models.OutputFileUploadDetails(models.TaskUploadStatus.task_success))],
+                destination=models.ExtendedOutputFileDestination(
+                    auto_storage=models.OutputFileAutoStorageDestination(job_id, path="audio{0}.mp3")),
+                upload_options=models.OutputFileUploadOptions(models.OutputFileUploadCondition.task_success))],
             package_references=[models.AptPackageReference("ffmpeg")]))
     job = models.ExtendedJobParameter(
         id=job_id,
-        pool_info=models.PoolInformation(pool_id=pool_param.id),
+        pool_info=models.PoolInformation(pool_id=pool_param.properties.id),
         constraints=models.JobConstraints(
             max_wall_clock_time=datetime.timedelta(hours=5),
             max_task_retry_count=1),
@@ -81,5 +105,5 @@ if __name__ == '__main__':
         job = client.job.get(job_id)
         print("Watching job: {}".format(job.state))
         if job.state == models.JobState.completed:
-            client.file.download(input_data, job_id)
+            client.file.download(SAMPLE_DIR, job_id)
             break
