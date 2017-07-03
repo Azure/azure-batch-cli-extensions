@@ -25,9 +25,14 @@ def get_all_module_paths():
 def get_command_modules_paths(include_prefix=False):
     """List all the command modules"""
     root = get_repo_root()
+    modules = []
     name = 'batch-extensions'
-    name = COMMAND_MODULE_PREFIX + name if include_prefix else name
-    return [(name, root)]
+    sdk_name = 'azure-' + name if include_prefix else name
+    modules.append((sdk_name, os.path.join(root, name)))
+    
+    cli_name = COMMAND_MODULE_PREFIX + name if include_prefix else name
+    modules.append((cli_name, os.path.join(root, 'batch-cli-extensions')))
+    return modules
 
 
 def get_command_modules_paths_with_tests():

@@ -4,7 +4,7 @@ These experimental features provide new ways to work with Azure Batch without ne
 
 * [Input data upload to Batch linked storage accounts](inputFiles.md#input-file-upload)
 * [Input data references using linked storage accounts](inputFiles.md#referencing-input-data)
-* [Automatic persistence of task output files to Azure Storage](outputFiles.md)
+* [Persist task outputs to a file group](outputFiles.md)
 * [Job and pool templates with parameterization](templates.md)
 * [Task factories for automatic task generation on job submission](taskFactories.md)
 * [Split job configuration and management with reusable application templates](application-templates.md)

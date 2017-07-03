@@ -13,11 +13,13 @@ from distutils.sysconfig import get_python_lib
 
 import automation.utilities.path as automation_path
 
+MODULES = ['batch-cli-extensions', 'batch-extensions']
 
 def run_pylint():
     print('\n\nRun pylint')
 
-    modules_list = os.path.join(automation_path.get_repo_root(), 'azure')
+    modules_list = ' '.join([os.path.join(automation_path.get_repo_root(), m, 'azure') for m in MODULES])
+    print(modules_list)
     arguments = '{} --rcfile={} -j {} -r n -d I0013'.format(
         modules_list,
         os.path.join(automation_path.get_repo_root(), 'pylintrc'),
@@ -35,8 +37,8 @@ def run_pylint():
 
 def run_pep8():
     print('\n\nRun flake8 for PEP8 compliance')
-
-    modules_list = os.path.join(automation_path.get_repo_root(), 'azure')
+    modules_list = ' '.join([os.path.join(automation_path.get_repo_root(), m) for m in MODULES])
+    print(modules_list)
     command = 'flake8 --statistics --append-config={} {}'.format(
         os.path.join(automation_path.get_repo_root(), '.flake8'), modules_list)
 

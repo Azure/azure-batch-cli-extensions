@@ -63,28 +63,3 @@ You can also use the [Azure portal](https://portal.azure.com) or [Batch Explorer
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `template.json` | Specifies an application template, containing all of the logic for the job we are going to run and any required parameters.                                                                                                                                     |
 | `job.json`      | Defines the job to run by referencing the template file `template.json` and providing values for appropriate parameters. <br/> It also specifies the pool to use for the job, in this sample an auto pool containing **3** **STANDARD_D1_V2** virtual machines. |
-
-## Troubleshooting
-
-### "One of the specified Azure Blob(s) is not found"
-
-If the preparation tasks for the job fail with the error *"One of the specified Azure Blob(s) is not found"*, verify that the resource file URLs specified for the file egress scripts are still correct (these URLs are dependent on the branch structure in the git repo for the Azure CLI and may change without warning).
-
-To check these URLs with the Azure Batch Portal, select the *Preparation Tasks* details page for your job then click the link next to *Resource Files*.  Another pane will open showing all the associated resource files and their URLs. Check that none of these return a 404 (not found) result in your browser.
-
-If any of these files return a 404, you will need to point your installation to the correct files from github.com, as follows:
-
-1. Go to [the github repository](https://github.com/Azure/azure-batch-cli-extensions) (`https://github.com/Azure/azure-batch-cli-extensions`)
-2. Check the following branches (in order) to find one that contains the file `azure/cli/command_modules/batch_extensions/fileegress/batchfileuploader.py`. 
-    * master
-    * dev
-3. Browse your installation of the Azure CLI and open the file `azure/cli/command_modules/batch_extensions/_template_utils.py` in a Unicode-aware developers' text editor (such as [Visual Studio Code](https://code.visualstudio.com/), [Notepad++](https://notepad-plus-plus.org/) or [Vim](http://www.vim.org/)). 
-
-4. Modify the assignment of `_ROOT_FILE_UPLOAD_URL` (around line #25) to specify the branch you found above; the branch is the last part of the string.
-
-5. Save the file and recreate your job from the command line.
-
-To illustrate, this assignment specifies the branch `dev`:
-``` javascript
-_ROOT_FILE_UPLOAD_URL = 'https://raw.githubusercontent.com/Azure/azure-batch-cli-extensions/dev';
-```

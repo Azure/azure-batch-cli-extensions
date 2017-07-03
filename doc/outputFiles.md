@@ -1,9 +1,8 @@
-# Output files
+# Output files to a file group
 
-When adding a task, you can now declare a list of output files to be automatically uploaded to 
-an Azure Storage container of your choice.
+When specifying output files for your tasks, you can now specify a file group to upload
+the outputs.
 
-An output file description can be added to a task or Job Manager task (or the taskFactory.repeatTask):
 ```json
 {
   "id" : "2",
@@ -12,13 +11,13 @@ An output file description can be added to a task or Job Manager task (or the ta
       {
         "filePattern": "outputVideo2.mp4",
         "destination": {
-          "container": {
+          "autoStorage": {
             "path": "mytask2output.mp4",
-            "containerSas": "https://storage.blob.core.windows.net/container?sv=2015-04-05sig=tAp0r3I3SV5PbjpZ5CIjvuo1jdUs5xW"
+            "fileGroup": "output-videos"
           }
         },
-        "uploadDetails": {
-          "taskStatus": "TaskSuccess"
+        "uploadOptions": {
+          "uploadCondition": "TaskSuccess"
         }
       },
       {
@@ -29,17 +28,13 @@ An output file description can be added to a task or Job Manager task (or the ta
             "fileGroup": "job-logs"
           }
         },
-        "uploadDetails": {
-          "taskStatus": "TaskFailure"
+        "uploadOptions": {
+          "uploadCondition": "TaskFailure"
         }
       }
     ]
 }
 ```
-
-Multiple output file descriptions can be included to cover different file patterns and different upload circumstances.
-In the above example, if the process completes successfully (the process exits with code 0), then the output will be uploaded,
-otherwise the error logs are uploaded for debugging.
 
 ## Options
 
@@ -47,14 +42,14 @@ otherwise the error logs are uploaded for debugging.
 | ------------- | --------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | filePattern   | Mandatory | String       | The name of the file or files to be uploaded. This could be an absolute path, or a path relative to the task working directory. This can be a single file, or a pattern using wildcards (`**` and `*`). |
 | destination   | Mandatory | Complex Type | The destination to which the output files specified in `filePattern` will be uploaded.                                                                                                                  |
-| uploadDetails | Mandatory | Complex Type | The details regarding the upload conditions.                                                                                                                                                            |
+| uploadOptions | Mandatory | Complex Type | The details regarding the upload conditions.                                                                                                                                                            |
 
 ### destination
 
 | Property    | Required | Type         | Description                                                                                                                |
 | ----------- | -------- | ------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| container   | Optional | Complex Type | Details of the destination container. The `container` property is mutually exclusive with `autoStorage` property.          |
-| autoStorage | OPtional | Complex Type | Details of the destination under auto-storage. The `autoStorage` property is mutually exclusive with `container` property. |
+| container   | Optional | Complex Type | Details of the destination container. The `container` property is mutually exclusive with `autoStorage` property, one of which must be supplied.          |
+| autoStorage | Optional | Complex Type | Details of the destination under auto-storage. The `autoStorage` property is mutually exclusive with `container` property, one of which must be supplied. |
 
 ### container
 
@@ -70,13 +65,13 @@ otherwise the error logs are uploaded for debugging.
 | path         | Optional  | String | Path within the file group to which data will be uploaded. If `filePath` refers to multiple files, `path` will be considered a virtual directory within the file group. Otherwise `path` will be considered to include the filename used in storage. |
 | fileGroup    | Optional  | String | The file group stored in linked storage.                                                                                                                                                                                                              |
 
-### uploadDetails 
+### uploadOptions 
 
 | Property   | Required  | Type    | Description                                                  |
 | ---------- | --------- | ------- | ------------------------------------------------------------ |
-| taskStatus | Mandatory | String  | Specify circumstances when output files should be persisted. |            
+| uploadCondition | Mandatory | String  | Specify circumstances when output files should be persisted. |            
 
-Available options for `taskStatus` are:
+Available options for `uploadCondition` are:
 
 * `TaskSuccess` - Upload if the task completed with an exit code of zero.
 * `TaskFailure` - Upload if the task completed with a nonzero exit code.
@@ -117,4 +112,3 @@ The following samples automatically upload their output files as they complete:
 ### Files do not upload to blob storage
 
 If there are no files uploaded to blob storage when your task completes, check error messages in an `uploadlog.txt` file on the node that ran the task. (You can do this from the [Azure portal](https://portal.azure.com)).
-

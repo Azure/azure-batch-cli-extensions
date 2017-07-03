@@ -6,7 +6,7 @@
     <ProjectGuid>{938454f7-93bd-41a7-84b2-3c89d64b969d}</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>env\Lib\site-packages\azure\cli\__main__.py</StartupFile>
-    <SearchPath>.</SearchPath>
+    <SearchPath>.;batch-cli-extensions\;batch-extensions\</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
@@ -14,9 +14,9 @@
     <InterpreterId>{305dc1c7-e94b-442f-9516-643a6718b3eb}</InterpreterId>
     <InterpreterVersion>3.5</InterpreterVersion>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>
-    </CommandLineArguments>
+    <CommandLineArguments></CommandLineArguments>
     <IsWindowsApplication>False</IsWindowsApplication>
+    <Environment></Environment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -25,52 +25,81 @@
     <PtvsTargetsFile>$(MSBuildextensionPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="azure\cli\command_modules\batch_extensions\commands.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\custom.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\batchfileuploader.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\configuration.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\setup_uploader.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\perf.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_aggregate_exception.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_argparse.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_end_to_end.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_error_mappings.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_extractpathinfo.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_load_specification.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\test_normalizeblobname.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\test\__init__.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\uploader.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\uploadfiles.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\fileegress\util.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\version.py">
+    <Compile Include="batch-cli-extensions\azure\cli\command_modules\batch_extensions\commands.py" />
+    <Compile Include="batch-cli-extensions\azure\cli\command_modules\batch_extensions\custom.py" />
+    <Compile Include="batch-cli-extensions\azure\cli\command_modules\batch_extensions\version.py" />
+    <Compile Include="batch-cli-extensions\azure\cli\command_modules\batch_extensions\_client_factory.py" />
+    <Compile Include="batch-cli-extensions\azure\cli\command_modules\batch_extensions\_help.py" />
+    <Compile Include="batch-cli-extensions\azure\cli\command_modules\batch_extensions\_params.py" />
+    <Compile Include="batch-cli-extensions\azure\cli\command_modules\batch_extensions\_validators.py" />
+    <Compile Include="batch-cli-extensions\azure\cli\command_modules\batch_extensions\__init__.py" />
+    <Compile Include="batch-cli-extensions\azure\cli\command_modules\__init__.py" />
+    <Compile Include="batch-cli-extensions\azure\cli\__init__.py" />
+    <Compile Include="batch-cli-extensions\azure\__init__.py" />
+    <Compile Include="batch-cli-extensions\setup.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\batch_auth.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\batch_extensions_client.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\application_template.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\application_template_info.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\application_template_parameter.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\apt_package_reference.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\auto_pool_specification.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\chocolatey_package_reference.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\constants.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\extended_job_parameter.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\extended_output_file_destination.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\extended_pool_parameter.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\extended_pool_specification.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\extended_resource_file.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\extended_task_parameter.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\file_collection_task_factory.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\file_source.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\job_manager_task.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\job_preparation_task.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\job_release_task.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\merge_task.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\output_file.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\output_file_auto_storage_destination.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\package_reference_base.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\parameter_set.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\parametric_sweep_task_factory.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\repeat_task.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\start_task.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\task_collection_task_factory.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\task_factory_base.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\yum_package_reference.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\models\__init__.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\operations\file_operations.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\operations\job_operations.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\operations\pool_operations.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\operations\__init__.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\version.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\_file_utils.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\_job_utils.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\_pool_utils.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\_template_utils.py" />
+    <Compile Include="batch-extensions\azure\batch_extensions\__init__.py" />
+    <Compile Include="batch-extensions\azure\__init__.py" />
+    <Compile Include="batch-extensions\setup.py" />
+    <Compile Include="samples\sdk\blender.py" />
+    <Compile Include="samples\sdk\blender_with_app_template.py" />
+    <Compile Include="samples\sdk\ffmpeg.py" />
+    <Compile Include="tests\test_extensions.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tests\test_application_templates.py" />
-    <Compile Include="tests\test_file_utils.py" />
-    <Compile Include="tests\test_live_ncj.py" />
-    <Compile Include="tests\test_template_utils.py" />
+    <Compile Include="tests\test_live.py" />
     <Compile Include="tests\vcr_test_base.py" />
     <Compile Include="tests\__init__.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\_client_factory.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\_file_utils.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\_help.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\_job_utils.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\_params.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\_pool_utils.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\_shipyard_utils.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\_template_utils.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\_validators.py" />
-    <Compile Include="azure\cli\command_modules\batch_extensions\__init__.py" />
-    <Compile Include="azure\cli\command_modules\__init__.py" />
-    <Compile Include="azure\cli\__init__.py" />
-    <Compile Include="azure\__init__.py" />
-    <Compile Include="setup.py" />
-    <Folder Include="azure\" />
-    <Folder Include="azure\cli\" />
-    <Folder Include="azure\cli\command_modules\" />
-    <Folder Include="azure\cli\command_modules\batch_extensions\" />
-    <Folder Include="azure\cli\command_modules\batch_extensions\fileegress\" />
-    <Folder Include="azure\cli\command_modules\batch_extensions\fileegress\test\" />
+    <Folder Include="batch-cli-extensions\" />
+    <Folder Include="batch-cli-extensions\azure\" />
+    <Folder Include="batch-cli-extensions\azure\cli\" />
+    <Folder Include="batch-cli-extensions\azure\cli\command_modules\" />
+    <Folder Include="batch-cli-extensions\azure\cli\command_modules\batch_extensions\" />
+    <Folder Include="batch-extensions\" />
+    <Folder Include="batch-extensions\azure\" />
+    <Folder Include="batch-extensions\azure\batch_extensions\" />
+    <Folder Include="batch-extensions\azure\batch_extensions\models\" />
+    <Folder Include="batch-extensions\azure\batch_extensions\operations\" />
     <Folder Include="doc\" />
     <Folder Include="samples\" />
     <Folder Include="samples\blender-appTemplate\" />
@@ -82,17 +111,16 @@
     <Folder Include="samples\hello-world\task-per-file-with-app-template\" />
     <Folder Include="samples\hello-world\task-per-file\" />
     <Folder Include="samples\mpi\" />
+    <Folder Include="samples\sdk\" />
     <Folder Include="samples\ocr\" />
     <Folder Include="tests\data\" />
     <Folder Include="tests\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="azure\cli\command_modules\batch_extensions\fileegress\bootstrap.cmd" />
-    <Content Include="azure\cli\command_modules\batch_extensions\fileegress\requirements.txt" />
-    <Content Include="azure\cli\command_modules\batch_extensions\fileegress\test\requirements.txt" />
+    <Content Include="batch-cli-extensions\setup.cfg" />
+    <Content Include="batch-extensions\setup.cfg" />
     <Content Include="doc\application-templates.md" />
     <Content Include="doc\inputFiles.md" />
-    <Content Include="doc\outputFiles.md" />
     <Content Include="doc\packages.md" />
     <Content Include="doc\readme.md" />
     <Content Include="doc\taskFactories.md" />
@@ -145,11 +173,8 @@
     <Content Include="tests\data\batch.job.simple.json" />
     <Content Include="tests\data\batch.pool.parameters.json" />
     <Content Include="tests\data\batch.pool.simple.json" />
-    <Content Include="tests\data\batch.shipyard.job.json" />
-    <Content Include="tests\data\batch.shipyard.pool.json" />
     <Content Include="HISTORY.rst" />
     <Content Include="MANIFEST.in" />
-    <Content Include="setup.cfg" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">

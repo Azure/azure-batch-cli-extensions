@@ -9,7 +9,7 @@
                 "targetOSVersion": "*" 
             },
             "vmSize": "small",
-            "targetDedicated": 1
+            "targetDedicatedNodes": 1
         }
     }
 }

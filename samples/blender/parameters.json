@@ -9,9 +9,9 @@
     "value": 1
   },
   "frameEnd": {
-    "value": 100
+    "value": 10
   },
-  "outputFileStorageUrl": {
-    "value": "https://storage.blob.core.windows.net/blender-outputs"
+  "outputFileGroup": {
+    "value": "blender-outputs"
   }
 }

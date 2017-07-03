@@ -56,7 +56,7 @@
                 }
             ],
             "vmSize": "[parameters('vmSize')]",
-            "targetDedicated": "[parameters('vmCount')]",
+            "targetDedicatedNodes": "[parameters('vmCount')]",
             "enableAutoScale": false
         }
     }

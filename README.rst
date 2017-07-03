@@ -24,13 +24,12 @@ A new command to allow a user to upload a set of files directly into the storage
 `Input data references using linked storage accounts <https://github.com/Azure/azure-batch-cli-extensions/blob/master/doc/inputFiles.md#referencing-input-data>`_
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
 Input data stored in linked storage under a file group can be simply referenced by a task by using some new ResourceFile properties. 
 
-`Automatic persistence of task output files to Azure Storage <https://github.com/Azure/azure-batch-cli-extensions/blob/master/doc/outputFiles.md>`_
+`Automatic persistence of task output files to a file group <https://github.com/Azure/azure-batch-cli-extensions/blob/master/doc/outputFiles.md>`_
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-When adding a task, you can now declare a list of output files to be automatically uploaded to an Azure Storage container of your choice when the task completes.
+When declaring task output files, you can now persist outputs to a named file group, without the need to generate a container SAS URL.
 
 `Download job outputs from directly from storage <https://github.com/Azure/azure-batch-cli-extensions/blob/master/doc/outputFiles.md#output-file-download>`_
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -68,14 +67,6 @@ Integration with existing 3rd party package managers to streamline the installat
 * APT - as used by some Linux distros including Ubuntu, Debian, and Fedora. 
 * Yum - a package manager used by some Linux distros including  Red Hat Enterprise Linux, Fedora, CentOS. 
 
-
-Limitations
------------
-
-At this point, the following features will only work with Batch IaaS VMs using Linux (excluding Oracle Linux). IaaS VMs in Batch
-are created with a VirtualMachineConfiguration as documented in the `Batch API documentation <https://msdn.microsoft.com/library/azure/dn820174.aspx#bk_vmconf>`_.
-
-- Automatic task output-file persistence
 
 Samples
 -------
