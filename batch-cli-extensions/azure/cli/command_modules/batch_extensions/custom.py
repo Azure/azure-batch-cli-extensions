@@ -33,7 +33,7 @@ def _handle_batch_exception(action):
             raise CLIError(message)
         except AttributeError:
             raise CLIError(ex)
-    except (ValidationError, ClientRequestError) as ex:
+    except (ValidationError, ClientRequestError, TypeError) as ex:
         raise CLIError(ex)
 
 
@@ -56,6 +56,8 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                     param_prompt = error.parameter_name
                     param_prompt += " ({}): ".format(error.parameter_description)
                     parameters[error.parameter_name] = prompt(param_prompt)
+                except TypeError as error:
+                    raise ValueError(str(error))
                 else:
                     json_obj = json_obj.get('properties', json_obj)
         else:
@@ -143,6 +145,8 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
                     param_prompt = error.parameter_name
                     param_prompt += " ({}): ".format(error.parameter_description)
                     parameters[error.parameter_name] = prompt(param_prompt)
+                except TypeError as error:
+                    raise ValueError(str(error))
                 else:
                     json_obj = json_obj.get('properties', json_obj)
         else:
