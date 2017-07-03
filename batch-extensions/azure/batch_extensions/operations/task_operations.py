@@ -96,13 +96,17 @@ class ExtendedTaskOperations(TaskOperations):
                           raw)))
                 submitting_tasks[-1].start()
                 start = end
+                error = None
                 if start >= len(value) or len(submitting_tasks) >= self._parent.threads:
                     while any(s for s in submitting_tasks if s.is_alive()) or not task_queue.empty():
                         queued = task_queue.get()
                         task_queue.task_done()
                         if isinstance(queued, Exception):
-                            raise queued
-                        submitted_tasks.append(queued)
+                            error = queued
+                        else:
+                            submitted_tasks.append(queued)
+                    if error:
+                        raise error  # pylint: disable=raising-bad-type
                     if start >= len(value):
                         break
         else:
