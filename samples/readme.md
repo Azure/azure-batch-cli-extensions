@@ -12,8 +12,8 @@ Create a pool and then run a job with a single task. Both the pool and the job a
 
 Features used:
 
-* [Pool and job templates with parameterization](../templates.md)
-* [Task collection task factory](../taskFactories.md#task-collection)
+* [Pool and job templates with parameterization](../doc/templates.md)
+* [Task collection task factory](../doc/taskFactories.md#task-collection)
 
 
 ### [Create pool and job with templates](hello-world/create-pool-and-job-with-templates)
@@ -22,9 +22,9 @@ Create a pool and then run a job with a single task. Both the pool and the job a
 
 Features used:
 
-* [Pool and job templates with parameterization](../templates.md)
-* [Parametric sweep task factory](../taskFactories.md#parametric-sweep)
-* [Task per file task factory](../taskFactories.md#task-per-file)
+* [Pool and job templates with parameterization](../doc/templates.md)
+* [Parametric sweep task factory](../doc/taskFactories.md#parametric-sweep)
+* [Task per file task factory](../doc/taskFactories.md#task-per-file)
 
 
 ### [Task per file](hello-world/task-per-file)
@@ -33,10 +33,10 @@ Run a specific piece of processing independently across a set of files that are 
 
 Features used:
 
-* [Input data upload to Batch linked storage accounts](../inputFiles.md#input-file-upload)
-* [Pool and job templates with parameterization](../templates.md)
-* [Task per file task factory](../taskFactories.md#task-per-file)
-* [Automatic persistence of task output files to Azure Storage](../outputFiles.md)
+* [Input data upload to Batch linked storage accounts](../doc/inputFiles.md#input-file-upload)
+* [Pool and job templates with parameterization](../doc/templates.md)
+* [Task per file task factory](../doc/taskFactories.md#task-per-file)
+* [Automatic persistence of task output files to Azure Storage](../doc/outputFiles.md)
 
 ### [Task per file with application template](hello-world/task-per-file-with-app-template)
 
@@ -44,9 +44,9 @@ Run a specific piece of processing independently across a set of files that are 
 
 Features used:
 
-* [Split job configuration and management with reusable application templates](../application-templates.md)
-* [Task per file task factory](../taskFactories.md#task-per-file)
-* [Automatic persistence of task output files to Azure Storage](../outputFiles.md)
+* [Split job configuration and management with reusable application templates](../doc/application-templates.md)
+* [Task per file task factory](../doc/taskFactories.md#task-per-file)
+* [Automatic persistence of task output files to Azure Storage](../doc/outputFiles.md)
 
 
 ## More Complex Samples
@@ -59,11 +59,11 @@ FFmpeg is an open-source command line tool for processing multimedia files. This
 
 Features used:
 
-* [Job template with parameterization](../templates.md)
-* [Automatic persistence of task output files to Azure Storage](../outputFiles.md)
-* [Easy software installation via package managers](../packages.md)
-* [Parametric sweep task factory](../taskFactories.md#parametric-sweep)
-* [Task per file task factory](../taskFactories.md#task-per-file)
+* [Job template with parameterization](../doc/templates.md)
+* [Automatic persistence of task output files to Azure Storage](../doc/outputFiles.md)
+* [Easy software installation via package managers](../doc/packages.md)
+* [Parametric sweep task factory](../doc/taskFactories.md#parametric-sweep)
+* [Task per file task factory](../doc/taskFactories.md#task-per-file)
 
 ### [OCR](ocr)
 
@@ -71,10 +71,10 @@ OCR (Optical Character Recognition) is the process of extracting text from PDF i
 
 Features used:
 
-* [Pool and job templates with parameterization](../templates.md)
-* [Parametric sweep task factory](../taskFactories.md#parametric-sweep)
-* [Automatic persistence of task output files to Azure Storage](../outputFiles.md)
-* [Easy software installation via package managers](../packages.md)
+* [Pool and job templates with parameterization](../doc/templates.md)
+* [Parametric sweep task factory](../doc/taskFactories.md#parametric-sweep)
+* [Automatic persistence of task output files to Azure Storage](../doc/outputFiles.md)
+* [Easy software installation via package managers](../doc/packages.md)
 
 ### [MPI](mpi)
 
@@ -86,10 +86,10 @@ Blender is an open-source 3D content creation suite. This sample demonstrates di
 
 Features used:
 
-* [Job template with parameterization](../templates.md)
-* [Parametric sweep task factory](../taskFactories.md#parametric-sweep)
-* [Automatic persistence of task output files to Azure Storage](../outputFiles.md)
-* [Easy software installation via package managers](../packages.md)
+* [Job template with parameterization](../doc/templates.md)
+* [Parametric sweep task factory](../doc/taskFactories.md#parametric-sweep)
+* [Automatic persistence of task output files to Azure Storage](../doc/outputFiles.md)
+* [Easy software installation via package managers](../doc/packages.md)
 
 ### [Blender (Application Template)](blender-appTemplate) 
 
@@ -97,12 +97,6 @@ A variation of the [Blender](blender) sample that uses an application template t
 
 Features used:
 
-* [Job template with parameterization](../templates.md)
-* [Parametric sweep task factory](../taskFactories.md#parametric-sweep)
-* [Automatic persistence of task output files to Azure Storage](../outputFiles.md)
-
-### [Docker - Caffe](docker)
-
-Caffe is an open-source deep learning framework. This sample demonstrates configuration of Caffe via Docker integration using Shipyard.
-
-
+* [Job template with parameterization](../doc/templates.md)
+* [Parametric sweep task factory](../doc/taskFactories.md#parametric-sweep)
+* [Automatic persistence of task output files to Azure Storage](../doc/outputFiles.md)

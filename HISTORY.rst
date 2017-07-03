@@ -3,6 +3,12 @@
 Release History
 ===============
 
+1.0.0rc3 (2017-07-03)
+---------------------
+
+* Refactored extensions to separate core logic into a standalone SDK.
+
+
 1.0.0rc2 (2017-04-25)
 ---------------------
 
