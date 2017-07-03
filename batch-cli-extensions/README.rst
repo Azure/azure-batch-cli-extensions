@@ -4,8 +4,6 @@ Microsoft Azure Batch CLI Extensions for Windows, Mac and Linux
 .. image:: https://travis-ci.org/Azure/azure-batch-cli-extensions.svg?branch=master
  :target: https://travis-ci.org/Azure/azure-batch-cli-extensions
 
-.. include:: https://raw.githubusercontent.com/Azure/azure-batch-cli-extensions/master/batch-cli-extensions/README.rst
-
 This project is a preview build of the Microsoft Azure command-line interface to demonstrate proposed features in Azure Batch.
 For further details on the Azure CLI, please check the `official documentation <https://docs.microsoft.com/en-us/cli/azure/install-azure-cli>`_.
 
