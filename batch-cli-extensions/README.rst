@@ -1,9 +1,6 @@
 Microsoft Azure Batch CLI Extensions for Windows, Mac and Linux
 ===============================================================
 
-.. image:: https://travis-ci.org/Azure/azure-batch-cli-extensions.svg?branch=master
- :target: https://travis-ci.org/Azure/azure-batch-cli-extensions
-
 This project is a preview build of the Microsoft Azure command-line interface to demonstrate proposed features in Azure Batch.
 For further details on the Azure CLI, please check the `official documentation <https://docs.microsoft.com/en-us/cli/azure/install-azure-cli>`_.
 
@@ -93,49 +90,3 @@ Azure Batch account requirements
 
 In order to make use of the new features previewed here, you will need an Azure Batch account with a linked storage account.
 For more information on this, see `Create an Azure Batch account using the Azure Portal <https://azure.microsoft.com/documentation/articles/batch-account-create-portal>`_.
-
-Contributing
-------------
-
-This project has adopted the `Microsoft Open Source Code of Conduct <https://opensource.microsoft.com/codeofconduct/>`_. For more information see the `Code of Conduct FAQ <https://opensource.microsoft.com/codeofconduct/faq/>`_ or contact `opencode@microsoft.com <mailto:opencode@microsoft.com>`_ with any additional questions or comments.
-
-Developer Installation
-----------------------
-
-Preparing your machine
-++++++++++++++++++++++
-1.	Install Python 3.5.x from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. 
-2.	Clone your repository and check out the master branch.
-3.	Create a new virtual environment “env” for Python 3.5 in the root of your clone. You can do this by running:
-
-    **Windows**
-
-    .. code-block:: bash
-
-        python -m venv <clone root>\env
-
-    **OSX/Ubuntu (bash)**
-
-    .. code-block:: bash
-
-        python –m venv <clone root>/env
-
-4.	Activate the env virtual environment by running:
-
-    **Windows**
-
-    .. code-block:: bash
-
-      <clone root>\env\scripts\activate.bat
-
-    **OSX/Ubuntu (bash)**
-
-    .. code-block:: bash
-
-      . <clone root>/env/bin/activate
-
-5.	Install the dependencies and load the command module as a local package using pip.
-
-  .. code-block:: bash
-  
-    python scripts/dev_setup.py

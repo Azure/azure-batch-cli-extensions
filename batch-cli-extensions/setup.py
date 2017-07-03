@@ -41,10 +41,9 @@ DEPENDENCIES_27 = {
     ":python_version<'3.4'": ['pathlib>=1.0.1']
 }
 
-root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-with open(os.path.join(root_dir, 'README.rst'), 'r', encoding='utf-8') as f:
+with open('README.rst', 'r', encoding='utf-8') as f:
     README = f.read()
-with open(os.path.join(root_dir, 'HISTORY.rst'), 'r', encoding='utf-8') as f:
+with open('HISTORY.rst', 'r', encoding='utf-8') as f:
     HISTORY = f.read()
 
 setup(
