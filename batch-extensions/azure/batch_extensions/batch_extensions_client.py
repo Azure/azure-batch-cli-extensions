@@ -93,7 +93,7 @@ class BatchExtensionsClient(BatchServiceClient):
             self._client, self.config, self._serialize, self._deserialize)
 
     def _get_cli_profile(self, subscription_id):  # pylint:disable=no-self-use
-        try:       
+        try:
             from azure.cli.core.util import CLIError
             from azure.cli.core.cloud import get_active_cloud
             try:
