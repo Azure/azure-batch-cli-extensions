@@ -433,12 +433,16 @@ def _parse_arm_parameter(name, template_obj, parameters):
         # If substitute value is a complex object - it may require
         # additional parameter substitutions
         return _parse_template(json.dumps(user_value), template_obj, parameters)
-    if param_def['type'] == 'int':
-        return _validate_int(user_value, param_def)
-    elif param_def['type'] == 'bool':
-        return _validate_bool(user_value)
-    elif param_def['type'] == 'string':
-        return _validate_string(user_value, param_def)
+    try:
+        if param_def['type'] == 'int':
+            return _validate_int(user_value, param_def)
+        elif param_def['type'] == 'bool':
+            return _validate_bool(user_value)
+        elif param_def['type'] == 'string':
+            return _validate_string(user_value, param_def)
+    except TypeError:
+        raise TypeError("Value '{}' for parameter '{}' must be a {}.".format(
+            user_value, name, param_def['type']))
     else:
         raise TypeError("Parameter type '{}' not supported.".format(param_def['type']))
 
