@@ -92,16 +92,15 @@ class BatchExtensionsClient(BatchServiceClient):
         self.compute_node = ComputeNodeOperations(
             self._client, self.config, self._serialize, self._deserialize)
 
-    def _get_cli_profile(self, profile, subscription_id):  # pylint:disable=no-self-use
-        if profile:
-            subscription = profile.get_expanded_subscription_info(subscription_id=subscription_id)
-            return profile, subscription
-        try:
+    def _get_cli_profile(self, subscription_id):  # pylint:disable=no-self-use
+        try:       
             from azure.cli.core.util import CLIError
+            from azure.cli.core.cloud import get_active_cloud
             try:
                 profile = get_cli_profile()
-                subscription = profile.get_expanded_subscription_info(subscription_id=subscription_id)
-                return profile, subscription
+                cloud = get_active_cloud()
+                subscription = profile.get_subscription(subscription=subscription_id)
+                return profile, subscription['id'], cloud.endpoints
             except CLIError:
                 raise ValueError("Unable to load Azure CLI authenticated session. Please "
                                  "run the 'az login' command or supply an AAD credentials "
@@ -109,24 +108,24 @@ class BatchExtensionsClient(BatchServiceClient):
         except ImportError:
             raise ValueError('Unable to load Azure CLI authenticated session. Please '
                              'supply an AAD credentials object from azure.common.credentials')
+        except (AttributeError, KeyError):
+            raise ValueError('Unable to load Azure CLI authenticated session. There is '
+                             'a version conflict with azure-cli-core.')
 
     def _configure_credentials(self, credentials, mgmt_credentials, subscription_id):
-        profile = None
         if not credentials:
-            profile, subscription = self._get_cli_profile(profile, subscription_id)
-            resource = subscription['endpoints'].batch_resource_id
+            profile, subscription, endpoints = self._get_cli_profile(subscription_id)
             credentials, subscription_id, _ = profile.get_login_credentials(
-                resource=resource, subscription_id=subscription['subscriptionId'])
+                resource=endpoints.batch_resource_id, subscription_id=subscription)
 
         if not mgmt_credentials:
             try:
-                profile, subscription = self._get_cli_profile(profile, subscription_id)
+                profile, subscription, endpoints = self._get_cli_profile(subscription_id)
             except ValueError:
                 pass
             else:
-                mgmt_resource = subscription['endpoints'].management
                 mgmt_credentials, subscription_id, _ = profile.get_login_credentials(
-                    resource=mgmt_resource, subscription_id=subscription_id)
+                    resource=endpoints.management, subscription_id=subscription)
 
         if not mgmt_credentials:
             try:
