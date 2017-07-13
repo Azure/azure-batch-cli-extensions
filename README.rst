@@ -87,6 +87,21 @@ It can be installed using the CLI component tools:
 
     $ az component update --add batch-extensions --allow-third-party
 
+Depending on how the Azure CLI was installed, the `az component` feature may be disabled. In this
+case use one of these OS-specified workarounds:
+
+Windows - CLI installed via MSI
++++++++++++++++++++++++++++++++
+
+The MSI for Windows bundles a complete version of Python. This can be used to install the Batch Extensions CLI.
+Note that the sample command below is the default install location, and can be adapted as necessary.
+
+.. code-block:: bash
+
+    > C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe -m pip install azure-cli-batch-extensions
+
+Note, if you uninstall the CLI using the MSI, these files will need to be cleaned up manually.
+
 
 Azure Batch account requirements
 --------------------------------

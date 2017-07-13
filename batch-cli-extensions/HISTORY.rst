@@ -3,6 +3,12 @@
 Release History
 ===============
 
+1.0.0rc4 (2017-07-10)
+---------------------
+
+* Better error handling on authentication.
+
+
 1.0.0rc3 (2017-07-03)
 ---------------------
 
