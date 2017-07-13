@@ -110,7 +110,9 @@ class BatchExtensionsClient(BatchServiceClient):
                              'supply an AAD credentials object from azure.common.credentials')
         except (AttributeError, KeyError, TypeError) as error:
             raise ValueError('Unable to load Azure CLI authenticated session. There is '
-                             'a version conflict with azure-cli-core:\n{}'.format(str(error)))
+                             'a version conflict with azure-cli-core. Please check for '
+                             'updates or report this issue at '
+                             'github.com/Azure/azure-batch-cli-extensions:\n{}'.format(str(error)))
 
     def _configure_credentials(self, credentials, mgmt_credentials, subscription_id):
         if not credentials:
