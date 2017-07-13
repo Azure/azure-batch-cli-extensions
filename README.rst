@@ -102,6 +102,54 @@ Note that the sample command below is the default install location, and can be a
 
 Note, if you uninstall the CLI using the MSI, these files will need to be cleaned up manually.
 
+Windows - CLI installed via Apt-Get on Ubuntu
++++++++++++++++++++++++++++++++++++++++++++++
+
+
+MacOS - CLI installed via InstallAzureCLI script (using curl)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Note that the sample command below is the default install location, and can be adapted as necessary.
+
+.. code-block:: bash
+
+    $ /Users/<username>/lib/azure-cli/bin/pip install azure-cli-batch-extensions
+
+Linux - CLI installed via InstallAzureCLI script (using curl)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Note that the sample command below is the default install location, and can be adapted as necessary.
+
+.. code-block:: bash
+
+    $ /home/<username>/lib/azure-cli/bin/pip install azure-cli-batch-extensions
+
+Linux - CLI installed via Apt-Get
++++++++++++++++++++++++++++++++++
+
+Note that the install location used by apt-get may vary. Use the command `dpkg -L azure-cli` to determine the 
+install location.
+
+.. code-block:: bash
+
+    $ sudo /opt/az/bin/python3 -m pip install azure-cli-batch-extensions
+
+Note, if you uninstall the CLI using `apt-get remove`, these files will need to be cleaned up manually.
+You can use the command `rm -r /opt/az` to remove them.
+
+Docker (any OS)
++++++++++++++++
+
+The Dockerfile `here <https://github.com/Azure/azure-batch-cli-extensions/blob/master/Dockerfile>`_ can
+be used to run the extended CLI on any machine with Docker installed.
+Download the Dockerfile to a location of choice, in a directory called 'batch-extensions', then run the 
+following commands to build and run the image.
+
+.. code-block:: bash
+
+    $ docker build -t batch-cli <download-location>/batch-extensions/
+    $ docker run -it batch-cli
+
 
 Azure Batch account requirements
 --------------------------------
