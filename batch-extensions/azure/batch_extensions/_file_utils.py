@@ -129,7 +129,7 @@ def generate_blob_sas_token(blob, container, blob_service, permission=BlobPermis
     sas_token = blob_service.generate_blob_shared_access_signature(
         container, blob.name,
         permission=permission,
-        start=datetime.datetime.utcnow(),
+        start=datetime.datetime.utcnow() - datetime.timedelta(minutes=15),
         expiry=datetime.datetime.utcnow() + datetime.timedelta(days=FileUtils.SAS_EXPIRY_DAYS))
     return blob_service.make_blob_url(container, quote(blob.name), sas_token=sas_token)
 
@@ -140,7 +140,7 @@ def generate_container_sas_token(container, blob_service, permission=BlobPermiss
     sas_token = blob_service.generate_container_shared_access_signature(
         container,
         permission=permission,
-        start=datetime.datetime.utcnow(),
+        start=datetime.datetime.utcnow() - datetime.timedelta(minutes=15),
         expiry=datetime.datetime.utcnow() + datetime.timedelta(days=FileUtils.SAS_EXPIRY_DAYS))
     url = '{}://{}/{}?{}'.format(
         blob_service.protocol,
