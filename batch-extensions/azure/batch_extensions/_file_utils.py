@@ -257,9 +257,19 @@ class FileUtils(object):
                      'fileNameWithoutExtension': file_name_only})
         return self.filter_resource_cache(container, source.prefix)
 
-    def get_container_sas(self, file_group_name):
+    def resolve_container_sas_if_needed(self, container_url):
+        if _container_url_has_sas(container_url):
+            return container_url
+        # The container Url doesn't have a SAS signature, let's generate one.
+        container_name = _get_container_name_from_url(container_url)
+        return self.get_container_sas(container_name, False)
+
+    def get_container_sas(self, file_group_or_container_name, is_file_group=True):
         storage_client = self.resolve_storage_account()
-        container = get_container_name(file_group_name)
+        if is_file_group:
+            container = get_container_name(file_group_name)
+        else:
+            container = file_group_or_container_name
         try:
             return self.container_sas_cache[container]
         except KeyError:
