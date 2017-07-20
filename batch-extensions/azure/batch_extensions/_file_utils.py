@@ -92,6 +92,7 @@ def resolve_remote_paths(blob_service, file_group, remote_path):
     blobs = blob_service.list_blobs(get_container_name(file_group), prefix=remote_path)
     return list(blobs)
 
+
 def generate_container_name(file_group):
     """Generate valid container name from file group name."""
     file_group = file_group.lower()
@@ -149,11 +150,13 @@ def generate_container_sas_token(container, blob_service, permission=BlobPermiss
         sas_token)
     return url
 
+
 def download_blob(blob, file_group, destination, blob_service, progress_callback):
     """Download the specified file to the specified container"""
     blob_service.get_blob_to_path(
         get_container_name(file_group), blob, destination,
         progress_callback=progress_callback)
+
 
 def upload_blob(source, destination, file_name,  # pylint: disable=too-many-arguments
                 blob_service, remote_path=None, flatten=None, progress_callback=None):
@@ -209,6 +212,14 @@ def upload_blob(source, destination, file_name,  # pylint: disable=too-many-argu
         max_connections=FileUtils.PARALLEL_OPERATION_THREAD_COUNT)
 
 
+def container_url_has_sas(container_url):
+    return '?' in container_url
+
+
+def get_container_name_from_url(container_url):
+    return container_url.split("/")[-1]
+
+
 class FileUtils(object):
 
     STRIP_PATH = re.compile(r"^[\/\\]+|[\/\\]+$")
@@ -258,10 +269,10 @@ class FileUtils(object):
         return self.filter_resource_cache(container, source.prefix)
 
     def resolve_container_sas_if_needed(self, container_url):
-        if _container_url_has_sas(container_url):
+        if container_url_has_sas(container_url):
             return container_url
         # The container Url doesn't have a SAS signature, let's generate one.
-        container_name = _get_container_name_from_url(container_url)
+        container_name = get_container_name_from_url(container_url)
         return self.get_container_sas(container_name, False)
 
     def get_container_sas(self, file_group_or_container_name, is_file_group=True):
