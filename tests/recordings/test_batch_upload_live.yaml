@@ -43,7 +43,7 @@ interactions:
       accept-language: [en-US]
       x-ms-client-request-id: [8fb69f40-5c11-11e7-8a43-54ee750f2fc7]
     method: POST
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_rg/providers/Microsoft.Storage/storageAccounts/testaccountforbatch/listKeys?api-version=2016-12-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_rg/providers/Microsoft.Storage/storageAccounts/testaccountforbatch/listKeys?api-version=2017-06-01
   response:
     body: {string: '{"keys":[{"keyName":"key1","permissions":"Full","value":"abc=="},{"keyName":"key2","permissions":"Full","value":"xyz=="}]}'}
     headers:
@@ -172,7 +172,7 @@ interactions:
       accept-language: [en-US]
       x-ms-client-request-id: [90cc5ae2-5c11-11e7-83b6-54ee750f2fc7]
     method: POST
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_rg/providers/Microsoft.Storage/storageAccounts/testaccountforbatch/listKeys?api-version=2016-12-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_rg/providers/Microsoft.Storage/storageAccounts/testaccountforbatch/listKeys?api-version=2017-06-01
   response:
     body: {string: '{"keys":[{"keyName":"key1","permissions":"Full","value":"abc=="},{"keyName":"key2","permissions":"Full","value":"xyz=="}]}'}
     headers:

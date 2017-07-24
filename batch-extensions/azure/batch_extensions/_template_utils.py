@@ -650,6 +650,10 @@ def _parse_task_output_files(task, file_utils):
             if destination.auto_storage.path:
                 destination.container.path = destination.auto_storage.path
             destination.auto_storage = None
+        elif destination.container:
+            # If only a container Url was specified we need to get a SAS Url for it.
+            destination.container.container_url = file_utils.resolve_container_sas_if_needed(
+                destination.container.container_url)
 
 
 def _transform_sweep_str(data, parameters):
