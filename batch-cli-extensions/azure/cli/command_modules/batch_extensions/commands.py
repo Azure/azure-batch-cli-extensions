@@ -18,16 +18,13 @@ from azure.cli.command_modules.batch_extensions._client_factory import (
 
 
 logger = azlogging.get_az_logger(__name__)
-SUPPORTED_CORE_VERSION = "2.0.X"
-SUPPORTED_BATCH_VERSION = "3.0.X"
-SUPPORTED_BMGMT_VERSION = "4.0.X"
-#SUPPORTED_BCLI_VERSION = "3.0.X"
+SUPPORTED_CORE_VERSION = "2.1"
+SUPPORTED_BATCH_VERSION = "3.2"
+SUPPORTED_BMGMT_VERSION = "4.2"
 
 
 def confirm_version(current, supported, package):
-    _current = ".".join(current.split('.')[0:-1])
-    _supported = ".".join(supported.split('.')[0:-1])
-    if version.StrictVersion(_current) > version.StrictVersion(_supported):
+    if version.StrictVersion(current) >= version.StrictVersion(supported):
         logger.warning("This package of the Batch Extensions module supports "
                        "%s up to version %s. The current version %s has not been "
                        "tested for compatibility.", package, supported, current)
