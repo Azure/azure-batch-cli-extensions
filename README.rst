@@ -88,19 +88,59 @@ It can be installed using the CLI component tools:
     $ az component update --add batch-extensions --allow-third-party
 
 Depending on how the Azure CLI was installed, the `az component` feature may be disabled. In this
-case use one of these OS-specified workarounds:
+case use one of these OS-specified workarounds.
 
 Windows - CLI installed via MSI
 +++++++++++++++++++++++++++++++
 
-The MSI for Windows bundles a complete version of Python. This can be used to install the Batch Extensions CLI.
-Note that the sample command below is the default install location, and can be adapted as necessary.
+This command uses the default install location, and can be adapted as necessary.
+If you uninstall the CLI using the MSI, these files will need to be cleaned up manually.
 
 .. code-block:: bash
 
     > C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe -m pip install azure-cli-batch-extensions
 
-Note, if you uninstall the CLI using the MSI, these files will need to be cleaned up manually.
+MacOS - CLI installed via InstallAzureCLI script (using curl)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+This command uses the default install location, and can be adapted as necessary.
+
+.. code-block:: bash
+
+    $ /Users/<username>/lib/azure-cli/bin/pip install azure-cli-batch-extensions
+
+Linux - CLI installed via InstallAzureCLI script (using curl)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+This command uses the default install location, and can be adapted as necessary.
+
+.. code-block:: bash
+
+    $ /home/<username>/lib/azure-cli/bin/pip install azure-cli-batch-extensions
+
+Linux - CLI installed via apt-get
++++++++++++++++++++++++++++++++++
+
+The install location used by apt-get may vary. Use the command :code:`dpkg -L azure-cli` to determine the 
+install location. If you uninstall the CLI using :code:`apt-get remove`, these files will need to be cleaned up manually.
+You can use the command (adjusted according to install location) :code:`rm -r /opt/az` to remove them.
+
+.. code-block:: bash
+
+    $ sudo /opt/az/bin/python3 -m pip install azure-cli-batch-extensions
+
+Docker (any OS)
++++++++++++++++
+
+The Dockerfile `here <https://github.com/Azure/azure-batch-cli-extensions/blob/master/Dockerfile>`_ can
+be used to run the extended CLI on any machine with Docker installed.
+Download the Dockerfile to a location of choice, in a directory called 'batch-extensions', then run the 
+following commands to build and run the image.
+
+.. code-block:: bash
+
+    $ docker build -t batch-cli <download-location>/batch-extensions/
+    $ docker run -it batch-cli
 
 
 Azure Batch account requirements

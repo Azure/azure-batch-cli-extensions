@@ -17,3 +17,4 @@ six==1.10.0
 tabulate==0.7.5
 vcrpy==1.10.3
 azure-cli==2.0.3
+azure-mgmt-storage==1.2.0
