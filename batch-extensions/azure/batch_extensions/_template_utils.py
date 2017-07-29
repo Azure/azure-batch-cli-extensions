@@ -180,7 +180,8 @@ def _is_prefixed(cmd_line):
     """
     return cmd_line.startswith('cmd.exe /c') or \
         cmd_line.startswith('cmd /c') or \
-        cmd_line.startswith('/bin/bash -c')
+        cmd_line.startswith('/bin/bash -c') or \
+        cmd_line.startswith('/bin/sh -c')
 
 
 def _strip_prefix(cmd_line):
@@ -192,6 +193,8 @@ def _strip_prefix(cmd_line):
         return cmd_line[7:].strip('"')
     elif cmd_line.startswith('/bin/bash -c '):
         return cmd_line[13:]
+    elif cmd_line.startswith('/bin/sh -c '):
+        return cmd_line[11:]
     else:
         return cmd_line
 
@@ -203,7 +206,7 @@ def _add_cmd_prefix(task, os_flavor):
     elif os_flavor == pool_utils.PoolOperatingSystemFlavor.LINUX:
         task.command_line = '/bin/bash -c \'set -e; set -o pipefail; {}; wait\''.format(task.command_line)
     else:
-        raise ValueError("Unknown pool OS flavor: " + os_flavor)
+        raise ValueError("Unknown pool OS flavor: " + str(os_flavor))
 
 def _get_installation_cmdline(references, os_flavor):
     """Build the installation command line for package reference collection.
@@ -927,7 +930,7 @@ def construct_setup_task(existing_task, command_info, os_flavor):
             elif os_flavor == pool_utils.PoolOperatingSystemFlavor.LINUX:
                 result['command_line'] = '/bin/bash -c {}'.format(result['command_line'])
             else:
-                raise ValueError("Unknown pool OS flavor: " + os_flavor)
+                raise ValueError("Unknown pool OS flavor: " + str(os_flavor))
         return result if result else None
     if result.get('command_line'):
         commands.append(_strip_prefix(result['command_line']))
@@ -944,7 +947,7 @@ def construct_setup_task(existing_task, command_info, os_flavor):
         result['user_identity'] = models.UserIdentity(
             auto_user=models.AutoUserSpecification(scope="pool", elevation_level="admin"))
     else:
-        raise ValueError("Unknown pool OS flavor: " + os_flavor)
+        raise ValueError("Unknown pool OS flavor: " + str(os_flavor))
     if resources:
         result['resource_files'] = resources
     # Must run elevated and wait for success for the setup step

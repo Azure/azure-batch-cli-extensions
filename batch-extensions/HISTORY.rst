@@ -3,6 +3,14 @@
 Release History
 ===============
 
+0.2.0 (2017-07-29)
+------------------
+
+* Support for Batch SDK version 3.1 
+* Fix bug with pool OS version detection
+* Download from file group now supports prefix
+* Support detection of Linux command using /bin/sh
+
 0.1.1 (2017-07-10)
 ------------------
 
