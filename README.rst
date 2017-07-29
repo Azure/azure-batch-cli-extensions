@@ -118,12 +118,12 @@ This command uses the default install location, and can be adapted as necessary.
 
     $ /home/<username>/lib/azure-cli/bin/pip install azure-cli-batch-extensions
 
-Linux - CLI installed via Apt-Get
+Linux - CLI installed via apt-get
 +++++++++++++++++++++++++++++++++
 
 The install location used by apt-get may vary. Use the command :code:`dpkg -L azure-cli` to determine the 
 install location. If you uninstall the CLI using :code:`apt-get remove`, these files will need to be cleaned up manually.
-You can use the command :code:`rm -r /opt/az` to remove them.
+You can use the command (adjusted according to install location) :code:`rm -r /opt/az` to remove them.
 
 .. code-block:: bash
 
