@@ -78,7 +78,7 @@ class ExtendedFileOperations(FileOperations):
          the files have a remote folder structure, this will be maintained relative to this
          directory.
         :param str file_group: The file group from which to download files.
-        :param str remote_path: The subfolder from which to download files.
+        :param str remote_path: The subfolder from which to download files or file name prefix.
         :param bool overwrite: Whether to overwrite files if the already exist at the local
          path specified.
         :param func progress_callback: A function to monitor progress of the download of an
@@ -86,13 +86,10 @@ class ExtendedFileOperations(FileOperations):
          total data to be retrieved (int) both in bytes.
         """
         storage_client = self.get_storage_client()
-        if remote_path and not remote_path.endswith('/'):
-            remote_path += '/'
         files = file_utils.resolve_remote_paths(storage_client, file_group, remote_path)
-        if len(files) > 0:
+        if files:
             for f in files:
-                file_name = os.path.realpath(\
-                    os.path.join(local_path, f.name[len(remote_path):] if remote_path else f.name))
+                file_name = os.path.realpath(os.path.join(local_path, f.name))
                 if not os.path.exists(file_name) or overwrite:
                     if not os.path.exists(os.path.dirname(file_name)):
                         try:

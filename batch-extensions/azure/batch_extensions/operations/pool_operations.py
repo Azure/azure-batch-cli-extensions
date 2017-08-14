@@ -106,10 +106,9 @@ class ExtendedPoolOperations(PoolOperations):
         """
         if isinstance(pool, models.PoolTemplate):
             pool = pool.properties
-        pool_os_flavor = None
+        pool_os_flavor = pool_utils.get_pool_target_os_type(pool)
         # Handle package manangement
         if hasattr(pool, 'package_references') and pool.package_references:
-            pool_os_flavor = pool_utils.get_pool_target_os_type(pool)
             cmds = [templates.process_pool_package_references(pool)]
             # Update the start task command
             pool.start_task = models.StartTask(**templates.construct_setup_task(
