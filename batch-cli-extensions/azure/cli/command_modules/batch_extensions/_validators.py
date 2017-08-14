@@ -163,7 +163,7 @@ def validate_options(namespace):
 def resource_file_format(value):
     """Space separated resource references in filename=blobsource format."""
     try:
-        file_name, blob_source = value.split('=')
+        file_name, blob_source = value.split('=', 1)
     except ValueError:
         message = ("Incorrectly formatted resource reference. "
                    "Argmuent values should be in the format filename=blobsource")

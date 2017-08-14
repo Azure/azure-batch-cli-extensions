@@ -3,6 +3,12 @@
 Release History
 ===============
 
+1.0.0 (2017-07-31)
+------------------
+
+* Some bug fixes in handling resource files and account URLs.
+
+
 1.0.0rc4 (2017-07-10)
 ---------------------
 
