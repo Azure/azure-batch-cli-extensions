@@ -117,7 +117,7 @@ class ExtendedTaskParameter(TaskAddParameter):
         'affinity_info': {'key': 'affinityInfo', 'type': 'AffinityInformation'},
         'constraints': {'key': 'constraints', 'type': 'TaskConstraints'},
         'user_identity': {'key': 'userIdentity', 'type': 'UserIdentity'},
-        'multi_instance_settings': {'key': 'multiInstanceSettings', 'type': 'MultiInstanceSettings'},
+        'multi_instance_settings': {'key': 'multiInstanceSettings', 'type': 'ExtendedMultiInstanceSettings'},
         'depends_on': {'key': 'dependsOn', 'type': 'TaskDependencies'},
         'application_package_references': {'key': 'applicationPackageReferences',
                                            'type': '[ApplicationPackageReference]'},
