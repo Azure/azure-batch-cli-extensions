@@ -20,9 +20,8 @@ else
     check_style --ci;
 fi
 
-cd batch-cli-extensions
+
 run_tests
-cd ..
 
 if [[ "$CI" == "true" ]]; then
     $scripts_root/package_verify.sh

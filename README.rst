@@ -73,8 +73,17 @@ Samples
 
 Samples for all of the preview features can be found in `samples <https://github.com/Azure/azure-batch-cli-extensions/blob/master/samples>`_.
 
-Installation
-------------
+
+SDK Installation
+----------------
+
+.. code-block:: bash
+
+    $ pip install azure-batch-extensions
+
+
+CLI Extensions Installation
+---------------------------
 
 In order to make use of these features, you must have the Azure CLI installed.
 You can find futher instructions in the `official documentation <https://docs.microsoft.com/en-us/cli/azure/install-azure-cli>`_ and in the

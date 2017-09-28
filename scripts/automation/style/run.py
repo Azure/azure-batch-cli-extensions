@@ -13,12 +13,12 @@ from distutils.sysconfig import get_python_lib
 
 import automation.utilities.path as automation_path
 
-MODULES = ['batch-cli-extensions', 'batch-extensions']
-
 def run_pylint():
     print('\n\nRun pylint')
 
-    modules_list = ' '.join([os.path.join(automation_path.get_repo_root(), m, 'azure') for m in MODULES])
+    modules = [os.path.join(automation_path.get_repo_root(), 'azure')]
+    modules.append(os.path.join(automation_path.get_repo_root(), 'batch-cli-extensions', 'azext_batch'))
+    modules_list = ' '.join(modules)
     print(modules_list)
     arguments = '{} --rcfile={} -j {} -r n -d I0013'.format(
         modules_list,
