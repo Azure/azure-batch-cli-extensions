@@ -19,6 +19,7 @@ from .output_file import OutputFile
 from .extended_output_file_destination import ExtendedOutputFileDestination
 from .output_file_auto_storage_destination import OutputFileAutoStorageDestination
 from .extended_resource_file import ExtendedResourceFile
+from .extended_multi_instance_settings import ExtendedMultiInstanceSettings
 from .file_source import FileSource
 from .task_factory_base import TaskFactoryBase
 from .task_collection_task_factory import TaskCollectionTaskFactory
