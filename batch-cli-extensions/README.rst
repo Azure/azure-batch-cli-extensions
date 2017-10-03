@@ -78,11 +78,11 @@ You can find futher instructions in the `official documentation <https://docs.mi
 `Azure CLI GitHub repository <https://github.com/azure/azure-cli>`_.
 
 This extension package can be installed to supplement the existing Azure CLI Batch commands.
-It can be installed using the CLI component tools:
+It can be installed using the CLI extension tools:
 
 .. code-block:: bash
 
-    $ az component update --add batch-extensions --allow-third-party
+    $ az extension add --source [URL to latest release package]
 
 
 Azure Batch account requirements

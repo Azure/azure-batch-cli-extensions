@@ -85,7 +85,7 @@ class TestBatchExtensionsLive(VCRTestBase):
             storage_account,
             self.output_blob_container,
             sas_token)
-        self.output_container_sas = 'https://pythonsdkteststorage.blob.core.windows.net:443/aaatestcontainer?sv=2015-04-05&sr=c&sig=ATi60Em20tc2KTXRl4E5Tl2wrjM1I2roHs1BnZS4JXM%3D&se=2018-12-31T17%3A43%3A53Z&sp=rwdl'
+        self.output_container_sas = 'https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer'
         print('Full container sas: {}'.format(self.output_container_sas))
 
     def cmd(self, command, checks=None, allowed_exceptions=None,

@@ -406,7 +406,7 @@ class VCRTestBase(unittest.TestCase):  # pylint: disable=too-many-instance-attri
         command_list = shlex.split(command)
         output = StringIO()
         try:
-            cli_main(command_list, file=output)
+            cli_main(command_list, output=output)
         except Exception as ex:  # pylint: disable=broad-except
             ex_msg = str(ex)
             if not next((x for x in allowed_exceptions if x in ex_msg), None):

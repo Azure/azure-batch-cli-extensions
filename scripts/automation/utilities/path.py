@@ -28,9 +28,10 @@ def get_command_modules_paths(include_prefix=False):
     modules = []
     name = 'batch-extensions'
     sdk_name = 'azure-' + name if include_prefix else name
-    modules.append((sdk_name, os.path.join(root, name)))
+    modules.append((sdk_name, root))
     
-    cli_name = COMMAND_MODULE_PREFIX + name if include_prefix else name
+    name = 'batch-cli-extensions'
+    cli_name = 'azure-' + name if include_prefix else name
     modules.append((cli_name, os.path.join(root, 'batch-cli-extensions')))
     return modules
 

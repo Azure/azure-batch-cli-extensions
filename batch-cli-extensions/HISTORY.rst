@@ -3,6 +3,13 @@
 Release History
 ===============
 
+2.0.0 (unreleased)
+------------------
+
+* Restructured to support new CLI extensions framework
+* Support for Azure Batch SDK 4.0 and Batch Extensions SDK 1.0
+
+
 1.0.0 (2017-07-31)
 ------------------
 

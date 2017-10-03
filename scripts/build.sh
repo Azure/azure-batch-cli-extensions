@@ -11,6 +11,8 @@ scripts_root=$(cd $(dirname $0); pwd)
 
 export PYTHONPATH=$PATHONPATH:./src
 python -m azure.cli -h --debug
+python -m azure.cli batch -h --debug
+python -m azure.cli batch job create -h --debug
 
 # PyLint crashes on Python 3.6
 LOCAL_PYTHON_VERSION=$(python -c 'import sys; print("{0}.{1}".format(sys.version_info[0], sys.version_info[1]))')
@@ -20,9 +22,8 @@ else
     check_style --ci;
 fi
 
-cd batch-cli-extensions
+
 run_tests
-cd ..
 
 if [[ "$CI" == "true" ]]; then
     $scripts_root/package_verify.sh
