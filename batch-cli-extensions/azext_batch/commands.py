@@ -11,15 +11,16 @@ import azure.cli.core.azlogging as azlogging
 
 from azure.batch import __version__ as batch_version
 from azure.mgmt.batch import __version__ as batch_mgmt_version
-#from azure.cli.batch import __version__ as batch_cli_version
+from azure.batch_extensions import __version__ as batch_ext_version
 
+from azext_batch._client_factory import (
     batch_extensions_client)
 
 
 logger = azlogging.get_az_logger(__name__)
-SUPPORTED_CORE_VERSION = "2.1"
-SUPPORTED_BATCH_VERSION = "3.2"
+SUPPORTED_BATCH_VERSION = "4.1"
 SUPPORTED_BMGMT_VERSION = "4.2"
+SUPPORTED_BATCH_EXT_VERSION = "1.1"
 
 
 def confirm_version(current, supported, package):
@@ -28,12 +29,11 @@ def confirm_version(current, supported, package):
                        "%s up to version %s. The current version %s has not been "
                        "tested for compatibility.", package, supported, current)
 
-confirm_version(core_version, SUPPORTED_CORE_VERSION, "Azure CLI Core")
 confirm_version(batch_version, SUPPORTED_BATCH_VERSION, "Azure Batch")
 confirm_version(batch_mgmt_version, SUPPORTED_BMGMT_VERSION, "Azure Batch Management")
-#confirm_version(batch_cli_version, SUPPORTED_CORE_VERSION, "Azure Batch CLI")
+confirm_version(batch_ext_version, SUPPORTED_BATCH_EXT_VERSION, "Azure Batch Extensions")
 
-custom_path = 'azure.cli.command_modules.batch_extensions.custom#{}'
+custom_path = 'azext_batch.custom#{}'
 
 # pylint: disable=line-too-long
 # NCJ Commands

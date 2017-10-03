@@ -11,8 +11,10 @@
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <InterpreterId>{305dc1c7-e94b-442f-9516-643a6718b3eb}</InterpreterId>
-    <InterpreterVersion>3.5</InterpreterVersion>
+    <InterpreterId>
+    </InterpreterId>
+    <InterpreterVersion>
+    </InterpreterVersion>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <CommandLineArguments>
     </CommandLineArguments>
@@ -156,9 +158,13 @@
     <Folder Include="scripts\license\" />
     <Folder Include="tests\data\" />
     <Folder Include="tests\" />
+    <Folder Include="tests\recordings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".travis.yml" />
+    <Content Include="batch-cli-extensions\azext_batch\azext_metadata.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="batch-cli-extensions\HISTORY.rst" />
     <Content Include="batch-cli-extensions\MANIFEST.in" />
     <Content Include="batch-cli-extensions\README.rst" />
@@ -243,19 +249,8 @@
     <Content Include="tests\data\batch.pool.parameters.json" />
     <Content Include="tests\data\batch.pool.simple.json" />
     <Content Include="MANIFEST.in" />
-  </ItemGroup>
-  <ItemGroup>
-    <Interpreter Include="env\">
-      <Id>{305dc1c7-e94b-442f-9516-643a6718b3eb}</Id>
-      <BaseInterpreter>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</BaseInterpreter>
-      <Version>3.5</Version>
-      <Description>env (Python 64-bit 3.5)</Description>
-      <InterpreterPath>Scripts\python.exe</InterpreterPath>
-      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
-      <LibraryPath>Lib\</LibraryPath>
-      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
-      <Architecture>Amd64</Architecture>
-    </Interpreter>
+    <Content Include="tests\recordings\test_batch_extensions_live.yaml" />
+    <Content Include="tests\recordings\test_batch_upload_live.yaml" />
   </ItemGroup>
   <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />

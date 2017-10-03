@@ -4,6 +4,8 @@ python:
 - '2.7'
 - '3.5'
 - '3.6'
+env:
+- AZURE_EXTENSION_DIR=./.azure/devcliextensions
 install:
 - pip install -qqq virtualenv
 - python scripts/dev_setup.py

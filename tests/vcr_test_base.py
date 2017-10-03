@@ -441,7 +441,6 @@ class VCRTestBase(unittest.TestCase):  # pylint: disable=too-many-instance-attri
     def execute(self):
         ''' Method to actually start execution of the test. Must be called from the test_<name>
         method of the test class. '''
-        self.skipTest("pending")
         try:
             if self.run_live:
                 print('RUN LIVE: {}'.format(self.test_name))

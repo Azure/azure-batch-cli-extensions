@@ -31,7 +31,7 @@ DEPENDENCIES = [
     'msrestazure>=0.4.14,<1',
     'azure-batch>=4.0,<5',
     'azure-mgmt-batch>=4.0,<5',
-    'azure-storage>=0.34,<0.35',
+    'azure-storage>=0.32,<0.35',
     'azure-mgmt-storage>=1.0,<2'
 ]
 DEPENDENCIES_27 = {
@@ -51,7 +51,7 @@ setup(
     long_description=README + '\n\n' + HISTORY,
     license='MIT',
     author='Microsoft Corporation',
-    author_email='azpysdkhelp@microsoft.com',
+    author_email='azpycli@microsoft.com',
     url='https://github.com/Azure/azure-batch-cli-extensions',
     classifiers=CLASSIFIERS,
     namespace_packages=[

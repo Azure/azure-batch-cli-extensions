@@ -47,6 +47,7 @@ def set_version(path_to_setup):
         line = line.replace('azure-batch-extensions>=0.1,<1', 'azure-batch-extensions==1000.0.0')
         sys.stdout.write(line)
 
+
 def reset_version(path_to_setup):
     """
     Revert package to original version no. for PyPI package and deploy.
@@ -65,8 +66,9 @@ def build_package(path_to_package, dist_dir):
     if not cmd_success:
         print_heading('Error building {}!'.format(path_to_package), f=sys.stderr)
         sys.exit(1)
-    print_heading('Built {}'.format(path_to_package))
     reset_version(path_to_setup)
+    print('reset setup version')
+    print_heading('Built {}'.format(path_to_package))
 
 
 def install_pip_package(package_name):
@@ -77,6 +79,7 @@ def install_pip_package(package_name):
         print_heading('Error installing {}!'.format(package_name), f=sys.stderr)
         sys.exit(1)
     print_heading('Installed {}'.format(package_name))
+
 
 def install_package(path_to_package, package_name, dist_dir):
     egg_path = os.path.join(path_to_package, '{}.egg-info'.format(package_name.replace('-', '_')))
@@ -112,23 +115,34 @@ def verify_packages():
     for name, path in all_modules:
         build_package(path, built_packages_dir)
 
-    # Revert version
-    # Install the remaining command modules
-    for name, fullpath in all_modules:
-         install_package(fullpath, name, built_packages_dir) 
+    # STEP 3:: Install Batch Extensions and validate
+    install_package(all_modules[0][1], all_modules[0][0], built_packages_dir) 
+    try:
+        importlib.import_module('azure.batch_extensions')
+    except ImportError as err:
+        print("Unable to import {}".format(name))
+        print(err)
+        sys.exit(1)
 
-    # STEP 3:: Validate the installation
-    for name in ['azure.batch_extensions', 'azure.cli.command_modules.batch_extensions']:
-        try:
-            importlib.import_module(name)
-        except ImportError as err:
-            print("Unable to import {}".format(name))
-            print(err)
-            sys.exit(1)
+    # STEP 4:: Add CLI extension wheel to CLI
+    try: 
+
+        extension_whl = os.path.join(built_packages_dir, 'azure_batch_cli_extensions-1000.0.0-py2.py3-none-any.whl')
+        az_output = subprocess.check_output(['az', 'extension', 'add', '--source', extension_whl, '--debug'], stderr=subprocess.STDOUT,
+                                            universal_newlines=True)
+        success = 'Successfully installed azure-batch-cli-extensions-1000.0.0' in az_output
+        print(az_output, file=sys.stderr)
+    except subprocess.CalledProcessError as err:
+        success = False
+        print(err, file=sys.stderr)
+
+    # STEP 5:: Verify extension loading correctly
     try:
         az_output = subprocess.check_output(['az', '--debug'], stderr=subprocess.STDOUT,
                                             universal_newlines=True)
         success = 'Error loading command module' not in az_output
+        if success:
+            success = 'Loaded extension \'azure-batch-cli-extensions\'' in az_output
         print(az_output, file=sys.stderr)
     except subprocess.CalledProcessError as err:
         success = False
@@ -145,7 +159,7 @@ def verify_packages():
     print('Installed command modules', installed_modules)
 
     missing_modules = \
-        set([name for name, fullpath in all_modules]) - set(installed_modules)
+        set([all_modules[0][0]]) - set(installed_modules)
 
     if missing_modules:
         print_heading('Error: The following modules were not installed successfully', f=sys.stderr)

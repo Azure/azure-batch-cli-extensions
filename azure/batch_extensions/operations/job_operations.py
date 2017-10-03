@@ -125,12 +125,13 @@ class ExtendedJobOperations(JobOperations):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :rtype: :class:`TaskAddCollectionResult
-         <azure.batch.models.TaskAddCollectionResult>` if task_factory used otherwise
-         None
         :return: :class:`TaskAddCollectionResult
-         <azure.batch.models.TaskAddCollectionResult>` if task_factory used otherwise
-         None
+         <azure.batch.models.TaskAddCollectionResult>` if using TaskFactory or
+         :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>` if
+         raw=true, otherwise None
+        :rtype: None or :class:`TaskAddCollectionResult
+         <azure.batch.models.TaskAddCollectionResult>` or
+         :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
