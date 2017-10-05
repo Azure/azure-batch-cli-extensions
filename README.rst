@@ -1,5 +1,5 @@
-Microsoft Azure Batch CLI Extensions for Windows, Mac and Linux
-===============================================================
+Microsoft Azure Batch Extensions
+================================
 
 .. image:: https://travis-ci.org/Azure/azure-batch-cli-extensions.svg?branch=master
  :target: https://travis-ci.org/Azure/azure-batch-cli-extensions
