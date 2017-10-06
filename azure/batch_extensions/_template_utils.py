@@ -21,6 +21,12 @@ from . import _pool_utils as pool_utils
 from . import models
 
 
+try:
+    _UNICODE_TYPE = unicode
+except NameError:
+    _UNICODE_TYPE = str
+
+
 def _validate_int(value, content):
     """Return parameter value as an integer.
     :param str value: The raw parameter value.
@@ -55,10 +61,8 @@ def _validate_string(value, content):
     """
     if value in [None, ""]:
         raise TypeError("Empty string value is invalid: {}".format(value))
-    try:
-        value = str(value)
-    except UnicodeEncodeError:
-        value = unicode(value)
+
+    value = value if isinstance(value, _UNICODE_TYPE) else str(value)
     try:
         if len(value) < int(content['minLength']):
             raise ValueError("Minimum length: {}".format(content['minLength']))
@@ -535,10 +539,6 @@ def _parse_template_string(string_content, template_obj, parameters):
     """
     updated_content = ""
     current_index = 0
-    try:
-        unicode_type = unicode
-    except NameError:
-        unicode_type = str
     while current_index < len(string_content):
         try:
             expression_start = string_content.index('[', current_index)
@@ -559,7 +559,7 @@ def _parse_template_string(string_content, template_obj, parameters):
         parsed = _parse_arm_expression(expression, template_obj, parameters)
         if _is_substitution(string_content, expression_start, expression_end):
             # Replacing within the middle of a string
-            parsed = parsed if isinstance(parsed, unicode_type) else str(parsed)
+            parsed = parsed if isinstance(parsed, _UNICODE_TYPE) else str(parsed)
             updated_content += string_content[current_index:expression_start] + parsed
             current_index = expression_end + 1
         elif isinstance(parsed, bool):
@@ -575,7 +575,7 @@ def _parse_template_string(string_content, template_obj, parameters):
             updated_content += string_content[current_index:expression_start - 1] + json_content
             current_index = expression_end + 2
         else:
-            parsed = parsed if isinstance(parsed, unicode_type) else str(parsed)
+            parsed = parsed if isinstance(parsed, _UNICODE_TYPE) else str(parsed)
             updated_content += string_content[current_index:expression_start] + parsed
             current_index = expression_end + 1
     updated_content += string_content[current_index:]
