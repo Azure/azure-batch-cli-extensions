@@ -169,6 +169,7 @@
     <Content Include="batch-cli-extensions\MANIFEST.in" />
     <Content Include="batch-cli-extensions\README.rst" />
     <Content Include="batch-cli-extensions\setup.cfg" />
+    <Content Include="doc\outputFiles.md" />
     <Content Include="HISTORY.rst" />
     <Content Include="scripts\automation\release\README.md" />
     <Content Include="scripts\automation\tests\__pycache__\nose_helper.cpython-35.pyc" />

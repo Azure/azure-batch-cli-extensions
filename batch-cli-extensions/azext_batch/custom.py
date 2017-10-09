@@ -92,17 +92,21 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                 version = 'latest'
                 try:
                     publisher, offer, sku = image.split(':', 2)
+                    try:
+                        sku, version = sku.split(':', 1)
+                    except ValueError:
+                        pass
+                    pool.virtual_machine_configuration = VirtualMachineConfiguration(
+                        image_reference=ImageReference(publisher=publisher, offer=offer, sku=sku, version=version),
+                        node_agent_sku_id=node_agent_sku_id)
                 except ValueError:
-                    message = ("Incorrect format for VM image URN. Should be in the format: \n"
-                               "'publisher:offer:sku[:version]'")
-                    raise ValueError(message)
-                try:
-                    sku, version = sku.split(':', 1)
-                except ValueError:
-                    pass
-                pool.virtual_machine_configuration = VirtualMachineConfiguration(
-                    ImageReference(publisher, offer, sku, version),
-                    node_agent_sku_id)
+                    if '/' not in image:
+                        message = ("Incorrect format for VM image. Should be in the format: \n"
+                                   "'publisher:offer:sku[:version]' OR a URL to an ARM image.")
+                        raise ValueError(message)
+                    pool.virtual_machine_configuration = VirtualMachineConfiguration(
+                        image_reference=ImageReference(virtual_machine_image_id=image),
+                        node_agent_sku_id=node_agent_sku_id)
 
         if start_task_command_line:
             pool.start_task = StartTask(start_task_command_line)
