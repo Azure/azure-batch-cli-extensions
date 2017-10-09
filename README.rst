@@ -95,6 +95,16 @@ It can be installed using the CLI extension tools:
     $ az extension add --source [URL to latest release package]
 
 
+Uninstall CLI extensions
+------------------------
+
+The CLI extensions can be removed using the `az extension remove` command:
+
+.. code-block:: bash
+
+	$ az extension remove -n azure_batch_cli_extensions
+
+
 Azure Batch account requirements
 --------------------------------
 
