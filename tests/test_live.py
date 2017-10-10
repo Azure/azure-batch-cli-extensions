@@ -14,7 +14,7 @@ import azure.batch_extensions as batch
 from tests.vcr_test_base import VCRTestBase
 from azure.cli.core.profiles import get_sdk, ResourceType
 
-CloudStorageAccount = get_sdk(ResourceType.DATA_STORAGE, '#CloudStorageAccount')
+CloudStorageAccount = get_sdk(ResourceType.DATA_STORAGE, 'common.cloudstorageaccount#CloudStorageAccount')
 BlobPermissions = get_sdk(ResourceType.DATA_STORAGE, 'blob.models#BlobPermissions')
 
 

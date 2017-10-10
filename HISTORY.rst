@@ -3,7 +3,7 @@
 SDK Release History
 ===================
 
-1.0.1 (unreleased)
+1.0.1 (2017-10-10)
 ------------------
 
 * Better support for unicode in Python 2.7

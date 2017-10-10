@@ -3,7 +3,7 @@
 Release History
 ===============
 
-2.0.0 (unreleased)
+2.0.0 (2017-10-10)
 ------------------
 
 * Restructured to support new CLI extensions framework
