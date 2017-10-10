@@ -1,9 +1,14 @@
 .. :changelog:
 
 SDK Release History
-===============
+===================
 
-1.0.0 (2017-09-27)
+1.0.1 (unreleased)
+------------------
+
+* Better support for unicode in Python 2.7
+
+1.0.0 (2017-10-03)
 ------------------
 
 * Support for Batch SDK version 4.0

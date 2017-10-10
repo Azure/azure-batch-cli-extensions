@@ -9,32 +9,32 @@ from azure.cli.core.help_files import helps
 
 helps['batch'] = """
     type: group
-    short-summary: Commands for working with Azure Batch.
+    short-summary: Manage Azure Batch.
 """
 
 helps['batch job'] = """
     type: group
-    short-summary: Commands to manage your Batch jobs.
+    short-summary: Manage Batch jobs.
 """
 
 helps['batch job create'] = """
     type: command
-    short-summary: Adds a job and associated task(s) to the specified account.
+    short-summary: Add a job and associated task(s) to a Batch account.
 """
 
 helps['batch pool'] = """
     type: group
-    short-summary: Commands to manage your Batch pools.
+    short-summary: Manage Batch pools.
 """
 
 helps['batch pool create'] = """
     type: command
-    short-summary: Create a Batch pool.
+    short-summary: Create a Batch pool in an account. When creating a pool, choose arguments from either Cloud Services Configuration or Virtual Machine Configuration.
 """
 
 helps['batch file'] = """
     type: group
-    short-summary: Commands to manage your Batch input files.
+    short-summary: Manage Batch input files.
 """
 
 helps['batch file upload'] = """

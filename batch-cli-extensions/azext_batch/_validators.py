@@ -6,21 +6,12 @@
 import os
 import json
 
-from msrest.serialization import Deserializer
-from msrest.exceptions import DeserializationError
-
-from azure.mgmt.batch import BatchManagementClient
-
-from azure.cli.core._config import az_config
-from azure.cli.core.commands.client_factory import get_mgmt_service_client
-
-
-# COMPLETER
 
 def load_node_agent_skus(prefix, **kwargs):  # pylint: disable=unused-argument
     from msrest.exceptions import ClientRequestError
     from azure.batch.models import BatchErrorException
     from azure.cli.command_modules.batch._client_factory import account_client_factory
+    from azure.cli.core._config import az_config
     all_images = []
     client_creds = {}
     client_creds['account_name'] = az_config.get('batch', 'account', None)
@@ -53,52 +44,52 @@ def arg_name(name):
 
 def datetime_format(value):
     """Validate the correct format of a datetime string and deserialize."""
+    from msrest.serialization import Deserializer
+    from msrest.exceptions import DeserializationError
     try:
         datetime_obj = Deserializer.deserialize_iso(value)
     except DeserializationError:
         message = "Argument {} is not a valid ISO-8601 datetime format"
         raise ValueError(message.format(value))
-    else:
-        return datetime_obj
+    return datetime_obj
 
 
 def duration_format(value):
     """Validate the correct format of a timespan string and deserilize."""
+    from msrest.serialization import Deserializer
+    from msrest.exceptions import DeserializationError
     try:
         duration_obj = Deserializer.deserialize_duration(value)
     except DeserializationError:
         message = "Argument {} is not in a valid ISO-8601 duration format"
         raise ValueError(message.format(value))
-    else:
-        return duration_obj
+    return duration_obj
 
 
 def metadata_item_format(value):
-    """Validate listed metadata arguments"""
+    """Space separated values in 'key=value' format."""
     try:
         data_name, data_value = value.split('=')
     except ValueError:
         message = ("Incorrectly formatted metadata. "
-                   "Argmuent values should be in the format a=b c=d")
+                   "Argument values should be in the format a=b c=d")
         raise ValueError(message)
-    else:
-        return {'name': data_name, 'value': data_value}
+    return {'name': data_name, 'value': data_value}
 
 
 def environment_setting_format(value):
-    """Validate listed enviroment settings arguments"""
+    """Space separated values in 'key=value' format."""
     try:
         env_name, env_value = value.split('=')
     except ValueError:
-        message = ("Incorrectly formatted enviroment settings. "
-                   "Argmuent values should be in the format a=b c=d")
+        message = ("Incorrectly formatted environment settings. "
+                   "Argument values should be in the format a=b c=d")
         raise ValueError(message)
-    else:
-        return {'name': env_name, 'value': env_value}
+    return {'name': env_name, 'value': env_value}
 
 
 def application_package_reference_format(value):
-    """Validate listed application package reference arguments"""
+    """Space separated application IDs with optional version in 'id[#version]' format."""
     app_reference = value.split('#', 1)
     package = {'application_id': app_reference[0]}
     try:
@@ -108,8 +99,19 @@ def application_package_reference_format(value):
     return package
 
 
+def resource_file_format(value):
+    """Space separated resource references in filename=blobsource format."""
+    try:
+        file_name, blob_source = value.split('=', 1)
+    except ValueError:
+        message = ("Incorrectly formatted resource reference. "
+                   "Argmuent values should be in the format filename=blobsource")
+        raise ValueError(message)
+    return {'file_path': file_name, 'blob_source': blob_source}
+
+
 def certificate_reference_format(value):
-    """Validate listed certificate reference arguments"""
+    """Space separated certificate thumbprints."""
     cert = {'thumbprint': value, 'thumbprint_algorithm': 'sha1'}
     return cert
 
@@ -118,6 +120,8 @@ def certificate_reference_format(value):
 
 def application_enabled(namespace):
     """Validates account has auto-storage enabled"""
+    from azure.cli.core.commands.client_factory import get_mgmt_service_client
+    from azure.mgmt.batch import BatchManagementClient
     client = get_mgmt_service_client(BatchManagementClient)
     acc = client.batch_account.get(namespace.resource_group, namespace.account_name)
     if not acc:
@@ -137,10 +141,6 @@ def validate_json_file(namespace):
             raise ValueError("Cannot access JSON request file: " + namespace.json_file)
         except ValueError as err:
             raise ValueError("Invalid JSON file: {}".format(err))
-        # other_values = [arg_name(n) for n in vars(namespace).keys() if getattr(namespace, n)]
-        # if other_values:
-        #     message = "--json-file cannot be combined with:\n"
-        #     raise ValueError(message + '\n'.join(other_values))
 
 
 def validate_options(namespace):
@@ -158,17 +158,6 @@ def validate_options(namespace):
             start = start if start else 0
             end = end if end else ""
             namespace.ocp_range = "bytes={}-{}".format(start, end)
-
-
-def resource_file_format(value):
-    """Space separated resource references in filename=blobsource format."""
-    try:
-        file_name, blob_source = value.split('=', 1)
-    except ValueError:
-        message = ("Incorrectly formatted resource reference. "
-                   "Argmuent values should be in the format filename=blobsource")
-        raise ValueError(message)
-    return {'file_path': file_name, 'blob_source': blob_source}
 
 
 def validate_file_destination(namespace):
@@ -197,7 +186,7 @@ def validate_file_destination(namespace):
 
 def validate_client_parameters(namespace):
     """Retrieves Batch connection parameters from environment variables"""
-
+    from azure.cli.core._config import az_config
     # simply try to retrieve the remaining variables from environment variables
     if not namespace.account_name:
         namespace.account_name = az_config.get('batch', 'account', None)

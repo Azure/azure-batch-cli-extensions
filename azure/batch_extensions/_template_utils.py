@@ -4,6 +4,8 @@
 # --------------------------------------------------------------------------------------------
 
 # pylint: disable=too-many-lines
+from __future__ import unicode_literals
+
 import copy
 import itertools
 import json
@@ -19,16 +21,22 @@ from . import _pool_utils as pool_utils
 from . import models
 
 
+try:
+    _UNICODE_TYPE = unicode
+except NameError:
+    _UNICODE_TYPE = str
+
+
 def _validate_int(value, content):
     """Return parameter value as an integer.
     :param str value: The raw parameter value.
     :param dict content: The template parameter definition.
     :returns: int
     """
-    original = str(value)
     try:
+        original = str(value)
         value = int(value)
-    except ValueError:
+    except (ValueError, UnicodeEncodeError):
         raise TypeError("'{}' is not a valid integer.".format(value))
     if str(value) != original:
         raise TypeError("'{}' is not a valid integer.".format(value))
@@ -53,7 +61,8 @@ def _validate_string(value, content):
     """
     if value in [None, ""]:
         raise TypeError("Empty string value is invalid: {}".format(value))
-    value = str(value)
+
+    value = value if isinstance(value, _UNICODE_TYPE) else str(value)
     try:
         if len(value) < int(content['minLength']):
             raise ValueError("Minimum length: {}".format(content['minLength']))
@@ -75,11 +84,14 @@ def _validate_bool(value):
     """
     if value in [True, False]:
         return value
-    if str(value).lower() == 'true':
-        return True
-    elif str(value).lower() == 'false':
-        return False
-    else:
+    try:
+        if str(value).lower() == 'true':
+            return True
+        elif str(value).lower() == 'false':
+            return False
+        else:
+            raise TypeError("'{}' is not a valid bool".format(value))
+    except UnicodeEncodeError:
         raise TypeError("'{}' is not a valid bool".format(value))
 
 
@@ -547,7 +559,8 @@ def _parse_template_string(string_content, template_obj, parameters):
         parsed = _parse_arm_expression(expression, template_obj, parameters)
         if _is_substitution(string_content, expression_start, expression_end):
             # Replacing within the middle of a string
-            updated_content += string_content[current_index:expression_start] + str(parsed)
+            parsed = parsed if isinstance(parsed, _UNICODE_TYPE) else str(parsed)
+            updated_content += string_content[current_index:expression_start] + parsed
             current_index = expression_end + 1
         elif isinstance(parsed, bool):
             parsed = "true" if parsed else "false"
@@ -562,7 +575,8 @@ def _parse_template_string(string_content, template_obj, parameters):
             updated_content += string_content[current_index:expression_start - 1] + json_content
             current_index = expression_end + 2
         else:
-            updated_content += string_content[current_index:expression_start] + str(parsed)
+            parsed = parsed if isinstance(parsed, _UNICODE_TYPE) else str(parsed)
+            updated_content += string_content[current_index:expression_start] + parsed
             current_index = expression_end + 1
     updated_content += string_content[current_index:]
     return updated_content

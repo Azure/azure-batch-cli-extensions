@@ -3,6 +3,8 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
+from __future__ import unicode_literals
+
 import os
 import re
 import hashlib
@@ -10,7 +12,7 @@ import datetime
 import copy
 import pathlib
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
-from six.moves.urllib.parse import quote  # pylint: disable=import-error
+from six.moves.urllib.parse import quote  # pylint: disable=import-error,no-name-in-module
 
 from azure.storage.blob import BlobPermissions, BlockBlobService
 from . import models
@@ -19,7 +21,7 @@ from . import models
 def construct_sas_url(blob, uri):
     """Make up blob URL with container URL"""
     newuri = copy.copy(uri)
-    newuri.pathname = '{}/{}'.format(uri.path, quote(blob.name))
+    newuri.pathname = '{}/{}'.format(uri.path, quote(blob.name.encode('utf-8')))
     return newuri.geturl()
 
 
@@ -132,7 +134,7 @@ def generate_blob_sas_token(blob, container, blob_service, permission=BlobPermis
         permission=permission,
         start=datetime.datetime.utcnow() - datetime.timedelta(minutes=15),
         expiry=datetime.datetime.utcnow() + datetime.timedelta(days=FileUtils.SAS_EXPIRY_DAYS))
-    return blob_service.make_blob_url(container, quote(blob.name), sas_token=sas_token)
+    return blob_service.make_blob_url(container, quote(blob.name.encode('utf-8')), sas_token=sas_token)
 
 
 def generate_container_sas_token(container, blob_service, permission=BlobPermissions.WRITE):
