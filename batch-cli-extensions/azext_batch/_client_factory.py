@@ -3,11 +3,11 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-import azure.batch_extensions as batch
-from azure.cli.core.util import CLIError
 
+def batch_extensions_client(cli_ctx, kwargs):
+    from knack.util import CLIError
+    import azure.batch_extensions as batch
 
-def batch_extensions_client(kwargs):
     account_name = kwargs.pop('account_name', None)
     account_endpoint = kwargs.pop('account_endpoint', None)
     resource_group = kwargs.pop('resource_group', None)

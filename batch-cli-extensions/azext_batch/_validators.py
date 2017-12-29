@@ -3,36 +3,6 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-import os
-import json
-
-
-def load_node_agent_skus(prefix, **kwargs):  # pylint: disable=unused-argument
-    from msrest.exceptions import ClientRequestError
-    from azure.batch.models import BatchErrorException
-    from azure.cli.command_modules.batch._client_factory import account_client_factory
-    from azure.cli.core._config import az_config
-    all_images = []
-    client_creds = {}
-    client_creds['account_name'] = az_config.get('batch', 'account', None)
-    client_creds['account_key'] = az_config.get('batch', 'access_key', None)
-    client_creds['account_endpoint'] = az_config.get('batch', 'endpoint', None)
-    try:
-        client = account_client_factory(client_creds)
-        skus = client.list_node_agent_skus()
-        for sku in skus:
-            for image in sku['verifiedImageReferences']:
-                all_images.append("{}:{}:{}:{}".format(
-                    image['publisher'],
-                    image['offer'],
-                    image['sku'],
-                    image['version']))
-        return all_images
-    except (ClientRequestError, BatchErrorException):
-        return []
-
-
-# TYPES VALIDATORS
 
 def arg_name(name):
     """Convert snake case argument name to a command line name.
@@ -42,156 +12,13 @@ def arg_name(name):
     return "--" + name.replace('_', '-')
 
 
-def datetime_format(value):
-    """Validate the correct format of a datetime string and deserialize."""
-    from msrest.serialization import Deserializer
-    from msrest.exceptions import DeserializationError
-    try:
-        datetime_obj = Deserializer.deserialize_iso(value)
-    except DeserializationError:
-        message = "Argument {} is not a valid ISO-8601 datetime format"
-        raise ValueError(message.format(value))
-    return datetime_obj
-
-
-def duration_format(value):
-    """Validate the correct format of a timespan string and deserilize."""
-    from msrest.serialization import Deserializer
-    from msrest.exceptions import DeserializationError
-    try:
-        duration_obj = Deserializer.deserialize_duration(value)
-    except DeserializationError:
-        message = "Argument {} is not in a valid ISO-8601 duration format"
-        raise ValueError(message.format(value))
-    return duration_obj
-
-
-def metadata_item_format(value):
-    """Space separated values in 'key=value' format."""
-    try:
-        data_name, data_value = value.split('=')
-    except ValueError:
-        message = ("Incorrectly formatted metadata. "
-                   "Argument values should be in the format a=b c=d")
-        raise ValueError(message)
-    return {'name': data_name, 'value': data_value}
-
-
-def environment_setting_format(value):
-    """Space separated values in 'key=value' format."""
-    try:
-        env_name, env_value = value.split('=')
-    except ValueError:
-        message = ("Incorrectly formatted environment settings. "
-                   "Argument values should be in the format a=b c=d")
-        raise ValueError(message)
-    return {'name': env_name, 'value': env_value}
-
-
-def application_package_reference_format(value):
-    """Space separated application IDs with optional version in 'id[#version]' format."""
-    app_reference = value.split('#', 1)
-    package = {'application_id': app_reference[0]}
-    try:
-        package['version'] = app_reference[1]
-    except IndexError:  # No specified version - ignore
-        pass
-    return package
-
-
-def resource_file_format(value):
-    """Space separated resource references in filename=blobsource format."""
-    try:
-        file_name, blob_source = value.split('=', 1)
-    except ValueError:
-        message = ("Incorrectly formatted resource reference. "
-                   "Argmuent values should be in the format filename=blobsource")
-        raise ValueError(message)
-    return {'file_path': file_name, 'blob_source': blob_source}
-
-
-def certificate_reference_format(value):
-    """Space separated certificate thumbprints."""
-    cert = {'thumbprint': value, 'thumbprint_algorithm': 'sha1'}
-    return cert
-
-
-# COMMAND NAMESPACE VALIDATORS
-
-def application_enabled(namespace):
-    """Validates account has auto-storage enabled"""
-    from azure.cli.core.commands.client_factory import get_mgmt_service_client
-    from azure.mgmt.batch import BatchManagementClient
-    client = get_mgmt_service_client(BatchManagementClient)
-    acc = client.batch_account.get(namespace.resource_group, namespace.account_name)
-    if not acc:
-        raise ValueError("Batch account '{}' not found.".format(namespace.account_name))
-    if not acc.auto_storage or not acc.auto_storage.storage_account_id:  # pylint: disable=no-member
-        raise ValueError("Batch account '{}' needs auto-storage enabled.".
-                         format(namespace.account_name))
-
-
-def validate_json_file(namespace):
-    """Validate the give json file existing"""
-    if namespace.json_file:
-        try:
-            with open(namespace.json_file) as file_handle:
-                json.load(file_handle)
-        except EnvironmentError:
-            raise ValueError("Cannot access JSON request file: " + namespace.json_file)
-        except ValueError as err:
-            raise ValueError("Invalid JSON file: {}".format(err))
-
-
-def validate_options(namespace):
-    """Validate any flattened request header option arguments."""
-    try:
-        start = namespace.start_range
-        end = namespace.end_range
-    except AttributeError:
-        return
-    else:
-        namespace.ocp_range = None
-        del namespace.start_range
-        del namespace.end_range
-        if start or end:
-            start = start if start else 0
-            end = end if end else ""
-            namespace.ocp_range = "bytes={}-{}".format(start, end)
-
-
-def validate_file_destination(namespace):
-    """Validate the destination path for a file download."""
-    try:
-        path = namespace.destination
-    except AttributeError:
-        return
-    else:
-        # TODO: Need to confirm this logic...
-        file_path = path
-        file_dir = os.path.dirname(path)
-        if os.path.isdir(path):
-            file_name = os.path.basename(namespace.file_name)
-            file_path = os.path.join(path, file_name)
-        elif not os.path.isdir(file_dir):
-            try:
-                os.mkdir(file_dir)
-            except EnvironmentError as exp:
-                message = "Directory {} does not exist, and cannot be created: {}"
-                raise ValueError(message.format(file_dir, exp))
-        if os.path.isfile(file_path):
-            raise ValueError("File {} already exists.".format(file_path))
-        namespace.destination = file_path
-
-
-def validate_client_parameters(namespace):
+def validate_client_parameters(cmd, namespace):
     """Retrieves Batch connection parameters from environment variables"""
-    from azure.cli.core._config import az_config
     # simply try to retrieve the remaining variables from environment variables
     if not namespace.account_name:
-        namespace.account_name = az_config.get('batch', 'account', None)
+        namespace.account_name = cmd.cli_ctx.config.get('batch', 'account', None)
     if not namespace.account_endpoint:
-        namespace.account_endpoint = az_config.get('batch', 'endpoint', None)
+        namespace.account_endpoint = cmd.cli_ctx.config.get('batch', 'endpoint', None)
 
     if not namespace.account_name:
         raise ValueError("Please specify the batch account name using --account-name "
@@ -199,8 +26,6 @@ def validate_client_parameters(namespace):
     if not namespace.account_endpoint:
         raise ValueError("Please specify the batch account endpoint using --account-endpoint "
                          "or the AZURE_BATCH_ENDPOINT enviroment variable.")
-
-# CUSTOM REQUEST VALIDATORS
 
 
 def validate_mutually_exclusive(namespace, required, param1, param2):

@@ -3,6 +3,11 @@
 Release History
 ===============
 
+2.1.0 (2018-01-05)
+------------------
+
+* Structure changed for CLI core Knack refactor.
+
 2.0.1 (2017-12-15)
 ------------------
 
