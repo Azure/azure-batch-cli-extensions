@@ -20,7 +20,7 @@ class BatchExtensionsCommandLoader(AzCommandsLoader):
             exception_handler=batch_exception_handler)
         super(BatchExtensionsCommandLoader, self).__init__(
             cli_ctx=cli_ctx,
-            custom_command_type=batch_custom)
+            custom_command_type=batch_ext_custom)
         self.module_name = __name__
 
     def load_command_table(self, args):
