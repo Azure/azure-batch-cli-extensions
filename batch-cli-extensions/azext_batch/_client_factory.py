@@ -4,7 +4,7 @@
 # --------------------------------------------------------------------------------------------
 
 
-def batch_extensions_client(cli_ctx, kwargs):
+def batch_extensions_client(cli_ctx, kwargs):  # pylint: disable=unused-argument
     from knack.util import CLIError
     import azure.batch_extensions as batch
 

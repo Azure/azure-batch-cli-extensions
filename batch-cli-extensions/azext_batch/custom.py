@@ -5,12 +5,11 @@
 
 import json
 
-from knack.log import get_logger
-
 from azure.batch_extensions.models import PoolAddParameter, JobAddParameter, JobConstraints
 
+from knack.log import get_logger
 from knack.prompting import prompt
-from knack.util import CLIError
+
 
 logger = get_logger(__name__)
 
@@ -27,7 +26,7 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
     # pylint: disable=too-many-branches, too-many-statements
     from azure.batch_extensions.errors import MissingParameterValue
     from azure.batch_extensions.models import (
-        PoolInformation, PoolAddOptions, StartTask, ImageReference,
+        PoolAddOptions, StartTask, ImageReference,
         CloudServiceConfiguration, VirtualMachineConfiguration)
     if template or json_file:
         if template:
@@ -123,7 +122,7 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
                job_manager_task_id=None, job_manager_task_resource_files=None):
     # pylint: disable=too-many-branches, too-many-statements
     from azure.batch_extensions.errors import MissingParameterValue
-    from azure.batch_extensions.models import JobManagerTask, JobAddOptions
+    from azure.batch_extensions.models import JobManagerTask, JobAddOptions, PoolInformation
     if template or json_file:
         if template:
             logger.warning('You are using an experimental feature {Job Template}.')

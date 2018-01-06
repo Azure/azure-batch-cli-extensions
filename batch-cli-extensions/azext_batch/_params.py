@@ -5,9 +5,7 @@
 
 from argcomplete.completers import FilesCompleter
 
-from knack.arguments import CLIArgumentType
-from azure.cli.core.commands.parameters import get_resource_name_completion_list, file_type
-
+from azure.cli.core.commands.parameters import file_type
 from azure.cli.command_modules.batch._completers import load_node_agent_skus
 from azure.cli.command_modules.batch._validators import (
     metadata_item_format, certificate_reference_format, validate_json_file,
@@ -17,11 +15,6 @@ from azext_batch._validators import validate_pool_settings, validate_client_para
 
 # pylint: disable=line-too-long, too-many-statements
 def load_arguments(self, _):
-    batch_name_type = CLIArgumentType(
-        help='Name of the Batch account.',
-        options_list=('--account-name',),
-        completer=get_resource_name_completion_list('Microsoft.Batch/batchAccounts'),
-        id_part=None)
 
     with self.argument_context('batch pool create') as c:
         c.argument('json_file', type=file_type, help='The file containing the pool to create in JSON format, if this parameter is specified, all other parameters are ignored.', validator=validate_json_file, completer=FilesCompleter())
@@ -35,10 +28,10 @@ def load_arguments(self, _):
         c.argument('start_task_resource_files', arg_group='Pool: Start Task', nargs='+', type=resource_file_format, help='A list of files that the Batch service will download to the compute node before running the command line. Space separated resource references in filename=blobsource format.')
         c.argument('start_task_wait_for_success', arg_group='Pool: Start Task', action='store_true', help='Whether the Batch service should wait for the start task to complete successfully (that is, to exit with exit code 0) before scheduling any tasks on the compute node. If true and the start task fails on a compute node, the Batch service retries the start task up to its maximum retry count (maxTaskRetryCount). If the task has still not completed successfully after all retries, then the Batch service marks the compute node unusable, and will not schedule tasks to it. This condition can be detected via the node state and scheduling error detail. If false, the Batch service will not wait for the start task to complete. In this case, other tasks can start executing on the compute node while the start task is still running; and even if the start task fails, new tasks will continue to be scheduled on the node. The default is false. True if flag present.')
         c.argument('os_family', arg_group="Pool: Cloud Service Configuration",
-                      help='The Azure Guest OS family to be installed on the virtual machines in the pool. Possible values are: 2 - OS Family 2, equivalent to Windows Server 2008 R2 SP1. 3 - OS Family 3, equivalent to Windows Server 2012. 4 - OS Family 4, equivalent to Windows Server 2012 R2. 5 - OS Family 5, equivalent to Windows Server 2016. For more information, see Azure Guest OS Releases (https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/#releases). Allowed values: 2, 3, 4, 5.')
+                   help='The Azure Guest OS family to be installed on the virtual machines in the pool. Possible values are: 2 - OS Family 2, equivalent to Windows Server 2008 R2 SP1. 3 - OS Family 3, equivalent to Windows Server 2012. 4 - OS Family 4, equivalent to Windows Server 2012 R2. 5 - OS Family 5, equivalent to Windows Server 2016. For more information, see Azure Guest OS Releases (https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/#releases). Allowed values: 2, 3, 4, 5.')
         c.argument('node_agent_sku_id', arg_group="Pool: Virtual Machine Configuration", help='The SKU of the Batch node agent to be provisioned on compute nodes in the pool. The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the \'List supported node agent SKUs\' operation.')
         c.argument('image', completer=load_node_agent_skus, arg_group="Pool: Virtual Machine Configuration",
-                      help="OS image reference. This can be either 'publisher:offer:sku[:version]' format, or a fully qualified ARM image id of the form '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}'. If 'publisher:offer:sku[:version]' format, version is optional and if omitted latest will be used. Valid values can be retrieved via 'az batch pool node-agent-skus list'. For example: 'MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest'")
+                   help="OS image reference. This can be either 'publisher:offer:sku[:version]' format, or a fully qualified ARM image id of the form '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}'. If 'publisher:offer:sku[:version]' format, version is optional and if omitted latest will be used. Valid values can be retrieved via 'az batch pool node-agent-skus list'. For example: 'MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest'")
 
     with self.argument_context('batch job create') as c:
         c.argument('json_file', type=file_type, help='The file containing the job to create in JSON format, if this parameter is specified, all other parameters are ignored.', validator=validate_json_file, completer=FilesCompleter())

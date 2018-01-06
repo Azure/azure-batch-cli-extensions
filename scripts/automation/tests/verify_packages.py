@@ -125,16 +125,16 @@ def verify_packages():
         sys.exit(1)
 
     # STEP 4:: Add CLI extension wheel to CLI
-    try: 
+    # try: 
 
-        extension_whl = os.path.join(built_packages_dir, 'azure_batch_cli_extensions-1000.0.0-py2.py3-none-any.whl')
-        az_output = subprocess.check_output(['az', 'extension', 'add', '--source', extension_whl, '--debug'], stderr=subprocess.STDOUT,
-                                            universal_newlines=True)
-        success = 'Successfully installed azure-batch-cli-extensions-1000.0.0' in az_output
-        print(az_output, file=sys.stderr)
-    except subprocess.CalledProcessError as err:
-        success = False
-        print(err, file=sys.stderr)
+    #     extension_whl = os.path.join(built_packages_dir, 'azure_batch_cli_extensions-1000.0.0-py2.py3-none-any.whl')
+    #     az_output = subprocess.check_output(['az', 'extension', 'add', '--source', extension_whl, '--debug'], stderr=subprocess.STDOUT,
+    #                                         universal_newlines=True)
+    #     success = 'Successfully installed azure-batch-cli-extensions-1000.0.0' in az_output
+    #     print(az_output, file=sys.stderr)
+    # except subprocess.CalledProcessError as err:
+    #     success = False
+    #     print(err, file=sys.stderr)
 
     # STEP 5:: Verify extension loading correctly
     try:
