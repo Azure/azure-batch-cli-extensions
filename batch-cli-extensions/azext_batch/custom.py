@@ -5,36 +5,16 @@
 
 import json
 
-from msrest.exceptions import ValidationError, ClientRequestError
-from azure.batch_extensions.errors import MissingParameterValue
-from azure.batch_extensions.models import (
-    PoolAddParameter, CloudServiceConfiguration, VirtualMachineConfiguration,
-    ImageReference, PoolInformation, JobAddParameter, JobManagerTask, BatchErrorException,
-    JobConstraints, StartTask, JobAddOptions, PoolAddOptions)
-import azure.cli.core.azlogging as azlogging
-from azure.cli.core.prompting import prompt
-from azure.cli.core.util import CLIError
+from azure.batch_extensions.models import PoolAddParameter, JobAddParameter, JobConstraints
 
-logger = azlogging.get_az_logger(__name__)
+from knack.log import get_logger
+from knack.prompting import prompt
+
+
+logger = get_logger(__name__)
 
 # NCJ custom commands
 # pylint: disable=redefined-builtin
-
-
-def _handle_batch_exception(action):
-    try:
-        return action()
-    except BatchErrorException as ex:
-        try:
-            message = ex.error.message.value
-            if ex.error.values:
-                for detail in ex.error.values:
-                    message += "\n{}: {}".format(detail.key, detail.value)
-            raise CLIError(message)
-        except AttributeError:
-            raise CLIError(ex)
-    except (ValidationError, ClientRequestError, TypeError) as ex:
-        raise CLIError(ex)
 
 
 def create_pool(client, template=None, parameters=None, json_file=None, id=None, vm_size=None,  # pylint:disable=too-many-arguments, too-many-locals
@@ -44,6 +24,10 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                 start_task_resource_files=None, start_task_wait_for_success=False, application_licenses=None,
                 certificate_references=None, application_package_references=None, metadata=None):
     # pylint: disable=too-many-branches, too-many-statements
+    from azure.batch_extensions.errors import MissingParameterValue
+    from azure.batch_extensions.models import (
+        PoolAddOptions, StartTask, ImageReference,
+        CloudServiceConfiguration, VirtualMachineConfiguration)
     if template or json_file:
         if template:
             logger.warning('You are using an experimental feature {Pool Template}.')
@@ -125,7 +109,7 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
             pool.application_package_references = application_package_references
 
     add_option = PoolAddOptions()
-    _handle_batch_exception(lambda: client.pool.add(pool, add_option))
+    client.pool.add(pool, add_option)
 
 
 create_pool.__doc__ = PoolAddParameter.__doc__
@@ -137,6 +121,8 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
                job_manager_task_command_line=None, job_manager_task_environment_settings=None,
                job_manager_task_id=None, job_manager_task_resource_files=None):
     # pylint: disable=too-many-branches, too-many-statements
+    from azure.batch_extensions.errors import MissingParameterValue
+    from azure.batch_extensions.models import JobManagerTask, JobAddOptions, PoolInformation
     if template or json_file:
         if template:
             logger.warning('You are using an experimental feature {Job Template}.')
@@ -192,7 +178,7 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
             job.job_manager_task = job_manager_task
 
     add_option = JobAddOptions()
-    _handle_batch_exception(lambda: client.job.add(job, add_option))
+    client.job.add(job, add_option)
 
 
 create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__

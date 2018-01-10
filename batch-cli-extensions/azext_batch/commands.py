@@ -5,19 +5,14 @@
 
 from distutils import version  # pylint: disable=no-name-in-module
 
-from azure.cli.core import __version__ as core_version
-from azure.cli.core.commands import cli_command
-import azure.cli.core.azlogging as azlogging
+from knack.log import get_logger
 
 from azure.batch import __version__ as batch_version
 from azure.mgmt.batch import __version__ as batch_mgmt_version
 from azure.batch_extensions import __version__ as batch_ext_version
 
-from azext_batch._client_factory import (
-    batch_extensions_client)
 
-
-logger = azlogging.get_az_logger(__name__)
+logger = get_logger(__name__)
 SUPPORTED_BATCH_VERSION = "4.1"
 SUPPORTED_BMGMT_VERSION = "4.2"
 SUPPORTED_BATCH_EXT_VERSION = "1.1"
@@ -33,12 +28,15 @@ confirm_version(batch_version, SUPPORTED_BATCH_VERSION, "Azure Batch")
 confirm_version(batch_mgmt_version, SUPPORTED_BMGMT_VERSION, "Azure Batch Management")
 confirm_version(batch_ext_version, SUPPORTED_BATCH_EXT_VERSION, "Azure Batch Extensions")
 
-custom_path = 'azext_batch.custom#{}'
 
-# pylint: disable=line-too-long
-# NCJ Commands
+def load_command_table(self, _):
 
-cli_command(__name__, 'batch file upload', custom_path.format('upload_file'), batch_extensions_client)
-cli_command(__name__, 'batch file download', custom_path.format('download_file'), batch_extensions_client)
-cli_command(__name__, 'batch pool create', custom_path.format('create_pool'), batch_extensions_client)
-cli_command(__name__, 'batch job create', custom_path.format('create_job'), batch_extensions_client)
+    with self.command_group('batch file') as g:
+        g.custom_command('upload', 'upload_file')
+        g.custom_command('download', 'download_file')
+
+    with self.command_group('batch pool') as g:
+        g.custom_command('create', 'create_pool')
+
+    with self.command_group('batch job') as g:
+        g.custom_command('create', 'create_job')
