@@ -92,7 +92,7 @@ It can be installed using the CLI extension tools:
 
 .. code-block:: bash
 
-    $ az extension add --source [URL to latest release package]
+    $ az extension add --source https://github.com/Azure/azure-batch-cli-extensions/releases/download/azure-batch-cli-extensions-2.1.0/azure_batch_cli_extensions-2.1.0-py2.py3-none-any.whl
 
 
 Uninstall CLI extensions
