@@ -9,7 +9,7 @@ import unittest
 from mock import patch, Mock
 
 from msrest import Serializer, Deserializer
-from azure.storage import CloudStorageAccount
+from azure.storage.common import CloudStorageAccount
 from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.batch.batch_auth import SharedKeyCredentials
 import azure.batch_extensions as batch

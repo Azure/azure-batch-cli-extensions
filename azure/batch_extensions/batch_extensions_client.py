@@ -11,7 +11,7 @@ from msrest import Serializer, Deserializer
 from azure.batch import BatchServiceClient
 from azure.mgmt.batch import BatchManagementClient
 from azure.mgmt.storage import StorageManagementClient
-from azure.storage import CloudStorageAccount
+from azure.storage.common import CloudStorageAccount
 from azure.common.credentials import get_cli_profile
 from azure.batch.operations.application_operations import ApplicationOperations
 from azure.batch.operations.account_operations import AccountOperations
