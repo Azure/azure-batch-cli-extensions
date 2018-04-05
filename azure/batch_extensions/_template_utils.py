@@ -59,8 +59,9 @@ def _validate_string(value, content):
     :param dict content: The template parameter definition.
     :returns: str
     """
-    if value in [None, ""] and content['defaultValue'] != "":
-        raise TypeError("Empty string value is invalid: {}".format(value))
+
+    if value is None and content['defaultValue'] != "":
+        raise TypeError("String value must be provided")
 
     value = value if isinstance(value, _UNICODE_TYPE) else str(value)
     try:
@@ -190,6 +191,8 @@ def _is_prefixed(cmd_line):
     """Whether the supplied command line has already been prefixed
     with an OS specific operation.
     """
+    if cmd_line is None:
+        raise ValueError("CommandLine is required field for task.")
     return cmd_line.startswith('cmd.exe /c') or \
         cmd_line.startswith('cmd /c') or \
         cmd_line.startswith('/bin/bash -c') or \

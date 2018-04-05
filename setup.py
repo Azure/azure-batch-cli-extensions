@@ -9,7 +9,7 @@
 from codecs import open
 from setuptools import setup
 
-VERSION = '1.0.1'
+VERSION = '1.1.0'
 
 # The full list of classifiers is available at
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -31,7 +31,7 @@ DEPENDENCIES = [
     'msrestazure>=0.4.14,<1',
     'azure-batch>=4.0,<5',
     'azure-mgmt-batch>=4.0,<5',
-    'azure-storage>=0.32,<0.35',
+    'azure-storage-blob>=1.1.0,<2',
     'azure-mgmt-storage>=1.0,<2'
 ]
 DEPENDENCIES_27 = {

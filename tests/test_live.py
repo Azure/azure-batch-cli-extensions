@@ -12,14 +12,8 @@ from azure.batch_extensions.models import BatchErrorException, AllocationState, 
 import azure.batch.batch_auth as batchauth
 import azure.batch_extensions as batch
 from tests.vcr_test_base import VCRTestBase
-from azure.cli.core.profiles import get_sdk, ResourceType
-from azure.cli.core import get_default_cli
-
-az_cli = get_default_cli()
-
-CloudStorageAccount = get_sdk(az_cli, ResourceType.DATA_STORAGE, 'common.cloudstorageaccount#CloudStorageAccount')
-BlobPermissions = get_sdk(az_cli, ResourceType.DATA_STORAGE, 'blob.models#BlobPermissions')
-
+from azure.storage.common import CloudStorageAccount
+from azure.storage.blob import BlobPermissions
 
 class TestFileUpload(VCRTestBase):
     def __init__(self, test_method):
