@@ -59,7 +59,6 @@ def _validate_string(value, content):
     :param dict content: The template parameter definition.
     :returns: str
     """
-
     if value is None and content['defaultValue'] != "":
         raise TypeError("String value must be provided")
 
