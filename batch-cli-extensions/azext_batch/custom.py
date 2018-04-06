@@ -3,13 +3,11 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-import json
-
 from azure.batch_extensions.models import PoolAddParameter, JobAddParameter, JobConstraints
+from azure.cli.core.util import get_file_json
 
 from knack.log import get_logger
 from knack.prompting import prompt
-
 
 logger = get_logger(__name__)
 
@@ -32,10 +30,11 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
         if template:
             logger.warning('You are using an experimental feature {Pool Template}.')
             json_obj = None
-            parameters = parameters or {}
+            parameters = get_file_json(parameters) if parameters else {}
+            template_obj = get_file_json(template)
             while json_obj is None:
                 try:
-                    json_obj = client.pool.expand_template(template, parameters)
+                    json_obj = client.pool.expand_template(template_obj, parameters)
                 except MissingParameterValue as error:
                     param_prompt = error.parameter_name
                     param_prompt += " ({}): ".format(error.parameter_description)
@@ -45,8 +44,7 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                 else:
                     json_obj = json_obj.get('properties', json_obj)
         else:
-            with open(json_file) as f:
-                json_obj = json.load(f)
+            json_obj = get_file_json(json_file)
         # validate the json file
         pool = client.pool.poolparameter_from_json(json_obj)
         if pool is None:
@@ -127,10 +125,11 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
         if template:
             logger.warning('You are using an experimental feature {Job Template}.')
             json_obj = None
-            parameters = parameters or {}
+            parameters = get_file_json(parameters) if parameters else {}
+            template_obj = get_file_json(template)
             while json_obj is None:
                 try:
-                    json_obj = client.job.expand_template(template, parameters)
+                    json_obj = client.job.expand_template(template_obj, parameters)
                 except MissingParameterValue as error:
                     param_prompt = error.parameter_name
                     param_prompt += " ({}): ".format(error.parameter_description)
@@ -140,8 +139,7 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
                 else:
                     json_obj = json_obj.get('properties', json_obj)
         else:
-            with open(json_file) as f:
-                json_obj = json.load(f)
+            json_obj = get_file_json(json_file)
         # validate the json file
         job = client.job.jobparameter_from_json(json_obj)
         if job is None:

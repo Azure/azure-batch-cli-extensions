@@ -5,8 +5,6 @@
 
 from __future__ import unicode_literals
 
-import json
-
 from msrest.exceptions import DeserializationError
 from azure.batch.operations.job_operations import JobOperations
 
@@ -31,22 +29,6 @@ class ExtendedJobOperations(JobOperations):
         self._parent = parent
         self.get_storage_client = get_storage_account
 
-    def _load_template_file(self, json_file):  # pylint:disable=no-self-use
-        """Load the contents of a JSON file as a dict.
-        :param str json_file: The path to the JSON file or a
-        file-like object.
-        """
-        try:
-            try:
-                template_json = json.load(json_file)
-            except AttributeError:  # Not a readable source.
-                with open(json_file, 'r') as template:
-                    template_json = json.load(template)
-        except (EnvironmentError, ValueError) as error:
-            raise ValueError("Invalid JSON file: {}".format(error))
-        else:
-            return template_json
-
     def _get_target_pool(self, job):
         """Retrieve the pool information associated with a job. If the job
         is an auto-pool, this will be the pool specification. Otherwise
@@ -66,19 +48,18 @@ class ExtendedJobOperations(JobOperations):
         else:
             raise ValueError('Missing required poolId or autoPoolSpecification.pool.')
 
-    def expand_template(self, template, parameters=None):
+    @staticmethod
+    def expand_template(template, parameters=None):
         """Expand a JSON template, substituting in optional parameters.
-        :param template: The template data. Can either be a dictionary,
-         or a path to a JSON-formatted file, or a file-like readable object.
+        :param template: The template data. Must be a dictionary.
         :param parameters: The values of parameters to be substituted into
-         the template. Can either be a dictionary, a path to a JSON-formatted file,
-         or a file-like readable object.
+         the template. Must be a dictionary.
         :returns: The pool specification JSON dictionary.
         """
         if not isinstance(template, dict):
-            template = self._load_template_file(template)
+            raise ValueError("template isn't a JSON dictionary")
         if parameters and not isinstance(parameters, dict):
-            parameters = self._load_template_file(parameters)
+            raise ValueError("parameters isn't a JSON dictionary")
         elif not parameters:
             parameters = {}
         expanded_job_object = templates.expand_template(template, parameters)

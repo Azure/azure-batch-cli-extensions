@@ -244,10 +244,12 @@ class TestBatchExtensions(unittest.TestCase):
         self.assertEqual(resolved['result'], "alpha Frodo gamma")
 
     def test_batch_extensions_expand_template_with_parameter_file(self):
-        template_file = os.path.join(self.data_dir, 'batch.job.parametricsweep.json')
-        parameter_file = os.path.join(self.data_dir, 'batch.job.parameters.json')
+        with open(os.path.join(self.data_dir, 'batch.job.parametricsweep.json'), 'r') as template:
+            template_obj = json.load(template)
+        with open(os.path.join(self.data_dir, 'batch.job.parameters.json'), 'r') as parameter:
+            parameter_obj = json.load(parameter)
         job_ops = operations.ExtendedJobOperations(None, None, None, self._serialize, self._deserialize, None)
-        resolved = job_ops.expand_template(template_file, parameter_file)
+        resolved = job_ops.expand_template(template_obj, parameter_obj)
         self.assertTrue(resolved)
         self.assertEqual(resolved['properties']['id'], "helloworld")
         self.assertEqual(resolved['properties']['poolInfo']['poolId'], "xplatTestPool")
