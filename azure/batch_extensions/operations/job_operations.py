@@ -189,3 +189,4 @@ class ExtendedJobOperations(JobOperations):
                 self.patch(job.id, {'on_all_tasks_complete': auto_complete})
             return tasks
         return result
+    add.metadata = {'url': '/jobs'}

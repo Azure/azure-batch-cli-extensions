@@ -103,3 +103,4 @@ class ExtendedPoolOperations(PoolOperations):
         templates.post_processing(pool, fileutils, pool_os_flavor)
 
         return super(ExtendedPoolOperations, self).add(pool, pool_add_options, custom_headers, raw, **operation_config)
+    add.metadata = {'url': '/pools'}

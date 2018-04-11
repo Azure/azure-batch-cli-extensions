@@ -1083,6 +1083,7 @@ class TestBatchExtensions(unittest.TestCase):
                     'blobName': "music.mp3",
                     'keyValue': "yale"
                 }))
+        job.__dict__.pop('additional_properties')
         job_ref = models.ExtendedJobParameter(**job.__dict__)
         utils.expand_application_template(job, self._deserialize)
         self.assertIsNone(job.application_template_info)
