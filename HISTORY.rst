@@ -3,6 +3,13 @@
 SDK Release History
 ===================
 
+1.1.1 (2018-4-10)
+------------------
+
+* Using azure-storage-blob as dependency
+* Expand template only accept JSON dictionary object
+* Minor bugs fix
+
 1.0.1 (2017-10-10)
 ------------------
 

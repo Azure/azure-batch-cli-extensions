@@ -33,7 +33,7 @@ interactions:
       client-request-id: [a539cf48-a55b-11e7-a3fe-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:17:49 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodeagentskus\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"batch.node.centos 7\",\"verifiedImageReferences\"\
@@ -117,7 +117,7 @@ interactions:
       client-request-id: [a5ccae7e-a55b-11e7-a934-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:17:50 GMT']
     method: POST
-    uri: https://test1.westus.batch.azure.com/pools?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#Microsoft.Azure.Batch.Protocol.Entities.Container.errors/@Element\"\
         ,\"code\":\"PoolExists\",\"message\":{\r\n    \"lang\":\"en-US\",\"value\"\
@@ -146,7 +146,7 @@ interactions:
       client-request-id: [a6529312-a55b-11e7-8f6d-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:17:50 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#pools/@Element\"\
         ,\"id\":\"ncj-ubuntu1404\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404\"\
@@ -187,7 +187,7 @@ interactions:
       client-request-id: [a6d172be-a55b-11e7-8952-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:17:51 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodes\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"tvm-57200098_1-20170928t155122z\"\
@@ -231,7 +231,7 @@ interactions:
       client-request-id: [a75cd5da-a55b-11e7-b2f7-ecb1d755839a]
       return-client-request-id: ['false']
     method: POST
-    uri: https://test1.westus.batch.azure.com/jobs?api-version=2017-09-01.6.0&timeout=30
+    uri: https://test1.westus.batch.azure.com/jobs?api-version=2018-03-01.6.1&timeout=30
   response:
     body: {string: ''}
     headers:
@@ -264,7 +264,7 @@ interactions:
       accept-language: [en-US]
       client-request-id: [a9477ec8-a55b-11e7-9fbf-ecb1d755839a]
     method: POST
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/addtaskcollection?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/addtaskcollection?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#taskaddresult\"\
         ,\"value\":[\r\n    {\r\n      \"status\":\"Success\",\"taskId\":\"myTask\"\
@@ -294,7 +294,7 @@ interactions:
       client-request-id: [a9f2fffa-a55b-11e7-91f2-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:17:56 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#jobs/@Element\"\
         ,\"id\":\"ncj-ubuntu1404\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404\"\
@@ -331,7 +331,7 @@ interactions:
       client-request-id: [aa7148d8-a55b-11e7-b371-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:17:57 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/myTask\"\
@@ -377,7 +377,7 @@ interactions:
       client-request-id: [acbb4d2c-a55b-11e7-9da5-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:01 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/myTask\"\
@@ -425,7 +425,7 @@ interactions:
       client-request-id: [ad3857de-a55b-11e7-a32c-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:02 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/myTask?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/myTask?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks/@Element\"\
         ,\"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404/tasks/myTask\"\
@@ -509,7 +509,7 @@ interactions:
       client-request-id: [adf43f90-a55b-11e7-8a5a-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:03 GMT']
     method: DELETE
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404?api-version=2018-03-01.6.1
   response:
     body: {string: ''}
     headers:
@@ -644,7 +644,7 @@ interactions:
       client-request-id: [af28ed74-a55b-11e7-bb61-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:05 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodeagentskus\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"batch.node.centos 7\",\"verifiedImageReferences\"\
@@ -728,7 +728,7 @@ interactions:
       client-request-id: [afa646c2-a55b-11e7-a67e-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:06 GMT']
     method: POST
-    uri: https://test1.westus.batch.azure.com/pools?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#Microsoft.Azure.Batch.Protocol.Entities.Container.errors/@Element\"\
         ,\"code\":\"PoolExists\",\"message\":{\r\n    \"lang\":\"en-US\",\"value\"\
@@ -757,7 +757,7 @@ interactions:
       client-request-id: [b024b354-a55b-11e7-8137-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:07 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#pools/@Element\"\
         ,\"id\":\"ncj-windows-2012-r2\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2\"\
@@ -798,7 +798,7 @@ interactions:
       client-request-id: [b0a16ff8-a55b-11e7-87dd-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:08 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodes\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"tvm-57200098_1-20170928t160022z\"\
@@ -842,7 +842,7 @@ interactions:
       client-request-id: [b12497be-a55b-11e7-8484-ecb1d755839a]
       return-client-request-id: ['false']
     method: POST
-    uri: https://test1.westus.batch.azure.com/jobs?api-version=2017-09-01.6.0&timeout=30
+    uri: https://test1.westus.batch.azure.com/jobs?api-version=2018-03-01.6.1&timeout=30
   response:
     body: {string: ''}
     headers:
@@ -875,7 +875,7 @@ interactions:
       accept-language: [en-US]
       client-request-id: [b1d42398-a55b-11e7-8074-ecb1d755839a]
     method: POST
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/addtaskcollection?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/addtaskcollection?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#taskaddresult\"\
         ,\"value\":[\r\n    {\r\n      \"status\":\"Success\",\"taskId\":\"myTask\"\
@@ -905,7 +905,7 @@ interactions:
       client-request-id: [b3212f00-a55b-11e7-82ac-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:12 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#jobs/@Element\"\
         ,\"id\":\"ncj-windows-2012-r2\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2\"\
@@ -942,7 +942,7 @@ interactions:
       client-request-id: [b39c3dd2-a55b-11e7-b833-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:13 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/myTask\"\
@@ -982,7 +982,7 @@ interactions:
       client-request-id: [b5e4915e-a55b-11e7-b1de-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:17 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/myTask\"\
@@ -1030,7 +1030,7 @@ interactions:
       client-request-id: [b666a5d0-a55b-11e7-9e41-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:17 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/myTask?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/myTask?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks/@Element\"\
         ,\"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2/tasks/myTask\"\
@@ -1114,7 +1114,7 @@ interactions:
       client-request-id: [b71fe72c-a55b-11e7-8587-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:19 GMT']
     method: DELETE
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2?api-version=2018-03-01.6.1
   response:
     body: {string: ''}
     headers:
@@ -1249,7 +1249,7 @@ interactions:
       client-request-id: [b859a924-a55b-11e7-8c41-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:21 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodeagentskus\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"batch.node.centos 7\",\"verifiedImageReferences\"\
@@ -1333,7 +1333,7 @@ interactions:
       client-request-id: [b8d5ca74-a55b-11e7-9baf-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:21 GMT']
     method: POST
-    uri: https://test1.westus.batch.azure.com/pools?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#Microsoft.Azure.Batch.Protocol.Entities.Container.errors/@Element\"\
         ,\"code\":\"PoolExists\",\"message\":{\r\n    \"lang\":\"en-US\",\"value\"\
@@ -1362,7 +1362,7 @@ interactions:
       client-request-id: [b9566b48-a55b-11e7-bc26-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:22 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#pools/@Element\"\
         ,\"id\":\"ncj-ubuntu1404\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404\"\
@@ -1403,7 +1403,7 @@ interactions:
       client-request-id: [b9d18dfe-a55b-11e7-a60d-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:23 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools/ncj-ubuntu1404/nodes?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodes\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"tvm-57200098_1-20170928t155122z\"\
@@ -1528,7 +1528,7 @@ interactions:
       client-request-id: [bbc5e0ac-a55b-11e7-85bf-ecb1d755839a]
       return-client-request-id: ['false']
     method: POST
-    uri: https://test1.westus.batch.azure.com/jobs?api-version=2017-09-01.6.0&timeout=30
+    uri: https://test1.westus.batch.azure.com/jobs?api-version=2018-03-01.6.1&timeout=30
   response:
     body: {string: ''}
     headers:
@@ -1561,7 +1561,7 @@ interactions:
       accept-language: [en-US]
       client-request-id: [bc7a4c50-a55b-11e7-9cf0-ecb1d755839a]
     method: POST
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/addtaskcollection?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/addtaskcollection?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#taskaddresult\"\
         ,\"value\":[\r\n    {\r\n      \"status\":\"Success\",\"taskId\":\"myTask\"\
@@ -1591,7 +1591,7 @@ interactions:
       client-request-id: [bd255824-a55b-11e7-9811-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:29 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#jobs/@Element\"\
         ,\"id\":\"ncj-ubuntu1404-1\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1\"\
@@ -1628,7 +1628,7 @@ interactions:
       client-request-id: [bda145f4-a55b-11e7-a8ee-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:30 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks/myTask\"\
@@ -1676,7 +1676,7 @@ interactions:
       client-request-id: [be21238a-a55b-11e7-88d4-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:30 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks/myTask?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks/myTask?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks/@Element\"\
         ,\"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1/tasks/myTask\"\
@@ -1760,7 +1760,7 @@ interactions:
       client-request-id: [bedc830a-a55b-11e7-9cc7-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:32 GMT']
     method: DELETE
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-ubuntu1404-1?api-version=2018-03-01.6.1
   response:
     body: {string: ''}
     headers:
@@ -1895,7 +1895,7 @@ interactions:
       client-request-id: [c013dc08-a55b-11e7-b6a1-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:34 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/nodeagentskus?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodeagentskus\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"batch.node.centos 7\",\"verifiedImageReferences\"\
@@ -1979,7 +1979,7 @@ interactions:
       client-request-id: [c0989b76-a55b-11e7-9e4d-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:34 GMT']
     method: POST
-    uri: https://test1.westus.batch.azure.com/pools?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#Microsoft.Azure.Batch.Protocol.Entities.Container.errors/@Element\"\
         ,\"code\":\"PoolExists\",\"message\":{\r\n    \"lang\":\"en-US\",\"value\"\
@@ -2008,7 +2008,7 @@ interactions:
       client-request-id: [c11aea1e-a55b-11e7-ad9a-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:35 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#pools/@Element\"\
         ,\"id\":\"ncj-windows-2012-r2\",\"url\":\"https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2\"\
@@ -2049,7 +2049,7 @@ interactions:
       client-request-id: [c197a6d0-a55b-11e7-8444-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:36 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/pools/ncj-windows-2012-r2/nodes?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#nodes\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"tvm-57200098_1-20170928t160022z\"\
@@ -2174,7 +2174,7 @@ interactions:
       client-request-id: [c386688a-a55b-11e7-914e-ecb1d755839a]
       return-client-request-id: ['false']
     method: POST
-    uri: https://test1.westus.batch.azure.com/jobs?api-version=2017-09-01.6.0&timeout=30
+    uri: https://test1.westus.batch.azure.com/jobs?api-version=2018-03-01.6.1&timeout=30
   response:
     body: {string: ''}
     headers:
@@ -2207,7 +2207,7 @@ interactions:
       accept-language: [en-US]
       client-request-id: [c43b99e8-a55b-11e7-aeee-ecb1d755839a]
     method: POST
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/addtaskcollection?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/addtaskcollection?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#taskaddresult\"\
         ,\"value\":[\r\n    {\r\n      \"status\":\"Success\",\"taskId\":\"myTask\"\
@@ -2237,7 +2237,7 @@ interactions:
       client-request-id: [c4bc9c62-a55b-11e7-87a8-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:41 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#jobs/@Element\"\
         ,\"id\":\"ncj-windows-2012-r2-1\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1\"\
@@ -2274,7 +2274,7 @@ interactions:
       client-request-id: [c53c1864-a55b-11e7-a5f1-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:42 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks/myTask\"\
@@ -2318,7 +2318,7 @@ interactions:
       client-request-id: [c7840cec-a55b-11e7-afaa-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:46 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks\"\
         ,\"value\":[\r\n    {\r\n      \"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks/myTask\"\
@@ -2366,7 +2366,7 @@ interactions:
       client-request-id: [c8044c30-a55b-11e7-9ff8-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:47 GMT']
     method: GET
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks/myTask?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks/myTask?api-version=2018-03-01.6.1
   response:
     body: {string: "{\r\n  \"odata.metadata\":\"https://test1.westus.batch.azure.com/$metadata#tasks/@Element\"\
         ,\"id\":\"myTask\",\"url\":\"https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1/tasks/myTask\"\
@@ -2450,7 +2450,7 @@ interactions:
       client-request-id: [c8c132d8-a55b-11e7-a65f-ecb1d755839a]
       ocp-date: ['Fri, 29 Sep 2017 21:18:48 GMT']
     method: DELETE
-    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1?api-version=2017-09-01.6.0
+    uri: https://test1.westus.batch.azure.com/jobs/ncj-windows-2012-r2-1?api-version=2018-03-01.6.1
   response:
     body: {string: ''}
     headers:

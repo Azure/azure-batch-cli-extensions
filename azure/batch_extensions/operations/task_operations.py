@@ -136,3 +136,4 @@ class ExtendedTaskOperations(TaskOperations):
                 else:
                     submitted_tasks.extend(submission.value)  # pylint: disable=no-member
         return models.TaskAddCollectionResult(value=submitted_tasks)
+    add_collection.metadata = {'url': '/jobs/{jobId}/addtaskcollection'}
