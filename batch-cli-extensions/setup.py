@@ -9,7 +9,7 @@ import os
 from codecs import open
 from setuptools import setup, find_packages
 
-VERSION = '2.2.0'
+VERSION = '2.2.1'
 
 # The full list of classifiers is available at
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -37,7 +37,7 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
 setup(
     name='azure-batch-cli-extensions',
     version=VERSION,
-    description='Microsoft Azure Command-Line Tools Extended Batch Command Module',
+    description='Additional commands for working with Azure Batch service',
     long_description=README + '\n\n' + HISTORY,
     license='MIT',
     author='Microsoft Corporation',
