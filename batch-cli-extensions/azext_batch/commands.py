@@ -13,9 +13,9 @@ from azure.batch_extensions import __version__ as batch_ext_version
 
 
 logger = get_logger(__name__)
-SUPPORTED_BATCH_VERSION = "4.1"
+SUPPORTED_BATCH_VERSION = "4.2"
 SUPPORTED_BMGMT_VERSION = "4.2"
-SUPPORTED_BATCH_EXT_VERSION = "1.1"
+SUPPORTED_BATCH_EXT_VERSION = "1.2"
 
 
 def confirm_version(current, supported, package):

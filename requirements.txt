@@ -17,5 +17,5 @@ setuptools==30.4.0
 six==1.10.0
 tabulate==0.7.5
 vcrpy==1.10.3
-azure-cli==2.0.31
+azure-cli==2.0.32
 azure-storage-blob==1.1.0
