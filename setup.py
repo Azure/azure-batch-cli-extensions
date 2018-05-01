@@ -5,11 +5,10 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-
+import os
+import re
 from codecs import open
 from setuptools import setup
-
-VERSION = '1.1.1'
 
 # The full list of classifiers is available at
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -38,6 +37,13 @@ DEPENDENCIES_27 = {
     ":python_version<'3.4'": ['pathlib>=1.0.1']
 }
 
+# Version extraction inspired from 'requests'
+with open(os.path.join('azure/batch_extensions', 'version.py'), 'r') as fd:
+    version = re.search(r'^VERSION\s*=\s*[\'"]([^\'"]*)[\'"]',
+                        fd.read(), re.MULTILINE).group(1)
+
+if not version:
+    raise RuntimeError('Cannot find version information')
 
 with open('README.rst', 'r', encoding='utf-8') as f:
     README = f.read()
@@ -46,7 +52,7 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
 
 setup(
     name='azure-batch-extensions',
-    version=VERSION,
+    version=version,
     description='Microsoft Azure Batch Extended Features',
     long_description=README + '\n\n' + HISTORY,
     license='MIT',
