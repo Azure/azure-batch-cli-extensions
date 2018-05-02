@@ -75,7 +75,7 @@ Available options for `uploadCondition` are:
 
 * `TaskSuccess` - Upload if the task completed with an exit code of zero.
 * `TaskFailure` - Upload if the task completed with a nonzero exit code.
-* `TaskComplete` - Uploaded always (irrespective of the exit code of the task).
+* `TaskCompletion` - Uploaded always (irrespective of the exit code of the task).
 
 ## Output File Download
 
