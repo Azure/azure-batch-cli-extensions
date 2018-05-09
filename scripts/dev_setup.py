@@ -30,6 +30,9 @@ print('Root directory \'{}\'\n'.format(root_dir))
 # install general requirements and azure-cli
 exec_command('pip install -r requirements.txt')
 
+# upgrade to latest azure-batch
+exec_command('pip install --upgrade azure-batch')
+
 # install automation package
 exec_command('pip install -e ./scripts')
 
