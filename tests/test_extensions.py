@@ -3,15 +3,20 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
+import collections
 import json
 import os
+import requests
 import unittest
 from mock import patch, Mock
 
 from msrest import Serializer, Deserializer
+from azure.batch.operations.task_operations import TaskOperations
 from azure.storage.common import CloudStorageAccount
 from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.batch.batch_auth import SharedKeyCredentials
+from azure.batch.models import BatchErrorException, BatchError
+
 import azure.batch_extensions as batch
 from azure.batch_extensions import models
 from azure.batch_extensions import operations
@@ -1515,3 +1520,162 @@ class TestBatchExtensions(unittest.TestCase):
                          "fgrp-data-test-reall-cc5bdae242ec8cee81a2b85a35a0f538991472c2")
         with self.assertRaises(ValueError):
             file_utils.get_container_name("data-#$%")
+
+    def test_batch_extensions_add_task_collection_output(self):
+        def add_collection(
+                job_id, value, task_add_collection_options=None, custom_headers=None, raw=False, **operation_config):
+            status = models.TaskAddStatus.success
+            response = models.TaskAddCollectionResult([models.TaskAddResult(status, s.id) for s in value])
+            return response
+
+        num_calls = 7
+        with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
+                   Mock(side_effect=add_collection)):
+            task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
+            task_collection = []
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST * 7):
+                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+            task_add_result = task_ops.add_collection("job", task_collection)
+            assert type(task_add_result) is models.TaskAddCollectionResult
+            assert set(result.task_id for result in task_add_result.value) == set(task.id for task in task_collection)
+
+        with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
+                   Mock(side_effect=add_collection)):
+            task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
+            task_collection = []
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST * 7):
+                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+            task_add_result = task_ops.add_collection("job", task_collection, 4)
+            assert type(task_add_result) is models.TaskAddCollectionResult
+            assert set(result.task_id for result in task_add_result.value) == set(task.id for task in task_collection)
+
+    def test_batch_extensions_add_task_collection_chunk_single(self):
+        submitted_tasks = collections.deque()
+
+        def bulk_tasks(results_queue, values):
+            results_queue.appendleft(1)
+            submitted_tasks.extendleft(values)
+            assert(len(values) == task_ops.MAX_TASKS_PER_REQUEST)
+
+        with patch('azure.batch_extensions.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
+                   Mock(side_effect=bulk_tasks)):
+            task_ops = operations.ExtendedTaskOperations(None,  None, None, self._serialize, self._deserialize, None)
+            task_collection = []
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST):
+                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+
+            task_ops.add_collection("job", task_collection)
+            assert task_ops._TaskWorkflowManager._bulk_add_tasks.call_count == 1
+            assert set(task.id for task in task_collection) == set(task.id for task in submitted_tasks)
+
+        submitted_tasks = collections.deque()
+        with patch('azure.batch_extensions.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
+                   Mock(side_effect=bulk_tasks)):
+            task_ops = operations.ExtendedTaskOperations(None,  None, None, self._serialize, self._deserialize, None)
+            task_collection = []
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST):
+                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+
+            task_ops.add_collection("job", task_collection, threads=4)
+            assert task_ops._TaskWorkflowManager._bulk_add_tasks.call_count == 1
+            assert set(task.id for task in task_collection) == set(task.id for task in submitted_tasks)
+
+    def test_batch_extensions_add_task_collection_chunk_multiple(self):
+        submitted_tasks = collections.deque()
+
+        def bulk_tasks(results_queue, values):
+            results_queue.appendleft(1)
+            submitted_tasks.extendleft(values)
+            assert(len(values) == task_ops.MAX_TASKS_PER_REQUEST)
+
+        num_calls = 7
+
+        with patch('azure.batch_extensions.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
+                   Mock(side_effect=bulk_tasks)):
+            task_ops = operations.ExtendedTaskOperations(None,  None, None, self._serialize, self._deserialize, None)
+            task_collection = []
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST*num_calls):
+                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+            task_ops.add_collection("job", task_collection)
+
+            assert task_ops._TaskWorkflowManager._bulk_add_tasks.call_count == num_calls
+            assert set(task.id for task in task_collection) == set(task.id for task in submitted_tasks)
+
+        submitted_tasks = collections.deque()
+        with patch('azure.batch_extensions.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
+                   Mock(side_effect=bulk_tasks)):
+            task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
+            task_collection = []
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST*num_calls):
+                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+            task_ops.add_collection("job", task_collection, threads=4)
+
+            assert task_ops._TaskWorkflowManager._bulk_add_tasks.call_count == num_calls
+            assert set(task.id for task in task_collection) == set(task.id for task in submitted_tasks)
+
+    def test_batch_extensions_add_task_collection_request_body_too_large_handled(self):
+        submitted_tasks = collections.deque()
+        exception_thrown = []
+
+        def add_collection(
+                job_id, value, task_add_collection_options=None, custom_headers=None, raw=False, **operation_config):
+            if len(exception_thrown) == 0:
+                exception_thrown.append(True)
+                response = Mock(spec=requests.Response)
+                response.status_code = 413
+                err = BatchErrorException(self._deserialize, response)
+                err.error = Mock(spec=BatchError)
+                err.error.code = "RequestBodyTooLarge"
+                raise err
+            submitted_tasks.extendleft(value)
+            status = models.TaskAddStatus.success
+            response = models.TaskAddCollectionResult([models.TaskAddResult(status, s.id) for s in value])
+            return response
+
+        with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
+                   Mock(side_effect=add_collection)):
+            task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
+            task_collection = []
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST):
+                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+
+            task_workflow_manager = task_ops._TaskWorkflowManager(
+                task_ops,
+                "job",
+                task_collection,
+                None,
+                None,
+                False)
+            results_queue = collections.deque()
+            task_workflow_manager._bulk_add_tasks(results_queue, list(task_workflow_manager._tasks_to_add))
+
+            assert TaskOperations.add_collection.call_count == 3
+            assert set(task.id for task in task_collection) == set(result.task_id for result in results_queue)
+
+    def test_batch_extensions_add_task_collection_request_body_too_large_poison_task(self):
+        response = Mock(spec=requests.Response)
+        response.status_code = 413
+        err = BatchErrorException(self._deserialize, response)
+        err.error = Mock(spec=BatchError)
+        err.error.code = "RequestBodyTooLarge"
+
+        with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
+                   Mock(side_effect=err)):
+            task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
+            task_collection = []
+            for i in range(1):
+                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+            task_workflow_manager = task_ops._TaskWorkflowManager(
+                task_ops,
+                "job",
+                task_collection,
+                None,
+                None,
+                False)
+            results_queue = collections.deque()
+            task_workflow_manager._bulk_add_tasks(results_queue, task_collection)
+
+            assert len(results_queue) == 1
+            exception = results_queue.pop()
+            assert type(exception) is BatchErrorException
+            assert exception.error.code == "RequestBodyTooLarge"

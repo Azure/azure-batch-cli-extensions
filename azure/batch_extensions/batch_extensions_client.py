@@ -65,7 +65,6 @@ class BatchExtensionsClient(BatchServiceClient):
         self._resolved_storage_client = storage_client
         self._subscription = subscription_id
 
-        self.threads = None
         self.batch_account = batch_account
         self.resource_group = resource_group
 
