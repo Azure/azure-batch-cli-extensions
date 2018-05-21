@@ -16,7 +16,7 @@ import automation.utilities.path as automation_path
 def run_pylint():
     print('\n\nRun pylint')
 
-    modules = [os.path.join(automation_path.get_repo_root(), 'azure')]
+    modules = [os.path.join(automation_path.get_repo_root(), 'azext')]
     modules.append(os.path.join(automation_path.get_repo_root(), 'batch-cli-extensions', 'azext_batch'))
     modules_list = ' '.join(modules)
     print(modules_list)

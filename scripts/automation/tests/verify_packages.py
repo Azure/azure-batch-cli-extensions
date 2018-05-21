@@ -118,7 +118,7 @@ def verify_packages():
     # STEP 3:: Install Batch Extensions and validate
     install_package(all_modules[0][1], all_modules[0][0], built_packages_dir) 
     try:
-        importlib.import_module('azure.batch_extensions')
+        importlib.import_module('azext.batch')
     except ImportError as err:
         print("Unable to import {}".format(name))
         print(err)

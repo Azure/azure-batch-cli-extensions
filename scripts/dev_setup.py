@@ -38,6 +38,7 @@ exec_command('pip install -e ./scripts')
 
 # install reference to extension module package
 exec_command('pip install -e {}'.format(root_dir))
-exec_command('pip install --upgrade --target ./.azure/devcliextensions/azure-batch-cli-extensions {0}/batch-cli-extensions'.format(root_dir))
+exec_command('pip install --upgrade --target ./.azure/devcliextensions/azure-batch-cli-extensions {0}'.format(root_dir))
+exec_command('pip install --no-deps --upgrade --target ./.azure/devcliextensions/azure-batch-cli-extensions {0}/batch-cli-extensions'.format(root_dir))
 
 print('Finished dev setup.')

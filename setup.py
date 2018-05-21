@@ -38,7 +38,7 @@ DEPENDENCIES_27 = {
 }
 
 # Version extraction inspired from 'requests'
-with open(os.path.join('azure/batch_extensions', 'version.py'), 'r') as fd:
+with open(os.path.join('azext/batch', 'version.py'), 'r') as fd:
     version = re.search(r'^VERSION\s*=\s*[\'"]([^\'"]*)[\'"]',
                         fd.read(), re.MULTILINE).group(1)
 
@@ -61,12 +61,12 @@ setup(
     url='https://github.com/Azure/azure-batch-cli-extensions',
     classifiers=CLASSIFIERS,
     namespace_packages=[
-        'azure'
+        'azext'
     ],
     packages=[
-        'azure.batch_extensions',
-        'azure.batch_extensions.operations',
-        'azure.batch_extensions.models'
+        'azext.batch',
+        'azext.batch.operations',
+        'azext.batch.models'
     ],
     install_requires=DEPENDENCIES,
     extras_require=DEPENDENCIES_27,

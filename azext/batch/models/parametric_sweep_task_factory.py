@@ -13,12 +13,12 @@ class ParametricSweepTaskFactory(TaskFactoryBase):
     parameter sets can be combined for a multi-dimensional sweep.
 
     :param parameter_sets: A list if parameter sets from which tasks will be generated.
-    :type parameter_sets: A list of :class:`ParameterSet<azure.batch_extensions.models.ParameterSet>`
+    :type parameter_sets: A list of :class:`ParameterSet<azext.batch.models.ParameterSet>`
     :param repeat_task: The task template the will be used to generate each task.
-    :type repeat_task: :class:`RepeatTask <azure.batch_extensions.models.RepeatTask>`
+    :type repeat_task: :class:`RepeatTask <azext.batch.models.RepeatTask>`
     :param merge_task: An optional additional task to be run after all the other
      generated tasks have completed successfully.
-    :type merge_task: :class:`MergeTask <azure.batch_extensions.models.MergeTask>`
+    :type merge_task: :class:`MergeTask <azext.batch.models.MergeTask>`
     """
 
     _validation = {

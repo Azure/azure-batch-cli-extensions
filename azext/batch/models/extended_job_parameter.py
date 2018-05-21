@@ -105,14 +105,14 @@ class ExtendedJobParameter(JobAddParameter):
     :param task_factory: A task factory reference to automatically generate a set of
      tasks to be added to the job.
     :type task_factory: :class:`TaskFactoryBase
-     <azure.batch_extensions.models.TaskFactoryBase>`
+     <azext.batch.models.TaskFactoryBase>`
     :param application_template_info: A reference to an application template file to
      be expanded to complete the job specification. If supplied, the following arugments
      cannot also be supplied or they will be overwritten: 'job_manager_task',
     'common_environment_settings', 'uses_task_dependencies', 'on_all_tasks_complete',
     'on_task_failure', 'task_factory', 'job_preparation_task', 'job_release_task'.
     :type application_template_info: :class:`ApplicationTemplateInfo
-     <azure.batch_extensions.models.ApplicationTemplateInfo>`
+     <azext.batch.models.ApplicationTemplateInfo>`
     """
 
     _validation = {

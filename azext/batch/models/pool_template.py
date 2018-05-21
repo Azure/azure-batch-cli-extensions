@@ -15,7 +15,7 @@ class PoolTemplate(Model):
     :param api_version: The API version that the template conforms to.
     :type api_version: str
     :param properties: The specificaton of the pool.
-    :type properties: :class:`ExtendedPoolParameter<azure.batch_extensions.models.ExtendedPoolParameter>`
+    :type properties: :class:`ExtendedPoolParameter<azext.batch.models.ExtendedPoolParameter>`
     """
 
     _validation = {

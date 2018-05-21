@@ -56,7 +56,7 @@ class JobManagerTask(Model):
      download to the compute node before running the command line. Files listed
      under this element are located in the task's working directory.
     :type resource_files: list of :class:`ExtendedResourceFile
-     <azure.batch_extensions.models.ExtendedResourceFile>`
+     <azext.batch.models.ExtendedResourceFile>`
     :param output_files: A list of files that the Batch service will upload
      from the compute node after running the command line. For multi-instance
      tasks, the files will only be uploaded from the compute node on which the

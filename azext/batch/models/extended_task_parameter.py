@@ -5,13 +5,18 @@
 
 # pylint: disable=redefined-builtin
 
-from msrest.serialization import Model
+from azure.batch.models import TaskAddParameter
 
 
-class MergeTask(Model):
-    """An Azure Batch task template to repeat.
+class ExtendedTaskParameter(TaskAddParameter):
+    """An Azure Batch task to add.
 
-    :param str id: The ID of the merge task.
+    :param id: A string that uniquely identifies the task within the job. The
+     ID can contain any combination of alphanumeric characters including
+     hyphens and underscores, and cannot contain more than 64 characters. The
+     ID is case-preserving and case-insensitive (that is, you may not have two
+     IDs within a job that differ only by case).
+    :type id: str
     :param display_name: A display name for the task. The display name need
      not be unique and can contain any Unicode characters up to a maximum
      length of 1024.
@@ -25,6 +30,16 @@ class MergeTask(Model):
      shell in the command line, for example using "cmd /c MyCommand" in Windows
      or "/bin/sh -c MyCommand" in Linux.
     :type command_line: str
+    :param container_settings: The settings for the container under which the
+     task runs. If the pool that will run this task has containerConfiguration
+     set, this must be set as well. If the pool that will run this task doesn't
+     have containerConfiguration set, this must not be set. When this is
+     specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR
+     (the root of Azure Batch directories on the node) are mapped into the
+     container, all task environment variables are mapped into the container,
+     and the task command line is executed in the container.
+    :type container_settings: :class:`TaskContainerSettings
+     <azure.batch.models.TaskContainerSettings>`
     :param exit_conditions: How the Batch service should respond when the task
      completes.
     :type exit_conditions: :class:`ExitConditions
@@ -33,8 +48,8 @@ class MergeTask(Model):
      download to the compute node before running the command line. For
      multi-instance tasks, the resource files will only be downloaded to the
      compute node on which the primary task is executed.
-    :type resource_files: list of :class:`ExtendedResourceFile
-     <azure.batch_extensions.models.ExtendedResourceFile>`
+    :type resource_files: list of :class:`ResourceFile
+     <azure.batch.models.ResourceFile>`
     :param environment_settings: A list of environment variable settings for
      the task.
     :type environment_settings: list of :class:`EnvironmentSetting
@@ -53,6 +68,11 @@ class MergeTask(Model):
      omitted, the task runs as a non-administrative user unique to the task.
     :type user_identity: :class:`UserIdentity
      <azure.batch.models.UserIdentity>`
+    :param multi_instance_settings: An object that indicates that the task is
+     a multi-instance task, and contains information about how to run the
+     multi-instance task.
+    :type multi_instance_settings: :class:`MultiInstanceSettings
+     <azure.batch.models.MultiInstanceSettings>`
     :param depends_on: The tasks that this task depends on. This task will not
      be scheduled until all tasks that it depends on have completed
      successfully. If any of those tasks fail and exhaust their retry counts,
@@ -63,7 +83,12 @@ class MergeTask(Model):
      <azure.batch.models.TaskDependencies>`
     :param application_package_references: A list of application packages that
      the Batch service will deploy to the compute node before running the
-     command line.
+     command line. Application packages are downloaded and deployed to a shared
+     directory, not the task working directory. Therefore, if a referenced
+     package is already on the compute node, and is up to date, then it is not
+     re-downloaded; the existing copy on the compute node is used. If a
+     referenced application package cannot be installed, for example because
+     the package has been deleted or because download failed, the task fails.
     :type application_package_references: list of
      :class:`ApplicationPackageReference
      <azure.batch.models.ApplicationPackageReference>`
@@ -78,18 +103,21 @@ class MergeTask(Model):
      the job, or check the status of the job or of other tasks under the job.
     :type authentication_token_settings: :class:`AuthenticationTokenSettings
      <azure.batch.models.AuthenticationTokenSettings>`
-    :param output_files: A list of output file references to up persisted once
-     the task has completed.
+    :param output_files: A list of files that the Batch service will upload
+     from the compute node after running the command line. For multi-instance
+     tasks, the files will only be uploaded from the compute node on which the
+     primary task is executed.
     :type output_files: list of :class:`OutputFile
-     <azure.batch_extensions.models.OutputFile>`
+     <azext.batch.models.OutputFile>`
     :param package_references: A list of packages to be installed on the compute
      nodes. Must be of a Package Manager type in accordance with the selected
      operating system.
     :type package_references: list of :class:`PackageReferenceBase
-     <azure.batch_extensions.models.PackageReferenceBase>`
+     <azext.batch.models.PackageReferenceBase>`
     """
 
     _validation = {
+        'id': {'required': True},
         'command_line': {'required': True},
     }
 
@@ -97,36 +125,43 @@ class MergeTask(Model):
         'id': {'key': 'id', 'type': 'str'},
         'display_name': {'key': 'displayName', 'type': 'str'},
         'command_line': {'key': 'commandLine', 'type': 'str'},
+        'container_settings': {'key': 'containerSettings', 'type': 'TaskContainerSettings'},
         'exit_conditions': {'key': 'exitConditions', 'type': 'ExitConditions'},
         'resource_files': {'key': 'resourceFiles', 'type': '[ExtendedResourceFile]'},
+        'output_files': {'key': 'outputFiles', 'type': '[OutputFile]'},
         'environment_settings': {'key': 'environmentSettings', 'type': '[EnvironmentSetting]'},
         'affinity_info': {'key': 'affinityInfo', 'type': 'AffinityInformation'},
         'constraints': {'key': 'constraints', 'type': 'TaskConstraints'},
         'user_identity': {'key': 'userIdentity', 'type': 'UserIdentity'},
+        'multi_instance_settings': {'key': 'multiInstanceSettings', 'type': 'MultiInstanceSettings'},
         'depends_on': {'key': 'dependsOn', 'type': 'TaskDependencies'},
         'application_package_references': {'key': 'applicationPackageReferences',
                                            'type': '[ApplicationPackageReference]'},
         'authentication_token_settings': {'key': 'authenticationTokenSettings',
                                           'type': 'AuthenticationTokenSettings'},
-        'output_files': {'key': 'outputFiles', 'type': '[OutputFile]'},
-        'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'},
+        'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
     }
 
-    def __init__(self, command_line, id=None, display_name=None, exit_conditions=None,
-                 resource_files=None, environment_settings=None, affinity_info=None, constraints=None,
-                 user_identity=None, depends_on=None, application_package_references=None,
-                 authentication_token_settings=None, output_files=None, package_references=None):
-        self.id = id
-        self.display_name = display_name
-        self.command_line = command_line
-        self.exit_conditions = exit_conditions
-        self.resource_files = resource_files
-        self.environment_settings = environment_settings
-        self.affinity_info = affinity_info
-        self.constraints = constraints
-        self.user_identity = user_identity
-        self.depends_on = depends_on
-        self.application_package_references = application_package_references
-        self.authentication_token_settings = authentication_token_settings
-        self.output_files = output_files
+    def __init__(self, id, command_line, display_name=None, container_settings=None, exit_conditions=None,
+                 resource_files=None, output_files=None, environment_settings=None,
+                 affinity_info=None, constraints=None, user_identity=None,
+                 multi_instance_settings=None, depends_on=None,
+                 application_package_references=None, authentication_token_settings=None,
+                 package_references=None):
+        super(ExtendedTaskParameter, self).__init__(
+            id=id,
+            display_name=display_name,
+            command_line=command_line,
+            container_settings=container_settings,
+            exit_conditions=exit_conditions,
+            resource_files=resource_files,
+            output_files=output_files,
+            environment_settings=environment_settings,
+            affinity_info=affinity_info,
+            constraints=constraints,
+            user_identity=user_identity,
+            multi_instance_settings=multi_instance_settings,
+            depends_on=depends_on,
+            application_package_references=application_package_references,
+            authentication_token_settings=authentication_token_settings)
         self.package_references = package_references

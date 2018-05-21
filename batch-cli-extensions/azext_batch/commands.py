@@ -9,7 +9,7 @@ from knack.log import get_logger
 
 from azure.batch import __version__ as batch_version
 from azure.mgmt.batch import __version__ as batch_mgmt_version
-from azure.batch_extensions import __version__ as batch_ext_version
+from azext.batch import __version__ as batch_ext_version
 
 
 logger = get_logger(__name__)

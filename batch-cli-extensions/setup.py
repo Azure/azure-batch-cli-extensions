@@ -26,7 +26,9 @@ CLASSIFIERS = [
     'License :: OSI Approved :: MIT License',
 ]
 
-DEPENDENCIES = []
+DEPENDENCIES = [
+    'azure-batch-extensions>=1.2.0,<1.3'
+]
 
 # Version extraction inspired from 'requests'
 with open(os.path.join('azext_batch', 'version.py'), 'r') as fd:

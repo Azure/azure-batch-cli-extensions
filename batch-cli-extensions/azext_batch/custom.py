@@ -3,7 +3,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from azure.batch_extensions.models import PoolAddParameter, JobAddParameter, JobConstraints
+from azext.batch.models import PoolAddParameter, JobAddParameter, JobConstraints
 from azure.cli.core.util import get_file_json
 
 from knack.log import get_logger
@@ -22,8 +22,8 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                 start_task_resource_files=None, start_task_wait_for_success=False, application_licenses=None,
                 certificate_references=None, application_package_references=None, metadata=None):
     # pylint: disable=too-many-branches, too-many-statements
-    from azure.batch_extensions.errors import MissingParameterValue
-    from azure.batch_extensions.models import (
+    from azext.batch.errors import MissingParameterValue
+    from azext.batch.models import (
         PoolAddOptions, StartTask, ImageReference,
         CloudServiceConfiguration, VirtualMachineConfiguration)
     if template or json_file:
@@ -119,8 +119,8 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
                job_manager_task_command_line=None, job_manager_task_environment_settings=None,
                job_manager_task_id=None, job_manager_task_resource_files=None):
     # pylint: disable=too-many-branches, too-many-statements
-    from azure.batch_extensions.errors import MissingParameterValue
-    from azure.batch_extensions.models import JobManagerTask, JobAddOptions, PoolInformation
+    from azext.batch.errors import MissingParameterValue
+    from azext.batch.models import JobManagerTask, JobAddOptions, PoolInformation
     if template or json_file:
         if template:
             logger.warning('You are using an experimental feature {Job Template}.')

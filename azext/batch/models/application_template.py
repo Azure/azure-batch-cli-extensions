@@ -81,7 +81,7 @@ class ApplicationTemplate(Model):
     :param task_factory: A task factory reference to automatically generate a set of
      tasks to be added to the job.
     :type task_factory: :class:`TaskFactoryBase
-     <azure.batch_extensions.models.TaskFactoryBase>`
+     <azext.batch.models.TaskFactoryBase>`
     """
 
     _attribute_map = {

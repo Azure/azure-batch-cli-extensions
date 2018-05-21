@@ -7,8 +7,8 @@ import os
 import time
 
 from azure.common.credentials import ServicePrincipalCredentials
-import azure.batch_extensions as batch
-from azure.batch_extensions import models
+import azext.batch as batch
+from azext.batch import models
 
 
 BATCH_ENDPOINT = ""

@@ -29,7 +29,7 @@ class StartTask(Model):
      download to the compute node before running the command line. Files listed
      under this element are located in the task's working directory.
     :type resource_files: list of :class:`ExtendedResourceFile
-     <azure.batch_extensions.models.ExtendedResourceFile>`
+     <azext.batch.models.ExtendedResourceFile>`
     :param environment_settings: A list of environment variable settings for
      the start task.
     :type environment_settings: list of :class:`EnvironmentSetting

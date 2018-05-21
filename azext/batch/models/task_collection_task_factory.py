@@ -12,7 +12,7 @@ class TaskCollectionTaskFactory(TaskFactoryBase):
 
     :param tasks: A list if task parameters, each of which will be added straight to the job.
     :type tasks: A list of :class:`ExtendedTaskParameter
-     <azure.batch_extensions.models.ExtendedTaskParameter>`
+     <azext.batch.models.ExtendedTaskParameter>`
     """
 
     _validation = {

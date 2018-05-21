@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+1.2.0 (2018-5-25)
+------------------
+
+* Rename the namespace to azext.batch
+
 1.1.2 (2018-5-21)
 ------------------
 
