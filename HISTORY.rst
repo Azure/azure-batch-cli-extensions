@@ -3,6 +3,12 @@
 SDK Release History
 ===================
 
+1.1.2 (2018-5-21)
+------------------
+
+* Update add_collection function of ExtendedTaskOperations to handle RequestBodyTooLarge error for well behaved tasks.
+* Update add_collection function of ExtendedTaskOperations to enable degrees of parallelism.
+
 1.1.1 (2018-4-10)
 ------------------
 
