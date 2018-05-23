@@ -57,4 +57,4 @@ For more information on the properties available when creating a new pool, see [
 
 For more information on the properties available when creating jobs and tasks see [*Add a job*](https://docs.microsoft.com/rest/api/batchservice/job) and [*Add a task*](https://docs.microsoft.com/rest/api/batchservice/task).
 
-Note that the **taskFactory** feature used in `job.json` is not documented as a part of the REST API as it is currently an experimental feature only available through the Azure CLI.
+Note that the **taskFactory** feature used in `job.json` is not documented as a part of the REST API as it is currently a feature only available through the Azure CLI batch extension.

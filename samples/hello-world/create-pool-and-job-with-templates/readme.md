@@ -61,7 +61,7 @@ You can also use the [Azure portal](https://portal.azure.com) or [Batch Explorer
 | `job.json`             | A template for a new job.                                                                                                                                                                                                                                                                        |
 | `job.parameters.json`  | Provides values for the parameters defined in `job.json`. <br/> You will need to provide actual values for these parameters before job creation will succeed.                                                                                                                                    |
 
-Note that the **taskFactory** feature used in `job.json` is an experimental feature currently only available through the Azure CLI.
+Note that the **taskFactory** feature used in `job.json` is a feature currently only available through the Azure CLI.
 
 ## Troubleshooting
 

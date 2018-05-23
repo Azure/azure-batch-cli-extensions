@@ -28,7 +28,6 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
         CloudServiceConfiguration, VirtualMachineConfiguration)
     if template or json_file:
         if template:
-            logger.warning('You are using an experimental feature {Pool Template}.')
             json_obj = None
             parameters = get_file_json(parameters) if parameters else {}
             template_obj = get_file_json(template)
@@ -49,9 +48,6 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
         pool = client.pool.poolparameter_from_json(json_obj)
         if pool is None:
             raise ValueError("JSON pool parameter is not in correct format.")
-
-        if hasattr(pool, 'package_references') and pool.package_references:
-            logger.warning('You are using an experimental feature {Package Management}.')
     else:
         if not id:
             raise ValueError('Please supply template, json_file, or id')
@@ -123,7 +119,6 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
     from azext.batch.models import JobManagerTask, JobAddOptions, PoolInformation
     if template or json_file:
         if template:
-            logger.warning('You are using an experimental feature {Job Template}.')
             json_obj = None
             parameters = get_file_json(parameters) if parameters else {}
             template_obj = get_file_json(template)
@@ -144,15 +139,6 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
         job = client.job.jobparameter_from_json(json_obj)
         if job is None:
             raise ValueError("JSON job parameter is not in correct format.")
-
-        if hasattr(job, 'application_template_info') and job.application_template_info:
-            logger.warning('You are using an experimental feature {Application Templates}.')
-        if hasattr(job, 'task_factory') and job.task_factory:
-            logger.warning('You are using an experimental feature {Task Factory}.')
-        if job.pool_info.auto_pool_specification \
-                and job.pool_info.auto_pool_specification.pool \
-                and job.pool_info.auto_pool_specification.pool.package_references:
-            logger.warning('You are using an experimental feature {Package Management}.')
     else:
         if not id:
             raise ValueError('Please supply template, json_file, or id')
