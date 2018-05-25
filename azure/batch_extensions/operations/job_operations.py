@@ -82,7 +82,8 @@ class ExtendedJobOperations(JobOperations):
         except Exception as exp:
             raise ValueError("Unable to deserialize to {}: {}".format(result, exp))
 
-    def add(self, job, job_add_options=None, custom_headers=None, raw=False, **operation_config):
+    def add(self, job, job_add_options=None, custom_headers=None, raw=False,
+            threads=None, **operation_config):
         """Adds a job to the specified account.
 
         The Batch service supports two ways to control the work done as part of
@@ -106,6 +107,10 @@ class ExtendedJobOperations(JobOperations):
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
+        :param int threads: number of threads to use in parallel when adding tasks.
+         If specified will start additional threads to submit requests and
+         wait for them to finish. Otherwise will submit add_collection requests
+         sequentially on main thread
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
         :return: :class:`TaskAddCollectionResult
@@ -178,7 +183,12 @@ class ExtendedJobOperations(JobOperations):
             job, job_add_options, custom_headers, raw, **operation_config)
         if task_collection:
             try:
-                tasks = self._parent.task.add_collection(job.id, task_collection)
+                tasks = self._parent.task.add_collection(job.id,
+                                                         task_collection,
+                                                         None,
+                                                         None,
+                                                         raw,
+                                                         threads)
             except Exception:
                 # If task submission raises, we roll back the job
                 self.delete(job.id)
