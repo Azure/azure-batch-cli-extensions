@@ -32,7 +32,7 @@ class RepeatTask(Model):
     :param resource_files: A list of files that the Batch service will
      download to the compute node before running the command line.
     :type resource_files: list of :class:`ExtendedResourceFile
-     <azure.batch_extensions.models.ExtendedResourceFile>`
+     <azext.batch.models.ExtendedResourceFile>`
     :param environment_settings: A list of environment variable settings for
      the task.
     :type environment_settings: list of :class:`EnvironmentSetting
@@ -71,12 +71,12 @@ class RepeatTask(Model):
     :param output_files: A list of output file references to up persisted once
      the task has completed.
     :type output_files: list of :class:`OutputFile
-     <azure.batch_extensions.models.OutputFile>`
+     <azext.batch.models.OutputFile>`
     :param package_references: A list of packages to be installed on the compute
      nodes. Must be of a Package Manager type in accordance with the selected
      operating system.
     :type package_references: list of :class:`PackageReferenceBase
-     <azure.batch_extensions.models.PackageReferenceBase>`
+     <azext.batch.models.PackageReferenceBase>`
     """
 
     _validation = {

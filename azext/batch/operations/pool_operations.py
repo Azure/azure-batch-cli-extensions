@@ -70,7 +70,7 @@ class ExtendedPoolOperations(PoolOperations):
 
         :param pool: The pool to be added.
         :type pool: :class:`PoolAddParameter<azure.batch.models.PoolAddParameter>` or
-         :class:`ExtendedPoolParameter<azure.batch_extensions.models.ExtendedPoolParameter>`
+         :class:`ExtendedPoolParameter<azext.batch.models.ExtendedPoolParameter>`
          or :class:`PoolTemplate<azure.batch.models.PoolTemplate>`
         :param pool_add_options: Additional parameters for the operation
         :type pool_add_options: :class:`PoolAddOptions

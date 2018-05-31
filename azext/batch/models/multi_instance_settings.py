@@ -28,7 +28,7 @@ class MultiInstanceSettings(Model):
      directory, but instead are downloaded to the task root directory (one
      directory above the working directory).
     :type common_resource_files: list of :class:`ExtendedResourceFile
-     <azure.batch_extensions.models.ExtendedResourceFile>`
+     <azext.batch.models.ExtendedResourceFile>`
     """
 
     _validation = {

@@ -9,13 +9,13 @@ from knack.log import get_logger
 
 from azure.batch import __version__ as batch_version
 from azure.mgmt.batch import __version__ as batch_mgmt_version
-from azure.batch_extensions import __version__ as batch_ext_version
+from azext.batch import __version__ as batch_ext_version
 
 
 logger = get_logger(__name__)
 SUPPORTED_BATCH_VERSION = "4.2"
 SUPPORTED_BMGMT_VERSION = "4.2"
-SUPPORTED_BATCH_EXT_VERSION = "1.2"
+SUPPORTED_BATCH_EXT_VERSION = "2.1"
 
 
 def confirm_version(current, supported, package):

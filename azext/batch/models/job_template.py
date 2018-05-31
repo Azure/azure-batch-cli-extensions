@@ -15,7 +15,7 @@ class JobTemplate(Model):
     :param api_version: The API version that the template conforms to.
     :type api_version: str
     :param properties: The specificaton of the job.
-    :type properties: :class:`ExtendedJobParameter<azure.batch_extensions.models.ExtendedJobParameter>`
+    :type properties: :class:`ExtendedJobParameter<azext.batch.models.ExtendedJobParameter>`
     """
 
     _validation = {

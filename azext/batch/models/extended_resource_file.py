@@ -32,7 +32,7 @@ class ExtendedResourceFile(ResourceFile):
     :param source: A file source reference which could include a collection of files from
      a Azure Storage container or an auto-storage file group.
     :type source: :class:`FileSource
-     <azure.batch_extensions.models.FileSource>`
+     <azext.batch.models.FileSource>`
     """
 
     _attribute_map = {

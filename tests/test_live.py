@@ -8,9 +8,9 @@ import tempfile
 import json
 import datetime
 
-from azure.batch_extensions.models import BatchErrorException, AllocationState, ComputeNodeState, TaskState
+from azext.batch.models import BatchErrorException, AllocationState, ComputeNodeState, TaskState
 import azure.batch.batch_auth as batchauth
-import azure.batch_extensions as batch
+import azext.batch as batch
 from tests.vcr_test_base import VCRTestBase
 from azure.storage.common import CloudStorageAccount
 from azure.storage.blob import BlobPermissions

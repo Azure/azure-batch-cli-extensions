@@ -17,12 +17,12 @@ from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.batch.batch_auth import SharedKeyCredentials
 from azure.batch.models import BatchErrorException, BatchError
 
-import azure.batch_extensions as batch
-from azure.batch_extensions import models
-from azure.batch_extensions import operations
-from azure.batch_extensions import _template_utils as utils
-from azure.batch_extensions import _pool_utils as pool_utils
-from azure.batch_extensions import _file_utils as file_utils
+import azext.batch as batch
+from azext.batch import models
+from azext.batch import operations
+from azext.batch import _template_utils as utils
+from azext.batch import _pool_utils as pool_utils
+from azext.batch import _file_utils as file_utils
 
 
 
@@ -1557,7 +1557,7 @@ class TestBatchExtensions(unittest.TestCase):
             submitted_tasks.extendleft(values)
             assert(len(values) == task_ops.MAX_TASKS_PER_REQUEST)
 
-        with patch('azure.batch_extensions.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
+        with patch('azext.batch.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
                    Mock(side_effect=bulk_tasks)):
             task_ops = operations.ExtendedTaskOperations(None,  None, None, self._serialize, self._deserialize, None)
             task_collection = []
@@ -1569,7 +1569,7 @@ class TestBatchExtensions(unittest.TestCase):
             assert set(task.id for task in task_collection) == set(task.id for task in submitted_tasks)
 
         submitted_tasks = collections.deque()
-        with patch('azure.batch_extensions.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
+        with patch('azext.batch.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
                    Mock(side_effect=bulk_tasks)):
             task_ops = operations.ExtendedTaskOperations(None,  None, None, self._serialize, self._deserialize, None)
             task_collection = []
@@ -1590,7 +1590,7 @@ class TestBatchExtensions(unittest.TestCase):
 
         num_calls = 7
 
-        with patch('azure.batch_extensions.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
+        with patch('azext.batch.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
                    Mock(side_effect=bulk_tasks)):
             task_ops = operations.ExtendedTaskOperations(None,  None, None, self._serialize, self._deserialize, None)
             task_collection = []
@@ -1602,7 +1602,7 @@ class TestBatchExtensions(unittest.TestCase):
             assert set(task.id for task in task_collection) == set(task.id for task in submitted_tasks)
 
         submitted_tasks = collections.deque()
-        with patch('azure.batch_extensions.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
+        with patch('azext.batch.operations.ExtendedTaskOperations._TaskWorkflowManager._bulk_add_tasks',
                    Mock(side_effect=bulk_tasks)):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
             task_collection = []

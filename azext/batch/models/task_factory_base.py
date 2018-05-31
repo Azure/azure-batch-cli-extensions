@@ -12,7 +12,7 @@ class TaskFactoryBase(Model):
 
     :param merge_task: An optional additional task to be run after all the other
      generated tasks have completed successfully.
-    :type merge_task: :class:`MergeTask <azure.batch_extensions.models.MergeTask>`
+    :type merge_task: :class:`MergeTask <azext.batch.models.MergeTask>`
     """
 
     _validation = {

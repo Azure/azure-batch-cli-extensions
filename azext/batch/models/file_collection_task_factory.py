@@ -12,12 +12,12 @@ class FileCollectionTaskFactory(TaskFactoryBase):
     will be generated per input file, and automatically added to the job.
 
     :param source: The input file source from which the tasks will be generated.
-    :type source: :class:`FileSource <azure.batch_extensions.models.FileSource>`
+    :type source: :class:`FileSource <azext.batch.models.FileSource>`
     :param repeat_task: The task template the will be used to generate each task.
-    :type repeat_task: :class:`RepeatTask <azure.batch_extensions.models.RepeatTask>`
+    :type repeat_task: :class:`RepeatTask <azext.batch.models.RepeatTask>`
     :param merge_task: An optional additional task to be run after all the other
      generated tasks have completed successfully.
-    :type merge_task: :class:`MergeTask <azure.batch_extensions.models.MergeTask>`
+    :type merge_task: :class:`MergeTask <azext.batch.models.MergeTask>`
     """
 
     _validation = {

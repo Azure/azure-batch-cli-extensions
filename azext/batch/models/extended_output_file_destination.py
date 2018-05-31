@@ -17,7 +17,7 @@ class ExtendedOutputFileDestination(Model):
     :param auto_storage: An auto-storage file group reference. This cannot be
      combined with container.
     :type auto_storage: :class:`OutputFileAutoStorageDestination
-     <azure.batch_extensions.models.OutputFileAutoStorageDestination>`
+     <azext.batch.models.OutputFileAutoStorageDestination>`
     """
 
     _attribute_map = {

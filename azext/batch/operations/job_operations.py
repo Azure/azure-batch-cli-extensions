@@ -35,7 +35,7 @@ class ExtendedJobOperations(JobOperations):
         we will do a GET call on the pool ID.
         :param job: The job we want to extract the pool info from.
         :type job: :class:`JobAddParameter<azure.batch.models.JobAddParameter>` or
-         :class:`ExtendedJobParameter<azure.batch_extensions.models.ExtendedJobParameter>`
+         :class:`ExtendedJobParameter<azext.batch.models.ExtendedJobParameter>`
         :returns: :class:`CloudPool<azure.batch.models.CloudPool>`
         """
         if not job.pool_info:
@@ -99,7 +99,7 @@ class ExtendedJobOperations(JobOperations):
 
         :param job: The job to be added.
         :type job: :class:`JobAddParameter<azure.batch.models.JobAddParameter>` or
-         :class:`ExtendedJobParameter<azure.batch_extensions.models.ExtendedJobParameter>`
+         :class:`ExtendedJobParameter<azext.batch.models.ExtendedJobParameter>`
          or :class:`JobTemplate<azure.batch.models.JobTemplate>`
         :param job_add_options: Additional parameters for the operation
         :type job_add_options: :class:`JobAddOptions

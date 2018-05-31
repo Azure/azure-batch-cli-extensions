@@ -6,7 +6,7 @@
 
 def batch_extensions_client(cli_ctx, kwargs):  # pylint: disable=unused-argument
     from knack.util import CLIError
-    import azure.batch_extensions as batch
+    import azext.batch as batch
 
     account_name = kwargs.pop('account_name', None)
     account_endpoint = kwargs.pop('account_endpoint', None)

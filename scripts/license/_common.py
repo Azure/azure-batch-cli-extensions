@@ -16,7 +16,8 @@ PY_LICENSE_HEADER = \
 
 env_folders = [
     os.path.join(ROOT_DIR, 'env'),
-    os.path.join(ROOT_DIR, 'package-verify-env')
+    os.path.join(ROOT_DIR, 'package-verify-env'),
+    os.path.join(ROOT_DIR, '.azure')
 ]
 
 def contains_header(text):

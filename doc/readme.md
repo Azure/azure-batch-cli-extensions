@@ -1,6 +1,6 @@
 # New Features for Azure Batch
 
-These experimental features provide new ways to work with Azure Batch without needing to write your own applications. See the [included samples](../samples) for some ideas on use.
+These features provide new ways to work with Azure Batch without needing to write your own applications. See the [included samples](../samples) for some ideas on use.
 
 * [Input data upload to Batch linked storage accounts](inputFiles.md#input-file-upload)
 * [Input data references using linked storage accounts](inputFiles.md#referencing-input-data)
