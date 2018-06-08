@@ -2,7 +2,6 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-
 from __future__ import unicode_literals
 
 from msrest.exceptions import DeserializationError
@@ -109,8 +108,7 @@ class ExtendedJobOperations(JobOperations):
          deserialized response
         :param int threads: number of threads to use in parallel when adding tasks.
          If specified will start additional threads to submit requests and
-         wait for them to finish. Otherwise will submit add_collection requests
-         sequentially on main thread
+         wait for them to finish. Defaults to half of cpu count(floor)
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
         :return: :class:`TaskAddCollectionResult
@@ -183,12 +181,13 @@ class ExtendedJobOperations(JobOperations):
             job, job_add_options, custom_headers, raw, **operation_config)
         if task_collection:
             try:
-                tasks = self._parent.task.add_collection(job.id,
-                                                         task_collection,
-                                                         None,
-                                                         None,
-                                                         raw,
-                                                         threads)
+                tasks = self._parent.task.add_collection(
+                    job.id,
+                    task_collection,
+                    None,
+                    None,
+                    raw,
+                    threads)
             except Exception:
                 # If task submission raises, we roll back the job
                 self.delete(job.id)

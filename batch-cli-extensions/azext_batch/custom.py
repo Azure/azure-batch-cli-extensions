@@ -2,8 +2,10 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
+import multiprocessing
 
 from azext.batch.models import PoolAddParameter, JobAddParameter, JobConstraints
+from azext.batch.errors import CreateTasksErrorException
 from azure.cli.core.util import get_file_json
 
 from knack.log import get_logger
@@ -162,8 +164,11 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
             job.job_manager_task = job_manager_task
 
     add_option = JobAddOptions()
-    client.job.add(job, add_option)
-
+    try:
+        client.job.add(job, add_option, threads=multiprocessing.cpu_count()/2)
+    except CreateTasksErrorException as e:
+        for error in e.failures:
+            logger.warning(error.task_id + " failed to be added due to " + error.error.code)
 
 create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__
 

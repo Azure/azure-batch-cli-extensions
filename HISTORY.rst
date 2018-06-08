@@ -3,6 +3,12 @@
 SDK Release History
 ===================
 
+2.0.1 (2018-6-??)
+------------------
+
+* Update add_collection function of ExtendedTaskOperations to retry failed requests due to server errors.
+* Update add_collection function of ExtendedTaskOperations to track failed requests due to client errors and raise a CreateTasksErrorException if any occured.
+
 2.0.0 (2018-6-1)
 ------------------
 
