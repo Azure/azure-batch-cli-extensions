@@ -155,14 +155,24 @@ def generate_container_sas_token(container, blob_service, permission=BlobPermiss
 
 def download_blob(blob, file_group, destination, blob_service, progress_callback):
     """Download the specified file to the specified container"""
+
+    def _wrap_callback(curr, total):
+        if progress_callback:
+            progress_callback(curr, total, destination)
+
     blob_service.get_blob_to_path(
         get_container_name(file_group), blob, destination,
-        progress_callback=progress_callback)
+        progress_callback=_wrap_callback)
 
 
 def upload_blob(source, destination, file_name,  # pylint: disable=too-many-arguments
                 blob_service, remote_path=None, flatten=None, progress_callback=None):
     """Upload the specified file to the specified container"""
+
+    def _wrap_callback(curr, total):
+        if progress_callback:
+            progress_callback(curr, total, file_name)
+
     if not os.path.isfile(source):
         raise ValueError('Failed to locate file {}'.format(source))
 
@@ -206,7 +216,7 @@ def upload_blob(source, destination, file_name,  # pylint: disable=too-many-argu
         container_name=container_name,
         blob_name=blob_name,
         file_path=source,
-        progress_callback=progress_callback,
+        progress_callback=_wrap_callback,
         metadata={'lastmodified': file_time},
         # We want to validate the file as we upload, and only complete the operation
         # if all the data transfers successfully

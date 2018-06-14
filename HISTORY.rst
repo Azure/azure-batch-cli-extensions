@@ -3,11 +3,14 @@
 SDK Release History
 ===================
 
-2.0.1 (2018-6-??)
+3.0.0 (2018-6-20)
 ------------------
 
 * Update add_collection function of ExtendedTaskOperations to retry failed requests due to server errors.
 * Update add_collection function of ExtendedTaskOperations to track failed requests due to client errors and raise a CreateTasksErrorException if any occured.
+* Elements of input template/json can be case insensitive.
+* Escape in parameter json file doesn't need double escape.
+* The callback of file operations include file name.
 
 2.0.0 (2018-6-1)
 ------------------

@@ -8,7 +8,7 @@ import json
 import time
 
 import azext.batch as batch
-from azext.batch import models
+from azext.batch import models, operations
 from azure.common.credentials import ServicePrincipalCredentials
 
 
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         pool_json = json.load(template)
     pool_parameters = {'poolId': pool_id}
     pool_json = client.pool.expand_template(pool_json, pool_parameters)
-    pool = client.pool.poolparameter_from_json(pool_json)
+    pool = operations.ExtendedPoolOperations.poolparameter_from_json(pool_json)
     try:
         client.pool.add(pool)
     except models.BatchErrorException:

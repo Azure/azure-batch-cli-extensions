@@ -67,14 +67,18 @@ class ExtendedJobOperations(JobOperations):
         except KeyError:
             raise ValueError("Template missing required 'job' element")
 
-    def jobparameter_from_json(self, json_data):
+    @staticmethod
+    def jobparameter_from_json(json_data):
         """Create an ExtendedJobParameter object from a JSON specification.
         :param dict json_data: The JSON specification of an AddJobParameter or an
          ExtendedJobParameter or a JobTemplate
         """
         result = 'JobTemplate' if json_data.get('properties') else 'ExtendedJobParameter'
         try:
-            job = self._deserialize(result, json_data)
+            if result == 'JobTemplate':
+                job = models.JobTemplate.from_dict(json_data)
+            else:
+                job = models.ExtendedJobParameter.from_dict(json_data)
             if job is None:
                 raise ValueError("JSON file is not in correct format.")
             return job
