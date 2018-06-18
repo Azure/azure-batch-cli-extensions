@@ -3,6 +3,12 @@
 Release History
 ===============
 
+2.3.1 (2018-06-?)
+------------------
+
+* Update job create to have on-by-default multi-threading.
+* Update error logging for job create.
+
 2.3.0 (2018-05-25)
 ------------------
 
