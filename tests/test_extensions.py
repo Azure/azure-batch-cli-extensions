@@ -15,7 +15,7 @@ from azure.batch.operations.task_operations import TaskOperations
 from azure.storage.common import CloudStorageAccount
 from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.batch.batch_auth import SharedKeyCredentials
-from azure.batch.models import BatchErrorException, BatchError
+from azure.batch.models import BatchErrorException, BatchError, TaskAddCollectionResult, TaskAddResult, TaskAddStatus
 
 import azext.batch as batch
 from azext.batch import models
@@ -23,6 +23,7 @@ from azext.batch import operations
 from azext.batch import _template_utils as utils
 from azext.batch import _pool_utils as pool_utils
 from azext.batch import _file_utils as file_utils
+from azext.batch.errors import CreateTasksErrorException
 
 
 
@@ -1533,7 +1534,7 @@ class TestBatchExtensions(unittest.TestCase):
                    Mock(side_effect=add_collection)):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
             task_collection = []
-            for i in range(task_ops.MAX_TASKS_PER_REQUEST * 7):
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST * num_calls):
                 task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
             task_add_result = task_ops.add_collection("job", task_collection)
             assert type(task_add_result) is models.TaskAddCollectionResult
@@ -1543,7 +1544,7 @@ class TestBatchExtensions(unittest.TestCase):
                    Mock(side_effect=add_collection)):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
             task_collection = []
-            for i in range(task_ops.MAX_TASKS_PER_REQUEST * 7):
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST * num_calls):
                 task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
             task_add_result = task_ops.add_collection("job", task_collection, 4)
             assert type(task_add_result) is models.TaskAddCollectionResult
@@ -1635,9 +1636,9 @@ class TestBatchExtensions(unittest.TestCase):
         with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
                    Mock(side_effect=add_collection)):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
-            task_collection = []
+            task_collection = collections.deque()
             for i in range(task_ops.MAX_TASKS_PER_REQUEST):
-                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.appendleft(models.TaskAddParameter("task" + str(i), "sleep 1"))
 
             task_workflow_manager = task_ops._TaskWorkflowManager(
                 task_ops,
@@ -1649,8 +1650,7 @@ class TestBatchExtensions(unittest.TestCase):
             results_queue = collections.deque()
             task_workflow_manager._bulk_add_tasks(results_queue, list(task_workflow_manager._tasks_to_add))
 
-            assert TaskOperations.add_collection.call_count == 3
-            assert set(task.id for task in task_collection) == set(result.task_id for result in results_queue)
+            assert TaskOperations.add_collection.call_count == 2
 
     def test_batch_extensions_add_task_collection_request_body_too_large_poison_task(self):
         response = Mock(spec=requests.Response)
@@ -1662,9 +1662,9 @@ class TestBatchExtensions(unittest.TestCase):
         with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
                    Mock(side_effect=err)):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
-            task_collection = []
+            task_collection = collections.deque()
             for i in range(1):
-                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.appendleft(models.TaskAddParameter("task" + str(i), "sleep 1"))
             task_workflow_manager = task_ops._TaskWorkflowManager(
                 task_ops,
                 "job",
@@ -1712,3 +1712,77 @@ class TestBatchExtensions(unittest.TestCase):
         out = utils.expand_template(obj, param)
         assert out["value1"] == "Small"
         assert out["value2"] == "Small"
+
+    def test_batch_extensions_add_task_collection_collect_client_failures(self):
+        submitted_tasks = collections.deque()
+        exception_thrown = []
+
+        def add_collection(
+                job_id, value, task_add_collection_options=None, custom_headers=None, raw=False, **operation_config):
+            if len(exception_thrown) == 0:
+                exception_thrown.append(True)
+                results = []
+                for task in value:
+                    error = BatchError(code="testError", message="test error")
+                    result = TaskAddResult(TaskAddStatus.client_error, task.id, error=error)
+                    results.append(result)
+                collection = TaskAddCollectionResult()
+                collection.value = results
+                return collection
+            submitted_tasks.extendleft(value)
+            status = models.TaskAddStatus.success
+            response = models.TaskAddCollectionResult([models.TaskAddResult(status, s.id) for s in value])
+            return response
+
+        with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
+                   Mock(side_effect=add_collection)):
+            task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
+            task_collection = collections.deque()
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST):
+                task_collection.appendleft(models.TaskAddParameter("task" + str(i), "sleep 1"))
+
+            try:
+                task_ops.add_collection("job", task_collection)
+                self.fail()
+            except CreateTasksErrorException as e:
+                assert set(task.id for task in task_collection) == set(task.task_id for task in e.failures)
+            except Exception as e:
+                self.fail()
+
+
+    def test_batch_extensions_add_task_collection_retry_server_failures(self):
+        submitted_tasks = collections.deque()
+        exception_thrown = []
+
+        def add_collection(
+                job_id, value, task_add_collection_options=None, custom_headers=None, raw=False, **operation_config):
+            if len(exception_thrown) == 0:
+                exception_thrown.append(True)
+                results = []
+                for task in value:
+                    error = BatchError(code="testError", message="test error")
+                    result = TaskAddResult(TaskAddStatus.server_error, task.id, error=error)
+                    results.append(result)
+                collection = TaskAddCollectionResult()
+                collection.value = results
+                return collection
+            submitted_tasks.extendleft(value)
+            status = models.TaskAddStatus.success
+            response = models.TaskAddCollectionResult([models.TaskAddResult(status, s.id) for s in value])
+            return response
+
+        with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
+                   Mock(side_effect=add_collection)):
+            task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
+            task_collection = collections.deque()
+            for i in range(task_ops.MAX_TASKS_PER_REQUEST):
+                task_collection.appendleft(models.TaskAddParameter("task" + str(i), "sleep 1"))
+
+            try:
+                task_add_result = task_ops.add_collection("job", task_collection)
+                assert set(result.task_id for result in task_add_result.value) == set(task.id for task in task_collection)
+            except CreateTasksErrorException as e:
+                self.fail()
+            except Exception as e:
+                self.fail()
+

@@ -7,8 +7,10 @@ import logging
 import threading
 
 from azure.batch.models import BatchErrorException
+from azure.batch.models.batch_service_client_enums import TaskAddStatus
 from azure.batch.operations.task_operations import TaskOperations
 from msrest.pipeline import ClientRawResponse
+from .. import errors
 from .. import models
 
 
@@ -19,7 +21,7 @@ class ExtendedTaskOperations(TaskOperations):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
+    :param deserializer: An object model deserializer.
     :param get_storage_account: A callable to retrieve a storage client object.
     """
 
@@ -58,13 +60,25 @@ class ExtendedTaskOperations(TaskOperations):
                 custom_headers=None,
                 raw=False,
                 **kwargs):
-            self.error = False  # terminate all threads if error != False
+            # No complex operations - No lock needed
+            self._has_early_termination_error = False
+
+            # Append operations thread safe
+            # Only read once all threads have completed
+            self._failures = collections.deque()
+
+            # synchronized through lock variables
+            self.error = None  # Only written once all threads have completed
+            self._max_tasks_per_request = task_operations.MAX_TASKS_PER_REQUEST
+            self._tasks_to_add = collections.deque(tasks_to_add)
+
+            self._error_lock = threading.Lock()
             self._max_tasks_lock = threading.Lock()
             self._pending_queue_lock = threading.Lock()
-            self._max_tasks_per_request = task_operations.MAX_TASKS_PER_REQUEST
+
+            # Variables to be used for task add_collection requests
             self._task_operations = task_operations
             self._job_id = job_id
-            self._tasks_to_add = collections.deque(tasks_to_add)
             self._task_add_collection_options = task_add_collection_options
             self._custom_headers = custom_headers
             self._raw = raw
@@ -100,7 +114,7 @@ class ExtendedTaskOperations(TaskOperations):
                         results_queue.appendleft(e)
                         logging.error("Task ID " + failed_task.id + " failed to add due to exceeding the request body" +
                                       " being too large")
-                        self.error = True  # Used to indicate early termination to other threads
+                        self._has_early_termination_error = True
                     else:
                         # Assumption: Tasks are relatively close in size therefore if one batch exceeds size limit
                         # we should decrease the initial task collection size to avoid repeating the error
@@ -117,18 +131,32 @@ class ExtendedTaskOperations(TaskOperations):
 
                         # Not the most efficient solution for all cases, but the goal of this is to handle this
                         # exception and have it work in all cases where tasks are well behaved
+                        # Behavior retries as a smaller chunk and
+                        # appends extra tasks to queue to be picked up by another thread .
+                        self._tasks_to_add.extendleft(chunk_tasks_to_add[midpoint:])
                         self._bulk_add_tasks(results_queue, chunk_tasks_to_add[:midpoint])
-                        self._bulk_add_tasks(results_queue, chunk_tasks_to_add[midpoint:])
+                elif 500 <= e.response.status_code <= 599:
+                    self._tasks_to_add.extendleft(chunk_tasks_to_add)
                 else:
                     results_queue.appendleft(e)
             except Exception as e:  # pylint: disable=broad-except
                 results_queue.appendleft(e)
             else:
                 if isinstance(add_collection_response, ClientRawResponse):
-                    for task_result in add_collection_response.output.value:  # pylint: disable=no-member
-                        results_queue.appendleft(task_result)
-                else:
-                    for task_result in add_collection_response.value:  # pylint: disable=no-member
+                    add_collection_response = add_collection_response.output
+
+                for task_result in add_collection_response.value:  # pylint: disable=no-member
+                    if task_result.status == TaskAddStatus.server_error:
+                        # Server error will be retried
+                        with self._pending_queue_lock:
+                            for task in chunk_tasks_to_add:
+                                if task.id == task_result.task_id:
+                                    self._tasks_to_add.appendleft(task)
+                    elif (task_result.status == TaskAddStatus.client_error
+                          and not task_result.error.code == "TaskExists"):
+                        # Client error will be recorded unless Task already exists
+                        self._failures.appendleft(task_result)
+                    else:
                         results_queue.appendleft(task_result)
 
         def task_collection_thread_handler(self, results_queue):
@@ -138,7 +166,7 @@ class ExtendedTaskOperations(TaskOperations):
 
             :param collections.deque results_queue: Queue for worker to output results to
             """
-            while len(self._tasks_to_add) != 0 and not self.error:
+            while len(self._tasks_to_add) != 0 and not self._has_early_termination_error:
                 max_tasks = self._max_tasks_per_request  # local copy
                 chunk_tasks_to_add = []
                 with self._pending_queue_lock:
@@ -147,6 +175,17 @@ class ExtendedTaskOperations(TaskOperations):
 
                 if len(chunk_tasks_to_add) != 0:
                     self._bulk_add_tasks(results_queue, chunk_tasks_to_add)
+
+
+            # Only define error if all threads have finished and there were failures
+            with self._error_lock:
+                if threading.active_count() == 1 and len(self._failures) > 0:
+                    self.error = errors.CreateTasksErrorException(
+                        "One or more tasks failed to be added",
+                        self._failures,
+                        self._tasks_to_add)
+                else:
+                    return
 
     @staticmethod
     def _handle_output(results_queue):
@@ -207,9 +246,9 @@ class ExtendedTaskOperations(TaskOperations):
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
-        :param int threads: number of threads to use in parallel when adding tasks. If specified will start additional
-         threads to submit requests and wait for them to finish. Otherwise will submit add_collection requests
-         sequentially on main thread
+        :param int threads: number of threads to use in parallel when adding tasks. If specified
+         and greater than 0, will start additional threads to submit requests and wait for them to finish.
+         Otherwise will submit add_collection requests sequentially on main thread
         :return: :class:`TaskAddCollectionResult
          <azure.batch.models.TaskAddCollectionResult>` or
          :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>` if
@@ -232,7 +271,7 @@ class ExtendedTaskOperations(TaskOperations):
             **operation_config)
 
         # multi-threaded behavior
-        if threads:
+        if threads and threads > 0:
             active_threads = []
             for i in range(threads):
                 active_threads.append(threading.Thread(
@@ -246,5 +285,8 @@ class ExtendedTaskOperations(TaskOperations):
             task_workflow_manager.task_collection_thread_handler(results_queue)
 
         submitted_tasks = ExtendedTaskOperations._handle_output(results_queue)
-        return models.TaskAddCollectionResult(value=submitted_tasks)
+        if task_workflow_manager.error:
+            raise task_workflow_manager.error  # pylint: disable=raising-bad-type
+        else:
+            return models.TaskAddCollectionResult(value=submitted_tasks)
     add_collection.metadata = {'url': '/jobs/{jobId}/addtaskcollection'}
