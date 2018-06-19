@@ -425,26 +425,48 @@ def _parse_arm_parameter(name, template_obj, parameters):
     :param dict template_obj: The loaded contents of the JSON template.
     :param dict parameters: The loaded contents of the JSON parameters.
     """
+    # Find name of root parameter
+    param_name_end = _find_nested(')', name, 0)  # Find end of name
+    if param_name_end >= len(name):
+        raise ValueError(
+            "Template reference misformatted for parameter '{}'".format(name))
+    # Interpret name of parameter
+    param_name = _parse_arm_expression(
+        name[1:param_name_end-1],
+        template_obj,
+        parameters)
+
+    # Make sure there are defined parameters
     if 'parameters' not in template_obj:
-        raise ValueError("Template defines no parameters but tried to use '{}'".format(name))
+        raise ValueError("Template defines no parameters but tried to use '{}'".format(param_name))
+
     try:
-        param_def = template_obj['parameters'][name]
+        # Get parameter object
+        param_def = template_obj['parameters'][param_name]
+        # Parse nested object if exists
+        if len(name) > param_name_end+1:
+            param_def = _parse_nested_object(
+                param_def,
+                name[param_name_end+1:],
+                template_obj,
+                parameters)
+
     except KeyError:
-        raise ValueError("Template does not define parameter '{}'".format(name))
+        raise ValueError("Template does not define parameter '{}'".format(param_name))
     user_value = param_def.get('defaultValue')
-    if parameters and name in parameters:
+    if parameters and param_name in parameters:
         # Support both ARM and dictionary syntax
         # ARM: '<PropertyName>' : { 'value' : '<PropertyValue>' }
         # Dictionary: '<PropertyName>' : <PropertyValue>'
-        user_value = parameters[name]
+        user_value = parameters[param_name]
         try:
             user_value = user_value['value']
         except TypeError:
             pass
     if user_value is None:
         raise errors.MissingParameterValue(
-            "No value supplied for parameter '{}' and no default value".format(name),
-            parameter_name=name,
+            "No value supplied for parameter '{}' and no default value".format(param_name),
+            parameter_name=param_name,
             parameter_description=param_def.get('metadata', {}).get('description'))
     if isinstance(user_value, dict):
         # If substitute value is a complex object - it may require
@@ -459,9 +481,52 @@ def _parse_arm_parameter(name, template_obj, parameters):
             return _validate_string(user_value, param_def)
     except TypeError:
         raise TypeError("Value '{}' for parameter '{}' must be a {}.".format(
-            user_value, name, param_def['type']))
+            user_value, param_name, param_def['type']))
     else:
         raise TypeError("Parameter type '{}' not supported.".format(param_def['type']))
+
+
+def _parse_nested_object(obj, references, template_obj, parameters):
+    """ Decouple [] and . notation references. Then applies to object.
+
+    :param object obj: Root object being traversed
+    :param str references: String of references to be decoupled
+    :param dict template_obj: The loaded contents of the JSON template.
+    :param dict parameters: The loaded contents of the JSON parameters.
+    :return: Object referenced
+    """
+    obj_refs = []
+    ret_obj = obj
+    var_name = references
+    # Find and interpret each nested object and add them to a queue
+    while True:
+        start_dict = _find_nested('[', var_name, 0)
+        start_obj = _find_nested('.', var_name, 0)
+        # Handles nested [] references
+        if 0 <= start_dict < start_obj:
+            end_index = _find_nested(']', var_name, start_dict + 1)
+            obj_ref_str = var_name[start_dict + 1:end_index]
+            obj_refs.append(
+                _parse_arm_expression(obj_ref_str, template_obj, parameters))
+            var_name = var_name[:start_dict] + var_name[end_index + 1:]
+        # Handles nested . references
+        elif 0 <= start_obj < start_dict:
+            next_start_dict = _find_nested('[', var_name, 1)
+            next_start_obj = _find_nested('.', var_name, 1)
+            end_index = next_start_dict if next_start_dict < next_start_obj else next_start_obj
+            end_index = end_index if end_index > start_obj else len(var_name)
+            obj_ref_str = var_name[start_obj + 1:end_index]
+            obj_refs.append(
+                _parse_arm_expression(obj_ref_str, template_obj, parameters))
+            var_name = var_name[:start_obj] + var_name[end_index:]
+        else:
+            break
+
+    while len(obj_refs) > 0:
+        ref = obj_refs.pop(0)
+        ret_obj = ret_obj[ref]
+
+    return ret_obj
 
 
 def _parse_arm_variable(name, template_obj, parameters):
@@ -471,8 +536,26 @@ def _parse_arm_variable(name, template_obj, parameters):
     :param dict parameters: The loaded contents of the JSON parameters.
     """
     try:
+        # Get head object referenced
+        variable_name_end = _find_nested(')', name, 0)  # Find end of variable name
+        if variable_name_end >= len(name):
+            raise ValueError("Template reference misformatted for variable '{}'".format(name))
+        variable_name = _parse_arm_expression(
+            name[1:variable_name_end-1],
+            template_obj,
+            parameters)  # Make sure inner name is fully parsed
+        variable_obj = template_obj['variables'][variable_name]
+        # If there is any text after ')' then there additional references on the object
+        if len(name) > variable_name_end+1:
+            variable_obj = _parse_nested_object(
+                variable_obj,
+                name[variable_name_end+1:],
+                template_obj,
+                parameters)
+
+        # parse the result object
         variable = _parse_arm_expression(
-            template_obj['variables'][name],
+            variable_obj,
             template_obj, parameters)
     except KeyError:
         raise ValueError("Template contains no definition for variable '{}'".format(name))
@@ -520,9 +603,9 @@ def _parse_arm_expression(expression, template_obj, parameters):
         # If a string, remove quotes in order to perform parameter look-up
         return expression[1:-1]
     if re.match(r'^parameters', expression):
-        result = _parse_arm_parameter(expression[12:-2], template_obj, parameters)
+        result = _parse_arm_parameter(expression[11:], template_obj, parameters)
     elif re.match(r'^variables', expression):
-        result = _parse_arm_variable(expression[11:-2], template_obj, parameters)
+        result = _parse_arm_variable(expression[10:], template_obj, parameters)
     elif re.match(r'^concat', expression):
         result = _parse_arm_concat(expression[7:-1], template_obj, parameters)
     elif re.match(r'^reference', expression):

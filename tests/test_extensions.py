@@ -1680,6 +1680,39 @@ class TestBatchExtensions(unittest.TestCase):
             assert type(exception) is BatchErrorException
             assert exception.error.code == "RequestBodyTooLarge"
 
+    def test_template_parsing_variables(self):
+        obj = {
+            "parameters": {
+                "environmentName": {
+                    "type": "string",
+                    "allowedValues": [
+                        "test"
+                    ]
+                },
+                "env": {
+                    "type": "string",
+                    "allowedValues": [
+                        "environmentSettings"
+                    ]
+                }
+            },
+            "variables": {
+                "environmentSettings": {
+                    "test": {
+                        "instanceSize": "Small"
+                    }
+                }
+
+            },
+            "value1":"[variables('environmentSettings')[parameters('environmentName')].instanceSize]",
+            "value2":"[variables('environmentSettings').test.instanceSize]"
+        }
+        param = {"environmentName": "test",
+                 "env": "environmentSettings"}
+        out = utils.expand_template(obj, param)
+        assert out["value1"] == "Small"
+        assert out["value2"] == "Small"
+
     def test_batch_extensions_add_task_collection_collect_client_failures(self):
         submitted_tasks = collections.deque()
         exception_thrown = []
@@ -1752,3 +1785,4 @@ class TestBatchExtensions(unittest.TestCase):
                 self.fail()
             except Exception as e:
                 self.fail()
+
