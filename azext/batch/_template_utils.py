@@ -645,7 +645,7 @@ def _parse_template_string(string_content, template_obj, parameters):
         if _is_substitution(string_content, expression_start, expression_end):
             # Replacing within the middle of a string
             parsed = parsed if isinstance(parsed, _UNICODE_TYPE) else str(parsed)
-            updated_content += string_content[current_index:expression_start] + parsed
+            updated_content += string_content[current_index:expression_start] + json.dumps(parsed)[1:-1]
             current_index = expression_end + 1
         elif isinstance(parsed, bool):
             parsed = "true" if parsed else "false"
@@ -661,7 +661,7 @@ def _parse_template_string(string_content, template_obj, parameters):
             current_index = expression_end + 2
         else:
             parsed = parsed if isinstance(parsed, _UNICODE_TYPE) else str(parsed)
-            updated_content += string_content[current_index:expression_start] + parsed
+            updated_content += string_content[current_index:expression_start] + json.dumps(parsed)[1:-1]
             current_index = expression_end + 1
     updated_content += string_content[current_index:]
     return updated_content
@@ -1156,3 +1156,34 @@ def should_get_pool(job, tasks):
             and job.pool_info.auto_pool_specification.pool.package_references:
         get_pool = True
     return get_pool
+
+
+def validate_json_object(json_obj, obj):
+    """Determines if the json template matches expected Batch object
+    :param json_obj: json dictionary from template.
+    :param obj: matched Batch object.
+    """
+    # pylint:disable=protected-access
+    from enum import Enum
+    if issubclass(type(obj), Enum):
+        return
+    key_attr_map = {}
+    key_type_map = {}
+    for key in obj._attribute_map:
+        key_type_map[obj._attribute_map[key]['key'].lower()] = obj._attribute_map[key]['type']
+        key_attr_map[obj._attribute_map[key]['key'].lower()] = key
+    for item in json_obj:
+        if not item.lower() in key_type_map:
+            raise ValueError('Unexpect element {} in template'.format(item))
+        t = key_type_map[item.lower()]
+        if t[0].islower() or (t[0] == '[' and t[1].islower()):
+            continue
+        if t[0] == '[':
+            if not isinstance(json_obj[item], list):
+                raise ValueError('Expect element {} is list in template'.format(item))
+            for index in range(len(json_obj[item])):
+                inner_type = getattr(obj, key_attr_map[item.lower()])
+                validate_json_object(json_obj[item][index], inner_type[index])
+        else:
+            inner_type = getattr(obj, key_attr_map[item.lower()])
+            validate_json_object(json_obj[item], inner_type)

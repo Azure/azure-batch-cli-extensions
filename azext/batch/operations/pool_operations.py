@@ -46,14 +46,18 @@ class ExtendedPoolOperations(PoolOperations):
         except KeyError:
             raise ValueError("Template missing required 'pool' element")
 
-    def poolparameter_from_json(self, json_data):
+    @staticmethod
+    def poolparameter_from_json(json_data):
         """Create an ExtendedPoolParameter object from a JSON specification.
         :param dict json_data: The JSON specification of an AddPoolParameter or an
          ExtendedPoolParameter or a PoolTemplate.
         """
         result = 'PoolTemplate' if json_data.get('properties') else 'ExtendedPoolParameter'
         try:
-            pool = self._deserialize(result, json_data)
+            if result == 'PoolTemplate':
+                pool = models.PoolTemplate.from_dict(json_data)
+            else:
+                pool = models.ExtendedPoolParameter.from_dict(json_data)
             if pool is None:
                 raise ValueError("JSON data is not in correct format.")
             return pool
