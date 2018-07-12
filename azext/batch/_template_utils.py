@@ -923,7 +923,8 @@ def construct_setup_task(existing_task, command_info, os_flavor):
     """
     if existing_task:
         result = dict(existing_task.__dict__)
-
+        if 'additional_properties' in result:
+            del result['additional_properties']
     else:
         result = {}
     commands = []
