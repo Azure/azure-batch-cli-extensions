@@ -16,6 +16,7 @@ from azure.storage.common import CloudStorageAccount
 from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.batch.batch_auth import SharedKeyCredentials
 from azure.batch.models import BatchErrorException, BatchError
+from azure.batch import models as base_sdk_models
 
 import azext.batch as batch
 from azext.batch import models
@@ -1679,3 +1680,27 @@ class TestBatchExtensions(unittest.TestCase):
             exception = results_queue.pop()
             assert type(exception) is BatchErrorException
             assert exception.error.code == "RequestBodyTooLarge"
+
+    def test_batch_extensions_allows_base_sdk(self):
+        # Objects shared between base and extension sdks
+        start_task = base_sdk_models.StartTask(command_line="sleep 1")
+        job_manager_task = base_sdk_models.JobManagerTask( id="jobmanager", command_line="sleep 1")
+        job_preparation_task = base_sdk_models.JobPreparationTask(command_line="sleep 1",
+                                                        resource_files=[],
+                                                        wait_for_success=True,
+                                                        user_identity=base_sdk_models.UserIdentity())
+        job_release_task = base_sdk_models.JobReleaseTask("jobrelease")
+        multi_instance_settings = base_sdk_models.MultiInstanceSettings(
+            coordination_command_line="sleep 1")
+        output_file = base_sdk_models.OutputFile(
+            destination="../",
+            file_pattern="*.txt",
+            upload_options="")
+
+        # conversion between the two sdks objects
+        job_prep_task_parameters = utils.construct_setup_task(
+            job_preparation_task, [], pool_utils.PoolOperatingSystemFlavor.LINUX)
+        models.JobPreparationTask(**job_prep_task_parameters)
+
+        start_task = models.StartTask(**utils.construct_setup_task(
+            start_task, [], pool_utils.PoolOperatingSystemFlavor.LINUX))
