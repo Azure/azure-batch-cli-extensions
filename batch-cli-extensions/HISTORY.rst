@@ -7,6 +7,9 @@ Release History
 ------------------
 
 * Change dependency.
+* Validate the input template/json with correct schema.
+* Update job create to have on-by-default multi-threading.
+* Update error logging for job create.
 
 2.2.0 (2018-04-12)
 ------------------

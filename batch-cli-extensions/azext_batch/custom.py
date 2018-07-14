@@ -2,8 +2,12 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
+import multiprocessing
 
+from azext.batch import _template_utils as templates
+from azext.batch.errors import CreateTasksErrorException
 from azext.batch.models import PoolAddParameter, JobAddParameter, JobConstraints
+from azext.batch.operations import ExtendedPoolOperations, ExtendedJobOperations
 from azure.cli.core.util import get_file_json
 
 from knack.log import get_logger
@@ -45,9 +49,10 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
         else:
             json_obj = get_file_json(json_file)
         # validate the json file
-        pool = client.pool.poolparameter_from_json(json_obj)
+        pool = ExtendedPoolOperations.poolparameter_from_json(json_obj)
         if pool is None:
             raise ValueError("JSON pool parameter is not in correct format.")
+        templates.validate_json_object(json_obj, pool)
     else:
         if not id:
             raise ValueError('Please supply template, json_file, or id')
@@ -136,9 +141,10 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
         else:
             json_obj = get_file_json(json_file)
         # validate the json file
-        job = client.job.jobparameter_from_json(json_obj)
+        job = ExtendedJobOperations.jobparameter_from_json(json_obj)
         if job is None:
             raise ValueError("JSON job parameter is not in correct format.")
+        templates.validate_json_object(json_obj, job)
     else:
         if not id:
             raise ValueError('Please supply template, json_file, or id')
@@ -162,8 +168,11 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
             job.job_manager_task = job_manager_task
 
     add_option = JobAddOptions()
-    client.job.add(job, add_option)
-
+    try:
+        client.job.add(job, add_option, threads=multiprocessing.cpu_count()/2)
+    except CreateTasksErrorException as e:
+        for error in e.failures:
+            logger.warning(error.task_id + " failed to be added due to " + error.error.code)
 
 create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__
 

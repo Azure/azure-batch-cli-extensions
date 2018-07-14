@@ -11,7 +11,7 @@ import datetime
 
 from azure.common.credentials import ServicePrincipalCredentials
 import azext.batch as batch
-from azext.batch import models
+from azext.batch import models, operations
 
 OUTPUT_CONTAINER_SAS = ""
 
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     ## Create pool from template
     pool_template =  os.path.join(SAMPLE_DIR, 'ffmpeg', 'pool.json')
     pool_json = client.pool.expand_template(pool_template)
-    pool_param = client.pool.poolparameter_from_json(pool_json)
+    pool_param = operations.ExtendedPoolOperations.poolparameter_from_json(pool_json)
     client.pool.add(pool_param)
 
     # Create task-per-file job from template file with json parameters
@@ -73,7 +73,7 @@ if __name__ == '__main__':
         }
     }
     job_def = client.job.expand_template(job_template, parameters)
-    job_param = client.job.jobparameter_from_json(job_def)
+    job_param = operations.ExtendedJobOperations.jobparameter_from_json(job_def)
     client.job.add(job_param)
 
     # Create parametric sweep job using models

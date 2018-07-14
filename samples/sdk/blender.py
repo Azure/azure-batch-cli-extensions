@@ -8,7 +8,7 @@ import time
 
 from azure.common.credentials import ServicePrincipalCredentials
 import azext.batch as batch
-from azext.batch import models
+from azext.batch import models, operations
 
 
 BATCH_ENDPOINT = ""
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     job_json = client.job.expand_template(path_to_template, path_to_parameters)
 
     # Create job
-    job = client.job.jobparameter_from_json(job_json)
+    job = operations.ExtendedJobOperations.jobparameter_from_json(job_json)
     job_id = job.properties.id
     client.job.add(job)
 
