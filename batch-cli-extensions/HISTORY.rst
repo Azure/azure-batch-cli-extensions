@@ -3,6 +3,11 @@
 Release History
 ===============
 
+2.4.0 (2018-07-17)
+------------------
+
+* Remove warning message on using correct dependency.
+
 2.3.0 (2018-05-25)
 ------------------
 

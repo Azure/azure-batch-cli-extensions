@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+3.1.0 (2018-7-17)
+------------------
+
+* Align to Python SDK for shared models
+
 3.0.0 (2018-6-20)
 ------------------
 
