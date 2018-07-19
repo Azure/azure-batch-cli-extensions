@@ -169,7 +169,7 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
 
     add_option = JobAddOptions()
     try:
-        client.job.add(job, add_option, threads=multiprocessing.cpu_count()/2)
+        client.job.add(job, add_option, threads=multiprocessing.cpu_count()//2)
     except CreateTasksErrorException as e:
         for error in e.failures:
             logger.warning(error.task_id + " failed to be added due to " + error.error.code)
