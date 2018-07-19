@@ -115,9 +115,14 @@ class BatchExtensionsClient(BatchServiceClient):
 
     def _configure_credentials(self, credentials, mgmt_credentials, subscription_id):
         if not credentials:
+            from azure.cli.core.util import in_cloud_console
             profile, subscription, endpoints = self._get_cli_profile(subscription_id)
+            if in_cloud_console():
+                resource = endpoints.active_directory_resource_id
+            else:
+                resource = endpoints.batch_resource_id
             credentials, subscription_id, _ = profile.get_login_credentials(
-                resource=endpoints.batch_resource_id, subscription_id=subscription)
+                resource=resource, subscription_id=subscription)
 
         if not mgmt_credentials:
             try:

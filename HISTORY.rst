@@ -3,6 +3,12 @@
 SDK Release History
 ===================
 
+3.1.1 (2018-7-19)
+------------------
+
+* Enable using cloud shell AAD token for extension SDK
+* Fix bug on using default thread count to submit tasks on the machine with odd number CPU cores
+
 3.1.0 (2018-7-17)
 ------------------
 
