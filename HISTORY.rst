@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+3.1.2 (2018-08-22)
+------------------
+
+* Fix bug related to mis-configured endpoints for storage operations.
+
 3.1.1 (2018-7-19)
 ------------------
 
