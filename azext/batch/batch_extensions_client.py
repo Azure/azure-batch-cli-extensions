@@ -11,7 +11,7 @@ from msrest import Serializer, Deserializer
 from azure.batch import BatchServiceClient
 from azure.mgmt.batch import BatchManagementClient
 from azure.mgmt.storage import StorageManagementClient
-from azure.storage.common import CloudStorageAccount
+from azure.storage.blob import BlockBlobService
 from azure.common.credentials import get_cli_profile
 from azure.batch.operations.application_operations import ApplicationOperations
 from azure.batch.operations.account_operations import AccountOperations
@@ -51,19 +51,25 @@ class BatchExtensionsClient(BatchServiceClient):
      object<msrestazure.azure_active_directory>`
     :param api_version: Client API Version.
     :type api_version: str
-    :param str base_url: Service URL
+    :param str base_url: Batch Service URL
+    :param str mgmt_base_uri: Management Service URL
+    :param str storage_enpoint: Storage Endpoint Suffix
     """
 
     def __init__(self, credentials=None, base_url=None, subscription_id=None,
-                 resource_group=None, batch_account=None, storage_client=None, mgmt_credentials=None):
+                 resource_group=None, batch_account=None, storage_client=None,
+                 storage_endpoint=None, mgmt_credentials=None, mgmt_base_url=None):
         credentials, mgmt_credentials, subscription_id = self._configure_credentials(
             credentials, mgmt_credentials, subscription_id)
         super(BatchExtensionsClient, self).__init__(credentials, base_url=base_url)
         self.config.add_user_agent('batchextensionsclient/{}'.format(VERSION))
+        self._base_url = base_url
         self._mgmt_client = None
         self._mgmt_credentials = mgmt_credentials
+        self._mgmt_base_url = mgmt_base_url
         self._resolved_storage_client = storage_client
         self._subscription = subscription_id
+        self._storage_endpoint = storage_endpoint
 
         self.batch_account = batch_account
         self.resource_group = resource_group
@@ -157,7 +163,9 @@ class BatchExtensionsClient(BatchServiceClient):
         if self._mgmt_client:
             client = self._mgmt_client
         else:
-            client = BatchManagementClient(self._mgmt_credentials, self._subscription)
+            client = BatchManagementClient(self._mgmt_credentials,
+                                           self._subscription,
+                                           base_url=self._mgmt_base_url)
             self._mgmt_client = client
 
         if self.resource_group:
@@ -187,10 +195,13 @@ class BatchExtensionsClient(BatchServiceClient):
         storage_account_info = account.auto_storage.storage_account_id.split('/')  # pylint: disable=no-member
         storage_resource_group = storage_account_info[4]
         storage_account = storage_account_info[8]
-        storage_client = StorageManagementClient(self._mgmt_credentials, self._subscription)
+        storage_client = StorageManagementClient(self._mgmt_credentials,
+                                                 self._subscription,
+                                                 base_url=self._mgmt_base_url)
         keys = storage_client.storage_accounts.list_keys(storage_resource_group, storage_account)
         storage_key = keys.keys[0].value  # pylint: disable=no-member
 
-        self._resolved_storage_client = CloudStorageAccount(storage_account, storage_key)\
-            .create_block_blob_service()
+        self._resolved_storage_client = BlockBlobService(account_name=storage_account,
+                                                         account_key=storage_key,
+                                                         endpoint_suffix=self._storage_endpoint)
         return self._resolved_storage_client
