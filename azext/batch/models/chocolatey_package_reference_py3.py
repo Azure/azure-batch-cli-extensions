@@ -31,7 +31,7 @@ class ChocolateyPackageReference(PackageReferenceBase):
         'allow_empty_checksums': {'key': 'allowEmptyChecksums', 'type': 'bool'}
     }
 
-    def __init__(self, **kwargs):
-        super(ChocolateyPackageReference, self).__init__(**kwargs)
-        self.allow_empty_checksums = kwargs.get('allow_empty_checksums', None)
+    def __init__(self, *, id: str, version: str=None, allow_empty_checksums: bool=None, **kwargs) -> None:
+        super(ChocolateyPackageReference, self).__init__(id=id, version=version, **kwargs)
+        self.allow_empty_checksums = allow_empty_checksums
         self.type = 'chocolateyPackage'

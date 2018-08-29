@@ -28,6 +28,6 @@ class AptPackageReference(PackageReferenceBase):
         'version': {'key': 'version', 'type': 'str'},
     }
 
-    def __init__(self, id, version=None):
-        super(AptPackageReference, self).__init__(id=id, version=version)
+    def __init__(self, **kwargs):
+        super(AptPackageReference, self).__init__(**kwargs)
         self.type = 'aptPackage'

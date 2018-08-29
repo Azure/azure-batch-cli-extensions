@@ -149,19 +149,22 @@ class JobManagerTask(Model):
         'allow_low_priority_node': {'key': 'allowLowPriorityNode', 'type': 'bool'},
     }
 
-    def __init__(self, **kwargs):
+    def __init__(self, *, id: str, command_line: str, display_name: str=None, container_settings=None, resource_files=None,
+                 output_files=None, environment_settings=None, constraints=None, kill_job_on_completion: bool=None,
+                 user_identity=None, run_exclusive: bool=None, application_package_references=None,
+                 authentication_token_settings=None, allow_low_priority_node: bool=None, **kwargs) -> None:
         super(JobManagerTask, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
-        self.display_name = kwargs.get('display_name', None)
-        self.command_line = kwargs.get('command_line', None)
-        self.container_settings = kwargs.get('container_settings', None)
-        self.resource_files = kwargs.get('resource_files', None)
-        self.output_files = kwargs.get('output_files', None)
-        self.environment_settings = kwargs.get('environment_settings', None)
-        self.constraints = kwargs.get('constraints', None)
-        self.kill_job_on_completion = kwargs.get('kill_job_on_completion', None)
-        self.user_identity = kwargs.get('user_identity', None)
-        self.run_exclusive = kwargs.get('run_exclusive', None)
-        self.application_package_references = kwargs.get('application_package_references', None)
-        self.authentication_token_settings = kwargs.get('authentication_token_settings', None)
-        self.allow_low_priority_node = kwargs.get('allow_low_priority_node', None)
+        self.id = id
+        self.display_name = display_name
+        self.command_line = command_line
+        self.container_settings = container_settings
+        self.resource_files = resource_files
+        self.output_files = output_files
+        self.environment_settings = environment_settings
+        self.constraints = constraints
+        self.kill_job_on_completion = kill_job_on_completion
+        self.user_identity = user_identity
+        self.run_exclusive = run_exclusive
+        self.application_package_references = application_package_references
+        self.authentication_token_settings = authentication_token_settings
+        self.allow_low_priority_node = allow_low_priority_node

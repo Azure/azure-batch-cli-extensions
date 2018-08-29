@@ -138,26 +138,10 @@ class ExtendedJobParameter(JobAddParameter):
         'application_template_info': {'key': 'applicationTemplateInfo', 'type': 'ApplicationTemplateInfo'}
     }
 
-    def __init__(self, id, pool_info, display_name=None, priority=None, constraints=None, job_manager_task=None,
-                 job_preparation_task=None, job_release_task=None, common_environment_settings=None,
-                 on_all_tasks_complete=None, on_task_failure=None, metadata=None, uses_task_dependencies=None,
-                 task_factory=None, application_template_info=None):
-        super(ExtendedJobParameter, self).__init__(
-            id=id,
-            display_name=display_name,
-            priority=priority,
-            constraints=constraints,
-            job_manager_task=job_manager_task,
-            job_preparation_task=job_preparation_task,
-            job_release_task=job_release_task,
-            common_environment_settings=common_environment_settings,
-            pool_info=pool_info,
-            on_all_tasks_complete=on_all_tasks_complete,
-            on_task_failure=on_task_failure,
-            metadata=metadata,
-            uses_task_dependencies=uses_task_dependencies)
-        self.task_factory = task_factory
-        self.application_template_info = application_template_info
+    def __init__(self, **kwargs):
+        super(ExtendedJobParameter, self).__init__(**kwargs)
+        self.task_factory = kwargs.get('task_factory', None)
+        self.application_template_info = kwargs.get('application_template_info', None)
         if self.application_template_info:
             # Rule: Jobs may not use properties reserved for template use
             reserved = [k for k, v in self.__dict__.items() \

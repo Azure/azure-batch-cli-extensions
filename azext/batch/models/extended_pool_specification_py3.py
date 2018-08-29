@@ -3,25 +3,17 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-# pylint: disable=redefined-builtin
-
-from azure.batch.models import PoolAddParameter
+from azure.batch.models import PoolSpecification
 
 
-class ExtendedPoolParameter(PoolAddParameter):
-    """A pool in the Azure Batch service to add.
+class ExtendedPoolSpecification(PoolSpecification):
+    """Specification for creating a new pool.
 
-    :param id: A string that uniquely identifies the pool within the account.
-     The ID can contain any combination of alphanumeric characters including
-     hyphens and underscores, and cannot contain more than 64 characters. The
-     ID is case-preserving and case-insensitive (that is, you may not have two
-     pool IDs within an account that differ only by case).
-    :type id: str
     :param display_name: The display name for the pool. The display name need
      not be unique and can contain any Unicode characters up to a maximum
      length of 1024.
     :type display_name: str
-    :param vm_size: The size of virtual machines in the pool. All virtual
+    :param vm_size: The size of the virtual machines in the pool. All virtual
      machines in a pool are the same size. For information about available
      sizes of virtual machines for Cloud Services pools (pools created with
      cloudServiceConfiguration), see Sizes for Cloud Services
@@ -37,23 +29,38 @@ class ExtendedPoolParameter(PoolAddParameter):
      premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series).
     :type vm_size: str
     :param cloud_service_configuration: The cloud service configuration for
-     the pool. This property and virtualMachineConfiguration are mutually
-     exclusive and one of the properties must be specified. This property
-     cannot be specified if the Batch account was created with its
+     the pool. This property must be specified if the pool needs to be created
+     with Azure PaaS VMs. This property and virtualMachineConfiguration are
+     mutually exclusive and one of the properties must be specified. If neither
+     is specified then the Batch service returns an error; if you are calling
+     the REST API directly, the HTTP status code is 400 (Bad Request). This
+     property cannot be specified if the Batch account was created with its
      poolAllocationMode property set to 'UserSubscription'.
     :type cloud_service_configuration: :class:`CloudServiceConfiguration
      <azure.batch.models.CloudServiceConfiguration>`
     :param virtual_machine_configuration: The virtual machine configuration
-     for the pool. This property and cloudServiceConfiguration are mutually
-     exclusive and one of the properties must be specified.
+     for the pool. This property must be specified if the pool needs to be
+     created with Azure IaaS VMs. This property and cloudServiceConfiguration
+     are mutually exclusive and one of the properties must be specified. If
+     neither is specified then the Batch service returns an error; if you are
+     calling the REST API directly, the HTTP status code is 400 (Bad Request).
     :type virtual_machine_configuration: :class:`VirtualMachineConfiguration
      <azure.batch.models.VirtualMachineConfiguration>`
+    :param max_tasks_per_node: The maximum number of tasks that can run
+     concurrently on a single compute node in the pool. The default value is 1.
+     The maximum value of this setting depends on the size of the compute nodes
+     in the pool (the vmSize setting).
+    :type max_tasks_per_node: int
+    :param task_scheduling_policy: How tasks are distributed across compute
+     nodes in a pool.
+    :type task_scheduling_policy: :class:`TaskSchedulingPolicy
+     <azure.batch.models.TaskSchedulingPolicy>`
     :param resize_timeout: The timeout for allocation of compute nodes to the
      pool. This timeout applies only to manual scaling; it has no effect when
      enableAutoScale is set to true. The default value is 15 minutes. The
      minimum value is 5 minutes. If you specify a value less than 5 minutes,
-     the Batch service returns an error; if you are calling the REST API
-     directly, the HTTP status code is 400 (Bad Request).
+     the Batch service rejects the request with an error; if you are calling
+     the REST API directly, the HTTP status code is 400 (Bad Request).
     :type resize_timeout: timedelta
     :param target_dedicated_nodes: The desired number of dedicated compute
      nodes in the pool. This property must not be specified if enableAutoScale
@@ -66,26 +73,24 @@ class ExtendedPoolParameter(PoolAddParameter):
      you must set either targetDedicatedNodes, targetLowPriorityNodes, or both.
     :type target_low_priority_nodes: int
     :param enable_auto_scale: Whether the pool size should automatically
-     adjust over time. If false, at least one of targetDedicateNodes and
-     targetLowPriorityNodes must be specified. If true, the autoScaleFormula
-     property is required and the pool automatically resizes according to the
-     formula. The default value is false.
+     adjust over time. If false, the targetDedicated element is required. If
+     true, the autoScaleFormula element is required. The pool automatically
+     resizes according to the formula. The default value is false.
     :type enable_auto_scale: bool
-    :param auto_scale_formula: A formula for the desired number of compute
+    :param auto_scale_formula: The formula for the desired number of compute
      nodes in the pool. This property must not be specified if enableAutoScale
      is set to false. It is required if enableAutoScale is set to true. The
      formula is checked for validity before the pool is created. If the formula
      is not valid, the Batch service rejects the request with detailed error
-     information. For more information about specifying this formula, see
-     'Automatically scale compute nodes in an Azure Batch pool'
-     (https://azure.microsoft.com/documentation/articles/batch-automatic-scaling/).
+     information.
     :type auto_scale_formula: str
     :param auto_scale_evaluation_interval: The time interval at which to
      automatically adjust the pool size according to the autoscale formula. The
      default value is 15 minutes. The minimum and maximum value are 5 minutes
      and 168 hours respectively. If you specify a value less than 5 minutes or
-     greater than 168 hours, the Batch service returns an error; if you are
-     calling the REST API directly, the HTTP status code is 400 (Bad Request).
+     greater than 168 hours, the Batch service rejects the request with an
+     invalid property value error; if you are calling the REST API directly,
+     the HTTP status code is 400 (Bad Request).
     :type auto_scale_evaluation_interval: timedelta
     :param enable_inter_node_communication: Whether the pool permits direct
      communication between nodes. Enabling inter-node communication limits the
@@ -96,11 +101,11 @@ class ExtendedPoolParameter(PoolAddParameter):
     :param network_configuration: The network configuration for the pool.
     :type network_configuration: :class:`NetworkConfiguration
      <azure.batch.models.NetworkConfiguration>`
-    :param start_task: A task specified to run on each compute node as it
-     joins the pool. The task runs when the node is added to the pool or when
-     the node is restarted.
+    :param start_task: A task to run on each compute node as it joins the
+     pool. The task runs when the node is added to the pool or when the node is
+     restarted.
     :type start_task: :class:`StartTask <azure.batch.models.StartTask>`
-    :param certificate_references: The list of certificates to be installed on
+    :param certificate_references: A list of certificates to be installed on
      each compute node in the pool. For Windows compute nodes, the Batch
      service installs the certificates to the specified certificate store and
      location. For Linux compute nodes, the certificates are stored in a
@@ -122,15 +127,6 @@ class ExtendedPoolParameter(PoolAddParameter):
      application licenses. If a license is requested which is not supported,
      pool creation will fail.
     :type application_licenses: list of str
-    :param max_tasks_per_node: The maximum number of tasks that can run
-     concurrently on a single compute node in the pool. The default value is 1.
-     The maximum value of this setting depends on the size of the compute nodes
-     in the pool (the vmSize setting).
-    :type max_tasks_per_node: int
-    :param task_scheduling_policy: How tasks are distributed across compute
-     nodes in a pool.
-    :type task_scheduling_policy: :class:`TaskSchedulingPolicy
-     <azure.batch.models.TaskSchedulingPolicy>`
     :param user_accounts: The list of user accounts to be created on each node
      in the pool.
     :type user_accounts: list of :class:`UserAccount
@@ -148,18 +144,18 @@ class ExtendedPoolParameter(PoolAddParameter):
     """
 
     _validation = {
-        'id': {'required': True},
         'vm_size': {'required': True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
         'display_name': {'key': 'displayName', 'type': 'str'},
         'vm_size': {'key': 'vmSize', 'type': 'str'},
         'cloud_service_configuration': {'key': 'cloudServiceConfiguration',
                                         'type': 'CloudServiceConfiguration'},
         'virtual_machine_configuration': {'key': 'virtualMachineConfiguration',
                                           'type': 'VirtualMachineConfiguration'},
+        'max_tasks_per_node': {'key': 'maxTasksPerNode', 'type': 'int'},
+        'task_scheduling_policy': {'key': 'taskSchedulingPolicy', 'type': 'TaskSchedulingPolicy'},
         'resize_timeout': {'key': 'resizeTimeout', 'type': 'duration'},
         'target_dedicated_nodes': {'key': 'targetDedicatedNodes', 'type': 'int'},
         'target_low_priority_nodes': {'key': 'targetLowPriorityNodes', 'type': 'int'},
@@ -173,13 +169,38 @@ class ExtendedPoolParameter(PoolAddParameter):
         'application_package_references': {'key': 'applicationPackageReferences',
                                            'type': '[ApplicationPackageReference]'},
         'application_licenses': {'key': 'applicationLicenses', 'type': '[str]'},
-        'max_tasks_per_node': {'key': 'maxTasksPerNode', 'type': 'int'},
-        'task_scheduling_policy': {'key': 'taskSchedulingPolicy', 'type': 'TaskSchedulingPolicy'},
         'user_accounts': {'key': 'userAccounts', 'type': '[UserAccount]'},
         'metadata': {'key': 'metadata', 'type': '[MetadataItem]'},
         'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
     }
 
-    def __init__(self, **kwargs):
-        super(ExtendedPoolParameter, self).__init__(**kwargs)
-        self.package_references = kwargs.get('package_references', None)
+    def __init__(self, *, vm_size: str, display_name: str=None, cloud_service_configuration=None,
+                 virtual_machine_configuration=None, max_tasks_per_node: int=None, task_scheduling_policy=None,
+                 resize_timeout=None, target_dedicated_nodes: int=None, target_low_priority_nodes: int=None,
+                 enable_auto_scale: bool=None, auto_scale_formula: str=None, auto_scale_evaluation_interval=None,
+                 enable_inter_node_communication: bool=None, network_configuration=None, start_task=None,
+                 certificate_references=None, application_package_references=None, application_licenses=None,
+                 user_accounts=None, metadata=None, package_references=None, **kwargs) -> None:
+        super(ExtendedPoolSpecification, self).__init__(
+            display_name=display_name,
+            vm_size=vm_size,
+            cloud_service_configuration=cloud_service_configuration,
+            virtual_machine_configuration=virtual_machine_configuration,
+            max_tasks_per_node=max_tasks_per_node,
+            task_scheduling_policy=task_scheduling_policy,
+            resize_timeout=resize_timeout,
+            target_dedicated_nodes=target_dedicated_nodes,
+            target_low_priority_nodes=target_low_priority_nodes,
+            enable_auto_scale=enable_auto_scale,
+            auto_scale_formula=auto_scale_formula,
+            auto_scale_evaluation_interval=auto_scale_evaluation_interval,
+            enable_inter_node_communication=enable_inter_node_communication,
+            network_configuration=network_configuration,
+            start_task=start_task,
+            certificate_references=certificate_references,
+            application_package_references=application_package_references,
+            application_licenses=application_licenses,
+            user_accounts=user_accounts,
+            metadata=metadata,
+            **kwargs)
+        self.package_references = package_references

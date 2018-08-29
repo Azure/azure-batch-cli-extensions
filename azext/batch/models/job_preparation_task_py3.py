@@ -114,14 +114,16 @@ class JobPreparationTask(Model):
         'rerun_on_node_reboot_after_success': {'key': 'rerunOnNodeRebootAfterSuccess', 'type': 'bool'},
     }
 
-    def __init__(self, **kwargs):
+    def __init__(self, *, command_line: str, id: str=None, container_settings=None, resource_files=None,
+                 environment_settings=None, constraints=None, wait_for_success: bool=None, user_identity=None,
+                 rerun_on_node_reboot_after_success: bool=None, **kwargs) -> None:
         super(JobPreparationTask, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
-        self.command_line = kwargs.get('command_line', None)
-        self.container_settings = kwargs.get('container_settings', None)
-        self.resource_files = kwargs.get('resource_files', None)
-        self.environment_settings = kwargs.get('environment_settings', None)
-        self.constraints = kwargs.get('constraints', None)
-        self.wait_for_success = kwargs.get('wait_for_success', None)
-        self.user_identity = kwargs.get('user_identity', None)
-        self.rerun_on_node_reboot_after_success = kwargs.get('rerun_on_node_reboot_after_success', None)
+        self.id = id
+        self.command_line = command_line
+        self.container_settings = container_settings
+        self.resource_files = resource_files
+        self.environment_settings = environment_settings
+        self.constraints = constraints
+        self.wait_for_success = wait_for_success
+        self.user_identity = user_identity
+        self.rerun_on_node_reboot_after_success = rerun_on_node_reboot_after_success

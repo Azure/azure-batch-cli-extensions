@@ -142,6 +142,27 @@ class ExtendedTaskParameter(TaskAddParameter):
         'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
     }
 
-    def __init__(self, **kwargs):
-        super(ExtendedTaskParameter, self).__init__(**kwargs)
-        self.package_references = kwargs.get('package_references', None)
+    def __init__(self, *, id: str, command_line: str, display_name: str=None, container_settings=None, exit_conditions=None,
+                 resource_files=None, output_files=None, environment_settings=None,
+                 affinity_info=None, constraints=None, user_identity=None,
+                 multi_instance_settings=None, depends_on=None,
+                 application_package_references=None, authentication_token_settings=None,
+                 package_references=None, **kwargs) -> None:
+        super(ExtendedTaskParameter, self).__init__(
+            id=id,
+            display_name=display_name,
+            command_line=command_line,
+            container_settings=container_settings,
+            exit_conditions=exit_conditions,
+            resource_files=resource_files,
+            output_files=output_files,
+            environment_settings=environment_settings,
+            affinity_info=affinity_info,
+            constraints=constraints,
+            user_identity=user_identity,
+            multi_instance_settings=multi_instance_settings,
+            depends_on=depends_on,
+            application_package_references=application_package_references,
+            authentication_token_settings=authentication_token_settings,
+            **kwargs)
+        self.package_references = package_references

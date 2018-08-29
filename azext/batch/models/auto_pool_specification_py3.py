@@ -51,9 +51,9 @@ class AutoPoolSpecification(Model):
         'pool': {'key': 'pool', 'type': 'ExtendedPoolSpecification'},
     }
 
-    def __init__(self, **kwargs):
+    def __init__(self, *, pool_lifetime_option, auto_pool_id_prefix: str=None, keep_alive: bool=None, pool=None, **kwargs) -> None:
         super(AutoPoolSpecification, self).__init__(**kwargs)
-        self.auto_pool_id_prefix = kwargs.get('auto_pool_id_prefix', None)
-        self.pool_lifetime_option = kwargs.get('pool_lifetime_option', None)
-        self.keep_alive = kwargs.get('keep_alive', None)
-        self.pool = kwargs.get('pool', None)
+        self.auto_pool_id_prefix = auto_pool_id_prefix
+        self.pool_lifetime_option = pool_lifetime_option
+        self.keep_alive = keep_alive
+        self.pool = pool

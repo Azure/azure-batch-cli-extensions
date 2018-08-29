@@ -8,15 +8,13 @@
 from .package_reference_base import PackageReferenceBase
 
 
-class ChocolateyPackageReference(PackageReferenceBase):
-    """A reference to a package to be installed using the Chocolatey package
-    manager on a Windows node.
+class AptPackageReference(PackageReferenceBase):
+    """A reference to a package to be installed using the APT package
+    manager on a Linux node (apt-get).
 
     :param str id: The name of the package.
     :param str version: The version of the package to be installed. If omitted,
      the latest version (according to the package repository) will be installed.
-    :param bool allow_empty_checksums: Whether Chocolatey will install packages
-     without a checksum for validation. Default is false.
     """
 
     _validation = {
@@ -28,10 +26,8 @@ class ChocolateyPackageReference(PackageReferenceBase):
         'type': {'key': 'type', 'type': 'str'},
         'id': {'key': 'id', 'type': 'str'},
         'version': {'key': 'version', 'type': 'str'},
-        'allow_empty_checksums': {'key': 'allowEmptyChecksums', 'type': 'bool'}
     }
 
-    def __init__(self, **kwargs):
-        super(ChocolateyPackageReference, self).__init__(**kwargs)
-        self.allow_empty_checksums = kwargs.get('allow_empty_checksums', None)
-        self.type = 'chocolateyPackage'
+    def __init__(self, *, id: str, version: str=None, **kwargs) -> None:
+        super(AptPackageReference, self).__init__(id=id, version=version, **kwargs)
+        self.type = 'aptPackage'
