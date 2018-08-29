@@ -76,9 +76,9 @@ class StartTask(Model):
         'wait_for_success': {'key': 'waitForSuccess', 'type': 'bool'},
     }
 
-    def __init__(self, command_line, container_settings=None, resource_files=None, environment_settings=None,
-                 user_identity=None, max_task_retry_count=None, wait_for_success=None):
-        super(StartTask, self).__init__()
+    def __init__(self, *, command_line: str, container_settings=None, resource_files=None, environment_settings=None,
+                 user_identity=None, max_task_retry_count: int=None, wait_for_success: bool=None, **kwargs) -> None:
+        super(StartTask, self).__init__(**kwargs)
         self.command_line = command_line
         self.container_settings = container_settings
         self.resource_files = resource_files

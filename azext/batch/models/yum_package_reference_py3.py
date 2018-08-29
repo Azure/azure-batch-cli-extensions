@@ -31,7 +31,7 @@ class YumPackageReference(PackageReferenceBase):
         'disable_excludes': {'key': 'disableExcludes', 'type': 'bool'}
     }
 
-    def __init__(self, id, version=None, disable_excludes=None):
-        super(YumPackageReference, self).__init__(id=id, version=version)
+    def __init__(self, *, id: str, version: str=None, disable_excludes: bool=None, **kwargs) -> None:
+        super(YumPackageReference, self).__init__(**kwargs)
         self.disable_excludes = disable_excludes
         self.type = 'yumPackage'

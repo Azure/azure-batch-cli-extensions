@@ -101,7 +101,7 @@ class RepeatTask(Model):
         'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
     }
 
-    def __init__(self, command_line, display_name=None, container_settings=None, exit_conditions=None,
+    def __init__(self, *, command_line: str, display_name: str=None, container_settings=None, exit_conditions=None,
                  resource_files=None, environment_settings=None, affinity_info=None, constraints=None,
                  user_identity=None, application_package_references=None, authentication_token_settings=None,
                  output_files=None, package_references=None):

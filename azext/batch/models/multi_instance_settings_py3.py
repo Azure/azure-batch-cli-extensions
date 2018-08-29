@@ -41,7 +41,8 @@ class MultiInstanceSettings(Model):
         'common_resource_files': {'key': 'commonResourceFiles', 'type': '[ExtendedResourceFile]'},
     }
 
-    def __init__(self, coordination_command_line, number_of_instances=None, common_resource_files=None):
+    def __init__(self, *, coordination_command_line: int, number_of_instances: str=None,
+                 common_resource_files=None, **kwargs):
         super(MultiInstanceSettings, self).__init__()
         self.number_of_instances = number_of_instances
         self.coordination_command_line = coordination_command_line

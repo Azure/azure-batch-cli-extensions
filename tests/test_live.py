@@ -74,7 +74,7 @@ class TestBatchExtensionsLive(VCRTestBase):
 
         self.output_blob_container = 'aaatestcontainer'
         sas_token = self.blob_client.generate_container_shared_access_signature(
-            self.output_blob_container,
+            container_name=self.output_blob_container,
             permission=BlobPermissions(read=True, write=True),
             start=datetime.datetime.utcnow(),
             expiry=datetime.datetime.utcnow() + datetime.timedelta(days=1))

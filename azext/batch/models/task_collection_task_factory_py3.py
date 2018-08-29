@@ -25,7 +25,7 @@ class TaskCollectionTaskFactory(TaskFactoryBase):
         'tasks': {'key': 'tasks', 'type': '[ExtendedTaskParameter]'},
     }
 
-    def __init__(self, tasks):
-        super(TaskCollectionTaskFactory, self).__init__()
+    def __init__(self, *, tasks, **kwargs) -> None:
+        super(TaskCollectionTaskFactory, self).__init__(**kwargs)
         self.tasks = tasks
         self.type = 'taskCollection'

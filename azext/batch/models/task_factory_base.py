@@ -30,6 +30,6 @@ class TaskFactoryBase(Model):
                  'taskCollection': 'TaskCollectionTaskFactory'}
     }
 
-    def __init__(self, merge_task=None):
-        self.merge_task = merge_task
+    def __init__(self, **kwargs):
+        self.merge_task = kwargs.get('merge_task', None)
         self.type = None

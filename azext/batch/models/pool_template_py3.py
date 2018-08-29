@@ -31,6 +31,6 @@ class PoolTemplate(Model):
 
     type = "Microsoft.Batch/batchAccounts/pools"
 
-    def __init__(self, properties, api_version=None):
+    def __init__(self, *, properties: str, api_version=None):
         self.properties = properties
         self.api_version = api_version

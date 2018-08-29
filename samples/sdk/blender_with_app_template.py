@@ -64,7 +64,7 @@ if __name__ == '__main__':
     # Create a pool model with an application template reference
     pool_ref = models.PoolInformation(pool_id=pool_id)
     job_id = 'blender-app-template-test'
-    blender_job = models.ExtendedJobParameter(job_id, pool_ref)
+    blender_job = models.ExtendedJobParameter(id=job_id, pool_info=pool_ref)
     blender_job.display_name = "Blender Render using Application Templates"
     blender_job.on_all_tasks_complete = models.OnAllTasksComplete.terminate_job
     blender_job.application_template_info = models.ApplicationTemplateInfo(

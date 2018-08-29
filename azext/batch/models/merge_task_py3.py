@@ -112,10 +112,10 @@ class MergeTask(Model):
         'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'},
     }
 
-    def __init__(self, command_line, id=None, display_name=None, exit_conditions=None,
+    def __init__(self, *, command_line: str, id: str=None, display_name: str=None, exit_conditions=None,
                  resource_files=None, environment_settings=None, affinity_info=None, constraints=None,
                  user_identity=None, depends_on=None, application_package_references=None,
-                 authentication_token_settings=None, output_files=None, package_references=None):
+                 authentication_token_settings=None, output_files=None, package_references=None, **kwargs):
         self.id = id
         self.display_name = display_name
         self.command_line = command_line

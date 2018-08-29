@@ -92,7 +92,7 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                         node_agent_sku_id=node_agent_sku_id)
 
         if start_task_command_line:
-            pool.start_task = StartTask(start_task_command_line)
+            pool.start_task = StartTask(command_line=start_task_command_line)
             pool.start_task.wait_for_success = start_task_wait_for_success
             pool.start_task.resource_files = start_task_resource_files
         if resize_timeout:
@@ -161,8 +161,8 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
             job.metadata = metadata
 
         if job_manager_task_command_line and job_manager_task_id:
-            job_manager_task = JobManagerTask(job_manager_task_id,
-                                              job_manager_task_command_line,
+            job_manager_task = JobManagerTask(id=job_manager_task_id,
+                                              command_line=job_manager_task_command_line,
                                               resource_files=job_manager_task_resource_files,
                                               environment_settings=job_manager_task_environment_settings)  # pylint: disable=line-too-long
             job.job_manager_task = job_manager_task
