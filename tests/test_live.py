@@ -12,6 +12,7 @@ from azext.batch.models import BatchErrorException, AllocationState, ComputeNode
 import azure.batch.batch_auth as batchauth
 import azext.batch as batch
 from tests.vcr_test_base import VCRTestBase
+from azure.common import AzureMissingResourceHttpError
 from azure.storage.common import CloudStorageAccount
 from azure.storage.blob import BlobPermissions
 
@@ -24,15 +25,19 @@ class TestFileUpload(VCRTestBase):
             self.account_endpoint = 'https://test1.westus.batch.azure.com/'
         else:
             self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
-            self.resource_name = os.environ.get('AZURE_BATCH_RESORCE_GROUP', 'test_rg')
+            self.resource_name = os.environ.get('AZURE_BATCH_RESOURCE_GROUP', 'test_rg')
             self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
         self.testPrefix = 'cli-batch-extensions-live-tests'
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
             debug=False):
-        command = '{} --resource-group {} --account-name {} --account-endpoint {}'.\
-            format(command, self.resource_name, self.account_name, self.account_endpoint)
-        return super(TestFileUpload, self).cmd(command, checks, allowed_exceptions, debug)
+        command = '{} --resource-group {} --account-name {} --account-endpoint {}'.format(
+            command,
+            self.resource_name,
+            self.account_name,
+            self.account_endpoint)
+        return super(TestFileUpload, self).cmd(command=command, checks=checks,
+                                               allowed_exceptions=allowed_exceptions, debug=debug)
 
     def test_batch_upload_live(self):
         self.execute()
@@ -40,12 +45,12 @@ class TestFileUpload(VCRTestBase):
     def body(self):
         # should upload a local file to auto-storage
         input_str = os.path.join(os.path.dirname(__file__), 'data', 'file_tests', 'foo.txt')
-        result = self.cmd('batch file upload --local-path "{}" --file-group {}'.
+        result = self.cmd(command=r'batch file upload --local-path "{}" --file-group {}'.
                           format(input_str, self.testPrefix))
         print('Result text:{}'.format(result))
 
         # should upload a local file to auto-storage with path prefix
-        result = self.cmd('batch file upload --local-path "{}" --file-group {} '
+        result = self.cmd(command=r'batch file upload --local-path "{}" --file-group {} '
                           '--remote-path "test/data"'.format(input_str, self.testPrefix))
         print('Result text:{}'.format(result))
 
@@ -64,8 +69,8 @@ class TestBatchExtensionsLive(VCRTestBase):
             self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
             self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
             self.account_key = os.environ['AZURE_BATCH_ACCESS_KEY']
-            storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'testaccountforbatch')
-            storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'ZmFrZV9hY29jdW50X2tleQ==')
+        storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'testaccountforbatch')
+        storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'ZmFrZV9hY29jdW50X2tleQ==')
 
         self.blob_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
@@ -82,13 +87,16 @@ class TestBatchExtensionsLive(VCRTestBase):
             storage_account,
             self.output_blob_container,
             sas_token)
-        self.output_container_sas = 'https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer'
+        # self.output_container_sas = 'https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer'
         print('Full container sas: {}'.format(self.output_container_sas))
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
             debug=False):
-        command = '{} --account-name {} --account-key "{}" --account-endpoint {}'.\
-            format(command, self.account_name, self.account_key, self.account_endpoint)
+        command = r'{} --account-name {} --account-key "{}" --account-endpoint {}'.format(
+            command,
+            self.account_name,
+            self.account_key,
+            self.account_endpoint)
         return super(TestBatchExtensionsLive, self).cmd(command, checks, allowed_exceptions, debug)
 
     def test_batch_extensions_live(self):
@@ -96,7 +104,7 @@ class TestBatchExtensionsLive(VCRTestBase):
 
     def submit_job_wrapper(self, file_name):
         try:
-            result = self.cmd('batch job create --template "{}"'.format(file_name))
+            result = self.cmd(r'batch job create --template "{}"'.format(file_name))
         except Exception as exp:
             result = exp
         print('Result text:{}'.format(result))
@@ -164,11 +172,14 @@ class TestBatchExtensionsLive(VCRTestBase):
                     time.sleep(wait_for)
 
     def clear_container(self, container_name):
-        print('clearing container {}'.format(container_name))
-        blobs = self.blob_client.list_blobs(container_name)
-        blobs = [b.name for b in blobs]
-        for blob in blobs:
-            self.blob_client.delete_blob(container_name, blob)
+        try:
+            print('clearing container {}'.format(container_name))
+            blobs = self.blob_client.list_blobs(container_name)
+            blobs = [b.name for b in blobs]
+            for blob in blobs:
+                self.blob_client.delete_blob(container_name, blob)
+        except AzureMissingResourceHttpError:
+            pass
 
     def create_basic_spec(self, job_id, pool_id, task_id, text, is_windows):  # pylint: disable=too-many-arguments
         cmd_line = None
@@ -381,8 +392,8 @@ class TestBatchExtensionsLive(VCRTestBase):
             stdout_blob = [x for x in blobs if x.name == 'stdout.txt'][0]
             self.assertTrue(stdout_blob.properties.content_length>=4)
         finally:
-            print('Deleting job {}'.format(job_id))
-            self.batch_client.job.delete(job_id)
+             print('Deleting job {}'.format(job_id))
+             self.batch_client.job.delete(job_id=job_id)
 
     def body(self):
         # file egress should work on ubuntu 14.04
