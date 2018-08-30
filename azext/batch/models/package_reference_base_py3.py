@@ -34,7 +34,8 @@ class PackageReferenceBase(Model):
                  'yumPackage': 'YumPackageReference'}
     }
 
-    def __init__(self, *, id: str, version: str=None, **kwargs):
+    def __init__(self, *, id: str, version: str=None, **kwargs) -> None:
+        super(PackageReferenceBase, self).__init__(**kwargs)
         self.type = None
         self.id = id
         self.version = version

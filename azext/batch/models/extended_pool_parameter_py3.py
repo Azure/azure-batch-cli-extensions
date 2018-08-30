@@ -186,7 +186,8 @@ class ExtendedPoolParameter(PoolAddParameter):
                  auto_scale_evaluation_interval=None, enable_inter_node_communication: bool=None,
                  network_configuration=None, start_task=None, certificate_references=None,
                  application_package_references=None, application_licenses=None, max_tasks_per_node: int=None,
-                 task_scheduling_policy=None, user_accounts=None, metadata=None, package_references=None, **kwargs) -> None:
+                 task_scheduling_policy=None, user_accounts=None, metadata=None, package_references=None,
+                 **kwargs) -> None:
         super(ExtendedPoolParameter, self).__init__(
             id=id,
             display_name=display_name,

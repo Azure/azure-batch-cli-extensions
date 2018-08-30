@@ -115,7 +115,8 @@ class MergeTask(Model):
     def __init__(self, *, command_line: str, id: str=None, display_name: str=None, exit_conditions=None,
                  resource_files=None, environment_settings=None, affinity_info=None, constraints=None,
                  user_identity=None, depends_on=None, application_package_references=None,
-                 authentication_token_settings=None, output_files=None, package_references=None, **kwargs):
+                 authentication_token_settings=None, output_files=None, package_references=None, **kwargs) -> None:
+        super(MergeTask, self).__init__(**kwargs)
         self.id = id
         self.display_name = display_name
         self.command_line = command_line

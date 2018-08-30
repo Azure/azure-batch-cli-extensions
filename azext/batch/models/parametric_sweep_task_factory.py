@@ -36,8 +36,8 @@ class ParametricSweepTaskFactory(TaskFactoryBase):
 
     def __init__(self, **kwargs):
         super(ParametricSweepTaskFactory, self).__init__(**kwargs)
-        if not kwargs.get('parameter_sets'):
-            raise ValueError("Parametric Sweep task factory requires at least one parameter set.")
-        self.parameter_sets = kwargs.get('parameter_sets')
-        self.repeat_task = kwargs.get('repeat_task')
+        self.parameter_sets = kwargs.get('parameter_sets', None)
+        self.repeat_task = kwargs.get('repeat_task', None)
         self.type = 'parametricSweep'
+        if not self.parameter_sets:
+            raise ValueError("Parametric Sweep task factory requires at least one parameter set.")

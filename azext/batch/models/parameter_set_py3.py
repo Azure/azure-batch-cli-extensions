@@ -27,7 +27,8 @@ class ParameterSet(Model):
         'step': {'key': 'step', 'type': 'int'},
     }
 
-    def __init__(self, *, start: int, end: int, step: int=1, **kwargs):
+    def __init__(self, *, start: int, end: int, step: int=1, **kwargs) -> None:
+        super(ParameterSet, self).__init__(**kwargs)
         try:
             self.start = int(start)
             self.end = int(end)

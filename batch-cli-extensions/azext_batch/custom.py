@@ -69,7 +69,7 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
         pool.enable_inter_node_communication = enable_inter_node_communication
 
         if os_family:
-            pool.cloud_service_configuration = CloudServiceConfiguration(os_family)
+            pool.cloud_service_configuration = CloudServiceConfiguration(os_family=os_family)
         else:
             if image:
                 version = 'latest'

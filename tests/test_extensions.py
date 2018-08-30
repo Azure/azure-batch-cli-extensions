@@ -1634,7 +1634,7 @@ class TestBatchExtensions(unittest.TestCase):
                 raise err
             submitted_tasks.extendleft(value)
             status = models.TaskAddStatus.success
-            response = models.TaskAddCollectionResult([models.TaskAddResult(value=status, task_id=s.id) for s in value])
+            response = models.TaskAddCollectionResult(value=[models.TaskAddResult(value=status, task_id=s.id) for s in value])
             return response
 
         with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
@@ -1760,7 +1760,7 @@ class TestBatchExtensions(unittest.TestCase):
                 return collection
             submitted_tasks.extendleft(value)
             status = models.TaskAddStatus.success
-            response = models.TaskAddCollectionResult([models.TaskAddResult(status=status, task_id=s.id) for s in value])
+            response = models.TaskAddCollectionResult(value=[models.TaskAddResult(status=status, task_id=s.id) for s in value])
             return response
 
         with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',

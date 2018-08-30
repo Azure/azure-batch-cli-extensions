@@ -149,10 +149,11 @@ class JobManagerTask(Model):
         'allow_low_priority_node': {'key': 'allowLowPriorityNode', 'type': 'bool'},
     }
 
-    def __init__(self, *, id: str, command_line: str, display_name: str=None, container_settings=None, resource_files=None,
-                 output_files=None, environment_settings=None, constraints=None, kill_job_on_completion: bool=None,
-                 user_identity=None, run_exclusive: bool=None, application_package_references=None,
-                 authentication_token_settings=None, allow_low_priority_node: bool=None, **kwargs) -> None:
+    def __init__(self, *, id: str, command_line: str, display_name: str=None, container_settings=None,
+                 resource_files=None, output_files=None, environment_settings=None, constraints=None,
+                 kill_job_on_completion: bool=None, user_identity=None, run_exclusive: bool=None,
+                 application_package_references=None, authentication_token_settings=None,
+                 allow_low_priority_node: bool=None, **kwargs) -> None:
         super(JobManagerTask, self).__init__(**kwargs)
         self.id = id
         self.display_name = display_name

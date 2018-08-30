@@ -35,6 +35,7 @@ class PackageReferenceBase(Model):
     }
 
     def __init__(self, **kwargs):
+        super(PackageReferenceBase, self).__init__(**kwargs)
         self.type = None
         self.id = kwargs.get('id')
         self.version = kwargs.get('version', None)

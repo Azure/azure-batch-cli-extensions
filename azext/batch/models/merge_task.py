@@ -113,6 +113,7 @@ class MergeTask(Model):
     }
 
     def __init__(self, **kwargs):
+        super(MergeTask, self).__init__(**kwargs)
         self.id = kwargs.get('id', None)
         self.display_name = kwargs.get('display_name', None)
         self.command_line = kwargs.get('command_line')

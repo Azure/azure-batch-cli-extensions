@@ -28,6 +28,7 @@ class ParameterSet(Model):
     }
 
     def __init__(self, **kwargs):
+        super(ParameterSet, self).__init__(**kwargs)
         try:
             self.start = int(kwargs.get('start'))
             self.end = int(kwargs.get('end'))

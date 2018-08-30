@@ -42,7 +42,8 @@ class ExtendedResourceFile(ResourceFile):
         'source': {'key': 'source', 'type': 'FileSource'}
     }
 
-    def __init__(self, *, blob_source: str=None, file_path: str=None, file_mode: str=None, source=None, **kwargs) -> None:
+    def __init__(self, *, blob_source: str=None, file_path: str=None,
+                 file_mode: str=None, source=None, **kwargs) -> None:
         super(ExtendedResourceFile, self).__init__(
             blob_source=blob_source,
             file_path=file_path,

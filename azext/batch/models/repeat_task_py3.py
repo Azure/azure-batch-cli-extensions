@@ -104,7 +104,8 @@ class RepeatTask(Model):
     def __init__(self, *, command_line: str, display_name: str=None, container_settings=None, exit_conditions=None,
                  resource_files=None, environment_settings=None, affinity_info=None, constraints=None,
                  user_identity=None, application_package_references=None, authentication_token_settings=None,
-                 output_files=None, package_references=None):
+                 output_files=None, package_references=None, **kwargs) -> None:
+        super(RepeatTask, self).__init__(**kwargs)
         self.display_name = display_name
         self.command_line = command_line
         self.container_settings = container_settings

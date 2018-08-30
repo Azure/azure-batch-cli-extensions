@@ -31,5 +31,6 @@ class TaskFactoryBase(Model):
     }
 
     def __init__(self, **kwargs):
+        super(TaskFactoryBase, self).__init__(**kwargs)
         self.merge_task = kwargs.get('merge_task', None)
         self.type = None

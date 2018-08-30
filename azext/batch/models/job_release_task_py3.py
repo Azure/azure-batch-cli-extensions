@@ -100,7 +100,8 @@ class JobReleaseTask(Model):
     }
 
     def __init__(self, *, command_line: str, id: str=None, container_settings=None, resource_files=None,
-                 environment_settings=None, max_wall_clock_time=None, retention_time=None, user_identity=None, **kwargs) -> None:
+                 environment_settings=None, max_wall_clock_time=None, retention_time=None, user_identity=None,
+                 **kwargs) -> None:
         super(JobReleaseTask, self).__init__(**kwargs)
         self.id = id
         self.command_line = command_line

@@ -102,6 +102,7 @@ class RepeatTask(Model):
     }
 
     def __init__(self, **kwargs):
+        super(RepeatTask, self).__init__(**kwargs)
         self.display_name = kwargs.get('display_name')
         self.command_line = kwargs.get('command_line', None)
         self.exit_conditions = kwargs.get('exit_conditions', None)

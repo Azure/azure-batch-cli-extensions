@@ -208,7 +208,7 @@ class ExtendedTaskOperations(TaskOperations):
         return results
 
     def add_collection(
-            self, job_id: str, value, task_add_collection_options=None, custom_headers=None, raw=False, threads=None,
+            self, job_id, value, task_add_collection_options=None, custom_headers=None, raw=False, threads=None,
             **operation_config):
         """Adds a collection of tasks to the specified job.
 

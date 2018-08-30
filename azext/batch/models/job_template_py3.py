@@ -31,6 +31,7 @@ class JobTemplate(Model):
 
     type = "Microsoft.Batch/batchAccounts/jobs"
 
-    def __init__(self, *, properties, api_version: str=None, **kwargs):
+    def __init__(self, *, properties, api_version: str=None, **kwargs) -> None:
+        super(JobTemplate, self).__init__(**kwargs)
         self.properties = properties
         self.api_version = api_version

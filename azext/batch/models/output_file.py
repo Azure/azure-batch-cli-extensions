@@ -50,7 +50,7 @@ class OutputFile(Model):
     }
 
     def __init__(self, **kwargs):
-        super(OutputFile, self).__init__()
+        super(OutputFile, self).__init__(**kwargs)
         self.file_pattern = kwargs.get('file_pattern')
         self.destination = kwargs.get('destination')
         self.upload_options = kwargs.get('upload_options')

@@ -138,10 +138,11 @@ class ExtendedJobParameter(JobAddParameter):
         'application_template_info': {'key': 'applicationTemplateInfo', 'type': 'ApplicationTemplateInfo'}
     }
 
-    def __init__(self, *, id: str, pool_info, display_name: str=None, priority: int=None, constraints=None, job_manager_task=None,
-                 job_preparation_task=None, job_release_task=None, common_environment_settings=None,
-                 on_all_tasks_complete=None, on_task_failure=None, metadata=None, uses_task_dependencies: bool=None,
-                 task_factory=None, application_template_info=None, **kwargs) -> None:
+    def __init__(self, *, id: str, pool_info, display_name: str=None, priority: int=None, constraints=None,
+                 job_manager_task=None, job_preparation_task=None, job_release_task=None,
+                 common_environment_settings=None, on_all_tasks_complete=None, on_task_failure=None,
+                 metadata=None, uses_task_dependencies: bool=None, task_factory=None,
+                 application_template_info=None, **kwargs) -> None:
         super(ExtendedJobParameter, self).__init__(
             id=id,
             display_name=display_name,

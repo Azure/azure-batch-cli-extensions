@@ -27,7 +27,7 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-    'azure-batch-extensions>=3.0.0,<3.2'
+    'azure-batch-extensions>=3.4.0,<3.5'
 ]
 
 # Version extraction inspired from 'requests'
