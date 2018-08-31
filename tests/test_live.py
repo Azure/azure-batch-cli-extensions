@@ -87,7 +87,7 @@ class TestBatchExtensionsLive(VCRTestBase):
             storage_account,
             self.output_blob_container,
             sas_token)
-        # self.output_container_sas = 'https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer'
+        self.output_container_sas = 'https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer'
         print('Full container sas: {}'.format(self.output_container_sas))
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
@@ -392,8 +392,8 @@ class TestBatchExtensionsLive(VCRTestBase):
             stdout_blob = [x for x in blobs if x.name == 'stdout.txt'][0]
             self.assertTrue(stdout_blob.properties.content_length>=4)
         finally:
-             print('Deleting job {}'.format(job_id))
-             self.batch_client.job.delete(job_id=job_id)
+            print('Deleting job {}'.format(job_id))
+            self.batch_client.job.delete(job_id=job_id)
 
     def body(self):
         # file egress should work on ubuntu 14.04
