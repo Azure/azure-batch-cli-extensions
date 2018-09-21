@@ -27,18 +27,19 @@ class ParameterSet(Model):
         'step': {'key': 'step', 'type': 'int'},
     }
 
-    def __init__(self, start, end, step=1):
+    def __init__(self, **kwargs):
+        super(ParameterSet, self).__init__(**kwargs)
         try:
-            self.start = int(start)
-            self.end = int(end)
-            self.step = int(step)
+            self.start = int(kwargs.get('start'))
+            self.end = int(kwargs.get('end'))
+            self.step = int(kwargs.get('step', 1))
         except (TypeError, ValueError):
             raise ValueError("'start', 'end' and 'step' parameters must be integers.")
-        if step == 0:
+        if self.step == 0:
             raise ValueError("'step' parameter cannot be 0.")
-        elif start > end and step > 0:
+        elif self.start > self.end and self.step > 0:
             raise ValueError(
                 "'step' must be a negative number when 'start' is greater than 'end'")
-        elif start < end and step < 0:
+        elif self.start < self.end and self.step < 0:
             raise ValueError(
                 "'step' must be a positive number when 'end' is greater than 'start'")

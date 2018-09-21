@@ -843,7 +843,7 @@ def _transform_repeat_task(task, context, index, transformer):
     """
     if not task or not task.command_line:
         raise ValueError("RepeatTask and it's command line must be defined.")
-    new_task = models.ExtendedTaskParameter(str(index), **copy.deepcopy(task.__dict__))
+    new_task = models.ExtendedTaskParameter(id=str(index), **copy.deepcopy(task.__dict__))
     _replacement_transform(transformer, new_task, 'command_line', context)
     _replacement_transform(transformer, new_task, 'display_name', context)
     try:
@@ -893,7 +893,7 @@ def _parse_parameter_sets(parameter_sets):
         raise ValueError("At least one parameter set is required.")
     iterations = []
     for params in parameter_sets:
-        valid_params = models.ParameterSet(params.start, params.end, params.step)
+        valid_params = models.ParameterSet(start=params.start, end=params.end, step=params.step)
         end = valid_params.end + 1 if valid_params.end >= valid_params.start else valid_params.end - 1
         iterations.append(range(valid_params.start, end, valid_params.step))
     return itertools.product(*iterations)

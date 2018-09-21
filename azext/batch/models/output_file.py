@@ -49,8 +49,8 @@ class OutputFile(Model):
         'upload_options': {'key': 'uploadOptions', 'type': 'OutputFileUploadOptions'},
     }
 
-    def __init__(self, file_pattern, destination, upload_options):
-        super(OutputFile, self).__init__()
-        self.file_pattern = file_pattern
-        self.destination = destination
-        self.upload_options = upload_options
+    def __init__(self, **kwargs):
+        super(OutputFile, self).__init__(**kwargs)
+        self.file_pattern = kwargs.get('file_pattern')
+        self.destination = kwargs.get('destination')
+        self.upload_options = kwargs.get('upload_options')

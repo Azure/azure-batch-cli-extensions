@@ -27,6 +27,7 @@ class OutputFileAutoStorageDestination(Model):
         'path': {'key': 'path', 'type': 'str'},
     }
 
-    def __init__(self, file_group, path=None):
-        self.file_group = file_group
-        self.path = path
+    def __init__(self, **kwargs):
+        super(OutputFileAutoStorageDestination, self).__init__(**kwargs)
+        self.file_group = kwargs.get('file_group')
+        self.path = kwargs.get('path', None)

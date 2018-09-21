@@ -24,8 +24,9 @@ class FileSource(Model):
         'prefix': {'key': 'prefix', 'type': 'str'},
     }
 
-    def __init__(self, file_group=None, url=None, container_url=None, prefix=None):
-        self.file_group = file_group
-        self.url = url
-        self.container_url = container_url
-        self.prefix = prefix
+    def __init__(self, **kwargs):
+        super(FileSource, self).__init__(**kwargs)
+        self.file_group = kwargs.get('file_group', None)
+        self.url = kwargs.get('url', None)
+        self.container_url = kwargs.get('container_url', None)
+        self.prefix = kwargs.get('prefix', None)

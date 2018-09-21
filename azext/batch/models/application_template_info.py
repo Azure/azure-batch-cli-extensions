@@ -27,11 +27,13 @@ class ApplicationTemplateInfo(Model):
         'parameters': {'key': 'parameters', 'type': 'object'},
     }
 
-    def __init__(self, file_path, parameters=None, current_directory="."):
-        self.file_path = file_path
-        if not os.path.isfile(file_path):
-            self.file_path = os.path.abspath(os.path.join(current_directory, str(file_path)))
-        self.parameters = parameters
+    def __init__(self, **kwargs):
+        super(ApplicationTemplateInfo, self).__init__(**kwargs)
+        self.file_path = kwargs.get('file_path', None)
+        if not os.path.isfile(self.file_path):
+            current_directory = kwargs.get('current_directory', ".")
+            self.file_path = os.path.abspath(os.path.join(current_directory, str(self.file_path)))
+        self.parameters = kwargs.get('parameters', None)
 
         # Rule: Template file must exist
         # (We do this in order to give a good diagnostic in the most common case, knowing that this is

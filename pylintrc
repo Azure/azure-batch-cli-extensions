@@ -1,5 +1,5 @@
 [MASTER]
-ignore-patterns=test_*
+ignore-patterns=test_*,.*?_py3.py
 reports=no
 
 [MESSAGES CONTROL]

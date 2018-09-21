@@ -96,15 +96,14 @@ class ApplicationTemplate(Model):
         'task_factory': {'key': 'taskFactory', 'type': 'TaskFactoryBase'},
     }
 
-    def __init__(self, job_manager_task=None, job_preparation_task=None, job_release_task=None,
-                 common_environment_settings=None, on_all_tasks_complete=None, on_task_failure=None,
-                 metadata=None, uses_task_dependencies=None, task_factory=None):
-        self.job_manager_task = job_manager_task
-        self.job_preparation_task = job_preparation_task
-        self.job_release_task = job_release_task
-        self.common_environment_settings = common_environment_settings
-        self.on_all_tasks_complete = on_all_tasks_complete
-        self.on_task_failure = on_task_failure
-        self.metadata = metadata
-        self.uses_task_dependencies = uses_task_dependencies
-        self.task_factory = task_factory
+    def __init__(self, **kwargs):
+        super(ApplicationTemplate, self).__init__(**kwargs)
+        self.job_manager_task = kwargs.get('job_manager_task', None)
+        self.job_preparation_task = kwargs.get('job_preparation_task', None)
+        self.job_release_task = kwargs.get('job_release_task', None)
+        self.common_environment_settings = kwargs.get('common_environment_settings', None)
+        self.on_all_tasks_complete = kwargs.get('on_all_tasks_complete', None)
+        self.on_task_failure = kwargs.get('on_task_failure', None)
+        self.metadata = kwargs.get('metadata', None)
+        self.uses_task_dependencies = kwargs.get('uses_task_dependencies', None)
+        self.task_factory = kwargs.get('task_factory', None)

@@ -25,8 +25,9 @@ class ExtendedOutputFileDestination(Model):
         'auto_storage': {'key': 'autoStorage', 'type': 'OutputFileAutoStorageDestination'},
     }
 
-    def __init__(self, container=None, auto_storage=None):
-        if container and auto_storage:
+    def __init__(self, **kwargs):
+        super(ExtendedOutputFileDestination, self).__init__(**kwargs)
+        self.container = kwargs.get('container', None)
+        self.auto_storage = kwargs.get('auto_storage', None)
+        if self.container and self.auto_storage:
             raise ValueError("Cannot specify both container and auto_storage.")
-        self.container = container
-        self.auto_storage = auto_storage

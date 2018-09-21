@@ -33,8 +33,8 @@ class FileCollectionTaskFactory(TaskFactoryBase):
         'merge_task': {'key': 'mergeTask', 'type': 'MergeTask'}
     }
 
-    def __init__(self, source, repeat_task, merge_task=None):
-        super(FileCollectionTaskFactory, self).__init__(merge_task)
-        self.source = source
-        self.repeat_task = repeat_task
+    def __init__(self, **kwargs):
+        super(FileCollectionTaskFactory, self).__init__(**kwargs)
+        self.source = kwargs.get('source', None)
+        self.repeat_task = kwargs.get('repeat_task', None)
         self.type = 'taskPerFile'

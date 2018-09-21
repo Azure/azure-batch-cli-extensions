@@ -101,20 +101,17 @@ class RepeatTask(Model):
         'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
     }
 
-    def __init__(self, command_line, display_name=None, container_settings=None, exit_conditions=None,
-                 resource_files=None, environment_settings=None, affinity_info=None, constraints=None,
-                 user_identity=None, application_package_references=None, authentication_token_settings=None,
-                 output_files=None, package_references=None):
-        self.display_name = display_name
-        self.command_line = command_line
-        self.container_settings = container_settings
-        self.exit_conditions = exit_conditions
-        self.resource_files = resource_files
-        self.environment_settings = environment_settings
-        self.affinity_info = affinity_info
-        self.constraints = constraints
-        self.user_identity = user_identity
-        self.application_package_references = application_package_references
-        self.authentication_token_settings = authentication_token_settings
-        self.output_files = output_files
-        self.package_references = package_references
+    def __init__(self, **kwargs):
+        super(RepeatTask, self).__init__(**kwargs)
+        self.display_name = kwargs.get('display_name')
+        self.command_line = kwargs.get('command_line', None)
+        self.exit_conditions = kwargs.get('exit_conditions', None)
+        self.resource_files = kwargs.get('resource_files', None)
+        self.environment_settings = kwargs.get('environment_settings', None)
+        self.affinity_info = kwargs.get('affinity_info', None)
+        self.constraints = kwargs.get('constraints', None)
+        self.user_identity = kwargs.get('user_identity', None)
+        self.application_package_references = kwargs.get('application_package_references', None)
+        self.authentication_token_settings = kwargs.get('authentication_token_settings', None)
+        self.output_files = kwargs.get('output_files', None)
+        self.package_references = kwargs.get('package_references', None)

@@ -473,29 +473,29 @@ class TestBatchExtensions(unittest.TestCase):
     def test_batch_extensions_parse_parametricsweep_factory(self):
         template = models.ParametricSweepTaskFactory(
             parameter_sets=[
-                models.ParameterSet(1, 2),
-                models.ParameterSet(3, 5)
+                models.ParameterSet(start=1, end=2),
+                models.ParameterSet(start=3, end=5)
             ],
-            repeat_task= models.RepeatTask("cmd {0}.mp3 {1}.mp3"))
+            repeat_task= models.RepeatTask(command_line="cmd {0}.mp3 {1}.mp3"))
         result = utils._expand_parametric_sweep(template)  # pylint:disable=protected-access
         expected = [
-            models.ExtendedTaskParameter('0', 'cmd 1.mp3 3.mp3'),
-            models.ExtendedTaskParameter('1', 'cmd 1.mp3 4.mp3'),
-            models.ExtendedTaskParameter('2', 'cmd 1.mp3 5.mp3'),
-            models.ExtendedTaskParameter('3', 'cmd 2.mp3 3.mp3'),
-            models.ExtendedTaskParameter('4', 'cmd 2.mp3 4.mp3'),
-            models.ExtendedTaskParameter('5', 'cmd 2.mp3 5.mp3')
+            models.ExtendedTaskParameter(id='0', command_line='cmd 1.mp3 3.mp3'),
+            models.ExtendedTaskParameter(id='1', command_line='cmd 1.mp3 4.mp3'),
+            models.ExtendedTaskParameter(id='2', command_line='cmd 1.mp3 5.mp3'),
+            models.ExtendedTaskParameter(id='3', command_line='cmd 2.mp3 3.mp3'),
+            models.ExtendedTaskParameter(id='4', command_line='cmd 2.mp3 4.mp3'),
+            models.ExtendedTaskParameter(id='5', command_line='cmd 2.mp3 5.mp3')
         ]
         for index, task in enumerate(result):
             self.assertEqual(expected[index].id, task.id)
             self.assertEqual(expected[index].command_line, task.command_line)
 
         template = models.ParametricSweepTaskFactory(
-            parameter_sets=[models.ParameterSet(1, 3)],
-            repeat_task= models.RepeatTask("cmd {0}.mp3",
+            parameter_sets=[models.ParameterSet(start=1, end=3)],
+            repeat_task= models.RepeatTask(command_line="cmd {0}.mp3",
                 resource_files=[
-                    models.ResourceFile("http://account.blob/run.exe", "run.exe"),
-                    models.ResourceFile("http://account.blob/{0}.dat", "{0}.mp3")],
+                    models.ResourceFile(blob_source="http://account.blob/run.exe", file_path="run.exe"),
+                    models.ResourceFile(blob_source="http://account.blob/{0}.dat", file_path="{0}.mp3")],
                 output_files=[models.OutputFile(
                     file_pattern="{0}.txt",
                     destination=models.ExtendedOutputFileDestination(
@@ -509,10 +509,10 @@ class TestBatchExtensions(unittest.TestCase):
                     )
                 )]))
         expected = [
-            models.ExtendedTaskParameter('0', 'cmd 1.mp3',
+            models.ExtendedTaskParameter(id='0', command_line='cmd 1.mp3',
                 resource_files=[
-                    models.ResourceFile("http://account.blob/run.exe", "run.exe"),
-                    models.ResourceFile("http://account.blob/1.dat", "1.mp3")],
+                    models.ResourceFile(blob_source="http://account.blob/run.exe", file_path="run.exe"),
+                    models.ResourceFile(blob_source="http://account.blob/1.dat", file_path="1.mp3")],
                 output_files=[models.OutputFile(
                     file_pattern="1.txt",
                     destination=models.ExtendedOutputFileDestination(
@@ -524,10 +524,10 @@ class TestBatchExtensions(unittest.TestCase):
                     upload_options=models.OutputFileUploadOptions(
                         upload_condition=models.OutputFileUploadCondition.task_success
                     ))]),
-            models.ExtendedTaskParameter('1', 'cmd 2.mp3',
+            models.ExtendedTaskParameter(id='1', command_line='cmd 2.mp3',
                 resource_files=[
-                    models.ResourceFile("http://account.blob/run.exe", "run.exe"),
-                    models.ResourceFile("http://account.blob/2.dat", "2.mp3")],
+                    models.ResourceFile(blob_source="http://account.blob/run.exe", file_path="run.exe"),
+                    models.ResourceFile(blob_source="http://account.blob/2.dat", file_path="2.mp3")],
                 output_files=[models.OutputFile(
                     file_pattern="2.txt",
                     destination=models.ExtendedOutputFileDestination(
@@ -539,10 +539,10 @@ class TestBatchExtensions(unittest.TestCase):
                     upload_options=models.OutputFileUploadOptions(
                         upload_condition=models.OutputFileUploadCondition.task_success
                     ))]),
-            models.ExtendedTaskParameter('2', 'cmd 3.mp3',
+            models.ExtendedTaskParameter(id='2', command_line='cmd 3.mp3',
                 resource_files=[
-                    models.ResourceFile("http://account.blob/run.exe", "run.exe"),
-                    models.ResourceFile("http://account.blob/3.dat", "3.mp3")],
+                    models.ResourceFile(blob_source="http://account.blob/run.exe", file_path="run.exe"),
+                    models.ResourceFile(blob_source="http://account.blob/3.dat", file_path="3.mp3")],
                 output_files=[models.OutputFile(
                     file_pattern="3.txt",
                     destination=models.ExtendedOutputFileDestination(
@@ -564,16 +564,16 @@ class TestBatchExtensions(unittest.TestCase):
         
         template = models.ParametricSweepTaskFactory(
             parameter_sets=[
-                models.ParameterSet(1, 3)
+                models.ParameterSet(start=1, end=3)
             ],
-            repeat_task= models.RepeatTask("cmd {0}.mp3"),
-            merge_task=models.MergeTask("summary.exe"))
+            repeat_task= models.RepeatTask(command_line="cmd {0}.mp3"),
+            merge_task=models.MergeTask(command_line="summary.exe"))
         expected = [
-            models.ExtendedTaskParameter('0', 'cmd 1.mp3'),
-            models.ExtendedTaskParameter('1', 'cmd 2.mp3'),
-            models.ExtendedTaskParameter('2', 'cmd 3.mp3'),
-            models.ExtendedTaskParameter('merge', 'summary.exe',
-                depends_on=models.TaskDependencies(task_id_ranges=models.TaskIdRange(0, 2)))
+            models.ExtendedTaskParameter(id='0', command_line='cmd 1.mp3'),
+            models.ExtendedTaskParameter(id='1', command_line='cmd 2.mp3'),
+            models.ExtendedTaskParameter(id='2', command_line='cmd 3.mp3'),
+            models.ExtendedTaskParameter(id='merge', command_line='summary.exe',
+                depends_on=models.TaskDependencies(task_id_ranges=models.TaskIdRange(start=0, end=2)))
         ]
         result = utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
         for index, task in enumerate(result):
@@ -585,12 +585,12 @@ class TestBatchExtensions(unittest.TestCase):
     def test_batch_extensions_parse_invalid_parametricsweep(self):
 
         with self.assertRaises(ValueError):
-            utils._expand_parametric_sweep(Mock(parameter_sets=None, repeat_task=models.RepeatTask('cmd {0}.mp3')))  # pylint: disable=protected-access
+            utils._expand_parametric_sweep(Mock(parameter_sets=None, repeat_task=models.RepeatTask(command_line='cmd {0}.mp3')))  # pylint: disable=protected-access
         with self.assertRaises(ValueError):
-            utils._expand_parametric_sweep(Mock(parameter_sets=[models.ParameterSet(1, 3)], repeat_task=None))  # pylint: disable=protected-access
+            utils._expand_parametric_sweep(Mock(parameter_sets=[models.ParameterSet(start=1, end=3)], repeat_task=None))  # pylint: disable=protected-access
         template = models.ParametricSweepTaskFactory(
             parameter_sets=[
-                models.ParameterSet(1, 3)
+                models.ParameterSet(start=1, end=3)
             ],
             repeat_task=models.RepeatTask(
                 command_line=None,
@@ -608,7 +608,7 @@ class TestBatchExtensions(unittest.TestCase):
             utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
         template = models.ParametricSweepTaskFactory(
             parameter_sets=[
-                models.ParameterSet(1, 3)
+                models.ParameterSet(start=1, end=3)
             ],
             repeat_task=models.RepeatTask(
                 command_line="cmd {0}.mp3",
@@ -737,8 +737,8 @@ class TestBatchExtensions(unittest.TestCase):
             target_dedicated_nodes="10",
             enable_auto_scale=False,
             package_references=[
-                models.AptPackageReference("ffmpeg"),
-                models.AptPackageReference("apache2", "12.34")
+                models.AptPackageReference(id="ffmpeg"),
+                models.AptPackageReference(id="apache2", version="12.34")
             ]
         )
         commands = [utils.process_pool_package_references(pool)]
@@ -767,8 +767,10 @@ class TestBatchExtensions(unittest.TestCase):
             target_dedicated_nodes="10",
             enable_auto_scale=False,
             package_references=[
-                models.ChocolateyPackageReference("ffmpeg"),
-                models.ChocolateyPackageReference("testpkg", "12.34", True)
+                models.ChocolateyPackageReference(id="ffmpeg"),
+                models.ChocolateyPackageReference(id="testpkg",
+                                                  version="12.34",
+                                                  allow_empty_checksums=True)
             ]
         )
         commands = [utils.process_pool_package_references(pool)]
@@ -815,8 +817,8 @@ class TestBatchExtensions(unittest.TestCase):
                 ]
             ),
             package_references=[
-                models.AptPackageReference("ffmpeg"),
-                models.AptPackageReference("apache2", "12.34")
+                models.AptPackageReference(id="ffmpeg"),
+                models.AptPackageReference(id="apache2", version="12.34")
             ]
         )
         commands = [utils.process_pool_package_references(pool)]
@@ -838,12 +840,12 @@ class TestBatchExtensions(unittest.TestCase):
         job = Mock(
             job_preparation_task=None,
             task_factory=models.ParametricSweepTaskFactory(
-                parameter_sets=[models.ParameterSet(1, 2), models.ParameterSet(3, 5)],
+                parameter_sets=[models.ParameterSet(start=1, end=2), models.ParameterSet(start=3, end=5)],
                 repeat_task=models.RepeatTask(
                     command_line="cmd {0}.mp3 {1}.mp3",
                     package_references=[
-                        models.AptPackageReference("ffmpeg"),
-                        models.AptPackageReference("apache2", "12.34")
+                        models.AptPackageReference(id="ffmpeg"),
+                        models.AptPackageReference(id="apache2", version="12.34")
                     ]
                 )
             )
@@ -867,8 +869,8 @@ class TestBatchExtensions(unittest.TestCase):
         job = Mock(
             job_preparation_task=None,
             task_factory=models.ParametricSweepTaskFactory(
-                parameter_sets=[models.ParameterSet(1, 2), models.ParameterSet(3, 5)],
-                repeat_task=models.RepeatTask("cmd {0}.mp3 {1}.mp3")
+                parameter_sets=[models.ParameterSet(start=1, end=2), models.ParameterSet(start=3, end=5)],
+                repeat_task=models.RepeatTask(command_line="cmd {0}.mp3 {1}.mp3")
             )
         )
         collection = utils.expand_task_factory(job, None)
@@ -898,19 +900,19 @@ class TestBatchExtensions(unittest.TestCase):
             target_dedicated_nodes="10",
             enable_auto_scale=False,
             package_references=[
-                models.AptPackageReference("ffmpeg"),
-                models.AptPackageReference("apache2", "12.34")
+                models.AptPackageReference(id="ffmpeg"),
+                models.AptPackageReference(id="apache2", version="12.34")
             ]
         )
         pool.package_references[0].type = "newPackage"
         with self.assertRaises(ValueError):
             utils.process_pool_package_references(pool)
 
-        pool.package_references[0] = models.ChocolateyPackageReference("ffmpeg")
+        pool.package_references[0] = models.ChocolateyPackageReference(id="ffmpeg")
         with self.assertRaises(ValueError):
             utils.process_pool_package_references(pool)
 
-        pool.package_references = [models.AptPackageReference("ffmpeg", "12.34")]
+        pool.package_references = [models.AptPackageReference(id="ffmpeg", version="12.34")]
         pool.package_references[0].id = None
         with self.assertRaises(ValueError):
             utils.process_pool_package_references(pool)
@@ -918,22 +920,22 @@ class TestBatchExtensions(unittest.TestCase):
 
     def test_batch_extensions_validate_job_requesting_app_template(self):
         # Should do nothing for a job not using an application template'
-        job = models.ExtendedJobParameter('jobid', None)
+        job = models.ExtendedJobParameter(id='jobid', pool_info=None)
 
         # Should throw an error if job does not specify template location
         with self.assertRaises(TypeError):
-            appTemplate = models.ApplicationTemplateInfo(None)
+            appTemplate = models.ApplicationTemplateInfo(file_path=None)
 
         # Should throw an error if the template referenced by the job does not
         # exist
         with self.assertRaises(ValueError):
-            appTemplate = models.ApplicationTemplateInfo(self.static_apptemplate_path + '.notfound')
+            appTemplate = models.ApplicationTemplateInfo(file_path=(self.static_apptemplate_path + '.notfound'))
 
         # Should throw an error if job uses property reserved for application
         # template use
-        app_template = models.ApplicationTemplateInfo(self.static_apptemplate_path)
+        app_template = models.ApplicationTemplateInfo(file_path=self.static_apptemplate_path)
         with self.assertRaises(ValueError):
-            job = models.ExtendedJobParameter('jobid', None, application_template_info=app_template,
+            job = models.ExtendedJobParameter(id='jobid', pool_info=None, application_template_info=app_template,
                                           uses_task_dependencies=True)
 
     def test_batch_extensions_merge_metadata(self):
@@ -1061,32 +1063,32 @@ class TestBatchExtensions(unittest.TestCase):
         # should do nothing when no application template is required
 
         # should throw error if no filePath supplied for application template
-        job = models.ExtendedJobParameter("jobid", None,
-            application_template_info=models.ApplicationTemplateInfo(self.static_apptemplate_path))
+        job = models.ExtendedJobParameter(id="jobid", pool_info=None,
+            application_template_info=models.ApplicationTemplateInfo(file_path=self.static_apptemplate_path))
         job.application_template_info.file_path = None
         with self.assertRaises(ValueError):
             utils.expand_application_template(job, self._deserialize)
 
         # should merge a template with no parameters
-        job = models.ExtendedJobParameter("jobid", None,
-            application_template_info=models.ApplicationTemplateInfo(self.static_apptemplate_path))
+        job = models.ExtendedJobParameter(id="jobid", pool_info=None,
+            application_template_info=models.ApplicationTemplateInfo(file_path=self.static_apptemplate_path))
         result = utils.expand_application_template(job, self._deserialize)
         self.assertIsNotNone(job.job_manager_task,
             "expect the template to have provided jobManagerTask.")
 
         # should preserve properties on the job when expanding the template
-        job = models.ExtendedJobParameter("importantjob", None,
+        job = models.ExtendedJobParameter(id="importantjob", pool_info=None,
             priority=500,
-            application_template_info=models.ApplicationTemplateInfo(self.static_apptemplate_path))
+            application_template_info=models.ApplicationTemplateInfo(file_path=self.static_apptemplate_path))
         
         result = utils.expand_application_template(job, self._deserialize)
         self.assertEqual(job.id, 'importantjob')
         self.assertEqual(job.priority, 500)
 
         # should use parameters from the job to expand the template
-        job = models.ExtendedJobParameter("parameterJob", None,
+        job = models.ExtendedJobParameter(id="parameterJob", pool_info=None,
             application_template_info=models.ApplicationTemplateInfo(
-                self.apptemplate_with_params_path,
+                file_path=self.apptemplate_with_params_path,
                 parameters={
                     'blobName': "music.mp3",
                     'keyValue': "yale"
@@ -1103,9 +1105,9 @@ class TestBatchExtensions(unittest.TestCase):
         # should throw an error if any parameter has an undefined type
         untyped_parameter_path = os.path.join(self.data_dir,
             'batch-applicationTemplate-untypedParameter.json')
-        job = models.ExtendedJobParameter("parameterJob", None,
+        job = models.ExtendedJobParameter(id="parameterJob", pool_info=None,
             application_template_info=models.ApplicationTemplateInfo(
-                untyped_parameter_path,
+                file_path=untyped_parameter_path,
                 parameters={
                     'blobName': "music.mp3",
                     'keyValue': "yale"
@@ -1116,31 +1118,31 @@ class TestBatchExtensions(unittest.TestCase):
                       'Expect parameter \'blobName\' to be mentioned')
 
         # should not have an applicationTemplateInfo property on the expanded job
-        job = models.ExtendedJobParameter("importantjob", None,
+        job = models.ExtendedJobParameter(id="importantjob", pool_info=None,
             priority=500,
-            application_template_info=models.ApplicationTemplateInfo(self.static_apptemplate_path))
+            application_template_info=models.ApplicationTemplateInfo(file_path=self.static_apptemplate_path))
         utils.expand_application_template(job, self._deserialize)
         self.assertIsNone(job.application_template_info)
 
         # should not copy templateMetadata to the expanded job
-        job = models.ExtendedJobParameter("importantjob", None,
+        job = models.ExtendedJobParameter(id="importantjob", pool_info=None,
             priority=500,
-            application_template_info=models.ApplicationTemplateInfo(self.static_apptemplate_path))
+            application_template_info=models.ApplicationTemplateInfo(file_path=self.static_apptemplate_path))
         utils.expand_application_template(job, self._deserialize)
         self.assertFalse(hasattr(job, 'template_metadata'))
 
         # should not have a parameters property on the expanded job
-        job = models.ExtendedJobParameter("importantjob", None,
+        job = models.ExtendedJobParameter(id="importantjob", pool_info=None,
             priority=500,
-            application_template_info=models.ApplicationTemplateInfo(self.static_apptemplate_path))
+            application_template_info=models.ApplicationTemplateInfo(file_path=self.static_apptemplate_path))
         utils.expand_application_template(job, self._deserialize)
         self.assertFalse(hasattr(job, 'parameters'))
 
         # should throw error if application template specifies \'id\' property
         templateFilePath = os.path.join(self.data_dir,
             'batch-applicationTemplate-prohibitedId.json')
-        job = models.ExtendedJobParameter("jobid", None,
-            application_template_info=models.ApplicationTemplateInfo(templateFilePath))
+        job = models.ExtendedJobParameter(id="jobid", pool_info=None,
+            application_template_info=models.ApplicationTemplateInfo(file_path=templateFilePath))
         with self.assertRaises(ValueError) as ve:
             utils.expand_application_template(job, self._deserialize)
         self.assertIn('id', ve.exception.args[0], 'Expect property \'id\' to be mentioned')
@@ -1148,8 +1150,8 @@ class TestBatchExtensions(unittest.TestCase):
         # should throw error if application template specifies \'poolInfo\' property
         templateFilePath = os.path.join(self.data_dir,
             'batch-applicationTemplate-prohibitedPoolInfo.json')
-        job = models.ExtendedJobParameter("jobid", None,
-            application_template_info=models.ApplicationTemplateInfo(templateFilePath))
+        job = models.ExtendedJobParameter(id="jobid", pool_info=None,
+            application_template_info=models.ApplicationTemplateInfo(file_path=templateFilePath))
         with self.assertRaises(ValueError) as ve:
             utils.expand_application_template(job, self._deserialize)
         self.assertIn('poolInfo', ve.exception.args[0],
@@ -1158,8 +1160,8 @@ class TestBatchExtensions(unittest.TestCase):
         # should throw error if application template specifies \'applicationTemplateInfo\' property
         templateFilePath = os.path.join(self.data_dir,
             'batch-applicationTemplate-prohibitedApplicationTemplateInfo.json')
-        job = models.ExtendedJobParameter("jobid", None,
-            application_template_info=models.ApplicationTemplateInfo(templateFilePath))
+        job = models.ExtendedJobParameter(id="jobid", pool_info=None,
+            application_template_info=models.ApplicationTemplateInfo(file_path=templateFilePath))
         with self.assertRaises(ValueError) as ve:
             utils.expand_application_template(job, self._deserialize)
         self.assertIn('applicationTemplateInfo', ve.exception.args[0],
@@ -1168,8 +1170,8 @@ class TestBatchExtensions(unittest.TestCase):
         # should throw error if application template specifies \'priority\' property', function(_){
         templateFilePath = os.path.join(self.data_dir,
             'batch-applicationTemplate-prohibitedPriority.json')
-        job = models.ExtendedJobParameter("jobid", None,
-            application_template_info=models.ApplicationTemplateInfo(templateFilePath))
+        job = models.ExtendedJobParameter(id="jobid", pool_info=None,
+            application_template_info=models.ApplicationTemplateInfo(file_path=templateFilePath))
         with self.assertRaises(ValueError) as ve:
             utils.expand_application_template(job, self._deserialize)
         self.assertIn('priority', ve.exception.args[0],
@@ -1178,19 +1180,19 @@ class TestBatchExtensions(unittest.TestCase):
         # should throw error if application template specifies unrecognized property
         templateFilePath = os.path.join(self.data_dir,
             'batch-applicationTemplate-unsupportedProperty.json')
-        job = models.ExtendedJobParameter("jobid", None,
-            application_template_info=models.ApplicationTemplateInfo(templateFilePath))
+        job = models.ExtendedJobParameter(id="jobid", pool_info=None,
+            application_template_info=models.ApplicationTemplateInfo(file_path=templateFilePath))
         with self.assertRaises(ValueError) as ve:
             utils.expand_application_template(job, self._deserialize)
         self.assertIn('fluxCapacitorModel', ve.exception.args[0],
                       'Expect property \'fluxCapacitorModel\' to be mentioned')
 
         # should include metadata from original job on generated job
-        job = models.ExtendedJobParameter("importantjob", None,
+        job = models.ExtendedJobParameter(id="importantjob", pool_info=None,
             priority=500,
-            metadata=[models.MetadataItem('author', 'batman')],
+            metadata=[models.MetadataItem(name='author', value='batman')],
             application_template_info=models.ApplicationTemplateInfo(
-                self.apptemplate_with_params_path,
+                file_path=self.apptemplate_with_params_path,
                 parameters={
                     'blobName': 'henry',
                     'keyValue': 'yale'
@@ -1201,11 +1203,11 @@ class TestBatchExtensions(unittest.TestCase):
         self.assertTrue([m for m in job.metadata if m.name=='author' and m.value=='batman'])
 
         # should include metadata from template on generated job
-        job = models.ExtendedJobParameter("importantjob", None,
+        job = models.ExtendedJobParameter(id="importantjob", pool_info=None,
             priority=500,
-            metadata=[models.MetadataItem('author', 'batman')],
+            metadata=[models.MetadataItem(name='author', value='batman')],
             application_template_info=models.ApplicationTemplateInfo(
-                self.apptemplate_with_params_path,
+                file_path=self.apptemplate_with_params_path,
                 parameters={
                     'blobName': 'henry',
                     'keyValue': 'yale'
@@ -1216,20 +1218,20 @@ class TestBatchExtensions(unittest.TestCase):
         self.assertTrue([m for m in job.metadata if m.name=='myproperty' and m.value=='yale'])
 
         # should add a metadata property with the template location
-        job = models.ExtendedJobParameter("importantjob", None,
+        job = models.ExtendedJobParameter(id="importantjob", pool_info=None,
             priority=500,
-            application_template_info=models.ApplicationTemplateInfo(self.static_apptemplate_path))
+            application_template_info=models.ApplicationTemplateInfo(file_path=self.static_apptemplate_path))
         utils.expand_application_template(job, self._deserialize)
         self.assertTrue(job.metadata)
         self.assertTrue([m for m in job.metadata 
                          if m.name=='az_batch:template_filepath' and m.value==self.static_apptemplate_path])
 
         # should not allow the job to use a metadata property with our reserved prefix
-        job = models.ExtendedJobParameter("importantjob", None,
+        job = models.ExtendedJobParameter(id="importantjob", pool_info=None,
             priority=500,
-            metadata=[models.MetadataItem('az_batch:property', 'something')],
+            metadata=[models.MetadataItem(name='az_batch:property', value='something')],
             application_template_info=models.ApplicationTemplateInfo(
-                self.static_apptemplate_path))
+                file_path=self.static_apptemplate_path))
 
         with self.assertRaises(ValueError) as ve:
             utils.expand_application_template(job, self._deserialize)
@@ -1528,7 +1530,7 @@ class TestBatchExtensions(unittest.TestCase):
         def add_collection(
                 job_id, value, task_add_collection_options=None, custom_headers=None, raw=False, **operation_config):
             status = models.TaskAddStatus.success
-            response = models.TaskAddCollectionResult([models.TaskAddResult(status, s.id) for s in value])
+            response = models.TaskAddCollectionResult(value=[models.TaskAddResult(status=status, task_id=s.id) for s in value])
             return response
 
         num_calls = 7
@@ -1537,7 +1539,7 @@ class TestBatchExtensions(unittest.TestCase):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
             task_collection = []
             for i in range(task_ops.MAX_TASKS_PER_REQUEST * num_calls):
-                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.append(models.TaskAddParameter(id=("task" + str(i)), command_line="sleep 1"))
             task_add_result = task_ops.add_collection("job", task_collection)
             assert type(task_add_result) is models.TaskAddCollectionResult
             assert set(result.task_id for result in task_add_result.value) == set(task.id for task in task_collection)
@@ -1547,7 +1549,7 @@ class TestBatchExtensions(unittest.TestCase):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
             task_collection = []
             for i in range(task_ops.MAX_TASKS_PER_REQUEST * num_calls):
-                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.append(models.TaskAddParameter(id=("task" + str(i)), command_line="sleep 1"))
             task_add_result = task_ops.add_collection("job", task_collection, 4)
             assert type(task_add_result) is models.TaskAddCollectionResult
             assert set(result.task_id for result in task_add_result.value) == set(task.id for task in task_collection)
@@ -1565,7 +1567,7 @@ class TestBatchExtensions(unittest.TestCase):
             task_ops = operations.ExtendedTaskOperations(None,  None, None, self._serialize, self._deserialize, None)
             task_collection = []
             for i in range(task_ops.MAX_TASKS_PER_REQUEST):
-                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.append(models.TaskAddParameter(id="task" + str(i), command_line="sleep 1"))
 
             task_ops.add_collection("job", task_collection)
             assert task_ops._TaskWorkflowManager._bulk_add_tasks.call_count == 1
@@ -1577,7 +1579,7 @@ class TestBatchExtensions(unittest.TestCase):
             task_ops = operations.ExtendedTaskOperations(None,  None, None, self._serialize, self._deserialize, None)
             task_collection = []
             for i in range(task_ops.MAX_TASKS_PER_REQUEST):
-                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.append(models.TaskAddParameter(id="task" + str(i), command_line="sleep 1"))
 
             task_ops.add_collection("job", task_collection, threads=4)
             assert task_ops._TaskWorkflowManager._bulk_add_tasks.call_count == 1
@@ -1598,7 +1600,7 @@ class TestBatchExtensions(unittest.TestCase):
             task_ops = operations.ExtendedTaskOperations(None,  None, None, self._serialize, self._deserialize, None)
             task_collection = []
             for i in range(task_ops.MAX_TASKS_PER_REQUEST*num_calls):
-                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.append(models.TaskAddParameter(id="task" + str(i), command_line="sleep 1"))
             task_ops.add_collection("job", task_collection)
 
             assert task_ops._TaskWorkflowManager._bulk_add_tasks.call_count == num_calls
@@ -1610,7 +1612,7 @@ class TestBatchExtensions(unittest.TestCase):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
             task_collection = []
             for i in range(task_ops.MAX_TASKS_PER_REQUEST*num_calls):
-                task_collection.append(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.append(models.TaskAddParameter(id="task" + str(i), command_line="sleep 1"))
             task_ops.add_collection("job", task_collection, threads=4)
 
             assert task_ops._TaskWorkflowManager._bulk_add_tasks.call_count == num_calls
@@ -1632,7 +1634,7 @@ class TestBatchExtensions(unittest.TestCase):
                 raise err
             submitted_tasks.extendleft(value)
             status = models.TaskAddStatus.success
-            response = models.TaskAddCollectionResult([models.TaskAddResult(status, s.id) for s in value])
+            response = models.TaskAddCollectionResult(value=[models.TaskAddResult(value=status, task_id=s.id) for s in value])
             return response
 
         with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
@@ -1640,7 +1642,7 @@ class TestBatchExtensions(unittest.TestCase):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
             task_collection = collections.deque()
             for i in range(task_ops.MAX_TASKS_PER_REQUEST):
-                task_collection.appendleft(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.appendleft(models.TaskAddParameter(id="task" + str(i), command_line="sleep 1"))
 
             task_workflow_manager = task_ops._TaskWorkflowManager(
                 task_ops,
@@ -1666,7 +1668,7 @@ class TestBatchExtensions(unittest.TestCase):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
             task_collection = collections.deque()
             for i in range(1):
-                task_collection.appendleft(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.appendleft(models.TaskAddParameter(id="task" + str(i), command_line="sleep 1"))
             task_workflow_manager = task_ops._TaskWorkflowManager(
                 task_ops,
                 "job",
@@ -1691,7 +1693,7 @@ class TestBatchExtensions(unittest.TestCase):
                                                         resource_files=[],
                                                         wait_for_success=True,
                                                         user_identity=base_sdk_models.UserIdentity())
-        job_release_task = base_sdk_models.JobReleaseTask("jobrelease")
+        job_release_task = base_sdk_models.JobReleaseTask(command_line="jobrelease")
         multi_instance_settings = base_sdk_models.MultiInstanceSettings(
             coordination_command_line="sleep 1")
         output_file = base_sdk_models.OutputFile(
@@ -1751,14 +1753,14 @@ class TestBatchExtensions(unittest.TestCase):
                 results = []
                 for task in value:
                     error = BatchError(code="testError", message="test error")
-                    result = TaskAddResult(TaskAddStatus.client_error, task.id, error=error)
+                    result = TaskAddResult(status=TaskAddStatus.client_error, task_id=task.id, error=error)
                     results.append(result)
                 collection = TaskAddCollectionResult()
                 collection.value = results
                 return collection
             submitted_tasks.extendleft(value)
             status = models.TaskAddStatus.success
-            response = models.TaskAddCollectionResult([models.TaskAddResult(status, s.id) for s in value])
+            response = models.TaskAddCollectionResult(value=[models.TaskAddResult(status=status, task_id=s.id) for s in value])
             return response
 
         with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
@@ -1766,7 +1768,7 @@ class TestBatchExtensions(unittest.TestCase):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
             task_collection = collections.deque()
             for i in range(task_ops.MAX_TASKS_PER_REQUEST):
-                task_collection.appendleft(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.appendleft(models.TaskAddParameter(id=("task" + str(i)), command_line="sleep 1"))
 
             try:
                 task_ops.add_collection("job", task_collection)
@@ -1788,14 +1790,15 @@ class TestBatchExtensions(unittest.TestCase):
                 results = []
                 for task in value:
                     error = BatchError(code="testError", message="test error")
-                    result = TaskAddResult(TaskAddStatus.server_error, task.id, error=error)
+                    result = TaskAddResult(status=TaskAddStatus.server_error, task_id=task.id, error=error)
                     results.append(result)
                 collection = TaskAddCollectionResult()
                 collection.value = results
                 return collection
             submitted_tasks.extendleft(value)
             status = models.TaskAddStatus.success
-            response = models.TaskAddCollectionResult([models.TaskAddResult(status, s.id) for s in value])
+            response = models.TaskAddCollectionResult(
+                value=[models.TaskAddResult(status=status, task_id=s.id) for s in value])
             return response
 
         with patch('azure.batch.operations.task_operations.TaskOperations.add_collection',
@@ -1803,12 +1806,12 @@ class TestBatchExtensions(unittest.TestCase):
             task_ops = operations.ExtendedTaskOperations(None, None, None, self._serialize, self._deserialize, None)
             task_collection = collections.deque()
             for i in range(task_ops.MAX_TASKS_PER_REQUEST):
-                task_collection.appendleft(models.TaskAddParameter("task" + str(i), "sleep 1"))
+                task_collection.appendleft(models.TaskAddParameter(id=("task" + str(i)), command_line="sleep 1"))
 
             try:
-                task_add_result = task_ops.add_collection("job", task_collection)
+                task_add_result = task_ops.add_collection(job_id="job", value=task_collection)
                 assert set(result.task_id for result in task_add_result.value) == set(task.id for task in task_collection)
             except CreateTasksErrorException as e:
-                self.fail()
+                self.fail(True)
             except Exception as e:
-                self.fail()
+                self.fail(True)

@@ -180,33 +180,6 @@ class ExtendedPoolParameter(PoolAddParameter):
         'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
     }
 
-    def __init__(self, id, vm_size, display_name=None, cloud_service_configuration=None,
-                 virtual_machine_configuration=None, resize_timeout=None, target_dedicated_nodes=None,
-                 target_low_priority_nodes=None, enable_auto_scale=None, auto_scale_formula=None,
-                 auto_scale_evaluation_interval=None, enable_inter_node_communication=None,
-                 network_configuration=None, start_task=None, certificate_references=None,
-                 application_package_references=None, application_licenses=None, max_tasks_per_node=None,
-                 task_scheduling_policy=None, user_accounts=None, metadata=None, package_references=None):
-        super(ExtendedPoolParameter, self).__init__(
-            id=id,
-            display_name=display_name,
-            vm_size=vm_size,
-            cloud_service_configuration=cloud_service_configuration,
-            virtual_machine_configuration=virtual_machine_configuration,
-            resize_timeout=resize_timeout,
-            target_dedicated_nodes=target_dedicated_nodes,
-            target_low_priority_nodes=target_low_priority_nodes,
-            enable_auto_scale=enable_auto_scale,
-            auto_scale_formula=auto_scale_formula,
-            auto_scale_evaluation_interval=auto_scale_evaluation_interval,
-            enable_inter_node_communication=enable_inter_node_communication,
-            network_configuration=network_configuration,
-            start_task=start_task,
-            certificate_references=certificate_references,
-            application_package_references=application_package_references,
-            application_licenses=application_licenses,
-            max_tasks_per_node=max_tasks_per_node,
-            task_scheduling_policy=task_scheduling_policy,
-            user_accounts=user_accounts,
-            metadata=metadata)
-        self.package_references = package_references
+    def __init__(self, **kwargs):
+        super(ExtendedPoolParameter, self).__init__(**kwargs)
+        self.package_references = kwargs.get('package_references', None)

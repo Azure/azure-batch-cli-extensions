@@ -79,16 +79,16 @@ if __name__ == '__main__':
     # Create parametric sweep job using models
     job_id = "ffmpeg-parametric-sweep-test"
     task_factory = models.ParametricSweepTaskFactory(
-        parameter_sets=[models.ParameterSet(1, 5)],
+        parameter_sets=[models.ParameterSet(start=1, end=5)],
         repeat_task=models.RepeatTask(
             command_line="ffmpeg -y -i sample{0}.mp3 -acodec libmp3lame output.mp3",
             resource_files=[models.ExtendedResourceFile(source=models.FileSource(file_group=filegroup))],
             output_files=[models.OutputFile(
-                "output.mp3",
+                file_pattern="output.mp3",
                 destination=models.ExtendedOutputFileDestination(
                     auto_storage=models.OutputFileAutoStorageDestination(job_id, path="audio{0}.mp3")),
                 upload_options=models.OutputFileUploadOptions(models.OutputFileUploadCondition.task_success))],
-            package_references=[models.AptPackageReference("ffmpeg")]))
+            package_references=[models.AptPackageReference(id="ffmpeg")]))
     job = models.ExtendedJobParameter(
         id=job_id,
         pool_info=models.PoolInformation(pool_id=pool_param.properties.id),

@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+4.0.0 (2018-08-29)
+------------------
+
+* **Breaking** Model signatures are now using only keywords-arguments syntax. Each positional argument must be rewritten as a keyword argument.
+
 3.1.2 (2018-08-22)
 ------------------
 

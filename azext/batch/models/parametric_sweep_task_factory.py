@@ -34,10 +34,10 @@ class ParametricSweepTaskFactory(TaskFactoryBase):
         'merge_task': {'key': 'mergeTask', 'type': 'MergeTask'}
     }
 
-    def __init__(self, parameter_sets, repeat_task, merge_task=None):
-        super(ParametricSweepTaskFactory, self).__init__(merge_task)
-        if not parameter_sets:
-            raise ValueError("Parametric Sweep task factory requires at least one parameter set.")
-        self.parameter_sets = parameter_sets
-        self.repeat_task = repeat_task
+    def __init__(self, **kwargs):
+        super(ParametricSweepTaskFactory, self).__init__(**kwargs)
+        self.parameter_sets = kwargs.get('parameter_sets', None)
+        self.repeat_task = kwargs.get('repeat_task', None)
         self.type = 'parametricSweep'
+        if not self.parameter_sets:
+            raise ValueError("Parametric Sweep task factory requires at least one parameter set.")
