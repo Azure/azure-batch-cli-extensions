@@ -60,8 +60,8 @@ class ExtendedFileOperations(FileOperations):
         :param bool flatten: Whether to flatten the local directory structure when uploading.
          The default is False, where the local directory strucutre will be maintained.
         :param func progress_callback: A callback function to monitor progress of an individual
-         file upload. Must take two parameters, the data uploaded so far (int) and the total
-         data to be uploaded (int), both in bytes.
+         file upload. Must take three parameters, the data uploaded so far (int), the total
+         data to be uploaded (int), both in bytes, and filename (str).
         """
         path, files = file_utils.resolve_file_paths(local_path)
         if len(files) > 0:
