@@ -30,6 +30,9 @@ print('Root directory \'{}\'\n'.format(root_dir))
 # install general requirements and azure-cli
 exec_command('pip install -r requirements.txt')
 
+# upgrade to edge build of azure-cli
+exec_command('pip install --upgrade --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge --no-cache-dir')
+
 # upgrade to latest azure-batch
 exec_command('pip install --upgrade azure-batch')
 

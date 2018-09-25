@@ -88,11 +88,19 @@ You can find futher instructions in `the official documentation <https://docs.mi
 `Azure CLI GitHub repository <https://github.com/azure/azure-cli>`_.
 
 This extension package can be installed to supplement the existing Azure CLI Batch commands.
-It can be installed using the CLI extension tools:
+It can be installed using the CLI extension tools (recommended):
 
 .. code-block:: bash
 
-    $ az extension add --source https://github.com/Azure/azure-batch-cli-extensions/releases/download/azure-batch-cli-extensions-2.5.0/azure_batch_cli_extensions-2.5.0-py2.py3-none-any.whl
+    $ az extension add --source azure-batch-cli-extensions
+
+Each release of the CLI ships with a specific version of the azure-batch-cli-extensions.  This is considered the official version for the CLI release.
+If you would like to install a different version you can specify any release listed at https://github.com/Azure/azure-batch-cli-extensions/releases/.
+To add a specific extension version and pin to it:
+
+.. code-block:: bash
+
+    $ az extension add --source https://github.com/Azure/azure-batch-cli-extensions/releases/download/azure-batch-cli-extensions-x.x.x/azure_batch_cli_extensions-x.x.x-py2.py3-none-any.whl
 
 
 Uninstall CLI extensions
