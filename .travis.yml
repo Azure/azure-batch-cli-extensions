@@ -22,3 +22,11 @@ deploy:
     distributions: sdist bdist_wheel
     repo: Azure/azure-batch-cli-extensions
     branch: master
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+    recipients:
+      - xingwu@microsoft.com
+      - brklein@microsoft.com
+      - matthchr@microsoft.com
