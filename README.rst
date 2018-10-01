@@ -92,7 +92,7 @@ It can be installed using the CLI extension tools (recommended):
 
 .. code-block:: bash
 
-    $ az extension add --name azure-batch-cli-extensions
+    $ az extension add -n azure-batch-cli-extensions
 
 Each release of the CLI ships with a specific version of the azure-batch-cli-extensions.  This is considered the official version for the CLI release.
 If you would like to install a different version you can specify any release listed at https://github.com/Azure/azure-batch-cli-extensions/releases/.
@@ -110,7 +110,7 @@ The CLI extensions can be removed using the `az extension remove` command:
 
 .. code-block:: bash
 
-	$ az extension remove -n azure_batch_cli_extensions
+	$ az extension remove -n azure-batch-cli-extensions
 
 
 Azure Batch account requirements
