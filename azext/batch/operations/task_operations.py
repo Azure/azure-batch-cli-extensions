@@ -207,9 +207,10 @@ class ExtendedTaskOperations(TaskOperations):
                 results.append(queue_item)
         return results
 
+    # pylint: disable=arguments-differ
     def add_collection(
             self, job_id, value, task_add_collection_options=None, custom_headers=None, raw=False, threads=None,
-            **operation_config): # pylint: disable=arguments-differ
+            **operation_config):
         """Adds a collection of tasks to the specified job.
 
         Note that each task must have a unique ID. The Batch service may not
