@@ -11,8 +11,8 @@ import hashlib
 import datetime
 import copy
 import pathlib
-from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
-from six.moves.urllib.parse import quote  # pylint: disable=import-error,no-name-in-module
+from six.moves import urlsplit  # pylint: disable=import-error
+from six.moves import quote  # pylint: disable=import-error,no-name-in-module
 
 from azure.storage.blob import BlobPermissions, BlockBlobService
 from . import models

@@ -112,7 +112,7 @@ class ExtendedTaskOperations(TaskOperations):
                     if len(chunk_tasks_to_add) == 1:
                         failed_task = chunk_tasks_to_add.pop()
                         results_queue.appendleft(e)
-                        logging.error("Task ID " + failed_task.id + " failed to add due to exceeding the request body" +
+                        logging.error("Task ID ", failed_task.id, " failed to add due to exceeding the request body",
                                       " being too large")
                         self._has_early_termination_error = True
                     else:
@@ -125,8 +125,8 @@ class ExtendedTaskOperations(TaskOperations):
                         with self._max_tasks_lock:
                             if midpoint < self._max_tasks_per_request:
                                 self._max_tasks_per_request = midpoint
-                                logging.info("Amount of tasks per request reduced from " +
-                                             str(self._max_tasks_per_request) + " to " + str(midpoint) +
+                                logging.info("Amount of tasks per request reduced from ",
+                                             str(self._max_tasks_per_request), " to ", str(midpoint),
                                              " due to the request body being too large")
 
                         # Not the most efficient solution for all cases, but the goal of this is to handle this
@@ -166,20 +166,20 @@ class ExtendedTaskOperations(TaskOperations):
 
             :param collections.deque results_queue: Queue for worker to output results to
             """
-            while len(self._tasks_to_add) != 0 and not self._has_early_termination_error:
+            while self._tasks_to_add and not self._has_early_termination_error:
                 max_tasks = self._max_tasks_per_request  # local copy
                 chunk_tasks_to_add = []
                 with self._pending_queue_lock:
-                    while len(chunk_tasks_to_add) < max_tasks and len(self._tasks_to_add) != 0:
+                    while len(chunk_tasks_to_add) < max_tasks and self._tasks_to_add:
                         chunk_tasks_to_add.append(self._tasks_to_add.pop())
 
-                if len(chunk_tasks_to_add) != 0:
+                if chunk_tasks_to_add:
                     self._bulk_add_tasks(results_queue, chunk_tasks_to_add)
 
 
             # Only define error if all threads have finished and there were failures
             with self._error_lock:
-                if threading.active_count() == 1 and len(self._failures) > 0:
+                if threading.active_count() == 1 and self._failures:
                     self.error = errors.CreateTasksErrorException(
                         "One or more tasks failed to be added",
                         self._failures,
@@ -199,7 +199,7 @@ class ExtendedTaskOperations(TaskOperations):
         :rtype: list[~TaskAddResult]
         """
         results = []
-        while len(results_queue) != 0:
+        while results_queue:
             queue_item = results_queue.pop()
             if isinstance(queue_item, Exception):
                 raise queue_item
@@ -209,7 +209,7 @@ class ExtendedTaskOperations(TaskOperations):
 
     def add_collection(
             self, job_id, value, task_add_collection_options=None, custom_headers=None, raw=False, threads=None,
-            **operation_config):
+            **operation_config): # pylint: disable=arguments-differ
         """Adds a collection of tasks to the specified job.
 
         Note that each task must have a unique ID. The Batch service may not

@@ -86,7 +86,7 @@ class ExtendedJobOperations(JobOperations):
             raise ValueError("Unable to deserialize to {}: {}".format(result, exp))
 
     def add(self, job, job_add_options=None, custom_headers=None, raw=False,
-            threads=None, **operation_config):
+            threads=None, **operation_config): # pylint: disable=arguments-differ
         """Adds a job to the specified account.
 
         The Batch service supports two ways to control the work done as part of
