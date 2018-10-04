@@ -112,8 +112,8 @@ class ExtendedTaskOperations(TaskOperations):
                     if len(chunk_tasks_to_add) == 1:
                         failed_task = chunk_tasks_to_add.pop()
                         results_queue.appendleft(e)
-                        logging.error("Task ID ", failed_task.id, " failed to add due to exceeding the request body",
-                                      " being too large")
+                        logging.error("Task ID %s failed to add due to exceeding the request body being too large",
+                                      failed_task.id)
                         self._has_early_termination_error = True
                     else:
                         # Assumption: Tasks are relatively close in size therefore if one batch exceeds size limit
@@ -125,9 +125,9 @@ class ExtendedTaskOperations(TaskOperations):
                         with self._max_tasks_lock:
                             if midpoint < self._max_tasks_per_request:
                                 self._max_tasks_per_request = midpoint
-                                logging.info("Amount of tasks per request reduced from ",
-                                             str(self._max_tasks_per_request), " to ", str(midpoint),
-                                             " due to the request body being too large")
+                                logging.info("Amount of tasks per request reduced from %s to %s %s",
+                                             str(self._max_tasks_per_request), str(midpoint),
+                                             "due to the request body being too large")
 
                         # Not the most efficient solution for all cases, but the goal of this is to handle this
                         # exception and have it work in all cases where tasks are well behaved
