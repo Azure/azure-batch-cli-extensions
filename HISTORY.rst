@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+4.0.1 (2018-10-04)
+------------------
+
+* Clean up code to meet Python standards
+
 4.0.0 (2018-08-29)
 ------------------
 
