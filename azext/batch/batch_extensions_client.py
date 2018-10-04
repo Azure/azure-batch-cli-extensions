@@ -5,7 +5,7 @@
 
 import copy
 
-from six.moves import urlsplit  # pylint: disable=import-error
+from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
 from msrest import Serializer, Deserializer
 
 from azure.batch import BatchServiceClient
