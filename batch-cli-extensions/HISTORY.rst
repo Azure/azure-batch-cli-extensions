@@ -3,6 +3,11 @@
 Release History
 ===============
 
+2.5.1 (2018-10-04)
+------------------
+
+* Pin version of pycparser due to CLI breaking change
+
 2.5.0 (2018-08-29)
 ------------------
 
