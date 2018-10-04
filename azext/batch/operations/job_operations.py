@@ -41,11 +41,10 @@ class ExtendedJobOperations(JobOperations):
             raise ValueError('Missing required poolInfo.')
         if job.pool_info.pool_id:
             return self._parent.pool.get(job.pool_info.pool_id)
-        elif job.pool_info.auto_pool_specification \
-                and job.pool_info.auto_pool_specification.pool:
+        if (job.pool_info.auto_pool_specification
+                and job.pool_info.auto_pool_specification.pool):
             return job.pool_info.auto_pool_specification.pool
-        else:
-            raise ValueError('Missing required poolId or autoPoolSpecification.pool.')
+        raise ValueError('Missing required poolId or autoPoolSpecification.pool.')
 
     @staticmethod
     def expand_template(template, parameters=None):
@@ -85,6 +84,7 @@ class ExtendedJobOperations(JobOperations):
         except Exception as exp:
             raise ValueError("Unable to deserialize to {}: {}".format(result, exp))
 
+    # pylint: disable=arguments-differ
     def add(self, job, job_add_options=None, custom_headers=None, raw=False,
             threads=None, **operation_config):
         """Adds a job to the specified account.

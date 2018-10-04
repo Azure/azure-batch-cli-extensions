@@ -64,7 +64,7 @@ class ExtendedFileOperations(FileOperations):
          data to be uploaded (int), both in bytes, and filename (str).
         """
         path, files = file_utils.resolve_file_paths(local_path)
-        if len(files) > 0:
+        if files:
             for f in files:  # TODO: Threaded pool.
                 file_name = os.path.relpath(f, path)
                 file_utils.upload_blob(f, file_group, file_name, self.get_storage_client(),

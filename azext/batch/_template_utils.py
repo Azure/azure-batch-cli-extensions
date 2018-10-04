@@ -87,10 +87,9 @@ def _validate_bool(value):
     try:
         if str(value).lower() == 'true':
             return True
-        elif str(value).lower() == 'false':
+        if str(value).lower() == 'false':
             return False
-        else:
-            raise TypeError("'{}' is not a valid bool".format(value))
+        raise TypeError("'{}' is not a valid bool".format(value))
     except UnicodeEncodeError:
         raise TypeError("'{}' is not a valid bool".format(value))
 
@@ -136,7 +135,7 @@ def _find_nested(delimiter, content, start_index):
         char = content[index]
         if char == delimiter:
             return index
-        elif char == '[':
+        if char == '[':
             index = _find_nested(']', content, index + 1)
         elif char == '(':
             index = _find_nested(')', content, index + 1)
@@ -203,21 +202,20 @@ def _strip_prefix(cmd_line):
     """
     if cmd_line.startswith('cmd.exe /c '):
         return cmd_line[11:].strip('"')
-    elif cmd_line.startswith('cmd /c '):
+    if cmd_line.startswith('cmd /c '):
         return cmd_line[7:].strip('"')
-    elif cmd_line.startswith('/bin/bash -c '):
+    if cmd_line.startswith('/bin/bash -c '):
         return cmd_line[13:]
-    elif cmd_line.startswith('/bin/sh -c '):
+    if cmd_line.startswith('/bin/sh -c '):
         return cmd_line[11:]
-    else:
-        return cmd_line
+    return cmd_line
 
 def _add_cmd_prefix(task, os_flavor):
     """Add OS-specific command prefix to command line."""
     if os_flavor == pool_utils.PoolOperatingSystemFlavor.WINDOWS:
         # TODO: Do we need windows shell escaping?
         task.command_line = 'cmd /c "{}"'.format(task.command_line) #.replace('\"','\\\\\"')
-    elif os_flavor == pool_utils.PoolOperatingSystemFlavor.LINUX:
+    if os_flavor == pool_utils.PoolOperatingSystemFlavor.LINUX:
         task.command_line = '/bin/bash -c \'set -e; set -o pipefail; {}; wait\''.format(task.command_line)
     else:
         raise ValueError("Unknown pool OS flavor: " + str(os_flavor))
@@ -229,7 +227,7 @@ def _get_installation_cmdline(references, os_flavor):
     """
     # pylint: disable=too-many-statements
     if not references:
-        return
+        return None
     builder = ""
     package_type = None
     type_error = 'PackageReferences may only contain a single type of package reference.'
@@ -382,7 +380,7 @@ def _validate_parameter(name, content, value):
         elif content['type'] == 'bool':
             value = _validate_bool(value)
         elif content['type'] == 'string':
-            value = _validate_string(value, content)  # pylint: disable=redefined-variable-type
+            value = _validate_string(value, content)
         if value not in content.get('allowedValues', [value]):
             raise ValueError("Allowed values: {}".format(', '.join(content['allowedValues'])))
     except TypeError:
@@ -475,9 +473,9 @@ def _parse_arm_parameter(name, template_obj, parameters):
     try:
         if param_def['type'] == 'int':
             return _validate_int(user_value, param_def)
-        elif param_def['type'] == 'bool':
+        if param_def['type'] == 'bool':
             return _validate_bool(user_value)
-        elif param_def['type'] == 'string':
+        if param_def['type'] == 'string':
             return _validate_string(user_value, param_def)
     except TypeError:
         raise TypeError("Value '{}' for parameter '{}' must be a {}.".format(
@@ -522,7 +520,7 @@ def _parse_nested_object(obj, references, template_obj, parameters):
         else:
             break
 
-    while len(obj_refs) > 0:
+    while obj_refs:
         ref = obj_refs.pop(0)
         ret_obj = ret_obj[ref]
 
@@ -724,7 +722,7 @@ def _process_resource_files(request, fileutils):
                 for file_ref in value:
                     new_resources.extend(fileutils.resolve_resource_file(file_ref))
                 setattr(request, attr, new_resources)
-        elif isinstance(value, Model) or isinstance(value, list):
+        elif isinstance(value, (Model, list)):
             _process_resource_files(value, fileutils)
     return request
 
@@ -785,9 +783,8 @@ def _transform_sweep_str(data, parameters):
                     "The parameter pattern '{}' is out of bound. "
                     "The padding number can be only between 1 to 9.".format(r))
             return number_str.zfill(m)
-        else:
-            # This is just {n} scenario
-            return number_str
+        # This is just {n} scenario
+        return number_str
     return reg.sub(replace, data)
 
 
@@ -1086,7 +1083,7 @@ def process_task_package_references(tasks, os_flavor):
     :param str os_flavor: The OS flavor of the pool.
     """
     if not tasks:
-        return
+        return ""
     packages = []
     included = []
     for task in tasks:
@@ -1111,20 +1108,19 @@ def post_processing(request, fileutils, os_flavor):
             if not _is_prefixed(task.command_line):
                 _add_cmd_prefix(task, os_flavor)
         return [_process_resource_files(i, fileutils) for i in request]
-    else:
-        if hasattr(request, 'job_preparation_task') and request.job_preparation_task:
-            if not _is_prefixed(request.job_preparation_task.command_line):
-                _add_cmd_prefix(request.job_preparation_task, os_flavor)
-        if hasattr(request, 'job_release_task') and request.job_release_task:
-            if not _is_prefixed(request.job_release_task.command_line):
-                _add_cmd_prefix(request.job_release_task, os_flavor)
-        if hasattr(request, 'job_manager_task') and request.job_manager_task:
-            if not _is_prefixed(request.job_manager_task.command_line):
-                _add_cmd_prefix(request.job_manager_task, os_flavor)
-        if hasattr(request, 'start_task') and request.start_task:
-            if not _is_prefixed(request.start_task.command_line):
-                _add_cmd_prefix(request.start_task, os_flavor)
-        return _process_resource_files(request, fileutils)
+    if hasattr(request, 'job_preparation_task') and request.job_preparation_task:
+        if not _is_prefixed(request.job_preparation_task.command_line):
+            _add_cmd_prefix(request.job_preparation_task, os_flavor)
+    if hasattr(request, 'job_release_task') and request.job_release_task:
+        if not _is_prefixed(request.job_release_task.command_line):
+            _add_cmd_prefix(request.job_release_task, os_flavor)
+    if hasattr(request, 'job_manager_task') and request.job_manager_task:
+        if not _is_prefixed(request.job_manager_task.command_line):
+            _add_cmd_prefix(request.job_manager_task, os_flavor)
+    if hasattr(request, 'start_task') and request.start_task:
+        if not _is_prefixed(request.start_task.command_line):
+            _add_cmd_prefix(request.start_task, os_flavor)
+    return _process_resource_files(request, fileutils)
 
 
 def should_get_pool(job, tasks):

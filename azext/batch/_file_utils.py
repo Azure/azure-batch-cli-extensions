@@ -11,8 +11,8 @@ import hashlib
 import datetime
 import copy
 import pathlib
-from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error
-from six.moves.urllib.parse import quote  # pylint: disable=import-error,no-name-in-module
+from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error,relative-import
+from six.moves.urllib.parse import quote  # pylint: disable=import-error,no-name-in-module,relative-import
 
 from azure.storage.blob import BlobPermissions, BlockBlobService
 from . import models
@@ -113,13 +113,12 @@ def generate_container_name(file_group):
     if clean_group == file_group and len(file_group) <= FileUtils.MAX_GROUP_LENGTH:
         # If specified group name is clean, no need to add hash
         return file_group
-    else:
-        # If we had to transform the group name, add hash of original name
-        hash_str = hashlib.sha1(file_group.encode()).hexdigest()
-        new_group = '{}-{}'.format(clean_group, hash_str)
-        if len(new_group) > FileUtils.MAX_GROUP_LENGTH:
-            return '{}-{}'.format(clean_group[0:15], hash_str)
-        return new_group
+    # If we had to transform the group name, add hash of original name
+    hash_str = hashlib.sha1(file_group.encode()).hexdigest()
+    new_group = '{}-{}'.format(clean_group, hash_str)
+    if len(new_group) > FileUtils.MAX_GROUP_LENGTH:
+        return '{}-{}'.format(clean_group[0:15], hash_str)
+    return new_group
 
 
 def get_container_name(file_group):
@@ -341,14 +340,13 @@ class FileUtils(object):
             container = get_container_name(resource_file.source.file_group)
             blobs = self.list_container_contents(resource_file.source, container, storage_client)
             return convert_blobs_to_resource_files(blobs, resource_file)
-        elif resource_file.source.container_url:
+        if resource_file.source.container_url:
             # Input data storage in arbitrary container
             uri = urlsplit(resource_file.source.container_url)
             container = uri.pathname.split('/')[1]
             blobs = self.list_container_contents(resource_file.source, container, storage_client)
             return convert_blobs_to_resource_files(blobs, resource_file)
-        elif resource_file.source.url:
+        if resource_file.source.url:
             # TODO: Input data from an arbitrary HTTP GET source
             raise ValueError('Not implemented')
-        else:
-            raise ValueError('Malformed ResourceFile')
+        raise ValueError('Malformed ResourceFile')

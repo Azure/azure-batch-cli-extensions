@@ -3,15 +3,14 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 import multiprocessing
+from azure.cli.core.util import get_file_json
+from knack.log import get_logger
+from knack.prompting import prompt
 
 from azext.batch import _template_utils as templates
 from azext.batch.errors import CreateTasksErrorException
 from azext.batch.models import PoolAddParameter, JobAddParameter, JobConstraints
 from azext.batch.operations import ExtendedPoolOperations, ExtendedJobOperations
-from azure.cli.core.util import get_file_json
-
-from knack.log import get_logger
-from knack.prompting import prompt
 
 logger = get_logger(__name__)
 
