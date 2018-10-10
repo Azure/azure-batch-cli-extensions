@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+4.0.2 (2018-10-06)
+------------------
+
+* Move `ExtendedTaskOperation` feature to standard Azure Batch SDK
+
 4.0.1 (2018-10-04)
 ------------------
 
