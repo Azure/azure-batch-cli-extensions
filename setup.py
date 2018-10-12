@@ -29,9 +29,9 @@ CLASSIFIERS = [
 DEPENDENCIES = [
     'msrestazure>=0.4.14,<1',
     'azure-batch>=5.0,<6',
-    'azure-mgmt-batch>=4.0,<5',
+    'azure-mgmt-batch>=5.0,<6',
     'azure-storage-blob>=1.1.0,<2',
-    'azure-mgmt-storage>=1.0,<2'
+    'azure-mgmt-storage>=2.0,<3'
 ]
 DEPENDENCIES_27 = {
     ":python_version<'3.4'": ['pathlib>=1.0.1']
