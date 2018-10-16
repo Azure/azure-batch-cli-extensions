@@ -6,11 +6,9 @@
 from .pool_operations import ExtendedPoolOperations
 from .job_operations import ExtendedJobOperations
 from .file_operations import ExtendedFileOperations
-from .task_operations import ExtendedTaskOperations
 
 __all__ = [
     'ExtendedPoolOperations',
     'ExtendedJobOperations',
     'ExtendedFileOperations',
-    'ExtendedTaskOperations',
 ]
