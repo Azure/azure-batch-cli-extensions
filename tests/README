@@ -1,0 +1,14 @@
+##To Record Tests:
+
+* Delete all previous recordings located at tests/recordings (but not the folder)
+* Create the accounts below and set the respective values:
+    * AZURE_BATCH_ACCOUNT
+    * AZURE_BATCH_ENDPOINT
+    * AZURE_BATCH_ACCESS_KEY
+    * AZURE_BATCH_RESOURCE_GROUP
+    * AZURE_STORAGE_ACCOUNT
+    * AZURE_STORAGE_ACCESS_KEY
+* Additionally create a blob container in the storage account named aaatestcontainer. Make sure the container is empty and the storage account has no other contents.
+* Run scripts/run_tests.
+* Scrub the output recordings for keys.
+* Update tests to use your test account for default.

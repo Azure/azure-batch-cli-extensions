@@ -20,9 +20,9 @@ class TestFileUpload(VCRTestBase):
     def __init__(self, test_method):
         super(TestFileUpload, self).__init__(__file__, test_method)
         if self.playback:
-            self.account_name = 'test1'
-            self.resource_name = 'test_rg'
-            self.account_endpoint = 'https://test1.westus.batch.azure.com/'
+            self.account_name = 'brkltest'
+            self.resource_name = 'brkltest'
+            self.account_endpoint = 'https://brkltest.eastus2.batch.azure.com/'
         else:
             self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
             self.resource_name = os.environ.get('AZURE_BATCH_RESOURCE_GROUP', 'test_rg')
@@ -60,11 +60,11 @@ class TestBatchExtensionsLive(VCRTestBase):
     def __init__(self, test_method):
         super(TestBatchExtensionsLive, self).__init__(__file__, test_method)
         if self.playback:
-            self.account_name = 'test1'
-            self.account_endpoint = 'https://test1.westus.batch.azure.com/'
+            self.account_name = 'brkltest'
+            self.account_endpoint = 'https://brkltest.eastus2.batch.azure.com/'
             self.account_key = 'ZmFrZV9hY29jdW50X2tleQ=='
-            storage_account = 'testaccountforbatch'
-            storage_key = '1234'
+            storage_account = 'brkltest'
+            storage_key = '1234=='
         else:
             self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
             self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
