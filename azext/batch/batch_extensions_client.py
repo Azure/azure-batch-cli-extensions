@@ -52,7 +52,7 @@ class BatchExtensionsClient(BatchServiceClient):
 
     def __init__(self, credentials=None, batch_url=None, subscription_id=None,
                  resource_group=None, batch_account=None, storage_client=None,
-                 storage_endpoint=None, mgmt_credentials=None, mgmt_batch_url=None):
+                 storage_endpoint=None, mgmt_credentials=None, mgmt_base_url=None):
         credentials, mgmt_credentials, subscription_id = self._configure_credentials(
             credentials, mgmt_credentials, subscription_id)
         super(BatchExtensionsClient, self).__init__(credentials, batch_url=batch_url)
@@ -60,7 +60,7 @@ class BatchExtensionsClient(BatchServiceClient):
         self._batch_url = batch_url
         self._mgmt_client = None
         self._mgmt_credentials = mgmt_credentials
-        self._mgmt_batch_url = mgmt_batch_url
+        self._mgmt_base_url = mgmt_base_url
         self._resolved_storage_client = storage_client
         self._subscription = subscription_id
         self._storage_endpoint = storage_endpoint
@@ -147,7 +147,7 @@ class BatchExtensionsClient(BatchServiceClient):
         else:
             client = BatchManagementClient(self._mgmt_credentials,
                                            self._subscription,
-                                           base_url=self._mgmt_batch_url)
+                                           base_url=self._mgmt_base_url)
             self._mgmt_client = client
 
         if self.resource_group:
@@ -179,7 +179,7 @@ class BatchExtensionsClient(BatchServiceClient):
         storage_account = storage_account_info[8]
         storage_client = StorageManagementClient(self._mgmt_credentials,
                                                  self._subscription,
-                                                 base_url=self._mgmt_batch_url)
+                                                 base_url=self._mgmt_base_url)
         keys = storage_client.storage_accounts.list_keys(storage_resource_group, storage_account)
         storage_key = keys.keys[0].value  # pylint: disable=no-member
 
