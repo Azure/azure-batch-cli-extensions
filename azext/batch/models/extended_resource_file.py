@@ -36,7 +36,7 @@ class ExtendedResourceFile(ResourceFile):
     """
 
     _attribute_map = {
-        'blob_source': {'key': 'blobSource', 'type': 'str'},
+        'http_url': {'key': 'httpUrl', 'type': 'str'},
         'file_path': {'key': 'filePath', 'type': 'str'},
         'file_mode': {'key': 'fileMode', 'type': 'str'},
         'source': {'key': 'source', 'type': 'FileSource'}

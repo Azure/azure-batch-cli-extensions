@@ -20,9 +20,9 @@ class TestFileUpload(VCRTestBase):
     def __init__(self, test_method):
         super(TestFileUpload, self).__init__(__file__, test_method)
         if self.playback:
-            self.account_name = 'brkltest'
-            self.resource_name = 'brkltest'
-            self.account_endpoint = 'https://brkltest.eastus2.batch.azure.com/'
+            self.account_name = 'sdktest2'
+            self.resource_name = 'sdktest'
+            self.account_endpoint = 'https://sdktest2.westcentralus.batch.azure.com'
         else:
             self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
             self.resource_name = os.environ.get('AZURE_BATCH_RESOURCE_GROUP', 'test_rg')
@@ -60,22 +60,22 @@ class TestBatchExtensionsLive(VCRTestBase):
     def __init__(self, test_method):
         super(TestBatchExtensionsLive, self).__init__(__file__, test_method)
         if self.playback:
-            self.account_name = 'brkltest'
-            self.account_endpoint = 'https://brkltest.eastus2.batch.azure.com/'
-            self.account_key = 'ZmFrZV9hY29jdW50X2tleQ=='
-            storage_account = 'brkltest'
-            storage_key = '1234=='
+            self.account_name = 'sdktest2'
+            self.account_endpoint = 'https://sdktest2.westcentralus.batch.azure.com'
+            self.account_key = 'abc=='
+            storage_account = 'sdkteststore2'
+            storage_key = 'abc=='
         else:
             self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
             self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
             self.account_key = os.environ['AZURE_BATCH_ACCESS_KEY']
-        storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'testaccountforbatch')
-        storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'ZmFrZV9hY29jdW50X2tleQ==')
+            storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'testaccountforbatch')
+            storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'ZmFrZV9hY29jdW50X2tleQ==')
 
         self.blob_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
         credentials = batchauth.SharedKeyCredentials(self.account_name, self.account_key)
-        self.batch_client = batch.BatchExtensionsClient(credentials, base_url=self.account_endpoint)
+        self.batch_client = batch.BatchExtensionsClient(credentials, batch_url=self.account_endpoint)
 
         self.output_blob_container = 'aaatestcontainer'
         sas_token = self.blob_client.generate_container_shared_access_signature(

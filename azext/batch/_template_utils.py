@@ -846,7 +846,7 @@ def _transform_repeat_task(task, context, index, transformer):
     try:
         for resource in new_task.resource_files:
             _replacement_transform(transformer, resource, 'file_path', context)
-            _replacement_transform(transformer, resource, 'blob_source', context)
+            _replacement_transform(transformer, resource, 'http_url', context)
             try:
                 for param in ['file_group', 'prefix', 'container_url', 'url']:
                     _replacement_transform(transformer, resource.source, param, context)

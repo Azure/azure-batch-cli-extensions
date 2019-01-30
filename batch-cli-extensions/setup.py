@@ -27,7 +27,7 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-    'azure-batch-extensions>=4.0.0,<4.1',
+    'azure-batch-extensions>=5.0.0,<5.1',
     'pycparser==2.18'
 ]
 

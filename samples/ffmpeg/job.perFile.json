@@ -47,7 +47,7 @@
                     "commandLine": "ffmpeg -y -i \"{fileName}\" -acodec libmp3lame \"{fileNameWithoutExtension}.mp3\"",
                     "resourceFiles": [
                         {
-                            "blobSource": "{url}",
+                            "httpFile": "{url}",
                             "filePath" : "{fileName}" 
                         }
                     ],

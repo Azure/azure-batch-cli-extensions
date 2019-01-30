@@ -452,7 +452,7 @@ class TestBatchExtensions(unittest.TestCase):
                                  " -vcodec copy -acodec copy output.mp4 -y",
                     resource_files=[
                         models.ExtendedResourceFile(
-                            blob_source="[parameters('inputFileStorageContainerUrl')]"
+                            http_url="[parameters('inputFileStorageContainerUrl')]"
                                         "sampleVideo1.mkv",
                             file_path="sampleVideo1.mkv")
                     ],
@@ -493,8 +493,8 @@ class TestBatchExtensions(unittest.TestCase):
             parameter_sets=[models.ParameterSet(start=1, end=3)],
             repeat_task= models.RepeatTask(command_line="cmd {0}.mp3",
                 resource_files=[
-                    models.ResourceFile(blob_source="http://account.blob/run.exe", file_path="run.exe"),
-                    models.ResourceFile(blob_source="http://account.blob/{0}.dat", file_path="{0}.mp3")],
+                    models.ResourceFile(http_url="http://account.blob/run.exe", file_path="run.exe"),
+                    models.ResourceFile(http_url="http://account.blob/{0}.dat", file_path="{0}.mp3")],
                 output_files=[models.OutputFile(
                     file_pattern="{0}.txt",
                     destination=models.ExtendedOutputFileDestination(
@@ -510,8 +510,8 @@ class TestBatchExtensions(unittest.TestCase):
         expected = [
             models.ExtendedTaskParameter(id='0', command_line='cmd 1.mp3',
                 resource_files=[
-                    models.ResourceFile(blob_source="http://account.blob/run.exe", file_path="run.exe"),
-                    models.ResourceFile(blob_source="http://account.blob/1.dat", file_path="1.mp3")],
+                    models.ResourceFile(http_url="http://account.blob/run.exe", file_path="run.exe"),
+                    models.ResourceFile(http_url="http://account.blob/1.dat", file_path="1.mp3")],
                 output_files=[models.OutputFile(
                     file_pattern="1.txt",
                     destination=models.ExtendedOutputFileDestination(
@@ -525,8 +525,8 @@ class TestBatchExtensions(unittest.TestCase):
                     ))]),
             models.ExtendedTaskParameter(id='1', command_line='cmd 2.mp3',
                 resource_files=[
-                    models.ResourceFile(blob_source="http://account.blob/run.exe", file_path="run.exe"),
-                    models.ResourceFile(blob_source="http://account.blob/2.dat", file_path="2.mp3")],
+                    models.ResourceFile(http_url="http://account.blob/run.exe", file_path="run.exe"),
+                    models.ResourceFile(http_url="http://account.blob/2.dat", file_path="2.mp3")],
                 output_files=[models.OutputFile(
                     file_pattern="2.txt",
                     destination=models.ExtendedOutputFileDestination(
@@ -540,8 +540,8 @@ class TestBatchExtensions(unittest.TestCase):
                     ))]),
             models.ExtendedTaskParameter(id='2', command_line='cmd 3.mp3',
                 resource_files=[
-                    models.ResourceFile(blob_source="http://account.blob/run.exe", file_path="run.exe"),
-                    models.ResourceFile(blob_source="http://account.blob/3.dat", file_path="3.mp3")],
+                    models.ResourceFile(http_url="http://account.blob/run.exe", file_path="run.exe"),
+                    models.ResourceFile(http_url="http://account.blob/3.dat", file_path="3.mp3")],
                 output_files=[models.OutputFile(
                     file_pattern="3.txt",
                     destination=models.ExtendedOutputFileDestination(
@@ -557,7 +557,7 @@ class TestBatchExtensions(unittest.TestCase):
         result = utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
         for index, task in enumerate(result):
             self.assertEqual(expected[index].command_line, task.command_line)
-            self.assertEqual(expected[index].resource_files[1].blob_source, task.resource_files[1].blob_source)
+            self.assertEqual(expected[index].resource_files[1].http_url, task.resource_files[1].http_url)
             self.assertEqual(expected[index].resource_files[1].file_path, task.resource_files[1].file_path)
             self.assertEqual(expected[index].output_files[0].file_pattern, task.output_files[0].file_pattern)
         
@@ -596,10 +596,10 @@ class TestBatchExtensions(unittest.TestCase):
                 resource_files=[
                     models.ResourceFile(
                         file_path="run.exe",
-                        blob_source="http://account.blob/run.exe"),
+                        http_url="http://account.blob/run.exe"),
                     models.ResourceFile(
                         file_path="{0}.mp3",
-                        blob_source="http://account.blob/{0}.dat")
+                        http_url="http://account.blob/{0}.dat")
                 ]
             )
         )
@@ -614,10 +614,10 @@ class TestBatchExtensions(unittest.TestCase):
                 resource_files=[
                     models.ResourceFile(
                         file_path="run.exe",
-                        blob_source="http://account.blob/run.exe"),
+                        http_url="http://account.blob/run.exe"),
                     models.ResourceFile(
                         file_path="{0}.mp3",
-                        blob_source="http://account.blob/{0}.dat")
+                        http_url="http://account.blob/{0}.dat")
                 ]
             )
         )
@@ -628,7 +628,7 @@ class TestBatchExtensions(unittest.TestCase):
         request = Mock(
             resource_files=[
                 Mock(
-                    blob_source='abc',
+                    http_url='abc',
                     file_path='xyz')
             ])
         transformed = utils.post_processing(request, fileutils, pool_utils.PoolOperatingSystemFlavor.LINUX)
@@ -636,13 +636,13 @@ class TestBatchExtensions(unittest.TestCase):
         request = Mock(
             common_resource_files=[
                 Mock(
-                    blob_source='abc',
+                    http_url='abc',
                     file_path='xyz')
             ],
             job_manager_task=Mock(
                 resource_files=[
                     Mock(
-                        blob_source='foo',
+                        http_url='foo',
                         file_path='bar')
                 ]
             )
@@ -650,12 +650,12 @@ class TestBatchExtensions(unittest.TestCase):
         transformed = utils.post_processing(request, fileutils, pool_utils.PoolOperatingSystemFlavor.WINDOWS)
         self.assertEqual(transformed, request)
         request = [  # pylint: disable=redefined-variable-type
-            Mock(resource_files=[Mock(blob_source='abc', file_path='xyz')]),
-            Mock(resource_files=[Mock(blob_source='abc', file_path='xyz')])
+            Mock(resource_files=[Mock(http_url='abc', file_path='xyz')]),
+            Mock(resource_files=[Mock(http_url='abc', file_path='xyz')])
         ]
         transformed = utils.post_processing(request, fileutils, pool_utils.PoolOperatingSystemFlavor.WINDOWS)
         self.assertEqual(transformed, request)
-        request = Mock(resource_files=[Mock(blob_source='abc', file_path=None)])
+        request = Mock(resource_files=[Mock(http_url='abc', file_path=None)])
         with self.assertRaises(ValueError):
             utils.post_processing(request, fileutils, pool_utils.PoolOperatingSystemFlavor.WINDOWS)
 
@@ -1374,9 +1374,9 @@ class TestBatchExtensions(unittest.TestCase):
         ]
         resources = file_utils.convert_blobs_to_resource_files(blobs, resource)
         self.assertEqual(len(resources), 2)
-        self.assertEqual(resources[0].blob_source, "https://blob.fgrp-data/data1.txt")
+        self.assertEqual(resources[0].http_url, "https://blob.fgrp-data/data1.txt")
         self.assertEqual(resources[0].file_path, "data1.txt")
-        self.assertEqual(resources[1].blob_source, "https://blob.fgrp-data/data2.txt")
+        self.assertEqual(resources[1].http_url, "https://blob.fgrp-data/data2.txt")
         self.assertEqual(resources[1].file_path, "data2.txt")
 
         resource = {
@@ -1391,7 +1391,7 @@ class TestBatchExtensions(unittest.TestCase):
         ]
         resources = file_utils.convert_blobs_to_resource_files(blobs, resource)
         self.assertEqual(len(resources), 1)
-        self.assertEqual(resources[0].blob_source, "https://blob.fgrp-data/data1.txt")
+        self.assertEqual(resources[0].http_url, "https://blob.fgrp-data/data1.txt")
         self.assertEqual(resources[0].file_path, "localFile")
 
         resource = models.ExtendedResourceFile(
@@ -1402,7 +1402,7 @@ class TestBatchExtensions(unittest.TestCase):
         ]
         resources = file_utils.convert_blobs_to_resource_files(blobs, resource)
         self.assertEqual(len(resources), 1)
-        self.assertEqual(resources[0].blob_source, "https://blob.fgrp-data/data1.txt")
+        self.assertEqual(resources[0].http_url, "https://blob.fgrp-data/data1.txt")
         self.assertEqual(resources[0].file_path, "localFile/data1.txt")
 
         resource = models.ExtendedResourceFile(
@@ -1416,10 +1416,10 @@ class TestBatchExtensions(unittest.TestCase):
         ]
         resources = file_utils.convert_blobs_to_resource_files(blobs, resource)
         self.assertEqual(len(resources), 2)
-        self.assertEqual(resources[0].blob_source,
+        self.assertEqual(resources[0].http_url,
                          "https://blob.fgrp-data/subdir/data1.txt")
         self.assertEqual(resources[0].file_path, "localFile/subdir/data1.txt")
-        self.assertEqual(resources[1].blob_source,
+        self.assertEqual(resources[1].http_url,
                          "https://blob.fgrp-data/subdir/data2.txt")
         self.assertEqual(resources[1].file_path, "localFile/subdir/data2.txt")
 
@@ -1432,7 +1432,7 @@ class TestBatchExtensions(unittest.TestCase):
         ]
         resources = file_utils.convert_blobs_to_resource_files(blobs, resource)
         self.assertEqual(len(resources), 1)
-        self.assertEqual(resources[0].blob_source,
+        self.assertEqual(resources[0].http_url,
                          "https://blob.fgrp-data/subdir/data1.txt")
         self.assertEqual(resources[0].file_path, "localFile/subdir/data1.txt")
 
@@ -1450,10 +1450,10 @@ class TestBatchExtensions(unittest.TestCase):
         ]
         resources = file_utils.convert_blobs_to_resource_files(blobs, resource)
         self.assertEqual(len(resources), 2)
-        self.assertEqual(resources[0].blob_source,
+        self.assertEqual(resources[0].http_url,
                          "https://blob.fgrp-data/subdir/data1.txt")
         self.assertEqual(resources[0].file_path, "subdir/data1.txt")
-        self.assertEqual(resources[1].blob_source,
+        self.assertEqual(resources[1].http_url,
                          "https://blob.fgrp-data/subdir/more/data2.txt")
         self.assertEqual(resources[1].file_path, "subdir/more/data2.txt")
 

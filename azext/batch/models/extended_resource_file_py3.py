@@ -9,13 +9,13 @@ from azure.batch.models import ResourceFile
 class ExtendedResourceFile(ResourceFile):
     """A file to be downloaded from Azure blob storage to a compute node.
 
-    :param blob_source: The URL of the file within Azure Blob Storage. This
+    :param batch_url: The URL of the file within Azure Blob Storage. This
      URL must be readable using anonymous access; that is, the Batch service
      does not present any credentials when downloading the blob. There are two
      ways to get such a URL for a blob in Azure storage: include a Shared
      Access Signature (SAS) granting read permissions on the blob, or set the
      ACL for the blob or its container to allow public access.
-    :type blob_source: str
+    :type batch_url: str
     :param file_path: The location on the compute node to which to download
      the file, relative to the task's working directory. If using a file group
      source that references more than one file, this will be considered the name
@@ -36,16 +36,16 @@ class ExtendedResourceFile(ResourceFile):
     """
 
     _attribute_map = {
-        'blob_source': {'key': 'blobSource', 'type': 'str'},
+        'http_url': {'key': 'httpUrl', 'type': 'str'},
         'file_path': {'key': 'filePath', 'type': 'str'},
         'file_mode': {'key': 'fileMode', 'type': 'str'},
         'source': {'key': 'source', 'type': 'FileSource'}
     }
 
-    def __init__(self, *, blob_source: str=None, file_path: str=None,
+    def __init__(self, *, http_url: str=None, file_path: str=None,
                  file_mode: str=None, source=None, **kwargs) -> None:
         super(ExtendedResourceFile, self).__init__(
-            blob_source=blob_source,
+            http_url=http_url,
             file_path=file_path,
             file_mode=file_mode,
             **kwargs)

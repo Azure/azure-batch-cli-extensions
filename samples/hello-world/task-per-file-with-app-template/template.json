@@ -26,7 +26,7 @@
             "commandLine": "/bin/bash -c 'cat {fileName}'",
             "resourceFiles": [
                 {
-                    "blobSource" : "{url}",
+                    "httpFile" : "{url}",
                     "filePath" : "{fileName}"
                 }
             ],

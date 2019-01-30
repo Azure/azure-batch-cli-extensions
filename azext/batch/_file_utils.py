@@ -40,7 +40,7 @@ def convert_blobs_to_resource_files(blobs, resource_properties):
         file_path = resource_properties.file_path if resource_properties.file_path \
             else blobs[0]['filePath']
         resource_files.append(models.ExtendedResourceFile(
-            blob_source=blobs[0]['url'],
+            http_url=blobs[0]['url'],
             file_path=file_path,
         ))
     else:
@@ -53,7 +53,7 @@ def convert_blobs_to_resource_files(blobs, resource_properties):
         for blob in blobs:
             file_path = '{}{}'.format(base_file_path, blob['filePath'])
             resource_files.append(models.ExtendedResourceFile(
-                blob_source=blob['url'],
+                http_url=blob['url'],
                 file_path=file_path
             ))
 
@@ -320,16 +320,16 @@ class FileUtils(object):
 
     def resolve_resource_file(self, resource_file):
         """Convert new resourceFile reference to server-supported reference"""
-        if resource_file.blob_source:
+        if resource_file.http_url:
             # Support original resourceFile reference
             if not resource_file.file_path:
-                raise ValueError('Malformed ResourceFile: \'blobSource\' must '
+                raise ValueError('Malformed ResourceFile: \'httpFile\' must '
                                  'also have \'file_path\' attribute')
             return [resource_file]
 
         if not hasattr(resource_file, 'source') or not resource_file.source:
             raise ValueError('Malformed ResourceFile: Must have either '
-                             ' \'source\' or \'blobSource\'')
+                             ' \'source\' or \'httpFile\'')
 
         storage_client = self.resolve_storage_account()
         container = None

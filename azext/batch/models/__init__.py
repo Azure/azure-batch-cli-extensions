@@ -8,7 +8,6 @@
 # Not ideal syntax - but savaes us having to check and repopulate this
 # list every time the SDK is regenerated.
 from azure.batch.models import *
-from azure.batch.models.batch_service_client_enums import *
 
 try:
     from .extended_task_parameter_py3 import ExtendedTaskParameter
