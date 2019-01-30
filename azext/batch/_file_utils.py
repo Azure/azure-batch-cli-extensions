@@ -323,13 +323,13 @@ class FileUtils(object):
         if resource_file.http_url:
             # Support original resourceFile reference
             if not resource_file.file_path:
-                raise ValueError('Malformed ResourceFile: \'httpFile\' must '
+                raise ValueError('Malformed ResourceFile: \'httpUrl\' must '
                                  'also have \'file_path\' attribute')
             return [resource_file]
 
         if not hasattr(resource_file, 'source') or not resource_file.source:
             raise ValueError('Malformed ResourceFile: Must have either '
-                             ' \'source\' or \'httpFile\'')
+                             ' \'source\' or \'httpUrl\'')
 
         storage_client = self.resolve_storage_account()
         container = None

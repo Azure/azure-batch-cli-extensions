@@ -224,7 +224,7 @@ An example:
         "commandLine": "ffmpeg -i {fileName} -vcodec copy -acodec copy {fileNameWithoutExtension}.mp4 -y",
         "resourceFiles": [
           {
-            "httpFile": "{url}",
+            "httpUrl": "{url}",
             "filePath" : "{fileName}" 
           }
         ]
@@ -277,7 +277,7 @@ The above task factory would be expanded into the following tasks:
       "commandLine": "ffmpeg -i 1.mkv -vcodec copy -acodec copy 1.mp4 -y",
       "resourceFiles": [
         {
-          "httpFile": "http://account.blob.azure.com/raw-images/first_pass/mov_processing/1.mkv?sasToken",
+          "httpUrl": "http://account.blob.azure.com/raw-images/first_pass/mov_processing/1.mkv?sasToken",
           "filePath" : "1.mkv" 
         }
       ]
@@ -287,7 +287,7 @@ The above task factory would be expanded into the following tasks:
       "commandLine": "ffmpeg -i 2.mkv -vcodec copy -acodec copy 2.mp4 -y",
       "resourceFiles": [
         {
-          "httpFile": "http://account.blob.azure.com/raw-images/first_pass/mov_processing/2.mkv?sasToken",
+          "httpUrl": "http://account.blob.azure.com/raw-images/first_pass/mov_processing/2.mkv?sasToken",
           "filePath" : "2.mkv" 
         }
       ]
@@ -297,7 +297,7 @@ The above task factory would be expanded into the following tasks:
       "commandLine": "ffmpeg -i alpha.mkv -vcodec copy -acodec copy alpha.mp4 -y",
       "resourceFiles": [
         {
-          "httpFile": "http://account.blob.azure.com/raw-images/first_pass/alpha.mkv?sasToken",
+          "httpUrl": "http://account.blob.azure.com/raw-images/first_pass/alpha.mkv?sasToken",
           "filePath" : "alpha.mkv" 
         }
       ]

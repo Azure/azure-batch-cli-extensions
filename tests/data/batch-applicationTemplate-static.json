@@ -8,7 +8,7 @@
     "commandLine": "cmd /c dir /s",
     "resourceFiles": [
       {
-        "httpFile": "https://testacct.blob.core.windows.net/",
+        "httpUrl": "https://testacct.blob.core.windows.net/",
         "filePath": "filePath"
       }
     ],

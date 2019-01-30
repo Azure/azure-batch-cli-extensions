@@ -78,7 +78,7 @@
                     "commandLine": "/bin/bash -c 'cat {fileName}'",
                     "resourceFiles": [
                         {
-                            "httpFile" : "{url}",
+                            "httpUrl" : "{url}",
                             "filePath" : "{fileName}"
                         }
                     ],
