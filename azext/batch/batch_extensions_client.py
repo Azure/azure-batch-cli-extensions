@@ -58,9 +58,13 @@ class BatchExtensionsClient(BatchServiceClient):
         super(BatchExtensionsClient, self).__init__(credentials, batch_url=batch_url)
         self.config.add_user_agent('batchextensionsclient/{}'.format(VERSION))
         self._batch_url = batch_url
+        if self._batch_url:
+            self._batch_url = self._batch_url.rstrip('/')
         self._mgmt_client = None
         self._mgmt_credentials = mgmt_credentials
         self._mgmt_base_url = mgmt_base_url
+        if self._mgmt_base_url:
+            self._mgmt_base_url = self._mgmt_base_url.rstrip('/')
         self._resolved_storage_client = storage_client
         self._subscription = subscription_id
         self._storage_endpoint = storage_endpoint

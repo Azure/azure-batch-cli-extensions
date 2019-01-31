@@ -1,4 +1,4 @@
 {
-  "azext.minCliCoreVersion": "2.0.24",
+  "azext.minCliCoreVersion": "2.0.57",
   "azext.maxCliCoreVersion": "2.1.0"
 }
