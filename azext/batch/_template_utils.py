@@ -215,7 +215,7 @@ def _add_cmd_prefix(task, os_flavor):
     if os_flavor == pool_utils.PoolOperatingSystemFlavor.WINDOWS:
         # TODO: Do we need windows shell escaping?
         task.command_line = 'cmd /c "{}"'.format(task.command_line) #.replace('\"','\\\\\"')
-    if os_flavor == pool_utils.PoolOperatingSystemFlavor.LINUX:
+    elif os_flavor == pool_utils.PoolOperatingSystemFlavor.LINUX:
         task.command_line = '/bin/bash -c \'set -e; set -o pipefail; {}; wait\''.format(task.command_line)
     else:
         raise ValueError("Unknown pool OS flavor: " + str(os_flavor))
