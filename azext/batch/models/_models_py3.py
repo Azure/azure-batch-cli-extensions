@@ -1,7 +1,10 @@
+# pylint: disable=too-many-lines
+
+
 import os
-from .constants import *
 import azure.batch.models as models
 from msrest.serialization import Model
+from .constants import ATTRS_RESERVED_FOR_TEMPLATES
 
 
 class TaskFactoryBase(Model):

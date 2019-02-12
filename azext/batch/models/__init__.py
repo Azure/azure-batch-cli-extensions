@@ -5,7 +5,7 @@
 
 # pylint: disable=wildcard-import,unused-import,unused-wildcard-import
 
-# Not ideal syntax - but savaes us having to check and repopulate this
+# Not ideal syntax - but saves us having to check and repopulate this
 # list every time the SDK is regenerated.
 from azure.batch.models import *
 
