@@ -1924,37 +1924,39 @@ class ParameterSet(Model):
 
 
 class ParametricSweepTaskFactory(TaskFactoryBase):
-    class PoolTemplate(Model):
-        """A Pool Template.
+    """A Task Factory for generating a set of tasks based on one or more parameter	
+    sets to define a numeric input range. Each parameter set will have a start, end	
+    and step value. A task will be generated for each integer in this range. Multiple	
+    parameter sets can be combined for a multi-dimensional sweep.	
+     :param parameter_sets: A list if parameter sets from which tasks will be generated.	
+    :type parameter_sets: A list of :class:`ParameterSet<azext.batch.models.ParameterSet>`	
+    :param repeat_task: The task template the will be used to generate each task.	
+    :type repeat_task: :class:`RepeatTask <azext.batch.models.RepeatTask>`	
+    :param merge_task: An optional additional task to be run after all the other	
+     generated tasks have completed successfully.	
+    :type merge_task: :class:`MergeTask <azext.batch.models.MergeTask>`	
+    """
 
-        :ivar type: The type of object described by the template. Must be:
-         "Microsoft.Batch/batchAccounts/pools"
-        :type type: str
-        :param api_version: The API version that the template conforms to.
-        :type api_version: str
-        :param properties: The specificaton of the pool.
-        :type properties: :class:`ExtendedPoolParameter<azext.batch.models.ExtendedPoolParameter>`
-        """
+    _validation = {
+        'type': {'required': True},
+        'parameter_sets': {'required': True, 'min_items': 1},
+        'repeat_task': {'required': True}
+    }
 
-        _validation = {
-            'type': {'required': True, 'constant': True},
-            'properties': {'required': True},
-        }
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'parameter_sets': {'key': 'parameterSets', 'type': '[ParameterSet]'},
+        'repeat_task': {'key': 'repeatTask', 'type': 'RepeatTask'},
+        'merge_task': {'key': 'mergeTask', 'type': 'MergeTask'}
+    }
 
-        _attribute_map = {
-            'type': {'key': 'id', 'type': 'str'},
-            'api_version': {'key': 'apiVersion', 'type': 'str'},
-            'properties': {'key': 'properties',
-                           'type': 'ExtendedPoolParameter'},
-        }
-
-        type = "Microsoft.Batch/batchAccounts/pools"
-
-        def __init__(self, *, properties: str, api_version=None,
-                     **kwargs) -> None:
-            super(PoolTemplate, self).__init__(**kwargs)
-            self.properties = properties
-            self.api_version = api_version
+    def __init__(self, *, parameter_sets, repeat_task, merge_task=None, **kwargs) -> None:
+        super(ParametricSweepTaskFactory, self).__init__(merge_task=merge_task, **kwargs)
+        if not parameter_sets:
+            raise ValueError("Parametric Sweep task factory requires at least one parameter set.")
+        self.parameter_sets = parameter_sets
+        self.repeat_task = repeat_task
+        self.type = 'parametricSweep'
 
 
 class PoolTemplate(Model):
