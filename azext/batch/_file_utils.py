@@ -322,7 +322,7 @@ class FileUtils(object):
 
     def resolve_resource_file(self, resource_file):
         """Convert new resourceFile reference to server-supported reference"""
-        if resource_file.http_url or resource_file.url:
+        if resource_file.http_url:
             # Support original resourceFile reference
             if not resource_file.file_path:
                 raise ValueError('Malformed ResourceFile: \'httpUrl\' must '
