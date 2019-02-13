@@ -4,6 +4,8 @@
 # --------------------------------------------------------------------------------------------
 from __future__ import unicode_literals
 
+import logging
+from datetime import datetime as dt
 from msrest.exceptions import DeserializationError
 from azure.batch.operations.job_operations import JobOperations
 
@@ -11,7 +13,9 @@ from .. import models
 from .. import _template_utils as templates
 from .. import _pool_utils as pool_utils
 from .._file_utils import FileUtils
+from ..models.constants import KnownTemplateVersion
 
+logger = logging.getLogger(__name__)
 
 class ExtendedJobOperations(JobOperations):
     """JobOperations operations.
@@ -126,6 +130,12 @@ class ExtendedJobOperations(JobOperations):
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
         if isinstance(job, models.JobTemplate):
+            if job.api_version:
+                max_datetime = dt.strptime(KnownTemplateVersion.Dec2018, "%y-%m-%d")
+                specified_datetime = dt.strptime(job.api_version, "%y-%m-%d")
+                if max_datetime < specified_datetime:
+                    logger.error("The specified template API version is not supported by the current SDK extension")
+                    raise NotImplementedError("This SDK does not have template API version %s implemetned".format(job.api_version))
             job = job.properties
         # Process an application template reference.
         if hasattr(job, 'application_template_info') and job.application_template_info:

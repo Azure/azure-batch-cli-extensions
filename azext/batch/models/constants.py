@@ -2,7 +2,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-
+from enum import Enum
 
 # These properties are reserved for application template use
 # and may not be used on jobs using an application template
@@ -63,3 +63,8 @@ PROPS_ON_REPEAT_TASK = {
 PROPS_ON_COLLECTION_TASK = PROPS_ON_REPEAT_TASK.union({
     'multiInstanceSettings',
     'dependsOn'})
+
+
+# Dates used as cutoffs for different SDK extension versions
+class KnownTemplateVersion(Enum):
+    Dec2018 = "2018-12-01"

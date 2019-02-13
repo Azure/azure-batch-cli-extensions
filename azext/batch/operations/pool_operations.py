@@ -3,13 +3,18 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
+
+import logging
 from azure.batch.operations.pool_operations import PoolOperations
+from datetime import datetime as dt
 
 from .. import models
 from .. import _file_utils as file_utils
 from .. import _pool_utils as pool_utils
 from .. import _template_utils as templates
+from ..models.constants import KnownTemplateVersion
 
+logger = logging.getLogger(__name__)
 
 class ExtendedPoolOperations(PoolOperations):
     """PoolOperations operations.
@@ -93,7 +98,15 @@ class ExtendedPoolOperations(PoolOperations):
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
         if isinstance(pool, models.PoolTemplate):
+            if pool.api_version:
+                max_datetime = dt.strptime(KnownTemplateVersion.Dec2018, "%y-%m-%d")
+                specified_datetime = dt.strptime(pool.api_version, "%y-%m-%d")
+                if max_datetime < specified_datetime:
+                    logger.error("The specified template API version is not supported by the current SDK extension")
+                    raise NotImplementedError("This SDK does not have template API version %s implemetned".format(pool.api_version))
             pool = pool.properties
+
+
         pool_os_flavor = pool_utils.get_pool_target_os_type(pool)
         # Handle package manangement
         if hasattr(pool, 'package_references') and pool.package_references:
