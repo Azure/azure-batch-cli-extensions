@@ -145,7 +145,6 @@ class ExtendedJobOperations(JobOperations):
                 max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
                 specified_datetime = dt.strptime(job.api_version, "%Y-%m-%d")
                 if max_datetime < specified_datetime:
-                    logger.error("The specified template API version is not supported by the current SDK extension")
                     raise NotImplementedError("This SDK does not have template API version {} implemetned".format(
                         job.api_version))
             job = job.properties

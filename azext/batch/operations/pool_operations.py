@@ -64,8 +64,6 @@ class ExtendedPoolOperations(PoolOperations):
                     max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
                     specified_datetime = dt.strptime(json_data['apiVersion'], "%Y-%m-%d")
                     if max_datetime < specified_datetime:
-                        logger.error(
-                            "The specified template API version is not supported by the current SDK extension")
                         raise NotImplementedError(
                             "This SDK does not have template API version {} implemented".format(
                                 json_data['apiVersion']))

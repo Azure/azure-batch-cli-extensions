@@ -191,7 +191,7 @@ class TestBatchExtensionsLive(VCRTestBase):
         return {
             'job': {
                 'type': 'Microsoft.Batch/batchAccounts/jobs',
-                'apiVersion': '2016-12-01',
+                'apiVersion': '2018-12-01',
                 'properties': {
                     'id': job_id,
                     'poolInfo': {
@@ -236,7 +236,7 @@ class TestBatchExtensionsLive(VCRTestBase):
         return {
             'job': {
                 'type': 'Microsoft.Batch/batchAccounts/jobs',
-                'apiVersion': '2016-12-01',
+                'apiVersion': '2018-12-01',
                 'properties': {
                     'id': job_id,
                     'poolInfo': {

@@ -140,7 +140,11 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
         else:
             json_obj = get_file_json(json_file)
         # validate the json file
-        job = ExtendedJobOperations.jobparameter_from_json(json_obj)
+        try:
+            job = ExtendedJobOperations.jobparameter_from_json(json_obj)
+        except NotImplementedError:
+            logger.error("The specified template API version is not supported by the current SDK extension")
+            raise
         if job is None:
             raise ValueError("JSON job parameter is not in correct format.")
         templates.validate_json_object(json_obj, job)
