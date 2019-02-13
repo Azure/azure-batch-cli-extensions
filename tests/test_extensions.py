@@ -1581,3 +1581,25 @@ class TestBatchExtensions(unittest.TestCase):
         out = utils.expand_template(obj, param)
         assert out["value1"] == "Small"
         assert out["value2"] == "Small"
+
+
+    def test_batch_template_reject(self):
+        with open(os.path.join(self.data_dir, 'batch.job.simple.apiversionfail.json'), 'r') as template:
+            template_obj = json.load(template)
+        with open(os.path.join(self.data_dir, 'batch.job.parameters.json'), 'r') as parameter:
+            parameter_obj = json.load(parameter)
+        job_ops = operations.ExtendedJobOperations(None, None, None, self._serialize, self._deserialize, None)
+        job_template_json = job_ops.expand_template(template_obj, parameter_obj)
+
+        with open(os.path.join(self.data_dir, 'batch.pool.simple.apiversionfail.json'), 'r') as template:
+            template_obj = json.load(template)
+        with open(os.path.join(self.data_dir, 'batch.pool.parameters.json'), 'r') as parameter:
+            parameter_obj = json.load(parameter)
+        pool_ops = operations.ExtendedPoolOperations(None, None, None, self._serialize, self._deserialize, None)
+        pool_template_json = pool_ops.expand_template(template_obj, parameter_obj)
+
+        with self.assertRaises(NotImplementedError):
+            job_ops.jobparameter_from_json(job_template_json)
+
+        with self.assertRaises(NotImplementedError):
+            pool_ops.poolparameter_from_json(pool_template_json)

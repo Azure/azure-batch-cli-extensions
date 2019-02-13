@@ -79,12 +79,23 @@ class ExtendedJobOperations(JobOperations):
         result = 'JobTemplate' if json_data.get('properties') else 'ExtendedJobParameter'
         try:
             if result == 'JobTemplate':
+                if json_data['apiVersion']:
+                    max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
+                    specified_datetime = dt.strptime(json_data['apiVersion'], "%Y-%m-%d")
+                    if max_datetime < specified_datetime:
+                        logger.error(
+                            "The specified template API version is not supported by the current SDK extension")
+                        raise NotImplementedError(
+                            "This SDK does not have template API version {} implemented".format(
+                                json_data['apiVersion']))
                 job = models.JobTemplate.from_dict(json_data)
             else:
                 job = models.ExtendedJobParameter.from_dict(json_data)
             if job is None:
                 raise ValueError("JSON file is not in correct format.")
             return job
+        except NotImplementedError:
+            raise
         except Exception as exp:
             raise ValueError("Unable to deserialize to {}: {}".format(result, exp))
 
@@ -131,11 +142,12 @@ class ExtendedJobOperations(JobOperations):
         """
         if isinstance(job, models.JobTemplate):
             if job.api_version:
-                max_datetime = dt.strptime(KnownTemplateVersion.Dec2018, "%y-%m-%d")
-                specified_datetime = dt.strptime(job.api_version, "%y-%m-%d")
+                max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
+                specified_datetime = dt.strptime(job.api_version, "%Y-%m-%d")
                 if max_datetime < specified_datetime:
                     logger.error("The specified template API version is not supported by the current SDK extension")
-                    raise NotImplementedError("This SDK does not have template API version %s implemetned".format(job.api_version))
+                    raise NotImplementedError("This SDK does not have template API version {} implemetned".format(
+                        job.api_version))
             job = job.properties
         # Process an application template reference.
         if hasattr(job, 'application_template_info') and job.application_template_info:

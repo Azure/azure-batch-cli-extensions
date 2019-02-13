@@ -5,8 +5,8 @@
 
 
 import logging
-from azure.batch.operations.pool_operations import PoolOperations
 from datetime import datetime as dt
+from azure.batch.operations.pool_operations import PoolOperations
 
 from .. import models
 from .. import _file_utils as file_utils
@@ -60,12 +60,23 @@ class ExtendedPoolOperations(PoolOperations):
         result = 'PoolTemplate' if json_data.get('properties') else 'ExtendedPoolParameter'
         try:
             if result == 'PoolTemplate':
+                if json_data['apiVersion']:
+                    max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
+                    specified_datetime = dt.strptime(json_data['apiVersion'], "%Y-%m-%d")
+                    if max_datetime < specified_datetime:
+                        logger.error(
+                            "The specified template API version is not supported by the current SDK extension")
+                        raise NotImplementedError(
+                            "This SDK does not have template API version {} implemented".format(
+                                json_data['apiVersion']))
                 pool = models.PoolTemplate.from_dict(json_data)
             else:
                 pool = models.ExtendedPoolParameter.from_dict(json_data)
             if pool is None:
                 raise ValueError("JSON data is not in correct format.")
             return pool
+        except NotImplementedError:
+            raise
         except Exception as exp:
             raise ValueError("Unable to deserialize to {}: {}".format(result, exp))
 
@@ -99,11 +110,12 @@ class ExtendedPoolOperations(PoolOperations):
         """
         if isinstance(pool, models.PoolTemplate):
             if pool.api_version:
-                max_datetime = dt.strptime(KnownTemplateVersion.Dec2018, "%y-%m-%d")
-                specified_datetime = dt.strptime(pool.api_version, "%y-%m-%d")
+                max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
+                specified_datetime = dt.strptime(pool.api_version, "%Y-%m-%d")
                 if max_datetime < specified_datetime:
                     logger.error("The specified template API version is not supported by the current SDK extension")
-                    raise NotImplementedError("This SDK does not have template API version %s implemetned".format(pool.api_version))
+                    raise NotImplementedError("This SDK does not have template API version {} implemetned".format(
+                        pool.api_version))
             pool = pool.properties
 
 
