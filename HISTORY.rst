@@ -3,6 +3,12 @@
 SDK Release History
 ===================
 
+5.0.0 (2019-02-01)
+------------------
+
+* Align to Python SDK for breaking changes to shared models
+* This also includes collapsing all models into one models file. Models should now be imported from the models namespace and not from their individual files.
+
 4.0.2 (2018-10-06)
 ------------------
 

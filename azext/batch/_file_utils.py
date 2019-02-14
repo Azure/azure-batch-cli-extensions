@@ -13,10 +13,12 @@ import copy
 import pathlib
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error,relative-import
 from six.moves.urllib.parse import quote  # pylint: disable=import-error,no-name-in-module,relative-import
+from knack.log import get_logger
 
 from azure.storage.blob import BlobPermissions, BlockBlobService
 from . import models
 
+logger = get_logger(__name__)
 
 def construct_sas_url(blob, uri):
     """Make up blob URL with container URL"""
@@ -40,7 +42,7 @@ def convert_blobs_to_resource_files(blobs, resource_properties):
         file_path = resource_properties.file_path if resource_properties.file_path \
             else blobs[0]['filePath']
         resource_files.append(models.ExtendedResourceFile(
-            blob_source=blobs[0]['url'],
+            http_url=blobs[0]['url'],
             file_path=file_path,
         ))
     else:
@@ -53,7 +55,7 @@ def convert_blobs_to_resource_files(blobs, resource_properties):
         for blob in blobs:
             file_path = '{}{}'.format(base_file_path, blob['filePath'])
             resource_files.append(models.ExtendedResourceFile(
-                blob_source=blob['url'],
+                http_url=blob['url'],
                 file_path=file_path
             ))
 
@@ -320,16 +322,29 @@ class FileUtils(object):
 
     def resolve_resource_file(self, resource_file):
         """Convert new resourceFile reference to server-supported reference"""
-        if resource_file.blob_source:
+        if resource_file.http_url:
             # Support original resourceFile reference
+            if not resource_file.file_path:
+                raise ValueError('Malformed ResourceFile: \'httpUrl\' must '
+                                 'also have \'file_path\' attribute')
+            return [resource_file]
+
+        if resource_file.blob_source:
             if not resource_file.file_path:
                 raise ValueError('Malformed ResourceFile: \'blobSource\' must '
                                  'also have \'file_path\' attribute')
+            resource_file.http_url = resource_file.blob_source
+            logger.warning('BlobSource has been updated to HttpUrl to reflect new '
+                           'functionality of accepting any http url instead of just storage '
+                           'blobs. Please update your templates to reflect this')
+            return [resource_file]
+
+        if resource_file.storage_container_url or resource_file.auto_storage_container_name:
             return [resource_file]
 
         if not hasattr(resource_file, 'source') or not resource_file.source:
             raise ValueError('Malformed ResourceFile: Must have either '
-                             ' \'source\' or \'blobSource\'')
+                             ' \'source\' or \'httpUrl\'')
 
         storage_client = self.resolve_storage_account()
         container = None

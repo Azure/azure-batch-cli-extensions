@@ -50,7 +50,7 @@
     },
     "job": {
         "type": "Microsoft.Batch/batchAccounts/jobs",
-        "apiVersion": "2016-12-01",
+        "apiVersion": "2018-12-01",
         "properties": {
             "id": "[parameters('jobId')]",
             "onAllTasksComplete": "terminateJob",
@@ -78,7 +78,7 @@
                     "commandLine": "/bin/bash -c 'cat {fileName}'",
                     "resourceFiles": [
                         {
-                            "blobSource" : "{url}",
+                            "httpUrl" : "{url}",
                             "filePath" : "{fileName}"
                         }
                     ],

@@ -14,7 +14,7 @@ def batch_extensions_client(cli_ctx, kwargs):  # pylint: disable=unused-argument
     if account_endpoint and not account_endpoint.startswith('https://'):
         account_endpoint = 'https://' + account_endpoint
     try:
-        client = batch.BatchExtensionsClient(base_url=account_endpoint)
+        client = batch.BatchExtensionsClient(batch_url=account_endpoint)
     except ValueError as error:
         raise CLIError(str(error))
     client.resource_group = resource_group

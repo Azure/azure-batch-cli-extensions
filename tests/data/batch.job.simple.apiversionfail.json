@@ -16,13 +16,13 @@
     },
     "job": {
         "type": "Microsoft.Batch/batchAccounts/jobs",
-        "apiVersion": "2018-12-01",
+        "apiVersion": "2030-12-01",
         "properties": {
-            "id": "[parameters('jobId')]",
-            "poolInfo": {
+            "fob": "[parameters('jobId')]",
+            "ks": {
                 "poolId": "[parameters('poolId')]"
             },
-            "taskFactory": {
+            "ls": {
                 "type": "taskCollection",
                 "tasks": [
                     {
