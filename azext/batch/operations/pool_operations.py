@@ -14,8 +14,6 @@ from .. import _pool_utils as pool_utils
 from .. import _template_utils as templates
 from ..models.constants import KnownTemplateVersion
 
-logger = logging.getLogger(__name__)
-
 class ExtendedPoolOperations(PoolOperations):
     """PoolOperations operations.
 
@@ -111,7 +109,6 @@ class ExtendedPoolOperations(PoolOperations):
                 max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
                 specified_datetime = dt.strptime(pool.api_version, "%Y-%m-%d")
                 if max_datetime < specified_datetime:
-                    logger.error("The specified template API version is not supported by the current SDK extension")
                     raise NotImplementedError("This SDK does not have template API version {} implemetned".format(
                         pool.api_version))
             pool = pool.properties
