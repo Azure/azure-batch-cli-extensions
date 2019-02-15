@@ -76,7 +76,7 @@ class ExtendedJobOperations(JobOperations):
         result = 'JobTemplate' if json_data.get('properties') else 'ExtendedJobParameter'
         try:
             if result == 'JobTemplate':
-                if json_data['apiVersion']:
+                if 'apiVersion' in json_data:
                     max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
                     specified_datetime = dt.strptime(json_data['apiVersion'], "%Y-%m-%d")
                     if max_datetime < specified_datetime:
