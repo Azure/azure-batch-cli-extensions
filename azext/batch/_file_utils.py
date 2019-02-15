@@ -11,9 +11,10 @@ import hashlib
 import datetime
 import copy
 import pathlib
+
+from logging import getLogger
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error,relative-import
 from six.moves.urllib.parse import quote  # pylint: disable=import-error,no-name-in-module,relative-import
-from logging import getLogger
 
 from azure.storage.blob import BlobPermissions, BlockBlobService
 from . import models
