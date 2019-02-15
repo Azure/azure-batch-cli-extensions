@@ -11,14 +11,15 @@ import hashlib
 import datetime
 import copy
 import pathlib
+
+from logging import getLogger
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error,relative-import
 from six.moves.urllib.parse import quote  # pylint: disable=import-error,no-name-in-module,relative-import
-from knack.log import get_logger
 
 from azure.storage.blob import BlobPermissions, BlockBlobService
 from . import models
 
-logger = get_logger(__name__)
+logger = getLogger(__name__)
 
 def construct_sas_url(blob, uri):
     """Make up blob URL with container URL"""

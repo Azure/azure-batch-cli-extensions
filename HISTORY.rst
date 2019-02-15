@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+5.0.1 (2019-02-15)
+------------------
+
+* Fix bug where knack.get_logger was used instead of logging.getLogger
+
 5.0.0 (2019-02-01)
 ------------------
 
