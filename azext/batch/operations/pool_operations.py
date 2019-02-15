@@ -3,8 +3,6 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-
-import logging
 from datetime import datetime as dt
 from azure.batch.operations.pool_operations import PoolOperations
 

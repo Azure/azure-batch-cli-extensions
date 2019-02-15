@@ -4,7 +4,6 @@
 # --------------------------------------------------------------------------------------------
 from __future__ import unicode_literals
 
-import logging
 from datetime import datetime as dt
 from msrest.exceptions import DeserializationError
 from azure.batch.operations.job_operations import JobOperations
