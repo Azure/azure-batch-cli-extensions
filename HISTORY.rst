@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+5.0.2 (2019-02-15)
+------------------
+
+* Fix bug where apiVersion became required
+
 5.0.1 (2019-02-15)
 ------------------
 
