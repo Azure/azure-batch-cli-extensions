@@ -897,6 +897,7 @@ class ExtendedResourceFile(models.ResourceFile):
         'auto_storage_container_name': {'key': 'autoStorageContainerName', 'type': 'str'},
         'blob_prefix': {'key': 'blobPrefix', 'type': 'str'},
         'storage_container_url': {'key': 'storageContainerUrl', 'type': 'str'},
+        'blob_source': {'key': 'blobSource', 'type': 'str'},
         'file_path': {'key': 'filePath', 'type': 'str'},
         'file_mode': {'key': 'fileMode', 'type': 'str'},
         'source': {'key': 'source', 'type': 'FileSource'}

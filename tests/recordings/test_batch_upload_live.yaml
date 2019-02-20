@@ -9,7 +9,7 @@ interactions:
       User-Agent: [python/3.6.5 (Windows-10-10.0.17763-SP0) msrest/0.6.4 msrest_azure/0.6.0
           azure-mgmt-batch/6.0.0 Azure-SDK-For-Python]
       accept-language: [en-US]
-      x-ms-client-request-id: [475e05a6-28ad-11e9-b451-44032c851686]
+      x-ms-client-request-id: [b7241a52-349e-11e9-b276-44032c851686]
     method: GET
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2?api-version=2018-12-01
   response:
@@ -17,10 +17,10 @@ interactions:
     headers:
       Cache-Control: [no-cache]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Mon, 04 Feb 2019 18:47:11 GMT']
-      ETag: ['"0x8D671CA7C4BC99C"']
+      Date: ['Tue, 19 Feb 2019 23:33:10 GMT']
+      ETag: ['"0x8D68C797BA4521F"']
       Expires: ['-1']
-      Last-Modified: ['Thu, 03 Jan 2019 22:26:20 GMT']
+      Last-Modified: ['Wed, 06 Feb 2019 21:24:31 GMT']
       Pragma: [no-cache]
       Server: [Microsoft-HTTPAPI/2.0]
       Strict-Transport-Security: [max-age=31536000; includeSubDomains]
@@ -40,15 +40,15 @@ interactions:
       User-Agent: [python/3.6.5 (Windows-10-10.0.17763-SP0) msrest/0.6.4 msrest_azure/0.6.0
           azure-mgmt-storage/2.0.0 Azure-SDK-For-Python]
       accept-language: [en-US]
-      x-ms-client-request-id: [48d24b98-28ad-11e9-8329-44032c851686]
+      x-ms-client-request-id: [b88e6f00-349e-11e9-bee5-44032c851686]
     method: POST
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Storage/storageAccounts/sdkteststore2/listKeys?api-version=2018-02-01
   response:
-    body: {string: '{"keys":[{"keyName":"key1","value":"def==","permissions":"FULL"},{"keyName":"key2","value":"def==","permissions":"FULL"}]}'}
+    body: {string: '{"keys":[{"keyName":"key1","value":"abc==","permissions":"FULL"},{"keyName":"key2","value":"def==","permissions":"FULL"}]}'}
     headers:
       Cache-Control: [no-cache]
       Content-Type: [application/json]
-      Date: ['Mon, 04 Feb 2019 18:47:12 GMT']
+      Date: ['Tue, 19 Feb 2019 23:33:11 GMT']
       Expires: ['-1']
       Pragma: [no-cache]
       Server: ['Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0
@@ -66,17 +66,17 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['0']
       User-Agent: [Azure-Storage/1.1.0-1.1.0 (Python CPython 3.6.5; Windows 10)]
-      x-ms-client-request-id: [490bae50-28ad-11e9-bd1b-44032c851686]
-      x-ms-date: ['Mon, 04 Feb 2019 18:47:13 GMT']
+      x-ms-client-request-id: [b8aca592-349e-11e9-8d07-44032c851686]
+      x-ms-date: ['Tue, 19 Feb 2019 23:33:11 GMT']
       x-ms-version: ['2017-07-29']
     method: PUT
     uri: https://sdkteststore2.blob.core.windows.net/fgrp-cli-batch-extensions-live-tests?restype=container
   response:
     body: {string: ''}
     headers:
-      Date: ['Mon, 04 Feb 2019 18:47:12 GMT']
-      ETag: ['"0x8D68AD12D4FB932"']
-      Last-Modified: ['Mon, 04 Feb 2019 18:47:13 GMT']
+      Date: ['Tue, 19 Feb 2019 23:33:11 GMT']
+      ETag: ['"0x8D696C29CF6EEFD"']
+      Last-Modified: ['Tue, 19 Feb 2019 23:33:12 GMT']
       Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
       Transfer-Encoding: [chunked]
       x-ms-version: ['2017-07-29']
@@ -86,19 +86,19 @@ interactions:
     headers:
       Connection: [keep-alive]
       User-Agent: [Azure-Storage/1.1.0-1.1.0 (Python CPython 3.6.5; Windows 10)]
-      x-ms-client-request-id: [49262618-28ad-11e9-91e4-44032c851686]
-      x-ms-date: ['Mon, 04 Feb 2019 18:47:13 GMT']
+      x-ms-client-request-id: [b8c33dec-349e-11e9-9db6-44032c851686]
+      x-ms-date: ['Tue, 19 Feb 2019 23:33:12 GMT']
       x-ms-version: ['2017-07-29']
     method: GET
     uri: https://sdkteststore2.blob.core.windows.net/fgrp-cli-batch-extensions-live-tests/foo.txt?comp=metadata
   response:
     body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The\
-        \ specified blob does not exist.\nRequestId:9edb57b2-d01e-0003-46ba-bc6707000000\n\
-        Time:2019-02-04T18:47:13.3031669Z</Message></Error>"}
+        \ specified blob does not exist.\nRequestId:037180bf-601e-00bb-60ab-c885f4000000\n\
+        Time:2019-02-19T23:33:12.1184732Z</Message></Error>"}
     headers:
       Content-Length: ['215']
       Content-Type: [application/xml]
-      Date: ['Mon, 04 Feb 2019 18:47:12 GMT']
+      Date: ['Tue, 19 Feb 2019 23:33:11 GMT']
       Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
       x-ms-error-code: [BlobNotFound]
       x-ms-version: ['2017-07-29']
@@ -111,8 +111,8 @@ interactions:
       Content-MD5: [xMpCOKC5I4INzFCab3WEmw==]
       User-Agent: [Azure-Storage/1.1.0-1.1.0 (Python CPython 3.6.5; Windows 10)]
       x-ms-blob-type: [BlockBlob]
-      x-ms-client-request-id: [492dcd0c-28ad-11e9-bd7a-44032c851686]
-      x-ms-date: ['Mon, 04 Feb 2019 18:47:13 GMT']
+      x-ms-client-request-id: [b8c90a5e-349e-11e9-b897-44032c851686]
+      x-ms-date: ['Tue, 19 Feb 2019 23:33:12 GMT']
       x-ms-meta-lastmodified: ['1524153754.2560813']
       x-ms-version: ['2017-07-29']
     method: PUT
@@ -121,9 +121,9 @@ interactions:
     body: {string: ''}
     headers:
       Content-MD5: [xMpCOKC5I4INzFCab3WEmw==]
-      Date: ['Mon, 04 Feb 2019 18:47:12 GMT']
-      ETag: ['"0x8D68AD12D5DB53B"']
-      Last-Modified: ['Mon, 04 Feb 2019 18:47:13 GMT']
+      Date: ['Tue, 19 Feb 2019 23:33:11 GMT']
+      ETag: ['"0x8D696C29D039995"']
+      Last-Modified: ['Tue, 19 Feb 2019 23:33:12 GMT']
       Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
       Transfer-Encoding: [chunked]
       x-ms-request-server-encrypted: ['true']
@@ -139,7 +139,7 @@ interactions:
       User-Agent: [python/3.6.5 (Windows-10-10.0.17763-SP0) msrest/0.6.4 msrest_azure/0.6.0
           azure-mgmt-batch/6.0.0 Azure-SDK-For-Python]
       accept-language: [en-US]
-      x-ms-client-request-id: [494db2be-28ad-11e9-97c5-44032c851686]
+      x-ms-client-request-id: [b8ece4be-349e-11e9-aad2-44032c851686]
     method: GET
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2?api-version=2018-12-01
   response:
@@ -147,10 +147,10 @@ interactions:
     headers:
       Cache-Control: [no-cache]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Mon, 04 Feb 2019 18:47:14 GMT']
-      ETag: ['"0x8D671CA7C4BC99C"']
+      Date: ['Tue, 19 Feb 2019 23:33:12 GMT']
+      ETag: ['"0x8D68C797BA4521F"']
       Expires: ['-1']
-      Last-Modified: ['Thu, 03 Jan 2019 22:26:20 GMT']
+      Last-Modified: ['Wed, 06 Feb 2019 21:24:31 GMT']
       Pragma: [no-cache]
       Server: [Microsoft-HTTPAPI/2.0]
       Strict-Transport-Security: [max-age=31536000; includeSubDomains]
@@ -170,15 +170,15 @@ interactions:
       User-Agent: [python/3.6.5 (Windows-10-10.0.17763-SP0) msrest/0.6.4 msrest_azure/0.6.0
           azure-mgmt-storage/2.0.0 Azure-SDK-For-Python]
       accept-language: [en-US]
-      x-ms-client-request-id: [49ff5026-28ad-11e9-8b20-44032c851686]
+      x-ms-client-request-id: [b91d440c-349e-11e9-93d1-44032c851686]
     method: POST
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Storage/storageAccounts/sdkteststore2/listKeys?api-version=2018-02-01
   response:
-    body: {string: '{"keys":[{"keyName":"key1","value":"def==","permissions":"FULL"},{"keyName":"key2","value":"def==","permissions":"FULL"}]}'}
+    body: {string: '{"keys":[{"keyName":"key1","value":"abc==","permissions":"FULL"},{"keyName":"key2","value":"def==","permissions":"FULL"}]}'}
     headers:
       Cache-Control: [no-cache]
       Content-Type: [application/json]
-      Date: ['Mon, 04 Feb 2019 18:47:14 GMT']
+      Date: ['Tue, 19 Feb 2019 23:33:12 GMT']
       Expires: ['-1']
       Pragma: [no-cache]
       Server: ['Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0
@@ -196,19 +196,19 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['0']
       User-Agent: [Azure-Storage/1.1.0-1.1.0 (Python CPython 3.6.5; Windows 10)]
-      x-ms-client-request-id: [4a338de4-28ad-11e9-a20d-44032c851686]
-      x-ms-date: ['Mon, 04 Feb 2019 18:47:15 GMT']
+      x-ms-client-request-id: [b93f98c0-349e-11e9-8f95-44032c851686]
+      x-ms-date: ['Tue, 19 Feb 2019 23:33:12 GMT']
       x-ms-version: ['2017-07-29']
     method: PUT
     uri: https://sdkteststore2.blob.core.windows.net/fgrp-cli-batch-extensions-live-tests?restype=container
   response:
     body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The\
-        \ specified container already exists.\nRequestId:d25ba6ca-d01e-00a2-80ba-bca99c000000\n\
-        Time:2019-02-04T18:47:15.1800498Z</Message></Error>"}
+        \ specified container already exists.\nRequestId:6da90795-d01e-0021-42ab-c80931000000\n\
+        Time:2019-02-19T23:33:13.0550874Z</Message></Error>"}
     headers:
       Content-Length: ['230']
       Content-Type: [application/xml]
-      Date: ['Mon, 04 Feb 2019 18:47:15 GMT']
+      Date: ['Tue, 19 Feb 2019 23:33:12 GMT']
       Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
       x-ms-error-code: [ContainerAlreadyExists]
       x-ms-version: ['2017-07-29']
@@ -218,19 +218,19 @@ interactions:
     headers:
       Connection: [keep-alive]
       User-Agent: [Azure-Storage/1.1.0-1.1.0 (Python CPython 3.6.5; Windows 10)]
-      x-ms-client-request-id: [4a4c3858-28ad-11e9-9213-44032c851686]
-      x-ms-date: ['Mon, 04 Feb 2019 18:47:15 GMT']
+      x-ms-client-request-id: [b957f35a-349e-11e9-86ac-44032c851686]
+      x-ms-date: ['Tue, 19 Feb 2019 23:33:13 GMT']
       x-ms-version: ['2017-07-29']
     method: GET
     uri: https://sdkteststore2.blob.core.windows.net/fgrp-cli-batch-extensions-live-tests/test/data/foo.txt?comp=metadata
   response:
     body: {string: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The\
-        \ specified blob does not exist.\nRequestId:d25ba6d9-d01e-00a2-0aba-bca99c000000\n\
-        Time:2019-02-04T18:47:15.2180762Z</Message></Error>"}
+        \ specified blob does not exist.\nRequestId:6da907c7-d01e-0021-68ab-c80931000000\n\
+        Time:2019-02-19T23:33:13.0931142Z</Message></Error>"}
     headers:
       Content-Length: ['215']
       Content-Type: [application/xml]
-      Date: ['Mon, 04 Feb 2019 18:47:15 GMT']
+      Date: ['Tue, 19 Feb 2019 23:33:12 GMT']
       Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
       x-ms-error-code: [BlobNotFound]
       x-ms-version: ['2017-07-29']
@@ -243,8 +243,8 @@ interactions:
       Content-MD5: [xMpCOKC5I4INzFCab3WEmw==]
       User-Agent: [Azure-Storage/1.1.0-1.1.0 (Python CPython 3.6.5; Windows 10)]
       x-ms-blob-type: [BlockBlob]
-      x-ms-client-request-id: [4a51e6e6-28ad-11e9-ab0f-44032c851686]
-      x-ms-date: ['Mon, 04 Feb 2019 18:47:15 GMT']
+      x-ms-client-request-id: [b95dbec0-349e-11e9-92e0-44032c851686]
+      x-ms-date: ['Tue, 19 Feb 2019 23:33:13 GMT']
       x-ms-meta-lastmodified: ['1524153754.2560813']
       x-ms-version: ['2017-07-29']
     method: PUT
@@ -253,9 +253,9 @@ interactions:
     body: {string: ''}
     headers:
       Content-MD5: [xMpCOKC5I4INzFCab3WEmw==]
-      Date: ['Mon, 04 Feb 2019 18:47:15 GMT']
-      ETag: ['"0x8D68AD12E81A973"']
-      Last-Modified: ['Mon, 04 Feb 2019 18:47:15 GMT']
+      Date: ['Tue, 19 Feb 2019 23:33:12 GMT']
+      ETag: ['"0x8D696C29D987AE6"']
+      Last-Modified: ['Tue, 19 Feb 2019 23:33:13 GMT']
       Server: [Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0]
       Transfer-Encoding: [chunked]
       x-ms-request-server-encrypted: ['true']

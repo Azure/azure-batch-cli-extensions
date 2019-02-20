@@ -8,10 +8,11 @@ import json
 import os
 import requests
 import unittest
-from mock import patch, Mock
+from mock import patch, Mock, MagicMock
 
 from msrest import Serializer, Deserializer
 from azure.batch.operations.task_operations import TaskOperations
+from azure.batch.operations.pool_operations import PoolOperations
 from azure.storage.common import CloudStorageAccount
 from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.batch.batch_auth import SharedKeyCredentials
@@ -916,7 +917,6 @@ class TestBatchExtensions(unittest.TestCase):
         with self.assertRaises(ValueError):
             utils.process_pool_package_references(pool)
 
-
     def test_batch_extensions_validate_job_requesting_app_template(self):
         # Should do nothing for a job not using an application template'
         job = models.ExtendedJobParameter(id='jobid', pool_info=None)
@@ -1603,3 +1603,11 @@ class TestBatchExtensions(unittest.TestCase):
 
         with self.assertRaises(NotImplementedError):
             pool_ops.poolparameter_from_json(pool_template_json)
+
+
+    def test_blob_source_resource_files(self):
+        with open(os.path.join(self.data_dir, 'batch.pool.simple.resourcefile-legacy.json'), 'r') as template:
+            json_obj = json.load(template)
+        pool_ops = operations.ExtendedPoolOperations(None, None, None, self._serialize, self._deserialize, None)
+        expanded_template = pool_ops.expand_template(json_obj)
+        pool_param = pool_ops.poolparameter_from_json(expanded_template)

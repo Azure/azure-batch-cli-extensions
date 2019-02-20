@@ -3,6 +3,12 @@
 SDK Release History
 ===================
 
+5.0.3 (2019-02-19)
+------------------
+
+* Fix bug where blobSource was no longer an attribute of ExtendedResourceFile
+* Improve test coverage
+
 5.0.2 (2019-02-15)
 ------------------
 
