@@ -337,7 +337,7 @@ class FileUtils(object):
             resource_file.http_url = resource_file.blob_source
             logger.warning('BlobSource has been updated to HttpUrl to reflect new '
                            'functionality of accepting any http url instead of just storage '
-                           'blobs. Please update your templates to reflect this')
+                           'blobs. Please update your templates to reflect this.')
             return [resource_file]
 
         if resource_file.storage_container_url or resource_file.auto_storage_container_name:

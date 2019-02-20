@@ -905,6 +905,7 @@ class ExtendedResourceFile(models.ResourceFile):
 
     def __init__(self, **kwargs):
         super(ExtendedResourceFile, self).__init__(**kwargs)
+        self.blob_source = kwargs.get('blob_source', None)
         self.source = kwargs.get('source', None)
 
 
