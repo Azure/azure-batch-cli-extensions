@@ -975,7 +975,6 @@ class ExtendedResourceFile(models.ResourceFile):
         'auto_storage_container_name': {'key': 'autoStorageContainerName', 'type': 'str'},
         'blob_prefix': {'key': 'blobPrefix', 'type': 'str'},
         'storage_container_url': {'key': 'storageContainerUrl', 'type': 'str'},
-        'blob_source': {'key': 'blobSource', 'type': 'str'},
         'file_path': {'key': 'filePath', 'type': 'str'},
         'file_mode': {'key': 'fileMode', 'type': 'str'},
         'source': {'key': 'source', 'type': 'FileSource'}
@@ -987,7 +986,6 @@ class ExtendedResourceFile(models.ResourceFile):
                  auto_storage_container_name: str=None,
                  storage_container_url: str=None,
                  blob_prefix: str=None,
-                 blob_source: str=None,
                  file_path: str=None,
                  file_mode: str=None,
                  source=None, **kwargs) -> None:
@@ -1000,7 +998,6 @@ class ExtendedResourceFile(models.ResourceFile):
             file_mode=file_mode,
             **kwargs)
         self.source = source
-        self.blob_source = blob_source
 
 
 class ExtendedTaskParameter(models.TaskAddParameter):

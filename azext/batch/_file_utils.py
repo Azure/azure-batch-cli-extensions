@@ -12,14 +12,11 @@ import datetime
 import copy
 import pathlib
 
-from logging import getLogger
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error,relative-import
 from six.moves.urllib.parse import quote  # pylint: disable=import-error,no-name-in-module,relative-import
 
 from azure.storage.blob import BlobPermissions, BlockBlobService
 from . import models
-
-logger = getLogger(__name__)
 
 def construct_sas_url(blob, uri):
     """Make up blob URL with container URL"""
@@ -328,16 +325,6 @@ class FileUtils(object):
             if not resource_file.file_path:
                 raise ValueError('Malformed ResourceFile: \'httpUrl\' must '
                                  'also have \'file_path\' attribute')
-            return [resource_file]
-
-        if resource_file.blob_source:
-            if not resource_file.file_path:
-                raise ValueError('Malformed ResourceFile: \'blobSource\' must '
-                                 'also have \'file_path\' attribute')
-            resource_file.http_url = resource_file.blob_source
-            logger.warning('BlobSource has been updated to HttpUrl to reflect new '
-                           'functionality of accepting any http url instead of just storage '
-                           'blobs. Please update your templates to reflect this.')
             return [resource_file]
 
         if resource_file.storage_container_url or resource_file.auto_storage_container_name:

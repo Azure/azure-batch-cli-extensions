@@ -1603,11 +1603,3 @@ class TestBatchExtensions(unittest.TestCase):
 
         with self.assertRaises(NotImplementedError):
             pool_ops.poolparameter_from_json(pool_template_json)
-
-
-    def test_blob_source_resource_files(self):
-        with open(os.path.join(self.data_dir, 'batch.pool.simple.resourcefile-legacy.json'), 'r') as template:
-            json_obj = json.load(template)
-        pool_ops = operations.ExtendedPoolOperations(None, None, None, self._serialize, self._deserialize, None)
-        expanded_template = pool_ops.expand_template(json_obj)
-        pool_param = pool_ops.poolparameter_from_json(expanded_template)

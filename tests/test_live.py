@@ -72,6 +72,7 @@ class TestBatchExtensionsLive(VCRTestBase):
             storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'testaccountforbatch')
             storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'ZmFrZV9hY29jdW50X2tleQ==')
 
+        self.data_dir = os.path.join(os.path.dirname(__file__), 'data')
         self.blob_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
         credentials = batchauth.SharedKeyCredentials(self.account_name, self.account_key)
@@ -423,3 +424,12 @@ class TestBatchExtensionsLive(VCRTestBase):
         pool_id = 'ncj-windows-2012-r2'
         task_id = 'myTask'
         self.file_upload_helper(job_id, pool_id, task_id, 'windows-2012-r2', True)
+
+        # Batch Explorer workflow
+        with open(os.path.join(self.data_dir, 'batch.pool.simple.resourcefile-legacy.json'), 'r') as template:
+            json_obj = json.load(template)
+        expanded_template = self.batch_client.pool.expand_template(json_obj)
+        pool_param = self.batch_client.pool.poolparameter_from_json(expanded_template)
+        self.batch_client.pool.add(pool_param)
+        self.wait_for_pool_steady(pool_param.id, 5 * 60)
+        self.batch_client.pool.delete(pool_param.id)

@@ -1,6 +1,6 @@
 {
   "pool": {
-    "id": "blobsource",
+    "id": "blobsource1",
     "displayName": "Blender Ubuntu standard pool",
     "vmSize": "Standard_D1_v2",
     "virtualMachineConfiguration": {

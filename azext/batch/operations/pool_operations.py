@@ -43,7 +43,9 @@ class ExtendedPoolOperations(PoolOperations):
             parameters = {}
         expanded_pool_object = templates.expand_template(template, parameters)
         try:
-            return expanded_pool_object['pool']
+            pool = expanded_pool_object['pool']
+            pool = templates.convert_blob_source_to_http_url(pool)
+            return pool
         except KeyError:
             raise ValueError("Template missing required 'pool' element")
 
