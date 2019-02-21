@@ -1191,7 +1191,8 @@ def convert_blob_source_to_http_url(obj):
     if isinstance(obj, dict):
         for key in obj:
             if key in ['resourceFiles', 'commonResourceFiles']:
-                obj[key] = [_convert_blob_source_to_http_url(file) for file in obj[key]]
+                obj[key] = \
+                    [_convert_blob_source_to_http_url(resource_file) for resource_file in obj[key]]
             obj[key] = convert_blob_source_to_http_url(obj[key])
 
     return obj
@@ -1204,7 +1205,8 @@ def _convert_blob_source_to_http_url(resource_file):
                              'also have \'file_path\' attribute')
         resource_file['httpUrl'] = resource_file.pop('blobSource', None)
         logger.warning('BlobSource has been updated to HttpUrl to reflect new '
-                        'functionality of accepting any http url instead of just storage '
-                        'blobs. Please update your templates to reflect this.')
+                       'functionality of accepting any http url instead of just'
+                       ' storage blobs. Please update your templates to'
+                       ' reflect this.')
         return resource_file
     return resource_file
