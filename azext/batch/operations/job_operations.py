@@ -63,7 +63,8 @@ class ExtendedJobOperations(JobOperations):
             parameters = {}
         expanded_job_object = templates.expand_template(template, parameters)
         try:
-            return expanded_job_object['job']
+            job = expanded_job_object['job']
+            return templates.convert_blob_source_to_http_url(job)
         except KeyError:
             raise ValueError("Template missing required 'job' element")
 
