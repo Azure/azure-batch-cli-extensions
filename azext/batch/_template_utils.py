@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 import copy
 import itertools
 import json
+from logging import getLogger
 import re
 from msrest.serialization import Model
 try:
@@ -20,7 +21,7 @@ from . import errors
 from . import _pool_utils as pool_utils
 from . import models
 
-
+logger = getLogger(__name__)
 try:
     _UNICODE_TYPE = unicode
 except NameError:
@@ -1184,3 +1185,26 @@ def validate_json_object(json_obj, obj):
         else:
             inner_type = getattr(obj, key_attr_map[item.lower()])
             validate_json_object(json_obj[item], inner_type)
+
+
+def convert_blob_source_to_http_url(obj):
+    if isinstance(obj, dict):
+        for key in obj:
+            if key in ['resourceFiles', 'commonResourceFiles']:
+                obj[key] = \
+                    [_convert_blob_source_to_http_url(resource_file) for resource_file in obj[key]]
+            obj[key] = convert_blob_source_to_http_url(obj[key])
+    return obj
+
+
+def _convert_blob_source_to_http_url(resource_file):
+    if 'blobSource' in resource_file:
+        if 'filePath' not in resource_file:
+            raise ValueError('Malformed ResourceFile: \'blobSource\' must '
+                             'also have \'file_path\' attribute')
+        resource_file['httpUrl'] = resource_file.pop('blobSource', None)
+        logger.warning('BlobSource has been updated to HttpUrl to reflect new '
+                       'functionality of accepting any http url instead of just'
+                       ' storage blobs. Please update your templates to'
+                       ' reflect this.')
+    return resource_file

@@ -8,10 +8,11 @@ import json
 import os
 import requests
 import unittest
-from mock import patch, Mock
+from mock import patch, Mock, MagicMock
 
 from msrest import Serializer, Deserializer
 from azure.batch.operations.task_operations import TaskOperations
+from azure.batch.operations.pool_operations import PoolOperations
 from azure.storage.common import CloudStorageAccount
 from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.batch.batch_auth import SharedKeyCredentials
@@ -915,7 +916,6 @@ class TestBatchExtensions(unittest.TestCase):
         pool.package_references[0].id = None
         with self.assertRaises(ValueError):
             utils.process_pool_package_references(pool)
-
 
     def test_batch_extensions_validate_job_requesting_app_template(self):
         # Should do nothing for a job not using an application template'

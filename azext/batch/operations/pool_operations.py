@@ -54,6 +54,7 @@ class ExtendedPoolOperations(PoolOperations):
          ExtendedPoolParameter or a PoolTemplate.
         """
         result = 'PoolTemplate' if json_data.get('properties') else 'ExtendedPoolParameter'
+        json_data = templates.convert_blob_source_to_http_url(json_data)
         try:
             if result == 'PoolTemplate':
                 if 'apiVersion' in json_data:

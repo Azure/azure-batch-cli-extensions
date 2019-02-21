@@ -74,6 +74,7 @@ class ExtendedJobOperations(JobOperations):
          ExtendedJobParameter or a JobTemplate
         """
         result = 'JobTemplate' if json_data.get('properties') else 'ExtendedJobParameter'
+        json_data = templates.convert_blob_source_to_http_url(json_data)
         try:
             if result == 'JobTemplate':
                 if 'apiVersion' in json_data:
