@@ -1194,7 +1194,6 @@ def convert_blob_source_to_http_url(obj):
                 obj[key] = \
                     [_convert_blob_source_to_http_url(resource_file) for resource_file in obj[key]]
             obj[key] = convert_blob_source_to_http_url(obj[key])
-
     return obj
 
 
@@ -1208,5 +1207,4 @@ def _convert_blob_source_to_http_url(resource_file):
                        'functionality of accepting any http url instead of just'
                        ' storage blobs. Please update your templates to'
                        ' reflect this.')
-        return resource_file
     return resource_file
