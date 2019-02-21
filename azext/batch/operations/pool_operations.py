@@ -43,9 +43,7 @@ class ExtendedPoolOperations(PoolOperations):
             parameters = {}
         expanded_pool_object = templates.expand_template(template, parameters)
         try:
-            pool = expanded_pool_object['pool']
-            pool = templates.convert_blob_source_to_http_url(pool)
-            return pool
+            return expanded_pool_object['pool']
         except KeyError:
             raise ValueError("Template missing required 'pool' element")
 
@@ -56,6 +54,7 @@ class ExtendedPoolOperations(PoolOperations):
          ExtendedPoolParameter or a PoolTemplate.
         """
         result = 'PoolTemplate' if json_data.get('properties') else 'ExtendedPoolParameter'
+        json_data = templates.convert_blob_source_to_http_url(json_data)
         try:
             if result == 'PoolTemplate':
                 if 'apiVersion' in json_data:

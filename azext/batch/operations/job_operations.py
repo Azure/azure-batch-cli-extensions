@@ -63,8 +63,7 @@ class ExtendedJobOperations(JobOperations):
             parameters = {}
         expanded_job_object = templates.expand_template(template, parameters)
         try:
-            job = expanded_job_object['job']
-            return templates.convert_blob_source_to_http_url(job)
+            return expanded_job_object['job']
         except KeyError:
             raise ValueError("Template missing required 'job' element")
 
@@ -75,6 +74,7 @@ class ExtendedJobOperations(JobOperations):
          ExtendedJobParameter or a JobTemplate
         """
         result = 'JobTemplate' if json_data.get('properties') else 'ExtendedJobParameter'
+        json_data = templates.convert_blob_source_to_http_url(json_data)
         try:
             if result == 'JobTemplate':
                 if 'apiVersion' in json_data:
