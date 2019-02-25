@@ -157,6 +157,8 @@ class ExtendedJobOperations(JobOperations):
         task_collection = []
         file_utils = FileUtils(self.get_storage_client)
         if hasattr(job, 'task_factory') and job.task_factory:
+            if templates.has_merge_task(job):
+                job.uses_task_dependencies = True
             task_collection = templates.expand_task_factory(job, file_utils)
 
             # If job has a task factory and terminate job on all tasks complete is set, the job will
@@ -213,7 +215,7 @@ class ExtendedJobOperations(JobOperations):
                 # If task submission raises, we roll back the job
                 self.delete(job.id)
                 raise
-            if auto_complete:
+            # if auto_complete:
                 # If the option to terminate the job was set, we need to reapply it with a patch
                 # now that the tasks have been added.
                 self.patch(job.id, {'on_all_tasks_complete': auto_complete})

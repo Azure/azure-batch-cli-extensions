@@ -883,6 +883,11 @@ def _transform_repeat_task(task, context, index, transformer):
     return new_task
 
 
+def _transform_merge_task(task):
+    new_task = models.ExtendedTaskParameter(**copy.deepcopy(task.__dict__))
+    return new_task
+
+
 def _parse_parameter_sets(parameter_sets):
     """Parse parametric sweep set, and return all possible values in array.
     :param list parameter_sets: An array of parameter sets.
@@ -907,8 +912,8 @@ def _expand_parametric_sweep(factory):
     try:
         factory.merge_task.id = 'merge'
         factory.merge_task.depends_on = models.TaskDependencies(
-            task_id_ranges=models.TaskIdRange(start=0, end=len(task_objs) - 1))
-        task_objs.append(factory.merge_task)
+            task_id_ranges=[models.TaskIdRange(start=0, end=len(task_objs) - 1)])
+        task_objs.append(_transform_merge_task(factory.merge_task))
     except AttributeError:  # No merge task
         pass
     return task_objs
@@ -931,8 +936,8 @@ def _expand_task_per_file(factory, fileutils):
     try:
         factory.merge_task.id = 'merge'
         factory.merge_task.depends_on = models.TaskDependencies(
-            task_id_ranges=models.TaskIdRange(start=0, end=len(task_objs) - 1))
-        task_objs.append(factory.merge_task)
+             task_id_ranges=[models.TaskIdRange(start=0, end=len(task_objs) - 1)])
+        task_objs.append(_transform_merge_task(factory.merge_task))
     except AttributeError:  # No merge task
         pass
     return task_objs
@@ -993,6 +998,15 @@ def expand_task_factory(job, fileutils):
     job.task_factory = None
     return tasks
 
+
+def has_merge_task(job):
+    """ Check if user has specified a mergeTask on the task factory
+    :param job_obj: The JSON job entity loaded from a template.:
+    :return: true if merge task present
+    """
+    if job.task_factory.type in ['parametricSweep', 'taskPerFile'] and job.task_factory.merge_task:
+        return True
+    return False
 
 def construct_setup_task(existing_task, command_info, os_flavor):
     """Constructs a command line for the start task/job prep task which will
