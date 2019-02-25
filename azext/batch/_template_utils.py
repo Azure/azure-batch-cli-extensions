@@ -936,7 +936,7 @@ def _expand_task_per_file(factory, fileutils):
     try:
         factory.merge_task.id = 'merge'
         factory.merge_task.depends_on = models.TaskDependencies(
-             task_id_ranges=[models.TaskIdRange(start=0, end=len(task_objs) - 1)])
+            task_id_ranges=[models.TaskIdRange(start=0, end=len(task_objs) - 1)])
         task_objs.append(_transform_merge_task(factory.merge_task))
     except AttributeError:  # No merge task
         pass

@@ -215,7 +215,7 @@ class ExtendedJobOperations(JobOperations):
                 # If task submission raises, we roll back the job
                 self.delete(job.id)
                 raise
-            # if auto_complete:
+            if auto_complete:
                 # If the option to terminate the job was set, we need to reapply it with a patch
                 # now that the tasks have been added.
                 self.patch(job.id, {'on_all_tasks_complete': auto_complete})
