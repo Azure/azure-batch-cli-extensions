@@ -74,7 +74,7 @@ class TestBatchExtensionsLive(VCRTestBase):
                 'AZURE_BATCH_SUBSCRIPTION_ID',
                 "677f962b-9abf-4423-a27b-0c2f4094dcec")
             storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'testaccountforbatch')
-            storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'ZmFrZV9hY29jdW50X2tleQ==')
+            storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'abc==')
 
         self.data_dir = os.path.join(os.path.dirname(__file__), 'data')
         self.blob_client = CloudStorageAccount(storage_account, storage_key)\
@@ -447,4 +447,6 @@ class TestBatchExtensionsLive(VCRTestBase):
             json_obj = json.load(template)
         expanded_template = self.batch_client.job.expand_template(json_obj)
         job_param = self.batch_client.job.jobparameter_from_json(expanded_template)
-        self.batch_client.job.add(job_param)
+        self.cmd("batch job create --template '{}'".format(os.path.join(
+            self.data_dir,
+            'batch.job.mergetask.json')))
