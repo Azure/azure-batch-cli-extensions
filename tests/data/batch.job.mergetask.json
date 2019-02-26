@@ -81,7 +81,7 @@
                     "commandLine": "/bin/bash -c 'cat {fileName}'",
                     "resourceFiles": [
                         {
-                            "blobSource" : "{url}",
+                            "httpUrl" : "{url}",
                             "filePath" : "{fileName}"
                         }
                     ],
@@ -105,7 +105,7 @@
                     "commandLine": "/bin/bash -c 'ls'",
                     "resourceFiles": [
                         {
-                            "autoStorageContainerName": "fgrp-output"
+                            "autoStorageContainerName": "fgrp-[parameters('outputData')]"
                         }
                     ]
                 }

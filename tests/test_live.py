@@ -443,10 +443,6 @@ class TestBatchExtensionsLive(VCRTestBase):
 
         # Merge Task
         self.cmd("batch file upload --file-group 'in' --local-path '{}'".format(self.data_dir))
-        with open(os.path.join(self.data_dir, 'batch.job.mergetask.json'), 'r') as template:
-            json_obj = json.load(template)
-        expanded_template = self.batch_client.job.expand_template(json_obj)
-        job_param = self.batch_client.job.jobparameter_from_json(expanded_template)
         self.cmd("batch job create --template '{}'".format(os.path.join(
             self.data_dir,
             'batch.job.mergetask.json')))

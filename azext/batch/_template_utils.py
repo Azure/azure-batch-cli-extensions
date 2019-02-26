@@ -1008,6 +1008,7 @@ def has_merge_task(job):
         return True
     return False
 
+
 def construct_setup_task(existing_task, command_info, os_flavor):
     """Constructs a command line for the start task/job prep task which will
     run the setup script.
