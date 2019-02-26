@@ -188,6 +188,63 @@ Where the following tasks would be created:
   ]
 ```
 
+A `mergeTask` may also be specified to run after all tasks in the parametric sweep factory. This allows for map-reduce patterns where one task does parsing or combining of output upon completion of
+all tasks in the task factory. Similar to the `repeatTask` both the `id` and `dependsOn` properties are not allowed, as these are auto-populated with an `id` of 'merge' and the dependant tasks
+automatically. 
+
+ **Note:** It is not advised to use file groups as inputs to a `mergeTask`. File groups are expanded at the time of adding a task to the job and as such, will not contain output generated from dependant
+tasks. If you desire to output data from dependant tasks to the `mergeTask`, consider upgrading your extension for added functionality.
+
+ A basic example of using mergeTask:
+```json
+    "job": {
+            "type": "Microsoft.Batch/batchAccounts/jobs",
+            "apiVersion": "2018-12-01",
+            "properties": {
+                "id": "mergetask",
+                "poolInfo": {
+                  "poolId": "my-mergetask-pool"
+                },
+                "taskFactory": {
+                  "type": "parametricSweep",
+                  "parameterSets": [
+                  {
+                    "start": 1,
+                    "end": 500,
+                    "step": 1
+                  }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo {0}'",
+                    "outputFiles": [
+                        {
+                            "filePattern": "**/stdout.txt",
+                            "destination": {
+                                "autoStorage": {
+                                    "path": "output-{0}",
+                                    "fileGroup": "outputData"
+                                }
+                            },
+                            "uploadOptions": {
+                                "uploadCondition": "TaskSuccess"
+                            }
+                        }
+                    ]
+                },
+                "mergeTask" : {
+                    "displayName": "myMergeTask",
+                    "commandLine": "/bin/bash -c 'ls'",
+                    "resourceFiles": [
+                        {
+                            "autoStorageContainerName": "fgrp-outputData"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+```
+
 ### Samples
 
 The following samples use the parametric sweep task factory:
@@ -303,6 +360,63 @@ The above task factory would be expanded into the following tasks:
       ]
     }
   ]
+```
+
+A `mergeTask` may also be specified to run after all tasks in the task per file factory. This allows for map-reduce patterns where one task does parsing or combining of output upon completion of
+all tasks in the task factory. Similar to the `repeatTask` both the `id` and `dependsOn` properties are not allowed, as these are auto-populated with an `id` of 'merge' and the dependant tasks
+automatically. 
+
+ **Note:** It is not advised to use file groups as inputs to a `mergeTask`. File groups are expanded at the time of adding a task to the job and as such, will not contain output generated from dependant
+tasks. If you desire to output data from dependant tasks to the `mergeTask`, consider upgrading your extension for added capabilities.
+
+ A basic example of using mergeTask:
+
+ ```json
+    "job": {
+            "type": "Microsoft.Batch/batchAccounts/jobs",
+            "apiVersion": "2018-12-01",
+            "properties": {
+                "id": "mergetask",
+                "poolInfo": {
+                  "poolId": "my-mergetask-pool"
+                },
+                "taskFactory": {
+                    "type": "taskPerFile",
+                    "source" : {
+                        "fileGroup" : "inputData"
+                    },
+                    "repeatTask": {
+                        "commandLine": "/bin/bash -c 'cat {fileName}'",
+                        "resourceFiles": [
+                            {
+                                "blobSource" : "{url}",
+                                "filePath" : "{fileName}"
+                            }
+                        ],
+                        "outputFiles": [
+                            {
+                                "filePattern": "**/stdout.txt",
+                                "destination": {
+                                    "autoStorage": {
+                                        "path": "output-{fileName}",
+                                        "fileGroup": "outputData"
+                                    }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "TaskSuccess"
+                                }
+                            }
+                        ]
+                    },
+                    "mergeTask" : {
+                        "displayName": "myMergeTask",
+                        "commandLine": "/bin/bash -c 'ls'",
+                        "resourceFiles": [
+                            {
+                                "autoStorageContainerName": "fgrp-outputData"
+                            }
+                        ]
+                    }
 ```
 
 ### Samples
