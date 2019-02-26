@@ -3,6 +3,11 @@
 Release History
 ===============
 
+3.0.2 (2019-02-26)
+------------------
+
+* Fix bug when using extension to create a pool through normal CLI behavior
+
 3.0.1 (2019-02-04)
 ------------------
 
