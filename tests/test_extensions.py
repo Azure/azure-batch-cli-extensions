@@ -573,14 +573,14 @@ class TestBatchExtensions(unittest.TestCase):
             models.ExtendedTaskParameter(id='1', command_line='cmd 2.mp3'),
             models.ExtendedTaskParameter(id='2', command_line='cmd 3.mp3'),
             models.ExtendedTaskParameter(id='merge', command_line='summary.exe',
-                depends_on=models.TaskDependencies(task_id_ranges=models.TaskIdRange(start=0, end=2)))
+                depends_on=models.TaskDependencies(task_id_ranges=[models.TaskIdRange(start=0, end=2)]))
         ]
         result = utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
         for index, task in enumerate(result):
             self.assertEqual(expected[index].command_line, task.command_line)
         self.assertEqual(result[-1].id, 'merge')
-        self.assertEqual(result[-1].depends_on.task_id_ranges.start, 0)
-        self.assertEqual(result[-1].depends_on.task_id_ranges.end, 2)
+        self.assertEqual(result[-1].depends_on.task_id_ranges[0].start, 0)
+        self.assertEqual(result[-1].depends_on.task_id_ranges[0].end, 2)
 
     def test_batch_extensions_parse_invalid_parametricsweep(self):
 

@@ -63,20 +63,28 @@ class TestBatchExtensionsLive(VCRTestBase):
             self.account_name = 'sdktest2'
             self.account_endpoint = 'https://sdktest2.westcentralus.batch.azure.com'
             self.account_key = 'abc=='
+            self.subscription_id = "677f962b-9abf-4423-a27b-0c2f4094dcec"
             storage_account = 'sdkteststore2'
             storage_key = 'abc=='
         else:
             self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
             self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
             self.account_key = os.environ['AZURE_BATCH_ACCESS_KEY']
+            self.subscription_id = os.environ.get(
+                'AZURE_BATCH_SUBSCRIPTION_ID',
+                "677f962b-9abf-4423-a27b-0c2f4094dcec")
             storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'testaccountforbatch')
-            storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'ZmFrZV9hY29jdW50X2tleQ==')
+            storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'abc==')
 
         self.data_dir = os.path.join(os.path.dirname(__file__), 'data')
         self.blob_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
         credentials = batchauth.SharedKeyCredentials(self.account_name, self.account_key)
-        self.batch_client = batch.BatchExtensionsClient(credentials, batch_url=self.account_endpoint)
+        self.batch_client = batch.BatchExtensionsClient(
+            credentials,
+            batch_url=self.account_endpoint,
+            subscription_id=self.subscription_id,
+            batch_account=self.account_name)
 
         self.output_blob_container = 'aaatestcontainer'
         sas_token = self.blob_client.generate_container_shared_access_signature(
@@ -88,7 +96,6 @@ class TestBatchExtensionsLive(VCRTestBase):
             storage_account,
             self.output_blob_container,
             sas_token)
-        self.output_container_sas = 'https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer'
         print('Full container sas: {}'.format(self.output_container_sas))
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
@@ -433,3 +440,9 @@ class TestBatchExtensionsLive(VCRTestBase):
         self.batch_client.pool.add(pool_param)
         self.wait_for_pool_steady(pool_param.id, 5 * 60)
         self.batch_client.pool.delete(pool_param.id)
+
+        # Merge Task
+        self.cmd("batch file upload --file-group 'in' --local-path '{}'".format(self.data_dir))
+        self.cmd("batch job create --template '{}'".format(os.path.join(
+            self.data_dir,
+            'batch.job.mergetask.json')))

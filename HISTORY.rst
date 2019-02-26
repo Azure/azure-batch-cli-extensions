@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+5.0.4 (2019-02-25)
+------------------
+
+* Fix bug where specifying a mergeTask in a template would cause task add failures.
+
 5.0.3 (2019-02-19)
 ------------------
 
