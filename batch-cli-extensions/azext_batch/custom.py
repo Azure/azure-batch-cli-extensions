@@ -153,7 +153,7 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
             raise ValueError('Please supply template, json_file, or id')
 
         pool = PoolInformation(pool_id=pool_id)
-        job = JobAddParameter(id, pool, priority=priority)
+        job = JobAddParameter(id=id, pool_info=pool, priority=priority)
         job.uses_task_dependencies = uses_task_dependencies
         if job_max_wall_clock_time is not None or job_max_task_retry_count is not None:
             constraints = JobConstraints(max_wall_clock_time=job_max_wall_clock_time,
