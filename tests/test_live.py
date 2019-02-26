@@ -20,13 +20,14 @@ class TestFileUpload(VCRTestBase):
     def __init__(self, test_method):
         super(TestFileUpload, self).__init__(__file__, test_method)
         if self.playback:
-            self.account_name = 'brkltest'
-            self.resource_name = 'brkltest'
+            self.account_name = 'sdktest2'
+            self.account_endpoint = 'https://sdktest2.westcentralus.batch.azure.com'
+            self.resource_name = 'sdktest'
             self.account_endpoint = 'https://brkltest.eastus2.batch.azure.com/'
         else:
-            self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
-            self.resource_name = os.environ.get('AZURE_BATCH_RESOURCE_GROUP', 'test_rg')
-            self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
+            self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'sdktest2')
+            self.resource_name = os.environ.get('AZURE_BATCH_RESOURCE_GROUP', 'sdktest')
+            self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://sdktest2.westcentralus.batch.azure.com')
         self.testPrefix = 'cli-batch-extensions-live-tests'
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
@@ -60,20 +61,20 @@ class TestBatchExtensionsLive(VCRTestBase):
     def __init__(self, test_method):
         super(TestBatchExtensionsLive, self).__init__(__file__, test_method)
         if self.playback:
-            self.account_name = 'brkltest'
-            self.account_endpoint = 'https://brkltest.eastus2.batch.azure.com/'
+            self.account_name = 'sdktest2'
+            self.account_endpoint = 'https://sdktest2.westcentralus.batch.azure.com'
             self.account_key = 'ZmFrZV9hY29jdW50X2tleQ=='
             self.subscription_id = "677f962b-9abf-4423-a27b-0c2f4094dcec"
             storage_account = 'sdkteststore2'
             storage_key = 'abc=='
         else:
-            self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
-            self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
+            self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'sdktest2')
+            self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://sdktest2.westcentralus.batch.azure.com')
             self.account_key = os.environ['AZURE_BATCH_ACCESS_KEY']
             self.subscription_id = os.environ.get(
                 'AZURE_BATCH_SUBSCRIPTION_ID',
                 "677f962b-9abf-4423-a27b-0c2f4094dcec")
-            storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'testaccountforbatch')
+            storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'sdkteststore2')
             storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'abc==')
 
         self.data_dir = os.path.join(os.path.dirname(__file__), 'data')
