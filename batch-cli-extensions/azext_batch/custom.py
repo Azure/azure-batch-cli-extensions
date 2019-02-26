@@ -56,7 +56,7 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
         if not id:
             raise ValueError('Please supply template, json_file, or id')
 
-        pool = PoolAddParameter(id, vm_size=vm_size)
+        pool = PoolAddParameter(id=id, vm_size=vm_size)
         if auto_scale_formula:
             pool.auto_scale_formula = auto_scale_formula
             pool.enable_auto_scale = True
