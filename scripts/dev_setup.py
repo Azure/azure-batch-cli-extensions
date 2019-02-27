@@ -31,7 +31,7 @@ print('Root directory \'{}\'\n'.format(root_dir))
 exec_command('pip install -r requirements.txt')
 
 # install to edge build of azure-cli
-exec_command('pip install azure-cli=2.0.58')
+exec_command('pip install azure-cli==2.0.58')
 
 # install automation package
 exec_command('pip install -e ./scripts')
