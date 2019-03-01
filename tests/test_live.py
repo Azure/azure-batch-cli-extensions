@@ -20,13 +20,14 @@ class TestFileUpload(VCRTestBase):
     def __init__(self, test_method):
         super(TestFileUpload, self).__init__(__file__, test_method)
         if self.playback:
-            self.account_name = 'brkltest'
-            self.resource_name = 'brkltest'
+            self.account_name = 'sdktest2'
+            self.account_endpoint = 'https://sdktest2.westcentralus.batch.azure.com'
+            self.resource_name = 'sdktest'
             self.account_endpoint = 'https://brkltest.eastus2.batch.azure.com/'
         else:
-            self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
-            self.resource_name = os.environ.get('AZURE_BATCH_RESOURCE_GROUP', 'test_rg')
-            self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
+            self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'sdktest2')
+            self.resource_name = os.environ.get('AZURE_BATCH_RESOURCE_GROUP', 'sdktest')
+            self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://sdktest2.westcentralus.batch.azure.com')
         self.testPrefix = 'cli-batch-extensions-live-tests'
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
@@ -60,18 +61,23 @@ class TestBatchExtensionsLive(VCRTestBase):
     def __init__(self, test_method):
         super(TestBatchExtensionsLive, self).__init__(__file__, test_method)
         if self.playback:
-            self.account_name = 'brkltest'
-            self.account_endpoint = 'https://brkltest.eastus2.batch.azure.com/'
+            self.account_name = 'sdktest2'
+            self.account_endpoint = 'https://sdktest2.westcentralus.batch.azure.com'
             self.account_key = 'ZmFrZV9hY29jdW50X2tleQ=='
-            storage_account = 'brkltest'
-            storage_key = '1234=='
+            self.subscription_id = "677f962b-9abf-4423-a27b-0c2f4094dcec"
+            storage_account = 'sdkteststore2'
+            storage_key = 'abc=='
         else:
-            self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'test1')
-            self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://test1.westus.batch.azure.com/')
+            self.account_name = os.environ.get('AZURE_BATCH_ACCOUNT', 'sdktest2')
+            self.account_endpoint = os.environ.get('AZURE_BATCH_ENDPOINT', 'https://sdktest2.westcentralus.batch.azure.com')
             self.account_key = os.environ['AZURE_BATCH_ACCESS_KEY']
-        storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'testaccountforbatch')
-        storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'ZmFrZV9hY29jdW50X2tleQ==')
+            self.subscription_id = os.environ.get(
+                'AZURE_BATCH_SUBSCRIPTION_ID',
+                "677f962b-9abf-4423-a27b-0c2f4094dcec")
+            storage_account = os.environ.get('AZURE_STORAGE_ACCOUNT', 'sdkteststore2')
+            storage_key = os.environ.get('AZURE_STORAGE_ACCESS_KEY', 'abc==')
 
+        self.data_dir = os.path.join(os.path.dirname(__file__), 'data')
         self.blob_client = CloudStorageAccount(storage_account, storage_key)\
             .create_block_blob_service()
         credentials = batchauth.SharedKeyCredentials(self.account_name, self.account_key)
@@ -87,7 +93,6 @@ class TestBatchExtensionsLive(VCRTestBase):
             storage_account,
             self.output_blob_container,
             sas_token)
-        self.output_container_sas = 'https://testaccountforbatch.blob.core.windows.net:443/aaatestcontainer'
         print('Full container sas: {}'.format(self.output_container_sas))
 
     def cmd(self, command, checks=None, allowed_exceptions=None,
@@ -423,3 +428,9 @@ class TestBatchExtensionsLive(VCRTestBase):
         pool_id = 'ncj-windows-2012-r2'
         task_id = 'myTask'
         self.file_upload_helper(job_id, pool_id, task_id, 'windows-2012-r2', True)
+
+        # Merge Task
+        self.cmd("batch file upload --file-group 'in' --local-path '{}'".format(self.data_dir))
+        self.cmd("batch job create --template '{}'".format(os.path.join(
+            self.data_dir,
+            'batch.job.mergetask.json')))

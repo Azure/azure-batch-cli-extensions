@@ -140,6 +140,8 @@ class ExtendedJobOperations(JobOperations):
         task_collection = []
         file_utils = FileUtils(self.get_storage_client)
         if hasattr(job, 'task_factory') and job.task_factory:
+            if templates.has_merge_task(job):
+                job.uses_task_dependencies = True
             task_collection = templates.expand_task_factory(job, file_utils)
 
             # If job has a task factory and terminate job on all tasks complete is set, the job will

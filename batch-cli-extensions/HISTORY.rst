@@ -3,6 +3,11 @@
 Release History
 ===============
 
+2.5.3 (2019-02-26)
+------------------
+
+* Fix bug where extension could not handle creating pools or jobs purely through command line
+
 2.5.1 (2018-10-04)
 ------------------
 
