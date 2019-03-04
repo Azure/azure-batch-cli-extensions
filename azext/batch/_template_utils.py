@@ -1203,6 +1203,11 @@ def validate_json_object(json_obj, obj):
 
 
 def convert_blob_source_to_http_url(obj):
+    if isinstance(obj, list):
+        out = []
+        for i in obj:
+            out.append(convert_blob_source_to_http_url(i))
+        return out
     if isinstance(obj, dict):
         for key in obj:
             if key in ['resourceFiles', 'commonResourceFiles']:

@@ -1,0 +1,45 @@
+{
+  "job": {
+    "type": "Microsoft.Batch/batchAccounts/jobs",
+    "apiVersion": "2018-12-01",
+    "properties": {
+      "id": "job123",
+      "onAllTasksComplete": "terminateJob",
+      "poolInfo": {
+        "autoPoolSpecification": {
+          "autoPoolIdPrefix": "pool123",
+          "poolLifetimeOption": "job",
+          "keepAlive": false,
+          "pool": {
+            "vmSize": "STANDARD_D1_V2",
+            "virtualMachineConfiguration": {
+              "imageReference": {
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "16.04.0-LTS",
+                "version": "latest"
+              },
+              "nodeAgentSKUId": "batch.node.ubuntu 16.04"
+            },
+            "targetDedicatedNodes": "1"
+          }
+        }
+      },
+      "taskFactory": {
+        "type": "taskCollection",
+        "tasks": [
+          {
+            "id": "1",
+            "commandLine": "/bin/bash -c 'cat {fileName}'",
+            "resourceFiles": [
+              {
+                "httpUrl": "fake.url",
+                "filePath": "location"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
