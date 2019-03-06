@@ -3,6 +3,11 @@
 Release History
 ===============
 
+3.0.3 (2019-03-06)
+------------------
+
+* Update supported version warning to be accurate
+
 3.0.2 (2019-02-26)
 ------------------
 
