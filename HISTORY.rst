@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+5.0.5 (2019-02-25)
+------------------
+
+* Fix bug in blobSource conversion to httpUrl
+
 5.0.4 (2019-02-25)
 ------------------
 

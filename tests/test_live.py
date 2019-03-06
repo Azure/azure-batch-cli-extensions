@@ -441,6 +441,11 @@ class TestBatchExtensionsLive(VCRTestBase):
         self.wait_for_pool_steady(pool_param.id, 5 * 60)
         self.batch_client.pool.delete(pool_param.id)
 
+        # Batch simple legacy task factory
+        self.cmd("batch job create --template '{}'".format(os.path.join(
+            self.data_dir,
+            'batch.job.resourcefile-legacy.json')))
+
         # Merge Task
         self.cmd("batch file upload --file-group 'in' --local-path '{}'".format(self.data_dir))
         self.cmd("batch job create --template '{}'".format(os.path.join(
