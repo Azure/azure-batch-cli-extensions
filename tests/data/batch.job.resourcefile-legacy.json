@@ -33,7 +33,7 @@
             "commandLine": "/bin/bash -c 'cat {fileName}'",
             "resourceFiles": [
               {
-                "httpUrl": "fake.url",
+                "httpUrl": "https://testacct.blob.core.windows.net/",
                 "filePath": "location"
               }
             ]
