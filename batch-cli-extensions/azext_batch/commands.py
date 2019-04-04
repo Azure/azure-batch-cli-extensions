@@ -13,9 +13,9 @@ from azext.batch import __version__ as batch_ext_version
 
 
 logger = get_logger(__name__)
-SUPPORTED_BATCH_VERSION = "6.0"
-SUPPORTED_BMGMT_VERSION = "6.0"
-SUPPORTED_BATCH_EXT_VERSION = "5.0"
+MINIMUM_UNSUPPORTED_BATCH_VERSION = "6.1"
+MINIMUM_UNSUPPORTED_BMGMT_VERSION = "6.1"
+MINIMUM_UNSUPPORTED_BATCH_EXT_VERSION = "5.1"
 
 
 def confirm_version(current, supported, package):
@@ -24,9 +24,9 @@ def confirm_version(current, supported, package):
                        "%s up to version %s. The current version %s has not been "
                        "tested for compatibility.", package, supported, current)
 
-confirm_version(batch_version, SUPPORTED_BATCH_VERSION, "Azure Batch")
-confirm_version(batch_mgmt_version, SUPPORTED_BMGMT_VERSION, "Azure Batch Management")
-confirm_version(batch_ext_version, SUPPORTED_BATCH_EXT_VERSION, "Azure Batch Extensions")
+confirm_version(batch_version, MINIMUM_UNSUPPORTED_BATCH_VERSION, "Azure Batch")
+confirm_version(batch_mgmt_version, MINIMUM_UNSUPPORTED_BMGMT_VERSION, "Azure Batch Management")
+confirm_version(batch_ext_version, MINIMUM_UNSUPPORTED_BATCH_EXT_VERSION, "Azure Batch Extensions")
 
 
 def load_command_table(self, _):
