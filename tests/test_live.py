@@ -431,8 +431,8 @@ class TestBatchExtensionsLive(VCRTestBase):
         expanded_template = self.batch_client.pool.expand_template(json_obj)
         pool_param = self.batch_client.pool.poolparameter_from_json(expanded_template)
         self.batch_client.pool.add(pool_param)
-        self.wait_for_pool_steady(pool_param.id, 5 * 60)
-        self.batch_client.pool.delete(pool_param.id)
+        self.wait_for_pool_steady(pool_param.properties.id, 5 * 60)
+        self.batch_client.pool.delete(pool_param.properties.id)
 
         # Batch simple legacy task factory
         self.cmd("batch job create --template '{}'".format(os.path.join(

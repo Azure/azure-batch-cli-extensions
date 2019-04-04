@@ -320,36 +320,24 @@ class FileUtils(object):
 
     def resolve_resource_file(self, resource_file):
         """Convert new resourceFile reference to server-supported reference"""
-        if resource_file.http_url:
-            # Support original resourceFile reference
-            if not resource_file.file_path:
-                raise ValueError('Malformed ResourceFile: \'httpUrl\' must '
-                                 'also have \'file_path\' attribute')
-            return [resource_file]
-
-        if resource_file.storage_container_url or resource_file.auto_storage_container_name:
-            return [resource_file]
-
-        if not hasattr(resource_file, 'source') or not resource_file.source:
-            raise ValueError('Malformed ResourceFile: Must have either '
-                             ' \'source\' or \'httpUrl\'')
-
         storage_client = self.resolve_storage_account()
         container = None
         blobs = []
+        if hasattr(resource_file, 'source') and  resource_file.source:
+            if resource_file.source.file_group:
+                # Input data stored in auto-storage
+                container = get_container_name(resource_file.source.file_group)
+                blobs = self.list_container_contents(resource_file.source, container, storage_client)
+                return convert_blobs_to_resource_files(blobs, resource_file)
+            if resource_file.source.container_url:
+                # Input data storage in arbitrary container
+                uri = urlsplit(resource_file.source.container_url)
+                container = uri.pathname.split('/')[1]
+                blobs = self.list_container_contents(resource_file.source, container, storage_client)
+                return convert_blobs_to_resource_files(blobs, resource_file)
+            if resource_file.source.url:
+                # TODO: Input data from an arbitrary HTTP GET source
+                raise ValueError('Not implemented')
 
-        if resource_file.source.file_group:
-            # Input data stored in auto-storage
-            container = get_container_name(resource_file.source.file_group)
-            blobs = self.list_container_contents(resource_file.source, container, storage_client)
-            return convert_blobs_to_resource_files(blobs, resource_file)
-        if resource_file.source.container_url:
-            # Input data storage in arbitrary container
-            uri = urlsplit(resource_file.source.container_url)
-            container = uri.pathname.split('/')[1]
-            blobs = self.list_container_contents(resource_file.source, container, storage_client)
-            return convert_blobs_to_resource_files(blobs, resource_file)
-        if resource_file.source.url:
-            # TODO: Input data from an arbitrary HTTP GET source
-            raise ValueError('Not implemented')
-        raise ValueError('Malformed ResourceFile')
+        return [resource_file]
+

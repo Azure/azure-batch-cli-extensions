@@ -1,36 +1,40 @@
 {
   "pool": {
-    "id": "blobsource1",
-    "displayName": "Blender Ubuntu standard pool",
-    "vmSize": "Standard_D1_v2",
-    "virtualMachineConfiguration": {
-      "imageReference": {
-        "publisher": "Canonical",
-        "offer" : "UbuntuServer",
-        "sku": "16.04.0-LTS",
-        "version": "latest"
+    "type": "Microsoft.Batch/batchAccounts/pools",
+    "apiVersion": "2018-08-01",
+    "properties": {
+      "id": "blobsource",
+      "displayName": "Blender Ubuntu standard pool",
+      "vmSize": "Standard_D1_v2",
+      "virtualMachineConfiguration": {
+        "imageReference": {
+          "publisher": "Canonical",
+          "offer": "UbuntuServer",
+          "sku": "16.04.0-LTS",
+          "version": "latest"
+        },
+        "nodeAgentSKUId": "batch.node.ubuntu 16.04"
       },
-      "nodeAgentSKUId": "batch.node.ubuntu 16.04"
-    },
-    "targetDedicatedNodes": "1",
-    "targetLowPriorityNodes": "0",
-    "enableAutoScale": false,
-    "startTask": {
-      "commandLine": "sleep 1",
-      "waitForSuccess": true,
-      "maxTaskRetryCount": 0,
-      "userIdentity": {
-        "autoUser": {
-          "scope": "pool",
-          "elevationLevel": "admin"
-        }
-      },
-      "resourceFiles": [
-        {
-          "blobSource": "https://raw.githubusercontent.com/Azure/BatchExplorer-data/master/ncj/blender/scripts/setup-linux-pool.sh",
-          "filePath": "setup-linux-pool.sh"
-        }
-      ]
+      "targetDedicatedNodes": "1",
+      "targetLowPriorityNodes": "0",
+      "enableAutoScale": false,
+      "startTask": {
+        "commandLine": "sleep 1",
+        "waitForSuccess": true,
+        "maxTaskRetryCount": 0,
+        "userIdentity": {
+          "autoUser": {
+            "scope": "pool",
+            "elevationLevel": "admin"
+          }
+        },
+        "resourceFiles": [
+          {
+            "blobSource": "https://raw.githubusercontent.com/Azure/BatchExplorer-data/master/ncj/blender/scripts/setup-linux-pool.sh",
+            "filePath": "setup-linux-pool.sh"
+          }
+        ]
+      }
     }
   }
 }

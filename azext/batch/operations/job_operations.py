@@ -4,15 +4,21 @@
 # --------------------------------------------------------------------------------------------
 from __future__ import unicode_literals
 
+import importlib
+import logging
+
 from datetime import datetime as dt
+from mock import patch
 from msrest.exceptions import DeserializationError
 from azure.batch.operations._job_operations import JobOperations
 
 from .. import models
-from .. import _template_utils as templates
-from .. import _pool_utils as pool_utils
+from .. import _template_utils
+from .. import _pool_utils
 from .._file_utils import FileUtils
-from ..models.constants import KnownTemplateVersion
+from ..models.constants import *
+
+logger = logging.getLogger(__name__)
 
 class ExtendedJobOperations(JobOperations):
     """JobOperations operations.
@@ -53,7 +59,7 @@ class ExtendedJobOperations(JobOperations):
         :param template: The template data. Must be a dictionary.
         :param parameters: The values of parameters to be substituted into
          the template. Must be a dictionary.
-        :returns: The pool specification JSON dictionary.
+        :returns: The job specification JSON dictionary.
         """
         if not isinstance(template, dict):
             raise ValueError("template isn't a JSON dictionary")
@@ -61,7 +67,7 @@ class ExtendedJobOperations(JobOperations):
             raise ValueError("parameters isn't a JSON dictionary")
         elif not parameters:
             parameters = {}
-        expanded_job_object = templates.expand_template(template, parameters)
+        expanded_job_object = _template_utils.expand_template(template, parameters)
         try:
             return expanded_job_object['job']
         except KeyError:
@@ -73,22 +79,39 @@ class ExtendedJobOperations(JobOperations):
         :param dict json_data: The JSON specification of an AddJobParameter or an
          ExtendedJobParameter or a JobTemplate
         """
+        # json_data = templates.convert_blob_source_to_http_url(json_data)
+        api_version_raw = json_data.get('apiVersion')
+        if api_version_raw:
+            api_version = None
+            for valid_version in SupportedRestApi:
+                if api_version_raw in valid_version.value:
+                    api_version = valid_version
+                    break
+
+            if api_version and SupportRestApiToSdkVersion[api_version] != "latest":
+                vendor_base = "azext.batch._vendor.v{}.azext.batch".format(
+                    SupportRestApiToSdkVersion[api_version])
+                models_str = "{}.models".format(vendor_base)
+                vendored_models = importlib.import_module(models_str)
+                return ExtendedJobOperations._jobparameter_from_json(
+                    json_data,
+                    vendored_models)
+            else:
+                logging.warning("Invalid apiVersion, defaulting to latest")
+            return ExtendedJobOperations._jobparameter_from_json(
+                json_data,
+                models)
+
+    @staticmethod
+    def _jobparameter_from_json(json_data, models_impl):
         result = 'JobTemplate' if json_data.get('properties') else 'ExtendedJobParameter'
-        json_data = templates.convert_blob_source_to_http_url(json_data)
         try:
             if result == 'JobTemplate':
-                if 'apiVersion' in json_data:
-                    max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
-                    specified_datetime = dt.strptime(json_data['apiVersion'], "%Y-%m-%d")
-                    if max_datetime < specified_datetime:
-                        raise NotImplementedError(
-                            "This SDK does not have template API version {} implemented".format(
-                                json_data['apiVersion']))
-                job = models.JobTemplate.from_dict(json_data)
+                job = models_impl.JobTemplate.from_dict(json_data)
             else:
-                job = models.ExtendedJobParameter.from_dict(json_data)
+                job = models_impl.ExtendedJobParameter.from_dict(json_data)
             if job is None:
-                raise ValueError("JSON file is not in correct format.")
+                raise ValueError("JSON data is not in correct format.")
             return job
         except NotImplementedError:
             raise
@@ -136,18 +159,121 @@ class ExtendedJobOperations(JobOperations):
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
-        if isinstance(job, models.JobTemplate):
-            if job.api_version:
-                max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
-                specified_datetime = dt.strptime(job.api_version, "%Y-%m-%d")
-                if max_datetime < specified_datetime:
-                    raise NotImplementedError("This SDK does not have template API version {} implemetned".format(
-                        job.api_version))
+        original_api_version = None
+        api_version = None
+        vendored_pool_utils = importlib.import_module("azext.batch._pool_utils")
+        vendored_template_utils = importlib.import_module("azext.batch._template_utils")
+        vendored_models = importlib.import_module("azext.batch.models")
+        api_version_raw = getattr(job, 'api_version', None)
+        if api_version_raw:
+            for valid_version in SupportedRestApi:
+                if api_version_raw in valid_version.value:
+                    api_version = valid_version
+                    break
+
+            if api_version and SupportRestApiToSdkVersion[api_version] != "latest":
+                vendor_base = "azext.batch._vendor.v{}.azext.batch".format(
+                    SupportRestApiToSdkVersion[api_version])
+                models_str = "{}.models".format(
+                    vendor_base)
+                vendored_models = importlib.import_module(models_str)
+
+                pool_utils_str = "{}._pool_utils".format(
+                    vendor_base)
+                vendored_pool_utils = importlib.import_module(pool_utils_str)
+
+                templates_str = "{}._template_utils".format(
+                    vendor_base)
+                vendored_template_utils = importlib.import_module(templates_str)
+
+                if isinstance(job, vendored_models.JobTemplate):
+                    job = job.properties
+            else:
+                logging.warning("Invalid apiVersion, defaulting to latest")
+                api_version = None
+
+        if isinstance(job, models.PoolTemplate):
             job = job.properties
+
+        try:
+            if api_version:
+                original_api_version = self.api_version
+                self.api_version = api_version.value[0]
+                self._parent.task.api_version = api_version.value[0]
+                ret = self._add(
+                    job,
+                    job_add_options,
+                    custom_headers,
+                    raw,
+                    threads,
+                    vendored_pool_utils,
+                    vendored_template_utils,
+                    vendored_models,
+                    **operation_config)
+                self.api_version = original_api_version
+                return ret
+            else:
+                return self._add(
+                    job,
+                    job_add_options,
+                    custom_headers,
+                    raw,
+                    threads,
+                    _pool_utils,
+                    _template_utils,
+                    models,
+                    **operation_config)
+        except Exception:
+            if original_api_version:
+                self.api_version = original_api_version
+                self._parent.task.api_version = original_api_version
+                raise
+    add.metadata = {'url': '/jobs'}
+
+    def _add(self, job, job_add_options, custom_headers, raw,
+             threads, pool_utils, template_utils, models_impl, **operation_config):
+        """Adds a job to the specified account.
+
+        The Batch service supports two ways to control the work done as part of
+        a job. In the first approach, the user specifies a Job Manager task.
+        The Batch service launches this task when it is ready to start the job.
+        The Job Manager task controls all other tasks that run under this job,
+        by using the Task APIs. In the second approach, the user directly
+        controls the execution of tasks under an active job, by using the Task
+        APIs. Also note: when naming jobs, avoid including sensitive
+        information such as user names or secret project names. This
+        information may appear in telemetry logs accessible to Microsoft
+        Support engineers.
+
+        :param job: The job to be added.
+        :type job: :class:`JobAddParameter<azure.batch.models.JobAddParameter>` or
+         :class:`ExtendedJobParameter<azext.batch.models.ExtendedJobParameter>`
+         or :class:`JobTemplate<azure.batch.models.JobTemplate>`
+        :param job_add_options: Additional parameters for the operation
+        :type job_add_options: :class:`JobAddOptions
+         <azure.batch.models.JobAddOptions>`
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: returns the direct response alongside the
+         deserialized response
+        :param int threads: number of threads to use in parallel when adding tasks.
+         If specified will start additional threads to submit requests and
+         wait for them to finish. Defaults to half of cpu count(floor)
+        :param operation_config: :ref:`Operation configuration
+         overrides<msrest:optionsforoperations>`.
+        :return: :class:`TaskAddCollectionResult
+         <azure.batch.models.TaskAddCollectionResult>` if using TaskFactory or
+         :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>` if
+         raw=true, otherwise None
+        :rtype: None or :class:`TaskAddCollectionResult
+         <azure.batch.models.TaskAddCollectionResult>` or
+         :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
+        :raises:
+         :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
+        """
         # Process an application template reference.
         if hasattr(job, 'application_template_info') and job.application_template_info:
             try:
-                templates.expand_application_template(job, self._deserialize)
+                template_utils.expand_application_template(job, self._deserialize)
             except DeserializationError as error:
                 raise ValueError("Failed to load application template from '{}': {}".
                                  format(job.application_template_info.file_path, error))
@@ -157,9 +283,9 @@ class ExtendedJobOperations(JobOperations):
         task_collection = []
         file_utils = FileUtils(self.get_storage_client)
         if hasattr(job, 'task_factory') and job.task_factory:
-            if templates.has_merge_task(job):
+            if template_utils.has_merge_task(job):
                 job.uses_task_dependencies = True
-            task_collection = templates.expand_task_factory(job, file_utils)
+            task_collection = template_utils.expand_task_factory(job, file_utils)
 
             # If job has a task factory and terminate job on all tasks complete is set, the job will
             # already be terminated when we add the tasks, so we need to set to noAction, then patch
@@ -168,7 +294,7 @@ class ExtendedJobOperations(JobOperations):
                 auto_complete = job.on_all_tasks_complete
                 job.on_all_tasks_complete = 'noaction'
 
-        should_get_pool = templates.should_get_pool(job, task_collection)
+        should_get_pool = template_utils.should_get_pool(job, task_collection)
         pool_os_flavor = None
         if should_get_pool:
             pool = self._get_target_pool(job)
@@ -180,24 +306,24 @@ class ExtendedJobOperations(JobOperations):
                 and job.pool_info.auto_pool_specification.pool.package_references:
 
             pool = job.pool_info.auto_pool_specification.pool
-            cmds = [templates.process_pool_package_references(pool)]
-            pool.start_task = models.StartTask(
-                **templates.construct_setup_task(pool.start_task, cmds, pool_os_flavor))
+            cmds = [template_utils.process_pool_package_references(pool)]
+            pool.start_task = models_impl.StartTask(
+                **template_utils.construct_setup_task(pool.start_task, cmds, pool_os_flavor))
 
         commands = []
         # Handle package management on tasks.
-        commands.append(templates.process_task_package_references(
+        commands.append(template_utils.process_task_package_references(
             task_collection, pool_os_flavor))
-        job_prep_task_parameters = templates.construct_setup_task(
+        job_prep_task_parameters = template_utils.construct_setup_task(
             job.job_preparation_task, commands, pool_os_flavor)
         if job_prep_task_parameters:
-            job.job_preparation_task = models.JobPreparationTask(**job_prep_task_parameters)
+            job.job_preparation_task = models_impl.JobPreparationTask(**job_prep_task_parameters)
 
         # Handle any extended resource file references.
-        templates.post_processing(job, file_utils, pool_os_flavor)
+            template_utils.post_processing(job, file_utils, pool_os_flavor)
         if task_collection:
-            templates.post_processing(task_collection, file_utils, pool_os_flavor)
-        templates.process_job_for_output_files(job, task_collection, file_utils)
+            template_utils.post_processing(task_collection, file_utils, pool_os_flavor)
+            template_utils.process_job_for_output_files(job, task_collection, file_utils)
 
         # Begin original job add process
         result = super(ExtendedJobOperations, self).add(
@@ -211,14 +337,13 @@ class ExtendedJobOperations(JobOperations):
                     None,
                     raw,
                     threads)
-            except Exception:
+            except Exception as e:
                 # If task submission raises, we roll back the job
                 self.delete(job.id)
-                raise
+                raise e
             if auto_complete:
                 # If the option to terminate the job was set, we need to reapply it with a patch
                 # now that the tasks have been added.
                 self.patch(job.id, {'on_all_tasks_complete': auto_complete})
             return tasks
         return result
-    add.metadata = {'url': '/jobs'}
