@@ -192,7 +192,7 @@ class ExtendedJobOperations(JobOperations):
                 logging.warning("Invalid apiVersion, defaulting to latest")
                 api_version = None
 
-        if isinstance(job, models.PoolTemplate):
+        if isinstance(job, models.JobTemplate):
             job = job.properties
 
         try:
@@ -223,11 +223,11 @@ class ExtendedJobOperations(JobOperations):
                     _template_utils,
                     models,
                     **operation_config)
-        except Exception:
+        except Exception as e:
             if original_api_version:
                 self.api_version = original_api_version
                 self._parent.task.api_version = original_api_version
-                raise
+                raise e
     add.metadata = {'url': '/jobs'}
 
     def _add(self, job, job_add_options, custom_headers, raw,
