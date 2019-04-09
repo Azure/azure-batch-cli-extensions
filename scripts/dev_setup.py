@@ -23,7 +23,7 @@ def exec_command(command):
         print(err, file=sys.stderr)
         sys.exit(1)
 
-print('Running dev setup...')
+print('Running dev setup... ')
 print(os.environ)
 print('Root directory \'{}\'\n'.format(root_dir))
 
