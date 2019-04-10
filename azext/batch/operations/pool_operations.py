@@ -13,7 +13,7 @@ from mock import patch
 from msrest import Serializer, Deserializer
 
 from .. import models
-from ..models.constants import *
+from ..models.constants import SupportedRestApi, SupportRestApiToSdkVersion
 from .. import _file_utils
 from .. import _pool_utils
 from .. import _template_utils
@@ -190,7 +190,6 @@ class ExtendedPoolOperations(PoolOperations):
                     **operation_config)
                 self.api_version = original_api_version
                 return ret
-            else:
                 return self._add(
                     pool,
                     pool_add_options,
@@ -201,7 +200,7 @@ class ExtendedPoolOperations(PoolOperations):
                     _file_utils,
                     models,
                     **operation_config)
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             if original_api_version:
                 self.api_version = original_api_version
                 raise
@@ -257,4 +256,3 @@ class ExtendedPoolOperations(PoolOperations):
         return super(ExtendedPoolOperations, self).add(pool, pool_add_options,
                                                        custom_headers, raw,
                                                        **operation_config)
-

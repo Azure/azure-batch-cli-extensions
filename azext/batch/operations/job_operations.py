@@ -7,8 +7,6 @@ from __future__ import unicode_literals
 import importlib
 import logging
 
-from datetime import datetime as dt
-from mock import patch
 from msrest.exceptions import DeserializationError
 from azure.batch.operations._job_operations import JobOperations
 
@@ -16,7 +14,7 @@ from .. import models
 from .. import _template_utils
 from .. import _pool_utils
 from .._file_utils import FileUtils
-from ..models.constants import *
+from ..models.constants import SupportedRestApi, SupportRestApiToSdkVersion
 
 logger = logging.getLogger(__name__)
 
@@ -98,9 +96,9 @@ class ExtendedJobOperations(JobOperations):
                     vendored_models)
             else:
                 logging.warning("Invalid apiVersion, defaulting to latest")
-            return ExtendedJobOperations._jobparameter_from_json(
-                json_data,
-                models)
+        return ExtendedJobOperations._jobparameter_from_json(
+            json_data,
+            models)
 
     @staticmethod
     def _jobparameter_from_json(json_data, models_impl):
@@ -212,22 +210,21 @@ class ExtendedJobOperations(JobOperations):
                     **operation_config)
                 self.api_version = original_api_version
                 return ret
-            else:
-                return self._add(
-                    job,
-                    job_add_options,
-                    custom_headers,
-                    raw,
-                    threads,
-                    _pool_utils,
-                    _template_utils,
-                    models,
-                    **operation_config)
-        except Exception as e:
+            return self._add(
+                job,
+                job_add_options,
+                custom_headers,
+                raw,
+                threads,
+                _pool_utils,
+                _template_utils,
+                models,
+                **operation_config)
+        except Exception as e:  # pylint: disable=broad-except
             if original_api_version:
                 self.api_version = original_api_version
                 self._parent.task.api_version = original_api_version
-                raise e
+            raise e
     add.metadata = {'url': '/jobs'}
 
     def _add(self, job, job_add_options, custom_headers, raw,

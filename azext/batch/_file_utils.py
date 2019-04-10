@@ -340,4 +340,3 @@ class FileUtils(object):
                 raise ValueError('Not implemented')
 
         return [resource_file]
-
