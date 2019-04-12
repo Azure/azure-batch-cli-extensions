@@ -159,9 +159,9 @@ class ExtendedJobOperations(JobOperations):
         """
         original_api_version = None
         api_version = None
-        vendored_pool_utils = importlib.import_module("azext.batch._pool_utils")
-        vendored_template_utils = importlib.import_module("azext.batch._template_utils")
-        vendored_models = importlib.import_module("azext.batch.models")
+        vendored_pool_utils = None
+        vendored_template_utils = None
+        vendored_models = None
         api_version_raw = getattr(job, 'api_version', None)
         if api_version_raw:
             for valid_version in SupportedRestApi:

@@ -7,7 +7,6 @@ from azure.cli.core.util import get_file_json
 from knack.log import get_logger
 from knack.prompting import prompt
 
-from azext.batch import _template_utils as templates
 from azext.batch.errors import CreateTasksErrorException
 from azext.batch.models import PoolAddParameter, JobAddParameter, JobConstraints
 from azext.batch.operations import ExtendedPoolOperations, ExtendedJobOperations
@@ -51,7 +50,6 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
         pool = ExtendedPoolOperations.poolparameter_from_json(json_obj)
         if pool is None:
             raise ValueError("JSON pool parameter is not in correct format.")
-        templates.validate_json_object(json_obj, pool)
     else:
         if not id:
             raise ValueError('Please supply template, json_file, or id')
@@ -147,7 +145,6 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
             raise
         if job is None:
             raise ValueError("JSON job parameter is not in correct format.")
-        templates.validate_json_object(json_obj, job)
     else:
         if not id:
             raise ValueError('Please supply template, json_file, or id')
