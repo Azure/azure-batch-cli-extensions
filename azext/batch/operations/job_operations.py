@@ -336,7 +336,7 @@ class ExtendedJobOperations(JobOperations):
                     threads)
             except Exception as e:
                 # If task submission raises, we roll back the job
-                self.delete(job.id)
+                # self.delete(job.id)
                 raise e
             if auto_complete:
                 # If the option to terminate the job was set, we need to reapply it with a patch

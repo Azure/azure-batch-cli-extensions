@@ -2,6 +2,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
+import json
 import multiprocessing
 from azure.cli.core.util import get_file_json
 from knack.log import get_logger
@@ -42,8 +43,6 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                     parameters[error.parameter_name] = prompt(param_prompt)
                 except TypeError as error:
                     raise ValueError(str(error))
-                else:
-                    json_obj = json_obj.get('properties', json_obj)
         else:
             json_obj = get_file_json(json_file)
         # validate the json file
@@ -133,11 +132,8 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
                     parameters[error.parameter_name] = prompt(param_prompt)
                 except TypeError as error:
                     raise ValueError(str(error))
-                else:
-                    json_obj = json_obj.get('properties', json_obj)
         else:
             json_obj = get_file_json(json_file)
-        # validate the json file
         try:
             job = ExtendedJobOperations.jobparameter_from_json(json_obj)
         except NotImplementedError:
@@ -173,7 +169,6 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
     except CreateTasksErrorException as e:
         for error in e.failures:
             logger.warning(error.task_id + " failed to be added due to " + error.error.code)
-
 create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__
 
 
