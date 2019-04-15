@@ -1,0 +1,715 @@
+{
+    "version": 1,
+    "interactions": [
+        {
+            "request": {
+                "method": "GET",
+                "uri": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2?api-version=2018-12-01",
+                "body": null,
+                "headers": {
+                    "User-Agent": [
+                        "python/3.7.3 (Windows-10-10.0.17763-SP0) msrest/0.6.6 msrest_azure/0.6.0 azure-mgmt-batch/6.0.0 Azure-SDK-For-Python"
+                    ],
+                    "Accept-Encoding": [
+                        "gzip, deflate"
+                    ],
+                    "Accept": [
+                        "application/json"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "Authorization": [
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik4tbEMwbi05REFMcXdodUhZbkhRNjNHZUNYYyIsImtpZCI6Ik4tbEMwbi05REFMcXdodUhZbkhRNjNHZUNYYyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTU1MzQ2MzQ2LCJuYmYiOjE1NTUzNDYzNDYsImV4cCI6MTU1NTM1MDI0NiwiX2NsYWltX25hbWVzIjp7Imdyb3VwcyI6InNyYzEifSwiX2NsYWltX3NvdXJjZXMiOnsic3JjMSI6eyJlbmRwb2ludCI6Imh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3VzZXJzLzI3MjQ0OTM1LWE0YjktNDBhNC1hMjcyLTQyOTQyYjY3ZWNmMS9nZXRNZW1iZXJPYmplY3RzIn19LCJhY3IiOiIxIiwiYWlvIjoiQVVRQXUvOExBQUFBRzZjTkw2eUIrcm9ycWpodUxDdW0xVURKeWROVlRRWFRQZWdReFg1b3B1Uy9JR0RLTkV2TWpwYVBKYzN1b2x6TVN5T1U4TTlpTExRWXhIU2NlWmJZRWc9PSIsImFtciI6WyJyc2EiLCJtZmEiXSwiYXBwaWQiOiIwNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDYiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjFkNTBjNWRmLWZkMDEtNGE2NC04ODU5LTg0NzIzNzU4YTI0NCIsImZhbWlseV9uYW1lIjoiS2xlaW4iLCJnaXZlbl9uYW1lIjoiQnJhbmRvbiIsImlwYWRkciI6IjEzMS4xMDcuMTYwLjI1MSIsIm5hbWUiOiJCcmFuZG9uIEtsZWluIiwib2lkIjoiMjcyNDQ5MzUtYTRiOS00MGE0LWEyNzItNDI5NDJiNjdlY2YxIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIxMjc1MjExODQtMTYwNDAxMjkyMC0xODg3OTI3NTI3LTMwODY5MTc0IiwicHVpZCI6IjEwMDMwMDAwQTkxNzc4OUUiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiIzLWlWTFpVcWc4cllVRTR5S0V2T0pLREtDdmdSNElSb0FyYVc5UVpiTUZBIiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidW5pcXVlX25hbWUiOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1cG4iOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJmYU5TbGNnUS1VV2FubW10YTlSZkFBIiwidmVyIjoiMS4wIn0.BR5vnGyMeYLi8DbnZF7nSZxkn-n9ixD0E1-n6Kp2Mv3GFlDZzfPwxvrhXqZezuzbcKIle36r2HQGbudCwDZS9DnRGPudNG3YVv_75j_rHYZ4o-PXTfSwX9xNBqQ8fxSEGTyUc8stB0DC1Vh1QNVLYuYBaWGMwL90YYQ_Hf2bIO7MFl1QHF62UxH6E_lvLScjZpf_qQA6WoylMbks49bua375-aa3nBI22nz8octpLTVELHwZIgHXum2ib7P_k3YCOARpDWycajUCTF36KbtN2N4ohnXc1F-G6ghzShdcTicwheod84Zb95SEdeCXDuJP4iaz1PNqrS0owjW8w7Rxjw"
+                    ],
+                    "Content-Type": [
+                        "application/json; charset=utf-8"
+                    ],
+                    "x-ms-client-request-id": [
+                        "75b28aee-5fa1-11e9-b72d-44032c851686"
+                    ],
+                    "accept-language": [
+                        "en-US"
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 200,
+                    "message": "OK"
+                },
+                "headers": {
+                    "Content-Type": [
+                        "application/json; charset=utf-8"
+                    ],
+                    "Last-Modified": [
+                        "Wed, 27 Mar 2019 18:16:27 GMT"
+                    ],
+                    "X-Content-Type-Options": [
+                        "nosniff"
+                    ],
+                    "Pragma": [
+                        "no-cache"
+                    ],
+                    "ETag": [
+                        "\"0x8D6B2E053F1292B\""
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Server": [
+                        "Microsoft-HTTPAPI/2.0"
+                    ],
+                    "Strict-Transport-Security": [
+                        "max-age=31536000; includeSubDomains"
+                    ],
+                    "Date": [
+                        "Mon, 15 Apr 2019 17:11:08 GMT"
+                    ],
+                    "Transfer-Encoding": [
+                        "chunked"
+                    ],
+                    "Expires": [
+                        "-1"
+                    ],
+                    "Cache-Control": [
+                        "no-cache"
+                    ],
+                    "content-length": [
+                        "674"
+                    ]
+                },
+                "body": {
+                    "string": "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2\",\"name\":\"sdktest2\",\"type\":\"Microsoft.Batch/batchAccounts\",\"location\":\"westcentralus\",\"properties\":{\"accountEndpoint\":\"sdktest2.westcentralus.batch.azure.com\",\"provisioningState\":\"Succeeded\",\"dedicatedCoreQuota\":20,\"lowPriorityCoreQuota\":100,\"poolQuota\":100,\"activeJobAndJobScheduleQuota\":300,\"autoStorage\":{\"storageAccountId\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Storage/storageAccounts/sdkteststore2\",\"lastKeySync\":\"2019-02-28T00:16:43.578203Z\"},\"poolAllocationMode\":\"BatchService\"}}"
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "POST",
+                "uri": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Storage/storageAccounts/sdkteststore2/listKeys?api-version=2018-02-01",
+                "body": null,
+                "headers": {
+                    "User-Agent": [
+                        "python/3.7.3 (Windows-10-10.0.17763-SP0) msrest/0.6.6 msrest_azure/0.6.0 azure-mgmt-storage/2.0.0 Azure-SDK-For-Python"
+                    ],
+                    "Accept-Encoding": [
+                        "gzip, deflate"
+                    ],
+                    "Accept": [
+                        "application/json"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "Authorization": [
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik4tbEMwbi05REFMcXdodUhZbkhRNjNHZUNYYyIsImtpZCI6Ik4tbEMwbi05REFMcXdodUhZbkhRNjNHZUNYYyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTU1MzQ2MzQ2LCJuYmYiOjE1NTUzNDYzNDYsImV4cCI6MTU1NTM1MDI0NiwiX2NsYWltX25hbWVzIjp7Imdyb3VwcyI6InNyYzEifSwiX2NsYWltX3NvdXJjZXMiOnsic3JjMSI6eyJlbmRwb2ludCI6Imh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3VzZXJzLzI3MjQ0OTM1LWE0YjktNDBhNC1hMjcyLTQyOTQyYjY3ZWNmMS9nZXRNZW1iZXJPYmplY3RzIn19LCJhY3IiOiIxIiwiYWlvIjoiQVVRQXUvOExBQUFBRzZjTkw2eUIrcm9ycWpodUxDdW0xVURKeWROVlRRWFRQZWdReFg1b3B1Uy9JR0RLTkV2TWpwYVBKYzN1b2x6TVN5T1U4TTlpTExRWXhIU2NlWmJZRWc9PSIsImFtciI6WyJyc2EiLCJtZmEiXSwiYXBwaWQiOiIwNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDYiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjFkNTBjNWRmLWZkMDEtNGE2NC04ODU5LTg0NzIzNzU4YTI0NCIsImZhbWlseV9uYW1lIjoiS2xlaW4iLCJnaXZlbl9uYW1lIjoiQnJhbmRvbiIsImlwYWRkciI6IjEzMS4xMDcuMTYwLjI1MSIsIm5hbWUiOiJCcmFuZG9uIEtsZWluIiwib2lkIjoiMjcyNDQ5MzUtYTRiOS00MGE0LWEyNzItNDI5NDJiNjdlY2YxIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIxMjc1MjExODQtMTYwNDAxMjkyMC0xODg3OTI3NTI3LTMwODY5MTc0IiwicHVpZCI6IjEwMDMwMDAwQTkxNzc4OUUiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiIzLWlWTFpVcWc4cllVRTR5S0V2T0pLREtDdmdSNElSb0FyYVc5UVpiTUZBIiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidW5pcXVlX25hbWUiOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1cG4iOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJmYU5TbGNnUS1VV2FubW10YTlSZkFBIiwidmVyIjoiMS4wIn0.BR5vnGyMeYLi8DbnZF7nSZxkn-n9ixD0E1-n6Kp2Mv3GFlDZzfPwxvrhXqZezuzbcKIle36r2HQGbudCwDZS9DnRGPudNG3YVv_75j_rHYZ4o-PXTfSwX9xNBqQ8fxSEGTyUc8stB0DC1Vh1QNVLYuYBaWGMwL90YYQ_Hf2bIO7MFl1QHF62UxH6E_lvLScjZpf_qQA6WoylMbks49bua375-aa3nBI22nz8octpLTVELHwZIgHXum2ib7P_k3YCOARpDWycajUCTF36KbtN2N4ohnXc1F-G6ghzShdcTicwheod84Zb95SEdeCXDuJP4iaz1PNqrS0owjW8w7Rxjw"
+                    ],
+                    "Content-Type": [
+                        "application/json; charset=utf-8"
+                    ],
+                    "x-ms-client-request-id": [
+                        "75f6544a-5fa1-11e9-ac95-44032c851686"
+                    ],
+                    "accept-language": [
+                        "en-US"
+                    ],
+                    "Content-Length": [
+                        "0"
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 200,
+                    "message": "OK"
+                },
+                "headers": {
+                    "Content-Type": [
+                        "application/json"
+                    ],
+                    "Date": [
+                        "Mon, 15 Apr 2019 17:11:08 GMT"
+                    ],
+                    "X-Content-Type-Options": [
+                        "nosniff"
+                    ],
+                    "Pragma": [
+                        "no-cache"
+                    ],
+                    "Server": [
+                        "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Strict-Transport-Security": [
+                        "max-age=31536000; includeSubDomains"
+                    ],
+                    "Transfer-Encoding": [
+                        "chunked"
+                    ],
+                    "x-ms-ratelimit-remaining-subscription-writes": [
+                        "1199"
+                    ],
+                    "Expires": [
+                        "-1"
+                    ],
+                    "Cache-Control": [
+                        "no-cache"
+                    ],
+                    "content-length": [
+                        "288"
+                    ]
+                },
+                "body": {
+                    "string": "{\"keys\":[{\"keyName\":\"key1\",\"value\":\"abc==\",\"permissions\":\"FULL\"},{\"keyName\":\"key2\",\"value\":\"def==\",\"permissions\":\"FULL\"}]}"
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "PUT",
+                "uri": "https://sdkteststore2.blob.core.windows.net/fgrp-cli-batch-extensions-live-tests?restype=container",
+                "body": null,
+                "headers": {
+                    "User-Agent": [
+                        "Azure-Storage/1.1.0-1.1.0 (Python CPython 3.7.3; Windows 10)"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "x-ms-client-request-id": [
+                        "761bb988-5fa1-11e9-9c20-44032c851686"
+                    ],
+                    "x-ms-date": [
+                        "Mon, 15 Apr 2019 17:11:08 GMT"
+                    ],
+                    "Authorization": [
+                        "SharedKey sdkteststore2:P01xAdcvfriIKmv59Ms4uFa7bugZcu5a46aNEe3BIXM="
+                    ],
+                    "Content-Length": [
+                        "0"
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 201,
+                    "message": "Created"
+                },
+                "headers": {
+                    "Date": [
+                        "Mon, 15 Apr 2019 17:11:08 GMT"
+                    ],
+                    "Last-Modified": [
+                        "Mon, 15 Apr 2019 17:11:08 GMT"
+                    ],
+                    "Content-Length": [
+                        "0"
+                    ],
+                    "ETag": [
+                        "\"0x8D6C1C55A75F75A\""
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "Server": [
+                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
+                    ]
+                },
+                "body": {
+                    "string": ""
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "GET",
+                "uri": "https://sdkteststore2.blob.core.windows.net/fgrp-cli-batch-extensions-live-tests/foo.txt?comp=metadata",
+                "body": null,
+                "headers": {
+                    "User-Agent": [
+                        "Azure-Storage/1.1.0-1.1.0 (Python CPython 3.7.3; Windows 10)"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "x-ms-client-request-id": [
+                        "7649e188-5fa1-11e9-8d14-44032c851686"
+                    ],
+                    "x-ms-date": [
+                        "Mon, 15 Apr 2019 17:11:09 GMT"
+                    ],
+                    "Authorization": [
+                        "SharedKey sdkteststore2:TOKJCG9WaxoaqRpI0ooc892Fyxdw2KwuVxLW3RmKohg="
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 404,
+                    "message": "The specified blob does not exist."
+                },
+                "headers": {
+                    "Date": [
+                        "Mon, 15 Apr 2019 17:11:08 GMT"
+                    ],
+                    "Content-Type": [
+                        "application/xml"
+                    ],
+                    "Content-Length": [
+                        "215"
+                    ],
+                    "x-ms-error-code": [
+                        "BlobNotFound"
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "Server": [
+                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
+                    ]
+                },
+                "body": {
+                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\nRequestId:d102a978-101e-00d2-02ae-f3da58000000\nTime:2019-04-15T17:11:09.0492831Z</Message></Error>"
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "PUT",
+                "uri": "https://sdkteststore2.blob.core.windows.net/fgrp-cli-batch-extensions-live-tests/foo.txt",
+                "body": "1",
+                "headers": {
+                    "User-Agent": [
+                        "Azure-Storage/1.1.0-1.1.0 (Python CPython 3.7.3; Windows 10)"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "x-ms-blob-type": [
+                        "BlockBlob"
+                    ],
+                    "x-ms-meta-lastmodified": [
+                        "1524153754.2560813"
+                    ],
+                    "Content-MD5": [
+                        "xMpCOKC5I4INzFCab3WEmw=="
+                    ],
+                    "Content-Length": [
+                        "1"
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "x-ms-client-request-id": [
+                        "7652751c-5fa1-11e9-a17f-44032c851686"
+                    ],
+                    "x-ms-date": [
+                        "Mon, 15 Apr 2019 17:11:09 GMT"
+                    ],
+                    "Authorization": [
+                        "SharedKey sdkteststore2:9iUtpOnjX8gA3hKSUUjeLK59vrgOg7oQ6+ud13jhSmI="
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 201,
+                    "message": "Created"
+                },
+                "headers": {
+                    "Date": [
+                        "Mon, 15 Apr 2019 17:11:08 GMT"
+                    ],
+                    "Last-Modified": [
+                        "Mon, 15 Apr 2019 17:11:09 GMT"
+                    ],
+                    "Content-Length": [
+                        "0"
+                    ],
+                    "ETag": [
+                        "\"0x8D6C1C55A86FF35\""
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "Content-MD5": [
+                        "xMpCOKC5I4INzFCab3WEmw=="
+                    ],
+                    "x-ms-request-server-encrypted": [
+                        "true"
+                    ],
+                    "Server": [
+                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
+                    ]
+                },
+                "body": {
+                    "string": ""
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "GET",
+                "uri": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2?api-version=2018-12-01",
+                "body": null,
+                "headers": {
+                    "User-Agent": [
+                        "python/3.7.3 (Windows-10-10.0.17763-SP0) msrest/0.6.6 msrest_azure/0.6.0 azure-mgmt-batch/6.0.0 Azure-SDK-For-Python"
+                    ],
+                    "Accept-Encoding": [
+                        "gzip, deflate"
+                    ],
+                    "Accept": [
+                        "application/json"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "Authorization": [
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik4tbEMwbi05REFMcXdodUhZbkhRNjNHZUNYYyIsImtpZCI6Ik4tbEMwbi05REFMcXdodUhZbkhRNjNHZUNYYyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTU1MzQ2MzQ2LCJuYmYiOjE1NTUzNDYzNDYsImV4cCI6MTU1NTM1MDI0NiwiX2NsYWltX25hbWVzIjp7Imdyb3VwcyI6InNyYzEifSwiX2NsYWltX3NvdXJjZXMiOnsic3JjMSI6eyJlbmRwb2ludCI6Imh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3VzZXJzLzI3MjQ0OTM1LWE0YjktNDBhNC1hMjcyLTQyOTQyYjY3ZWNmMS9nZXRNZW1iZXJPYmplY3RzIn19LCJhY3IiOiIxIiwiYWlvIjoiQVVRQXUvOExBQUFBRzZjTkw2eUIrcm9ycWpodUxDdW0xVURKeWROVlRRWFRQZWdReFg1b3B1Uy9JR0RLTkV2TWpwYVBKYzN1b2x6TVN5T1U4TTlpTExRWXhIU2NlWmJZRWc9PSIsImFtciI6WyJyc2EiLCJtZmEiXSwiYXBwaWQiOiIwNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDYiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjFkNTBjNWRmLWZkMDEtNGE2NC04ODU5LTg0NzIzNzU4YTI0NCIsImZhbWlseV9uYW1lIjoiS2xlaW4iLCJnaXZlbl9uYW1lIjoiQnJhbmRvbiIsImlwYWRkciI6IjEzMS4xMDcuMTYwLjI1MSIsIm5hbWUiOiJCcmFuZG9uIEtsZWluIiwib2lkIjoiMjcyNDQ5MzUtYTRiOS00MGE0LWEyNzItNDI5NDJiNjdlY2YxIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIxMjc1MjExODQtMTYwNDAxMjkyMC0xODg3OTI3NTI3LTMwODY5MTc0IiwicHVpZCI6IjEwMDMwMDAwQTkxNzc4OUUiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiIzLWlWTFpVcWc4cllVRTR5S0V2T0pLREtDdmdSNElSb0FyYVc5UVpiTUZBIiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidW5pcXVlX25hbWUiOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1cG4iOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJmYU5TbGNnUS1VV2FubW10YTlSZkFBIiwidmVyIjoiMS4wIn0.BR5vnGyMeYLi8DbnZF7nSZxkn-n9ixD0E1-n6Kp2Mv3GFlDZzfPwxvrhXqZezuzbcKIle36r2HQGbudCwDZS9DnRGPudNG3YVv_75j_rHYZ4o-PXTfSwX9xNBqQ8fxSEGTyUc8stB0DC1Vh1QNVLYuYBaWGMwL90YYQ_Hf2bIO7MFl1QHF62UxH6E_lvLScjZpf_qQA6WoylMbks49bua375-aa3nBI22nz8octpLTVELHwZIgHXum2ib7P_k3YCOARpDWycajUCTF36KbtN2N4ohnXc1F-G6ghzShdcTicwheod84Zb95SEdeCXDuJP4iaz1PNqrS0owjW8w7Rxjw"
+                    ],
+                    "Content-Type": [
+                        "application/json; charset=utf-8"
+                    ],
+                    "x-ms-client-request-id": [
+                        "7676516e-5fa1-11e9-830e-44032c851686"
+                    ],
+                    "accept-language": [
+                        "en-US"
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 200,
+                    "message": "OK"
+                },
+                "headers": {
+                    "Content-Type": [
+                        "application/json; charset=utf-8"
+                    ],
+                    "Last-Modified": [
+                        "Wed, 27 Mar 2019 18:16:27 GMT"
+                    ],
+                    "X-Content-Type-Options": [
+                        "nosniff"
+                    ],
+                    "Pragma": [
+                        "no-cache"
+                    ],
+                    "ETag": [
+                        "\"0x8D6B2E053F1292B\""
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Server": [
+                        "Microsoft-HTTPAPI/2.0"
+                    ],
+                    "Strict-Transport-Security": [
+                        "max-age=31536000; includeSubDomains"
+                    ],
+                    "Date": [
+                        "Mon, 15 Apr 2019 17:11:09 GMT"
+                    ],
+                    "Transfer-Encoding": [
+                        "chunked"
+                    ],
+                    "Expires": [
+                        "-1"
+                    ],
+                    "Cache-Control": [
+                        "no-cache"
+                    ],
+                    "content-length": [
+                        "674"
+                    ]
+                },
+                "body": {
+                    "string": "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2\",\"name\":\"sdktest2\",\"type\":\"Microsoft.Batch/batchAccounts\",\"location\":\"westcentralus\",\"properties\":{\"accountEndpoint\":\"sdktest2.westcentralus.batch.azure.com\",\"provisioningState\":\"Succeeded\",\"dedicatedCoreQuota\":20,\"lowPriorityCoreQuota\":100,\"poolQuota\":100,\"activeJobAndJobScheduleQuota\":300,\"autoStorage\":{\"storageAccountId\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Storage/storageAccounts/sdkteststore2\",\"lastKeySync\":\"2019-02-28T00:16:43.578203Z\"},\"poolAllocationMode\":\"BatchService\"}}"
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "POST",
+                "uri": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Storage/storageAccounts/sdkteststore2/listKeys?api-version=2018-02-01",
+                "body": null,
+                "headers": {
+                    "User-Agent": [
+                        "python/3.7.3 (Windows-10-10.0.17763-SP0) msrest/0.6.6 msrest_azure/0.6.0 azure-mgmt-storage/2.0.0 Azure-SDK-For-Python"
+                    ],
+                    "Accept-Encoding": [
+                        "gzip, deflate"
+                    ],
+                    "Accept": [
+                        "application/json"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "Authorization": [
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik4tbEMwbi05REFMcXdodUhZbkhRNjNHZUNYYyIsImtpZCI6Ik4tbEMwbi05REFMcXdodUhZbkhRNjNHZUNYYyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTU1MzQ2MzQ2LCJuYmYiOjE1NTUzNDYzNDYsImV4cCI6MTU1NTM1MDI0NiwiX2NsYWltX25hbWVzIjp7Imdyb3VwcyI6InNyYzEifSwiX2NsYWltX3NvdXJjZXMiOnsic3JjMSI6eyJlbmRwb2ludCI6Imh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3VzZXJzLzI3MjQ0OTM1LWE0YjktNDBhNC1hMjcyLTQyOTQyYjY3ZWNmMS9nZXRNZW1iZXJPYmplY3RzIn19LCJhY3IiOiIxIiwiYWlvIjoiQVVRQXUvOExBQUFBRzZjTkw2eUIrcm9ycWpodUxDdW0xVURKeWROVlRRWFRQZWdReFg1b3B1Uy9JR0RLTkV2TWpwYVBKYzN1b2x6TVN5T1U4TTlpTExRWXhIU2NlWmJZRWc9PSIsImFtciI6WyJyc2EiLCJtZmEiXSwiYXBwaWQiOiIwNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDYiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjFkNTBjNWRmLWZkMDEtNGE2NC04ODU5LTg0NzIzNzU4YTI0NCIsImZhbWlseV9uYW1lIjoiS2xlaW4iLCJnaXZlbl9uYW1lIjoiQnJhbmRvbiIsImlwYWRkciI6IjEzMS4xMDcuMTYwLjI1MSIsIm5hbWUiOiJCcmFuZG9uIEtsZWluIiwib2lkIjoiMjcyNDQ5MzUtYTRiOS00MGE0LWEyNzItNDI5NDJiNjdlY2YxIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIxMjc1MjExODQtMTYwNDAxMjkyMC0xODg3OTI3NTI3LTMwODY5MTc0IiwicHVpZCI6IjEwMDMwMDAwQTkxNzc4OUUiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiIzLWlWTFpVcWc4cllVRTR5S0V2T0pLREtDdmdSNElSb0FyYVc5UVpiTUZBIiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidW5pcXVlX25hbWUiOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1cG4iOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJmYU5TbGNnUS1VV2FubW10YTlSZkFBIiwidmVyIjoiMS4wIn0.BR5vnGyMeYLi8DbnZF7nSZxkn-n9ixD0E1-n6Kp2Mv3GFlDZzfPwxvrhXqZezuzbcKIle36r2HQGbudCwDZS9DnRGPudNG3YVv_75j_rHYZ4o-PXTfSwX9xNBqQ8fxSEGTyUc8stB0DC1Vh1QNVLYuYBaWGMwL90YYQ_Hf2bIO7MFl1QHF62UxH6E_lvLScjZpf_qQA6WoylMbks49bua375-aa3nBI22nz8octpLTVELHwZIgHXum2ib7P_k3YCOARpDWycajUCTF36KbtN2N4ohnXc1F-G6ghzShdcTicwheod84Zb95SEdeCXDuJP4iaz1PNqrS0owjW8w7Rxjw"
+                    ],
+                    "Content-Type": [
+                        "application/json; charset=utf-8"
+                    ],
+                    "x-ms-client-request-id": [
+                        "76b334a2-5fa1-11e9-baa0-44032c851686"
+                    ],
+                    "accept-language": [
+                        "en-US"
+                    ],
+                    "Content-Length": [
+                        "0"
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 200,
+                    "message": "OK"
+                },
+                "headers": {
+                    "Content-Type": [
+                        "application/json"
+                    ],
+                    "Date": [
+                        "Mon, 15 Apr 2019 17:11:09 GMT"
+                    ],
+                    "X-Content-Type-Options": [
+                        "nosniff"
+                    ],
+                    "Pragma": [
+                        "no-cache"
+                    ],
+                    "Server": [
+                        "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Strict-Transport-Security": [
+                        "max-age=31536000; includeSubDomains"
+                    ],
+                    "Transfer-Encoding": [
+                        "chunked"
+                    ],
+                    "x-ms-ratelimit-remaining-subscription-writes": [
+                        "1199"
+                    ],
+                    "Expires": [
+                        "-1"
+                    ],
+                    "Cache-Control": [
+                        "no-cache"
+                    ],
+                    "content-length": [
+                        "288"
+                    ]
+                },
+                "body": {
+                    "string": "{\"keys\":[{\"keyName\":\"key1\",\"value\":\"abc==\",\"permissions\":\"FULL\"},{\"keyName\":\"key2\",\"value\":\"def==\",\"permissions\":\"FULL\"}]}"
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "PUT",
+                "uri": "https://sdkteststore2.blob.core.windows.net/fgrp-cli-batch-extensions-live-tests?restype=container",
+                "body": null,
+                "headers": {
+                    "User-Agent": [
+                        "Azure-Storage/1.1.0-1.1.0 (Python CPython 3.7.3; Windows 10)"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "x-ms-client-request-id": [
+                        "76f8db98-5fa1-11e9-94f7-44032c851686"
+                    ],
+                    "x-ms-date": [
+                        "Mon, 15 Apr 2019 17:11:10 GMT"
+                    ],
+                    "Authorization": [
+                        "SharedKey sdkteststore2:bcaYxtOUeiL4OR/K0kB6RAPlo9ZOm+JA2aenUZdKRyk="
+                    ],
+                    "Content-Length": [
+                        "0"
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 409,
+                    "message": "The specified container already exists."
+                },
+                "headers": {
+                    "Date": [
+                        "Mon, 15 Apr 2019 17:11:09 GMT"
+                    ],
+                    "Content-Type": [
+                        "application/xml"
+                    ],
+                    "Content-Length": [
+                        "230"
+                    ],
+                    "x-ms-error-code": [
+                        "ContainerAlreadyExists"
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "Server": [
+                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
+                    ]
+                },
+                "body": {
+                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The specified container already exists.\nRequestId:878293a2-901e-0069-11ae-f33bac000000\nTime:2019-04-15T17:11:10.3517469Z</Message></Error>"
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "GET",
+                "uri": "https://sdkteststore2.blob.core.windows.net/fgrp-cli-batch-extensions-live-tests/test/data/foo.txt?comp=metadata",
+                "body": null,
+                "headers": {
+                    "User-Agent": [
+                        "Azure-Storage/1.1.0-1.1.0 (Python CPython 3.7.3; Windows 10)"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "x-ms-client-request-id": [
+                        "77192306-5fa1-11e9-a98b-44032c851686"
+                    ],
+                    "x-ms-date": [
+                        "Mon, 15 Apr 2019 17:11:10 GMT"
+                    ],
+                    "Authorization": [
+                        "SharedKey sdkteststore2:RQxatY9kpHsJCBPw6m46DiPyQbKcURnLp/FIp8ywCLc="
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 404,
+                    "message": "The specified blob does not exist."
+                },
+                "headers": {
+                    "Date": [
+                        "Mon, 15 Apr 2019 17:11:09 GMT"
+                    ],
+                    "Content-Type": [
+                        "application/xml"
+                    ],
+                    "Content-Length": [
+                        "215"
+                    ],
+                    "x-ms-error-code": [
+                        "BlobNotFound"
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "Server": [
+                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
+                    ]
+                },
+                "body": {
+                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\nRequestId:878293aa-901e-0069-16ae-f33bac000000\nTime:2019-04-15T17:11:10.4147901Z</Message></Error>"
+                }
+            }
+        },
+        {
+            "request": {
+                "method": "PUT",
+                "uri": "https://sdkteststore2.blob.core.windows.net/fgrp-cli-batch-extensions-live-tests/test/data/foo.txt",
+                "body": "1",
+                "headers": {
+                    "User-Agent": [
+                        "Azure-Storage/1.1.0-1.1.0 (Python CPython 3.7.3; Windows 10)"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "x-ms-blob-type": [
+                        "BlockBlob"
+                    ],
+                    "x-ms-meta-lastmodified": [
+                        "1524153754.2560813"
+                    ],
+                    "Content-MD5": [
+                        "xMpCOKC5I4INzFCab3WEmw=="
+                    ],
+                    "Content-Length": [
+                        "1"
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "x-ms-client-request-id": [
+                        "7722acb0-5fa1-11e9-8254-44032c851686"
+                    ],
+                    "x-ms-date": [
+                        "Mon, 15 Apr 2019 17:11:10 GMT"
+                    ],
+                    "Authorization": [
+                        "SharedKey sdkteststore2:pb+l2X37lmPnUeVCdjyYYjOZzFdwg8NSK2XyBQHEHxk="
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 201,
+                    "message": "Created"
+                },
+                "headers": {
+                    "Date": [
+                        "Mon, 15 Apr 2019 17:11:09 GMT"
+                    ],
+                    "Last-Modified": [
+                        "Mon, 15 Apr 2019 17:11:10 GMT"
+                    ],
+                    "Content-Length": [
+                        "0"
+                    ],
+                    "ETag": [
+                        "\"0x8D6C1C55B560D4F\""
+                    ],
+                    "x-ms-version": [
+                        "2017-07-29"
+                    ],
+                    "Content-MD5": [
+                        "xMpCOKC5I4INzFCab3WEmw=="
+                    ],
+                    "x-ms-request-server-encrypted": [
+                        "true"
+                    ],
+                    "Server": [
+                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
+                    ]
+                },
+                "body": {
+                    "string": ""
+                }
+            }
+        }
+    ]
+}
