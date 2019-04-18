@@ -2,12 +2,10 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-
 # pylint: disable=wildcard-import,unused-import,unused-wildcard-import
-
 # Not ideal syntax - but savaes us having to check and repopulate this
 # list every time the SDK is regenerated.
-from ....azure.batch.models import *
+from azext.batch._vendor.v4.azure.batch.models import *
 
 try:
     from .extended_task_parameter_py3 import ExtendedTaskParameter
@@ -16,8 +14,10 @@ try:
     from .extended_pool_specification_py3 import ExtendedPoolSpecification
     from .auto_pool_specification_py3 import AutoPoolSpecification
     from .output_file_py3 import OutputFile
-    from .extended_output_file_destination_py3 import ExtendedOutputFileDestination
-    from .output_file_auto_storage_destination_py3 import OutputFileAutoStorageDestination
+    from .extended_output_file_destination_py3 import \
+        ExtendedOutputFileDestination
+    from .output_file_auto_storage_destination_py3 import \
+        OutputFileAutoStorageDestination
     from .extended_resource_file_py3 import ExtendedResourceFile
     from .multi_instance_settings_py3 import MultiInstanceSettings
     from .file_source_py3 import FileSource
@@ -48,7 +48,8 @@ except (SyntaxError, ImportError):
     from .auto_pool_specification import AutoPoolSpecification
     from .output_file import OutputFile
     from .extended_output_file_destination import ExtendedOutputFileDestination
-    from .output_file_auto_storage_destination import OutputFileAutoStorageDestination
+    from .output_file_auto_storage_destination import \
+        OutputFileAutoStorageDestination
     from .extended_resource_file import ExtendedResourceFile
     from .multi_instance_settings import MultiInstanceSettings
     from .file_source import FileSource
@@ -71,11 +72,9 @@ except (SyntaxError, ImportError):
     from .application_template import ApplicationTemplate
     from .job_template import JobTemplate
     from .pool_template import PoolTemplate
-
 from .constants import (
     PROPS_RESERVED_FOR_JOBS,
     PROPS_PERMITTED_ON_TEMPLATES)
-
 __all__ = [
     'ExtendedTaskParameter',
     'ExtendedJobParameter',
