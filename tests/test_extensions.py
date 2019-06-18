@@ -1558,6 +1558,29 @@ class TestBatchExtensions(unittest.TestCase):
                         "test"
                     ]
                 },
+                "VNetSettings": {
+                    "type": "object",
+                    "defaultValue": {
+                        "name": "VNet1",
+                        "location": "eastus",
+                        "addressPrefixes": [
+                            {
+                                "name": "firstPrefix",
+                                "addressPrefix": "10.0.0.0/22"
+                            }
+                        ],
+                        "subnets": [
+                            {
+                                "name": "firstSubnet",
+                                "addressPrefix": "10.0.0.0/24"
+                            },
+                            {
+                                "name": "secondSubnet",
+                                "addressPrefix": "10.0.1.0/24"
+                            }
+                        ]
+                    }
+                },
                 "env": {
                     "type": "string",
                     "allowedValues": [
@@ -1574,13 +1597,15 @@ class TestBatchExtensions(unittest.TestCase):
 
             },
             "value1":"[variables('environmentSettings')[parameters('environmentName')].instanceSize]",
-            "value2":"[variables('environmentSettings').test.instanceSize]"
+            "value2":"[variables('environmentSettings').test.instanceSize]",
+            "value3":"[parameters('VNetSettings').subnets[0].name]"
         }
         param = {"environmentName": "test",
                  "env": "environmentSettings"}
         out = utils.expand_template(obj, param)
         assert out["value1"] == "Small"
         assert out["value2"] == "Small"
+        assert out["value3"] == "firstSubnet"
 
 
     def test_batch_template_reject(self):
