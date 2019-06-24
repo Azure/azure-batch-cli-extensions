@@ -413,7 +413,10 @@ def _get_template_params(template, param_values):
                 # ARM: '<PropertyName>' : { 'value' : '<PropertyValue>' }
                 # Dictionary: '<PropertyName>' : <PropertyValue>'
                 value = param_values[param]
-                param_keys[param] = value.get('value') if isinstance(value, dict) else value
+                if isinstance(value, dict) and value.get('value') != None:
+                    param_keys[param] = armStyleValue
+                else:
+                    param_keys[param] = value
             except KeyError:
                 param_keys[param] = values.get('defaultValue')
     except KeyError:
@@ -453,7 +456,9 @@ def _parse_arm_parameter(name, template_obj, parameters):
                 template_obj,
                 parameters)
     except KeyError:
-        raise ValueError("Template does not define parameter '{}'".format(param_name))
+        #this is ok in the case when the parameter name isn't defined in the template_obj ahead of time
+        pass
+        #raise ValueError("Template does not define parameter '{}'".format(param_name))
 
     user_value = param_def.get('defaultValue') if isinstance(param_def, dict) else param_def
     if parameters and param_name in parameters:
