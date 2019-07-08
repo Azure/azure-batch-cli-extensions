@@ -3,4 +3,4 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-VERSION = "5.0.5"
+VERSION = "6.0.0"
