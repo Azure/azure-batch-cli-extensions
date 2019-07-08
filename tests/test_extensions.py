@@ -168,7 +168,7 @@ class TestBatchExtensions(unittest.TestCase):
         }
         temaplate_string = json.dumps(template)
         parameters = {'code': True}
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             utils._parse_template(temaplate_string, template, parameters)  # pylint:disable=protected-access
 
     def test_batch_extensions_variables(self):

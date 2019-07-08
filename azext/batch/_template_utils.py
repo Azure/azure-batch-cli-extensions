@@ -382,15 +382,18 @@ def _validate_parameter(name, content, value):
             value = _validate_bool(value)
         elif content['type'] == 'string':
             value = _validate_string(value, content)
+        else:
+            raise ValueError("The parameter '{}' specifies an unsupported "
+                             "type: {}".format(name, content['type']))
         if value not in content.get('allowedValues', [value]):
             raise ValueError("Allowed values: {}".format(', '.join(content['allowedValues'])))
     except TypeError:
         raise TypeError("The value '{}' of parameter '{}' is not a {}".format(
-            name, value, content['type']))
+            value, name, content['type']))
     except ValueError as value_error:
         raise ValueError(
             "The value '{}' of parameter '{}' does not meet the requirement: {}".format(
-                name, value, str(value_error)))
+                value, name, str(value_error)))
     else:
         return value
 
