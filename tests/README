@@ -1,5 +1,6 @@
 ##To Record Tests:
 
+* Set environment variable AZURE_EXTENSION_DIR=./.azure/devcliextensions and 
 * Delete all previous recordings located at tests/recordings (but not the folder)
 * Create the accounts below and set the respective values:
     * AZURE_BATCH_ACCOUNT
