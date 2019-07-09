@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 import errno
 import os
 
-from azure.batch.operations.file_operations import FileOperations
+from azure.batch.operations._file_operations import FileOperations
 from azure.storage.blob.models import Include
 
 from .. import _file_utils as file_utils

@@ -4,7 +4,7 @@
 # --------------------------------------------------------------------------------------------
 
 from datetime import datetime as dt
-from azure.batch.operations.pool_operations import PoolOperations
+from azure.batch.operations._pool_operations import PoolOperations
 
 from .. import models
 from .. import _file_utils as file_utils

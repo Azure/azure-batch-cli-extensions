@@ -11,8 +11,8 @@ import unittest
 from mock import patch, Mock, MagicMock
 
 from msrest import Serializer, Deserializer
-from azure.batch.operations.task_operations import TaskOperations
-from azure.batch.operations.pool_operations import PoolOperations
+from azure.batch.operations._task_operations import TaskOperations
+from azure.batch.operations._pool_operations import PoolOperations
 from azure.storage.common import CloudStorageAccount
 from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.batch.batch_auth import SharedKeyCredentials
