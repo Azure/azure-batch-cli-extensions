@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 from datetime import datetime as dt
 from msrest.exceptions import DeserializationError
-from azure.batch.operations.job_operations import JobOperations
+from azure.batch.operations._job_operations import JobOperations
 
 from .. import models
 from .. import _template_utils as templates
