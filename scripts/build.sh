@@ -10,8 +10,10 @@ set -e
 scripts_root=$(cd $(dirname $0); pwd)
 
 export PYTHONPATH=$PATHONPATH:./src
+python -m azure.cli --version
 python -m azure.cli -h --debug
 python -m azure.cli batch -h --debug
+az --version
 python -m azure.cli batch job create -h --debug
 
 # Check readme formatting for PyPI
