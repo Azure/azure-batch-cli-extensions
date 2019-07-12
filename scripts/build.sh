@@ -14,6 +14,7 @@ python -m azure.cli --version
 python -m azure.cli -h --debug
 python -m azure.cli batch -h --debug
 az --version
+pip freeze
 python -m azure.cli batch job create -h --debug
 
 # Check readme formatting for PyPI

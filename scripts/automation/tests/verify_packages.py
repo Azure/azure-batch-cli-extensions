@@ -71,9 +71,17 @@ def build_package(path_to_package, dist_dir):
     print_heading('Built {}'.format(path_to_package))
 
 
-def install_pip_package(package_name):
+def install_pip_package(package_name, preview=False, extra_link=None):
     print_heading('Installing {}'.format(package_name))
-    cmd = 'python -m pip install {}'.format(package_name)
+    preview_str = "--pre" if preview else ""
+    if extra_link:
+        extra_link_str = "--extra-index-url extra_link --no-cache-dir"
+    else:
+        extra_link_str = ""
+    cmd = 'python -m pip install {} {} {}'.format(
+        preview_str,
+        package_name,
+        extra_link_str)
     cmd_success = exec_command(cmd)
     if not cmd_success:
         print_heading('Error installing {}!'.format(package_name), f=sys.stderr)
@@ -109,7 +117,10 @@ def verify_packages():
     all_modules = automation_path.get_all_module_paths()
 
     # STEP 1:: Install the CLI and dependencies by pip
-    install_pip_package('azure-cli')
+    install_pip_package(
+        'azure-cli',
+        True,
+        "https://azurecliprod.blob.core.windows.net/edge --no-cache-dir")
 
     # STEP 2:: Build the packages
     for name, path in all_modules:
