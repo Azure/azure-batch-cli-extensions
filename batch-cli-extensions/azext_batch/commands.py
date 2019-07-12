@@ -13,9 +13,9 @@ from azext.batch import __version__ as batch_ext_version
 
 
 logger = get_logger(__name__)
-MINIMUM_UNSUPPORTED_BATCH_VERSION = "6.1"
+MINIMUM_UNSUPPORTED_BATCH_VERSION = "7.1"
 MINIMUM_UNSUPPORTED_BMGMT_VERSION = "6.1"
-MINIMUM_UNSUPPORTED_BATCH_EXT_VERSION = "5.1"
+MINIMUM_UNSUPPORTED_BATCH_EXT_VERSION = "6.1"
 
 
 def confirm_version(current, supported, package):
