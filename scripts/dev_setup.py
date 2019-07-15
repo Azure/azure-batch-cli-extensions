@@ -31,8 +31,8 @@ print('Root directory \'{}\'\n'.format(root_dir))
 exec_command('pip install -r requirements.txt')
 
 # install to edge build of azure-cli
-exec_command('pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge --no-cache-dir')
-
+# exec_command('pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge --no-cache-dir')
+exec_command('brew install $(curl -Ls -o /dev/null -w %{url_effective} https://aka.ms/InstallAzureCliHomebrewEdge)')
 # upgrade to latest azure-batch
 exec_command('pip install --upgrade azure-batch')
 
