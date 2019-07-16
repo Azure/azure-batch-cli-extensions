@@ -31,8 +31,9 @@ print('Root directory \'{}\'\n'.format(root_dir))
 exec_command('pip install -r requirements.txt')
 
 # install homebrew for edge build
+exec_command('sudo apt-get update')
 exec_command('sudo apt-get install build-essential curl file git')
-exec_command('sudo apt-get update build-essential curl file git')
+exec_command('sudo apt-get install --only-upgrade curl')
 check_call(
     ['sudo', 'curl', '-fsSL', '"https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"'],
     cwd=root_dir)
