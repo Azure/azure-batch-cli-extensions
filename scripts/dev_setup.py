@@ -30,9 +30,19 @@ print('Root directory \'{}\'\n'.format(root_dir))
 # install general requirements
 exec_command('pip install -r requirements.txt')
 
+# install homebrew for edge build
+exec_command('sudo apt-get install build-essential curl file git')
+exec_command('sudo apt-get update build-essential curl file git')
+check_call(
+    ['sudo', 'curl', '-fsSL', '"https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"'],
+    cwd=root_dir)
+
 # install to edge build of azure-cli
 # exec_command('pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge --no-cache-dir')
-exec_command('brew install $(curl -Ls -o /dev/null -w %{url_effective} https://aka.ms/InstallAzureCliHomebrewEdge)')
+check_call(
+    ['sudo', 'brew', 'install', '$(curl -Ls -o /dev/null -w %{url_effective} https://aka.ms/InstallAzureCliHomebrewEdge)'],
+    cwd=root_dir)
+
 # upgrade to latest azure-batch
 exec_command('pip install --upgrade azure-batch')
 
