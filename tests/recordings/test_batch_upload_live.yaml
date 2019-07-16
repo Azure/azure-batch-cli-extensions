@@ -160,7 +160,7 @@
                     ]
                 },
                 "body": {
-                    "string": "{\"keys\":[{\"keyName\":\"key1\",\"value\":\"uO7UJqUIHY10lGLMf9Os9xZVtZIudsbF9ax4KLWQtVOOwEabYthFqhdTTpejENB7Cd1ygWRHGFVabM2Fst7Fig==\",\"permissions\":\"FULL\"},{\"keyName\":\"key2\",\"value\":\"xbyPSaI20ZSj4CDP5ERd1pkeX1DpF2zyAEgRqnp3swiyjKaazfsjDZUZfDBBR7ZsS8/bTHm8dy4C8S+aZvxz2Q==\",\"permissions\":\"FULL\"}]}"
+                    "string": "{\"keys\":[{\"keyName\":\"key1\",\"value\":\"abc==\",\"permissions\":\"FULL\"},{\"keyName\":\"key2\",\"value\":\"def==\",\"permissions\":\"FULL\"}]}"
                 }
             }
         },
@@ -512,7 +512,7 @@
                     ]
                 },
                 "body": {
-                    "string": "{\"keys\":[{\"keyName\":\"key1\",\"value\":\"uO7UJqUIHY10lGLMf9Os9xZVtZIudsbF9ax4KLWQtVOOwEabYthFqhdTTpejENB7Cd1ygWRHGFVabM2Fst7Fig==\",\"permissions\":\"FULL\"},{\"keyName\":\"key2\",\"value\":\"xbyPSaI20ZSj4CDP5ERd1pkeX1DpF2zyAEgRqnp3swiyjKaazfsjDZUZfDBBR7ZsS8/bTHm8dy4C8S+aZvxz2Q==\",\"permissions\":\"FULL\"}]}"
+                    "string": "{\"keys\":[{\"keyName\":\"key1\",\"value\":\"abc==\",\"permissions\":\"FULL\"},{\"keyName\":\"key2\",\"value\":\"def==\",\"permissions\":\"FULL\"}]}"
                 }
             }
         },
