@@ -35,13 +35,13 @@ exec_command('sudo apt-get update')
 exec_command('sudo apt-get install build-essential curl file git')
 exec_command('sudo apt-get install --only-upgrade curl')
 check_call(
-    ['sudo', 'curl', '-fsSL', '"https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"'],
+    ['sudo', 'curl', '-fsSL', '"http://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"'],
     cwd=root_dir)
 
 # install to edge build of azure-cli
 # exec_command('pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge --no-cache-dir')
 check_call(
-    ['sudo', 'brew', 'install', '$(curl -Ls -o /dev/null -w %{url_effective} https://aka.ms/InstallAzureCliHomebrewEdge)'],
+    ['sudo', 'brew', 'install', '$(curl -Ls -o /dev/null -w %{url_effective} http://aka.ms/InstallAzureCliHomebrewEdge)'],
     cwd=root_dir)
 
 # upgrade to latest azure-batch
