@@ -6,7 +6,7 @@
 from argcomplete.completers import FilesCompleter
 
 from azure.cli.core.commands.parameters import file_type
-from azure.cli.command_modules.batch._completers import load_node_agent_skus
+from azure.cli.command_modules.batch._completers import load_supported_images
 from azure.cli.command_modules.batch._validators import (
     metadata_item_format, certificate_reference_format, validate_json_file,
     environment_setting_format, resource_file_format)
@@ -30,7 +30,7 @@ def load_arguments(self, _):
         c.argument('os_family', arg_group="Pool: Cloud Service Configuration",
                    help='The Azure Guest OS family to be installed on the virtual machines in the pool. Possible values are: 2 - OS Family 2, equivalent to Windows Server 2008 R2 SP1. 3 - OS Family 3, equivalent to Windows Server 2012. 4 - OS Family 4, equivalent to Windows Server 2012 R2. 5 - OS Family 5, equivalent to Windows Server 2016. For more information, see Azure Guest OS Releases (https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/#releases). Allowed values: 2, 3, 4, 5.')
         c.argument('node_agent_sku_id', arg_group="Pool: Virtual Machine Configuration", help='The SKU of the Batch node agent to be provisioned on compute nodes in the pool. The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the \'List supported node agent SKUs\' operation.')
-        c.argument('image', completer=load_node_agent_skus, arg_group="Pool: Virtual Machine Configuration",
+        c.argument('image', completer=load_supported_images, arg_group="Pool: Virtual Machine Configuration",
                    help="OS image reference. This can be either 'publisher:offer:sku[:version]' format, or a fully qualified ARM image id of the form '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}'. If 'publisher:offer:sku[:version]' format, version is optional and if omitted latest will be used. Valid values can be retrieved via 'az batch pool node-agent-skus list'. For example: 'MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest'")
 
     with self.argument_context('batch job create') as c:

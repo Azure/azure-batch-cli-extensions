@@ -8,7 +8,7 @@ import tempfile
 import json
 import datetime
 
-from azext.batch.models import BatchErrorException, AllocationState, ComputeNodeState, TaskState
+from azext.batch.models import BatchErrorException, AllocationState, ComputeNodeState, TaskState, VerificationType
 import azure.batch.batch_auth as batchauth
 import azext.batch as batch
 from tests.vcr_test_base import VCRTestBase
@@ -281,7 +281,7 @@ class TestBatchExtensionsLive(VCRTestBase):
 
     def create_pool_if_not_exist(self, pool_id, flavor):
         print('Creating pool: {}'.format(pool_id))
-        sku_results = self.batch_client.account.list_node_agent_skus()
+        sku_results = self.batch_client.account.list_supported_images()
 
         publisher = None
         offer = None
@@ -290,47 +290,40 @@ class TestBatchExtensionsLive(VCRTestBase):
 
         def sku_filter_function(skus):
             for sku in skus:
-                result = [x for x in sku.verified_image_references
-                          if x.publisher == publisher and x.offer == offer and x.sku == sku_id]
-                if len(result) > 0:
-                    return sku.id
+                if (sku.verification_type == VerificationType.verified and
+                        sku.image_reference.publisher == publisher and
+                        sku.image_reference.offer == offer and
+                        sku.image_reference.sku == sku_id):
+                    return sku.node_agent_sku_id
             return None
 
-        if flavor == 'ubuntu14':
-            publisher = 'Canonical'
-            offer = 'UbuntuServer'
-            sku_id = '14.04.5-LTS'
-        elif flavor == 'ubuntu16':
-            publisher = 'Canonical'
-            offer = 'UbuntuServer'
-            sku_id = '16.04.0-LTS'
+        if flavor == 'ubuntu16':
+            publisher = 'canonical'
+            offer = 'ubuntuserver'
+            sku_id = '16.04-lts'
         elif flavor == 'centos':
-            publisher = 'OpenLogic'
-            offer = 'CentOS'
+            publisher = 'openlogic'
+            offer = 'centos'
             sku_id = '7.0'
         elif flavor == 'debian':
-            publisher = 'Credativ'
-            offer = 'Debian'
+            publisher = 'credativ'
+            offer = 'debian'
             sku_id = '8'
-        elif flavor == 'suse-sles':
-            publisher = 'SUSE'
-            offer = 'SLES'
-            sku_id = '12-SP1'
         elif flavor == 'windows-2012':
-            publisher = 'MicrosoftWindowsServer'
-            offer = 'WindowsServer'
-            sku_id = '2012-Datacenter'
+            publisher = 'microsoftwindowsserver'
+            offer = 'windowsserver'
+            sku_id = '2012-datacenter'
         elif flavor == 'windows-2012-r2':
-            publisher = 'MicrosoftWindowsServer'
-            offer = 'WindowsServer'
-            sku_id = '2012-R2-Datacenter'
+            publisher = 'microsoftwindowsserver'
+            offer = 'windowsserver'
+            sku_id = '2012-r2-datacenter'
         elif flavor == 'windows-2016':
-            publisher = 'MicrosoftWindowsServer'
-            offer = 'WindowsServer'
-            sku_id = '2016-Datacenter'
+            publisher = 'microsoftwindowsserver'
+            offer = 'windowsserver'
+            sku_id = '2016-datacenter'
         node_agent_sku_id = sku_filter_function(sku_results)
 
-        is_windows = True if publisher == 'MicrosoftWindowsServer' else False
+        is_windows = True if publisher.lower() == 'microsoftwindowsserver' else False
         print('Allocating pool {}, {}, {} with agent {}'.
               format(publisher, offer, sku_id, node_agent_sku_id))
 
@@ -404,12 +397,12 @@ class TestBatchExtensionsLive(VCRTestBase):
             self.batch_client.job.delete(job_id=job_id)
 
     def body(self):
-        # file egress should work on ubuntu 14.04
+        # file egress should work on ubuntu 16.04
         self.clear_container(self.output_blob_container)
-        job_id = 'ncj-ubuntu1404'
-        pool_id = 'ncj-ubuntu1404'
+        job_id = 'ncj-ubuntu1604'
+        pool_id = 'ncj-ubuntu1604'
         task_id = 'myTask'
-        self.file_upload_helper(job_id, pool_id, task_id, 'ubuntu14', False)
+        self.file_upload_helper(job_id, pool_id, task_id, 'ubuntu16', False)
 
         # should work on Windows 2012 R2
         self.clear_container(self.output_blob_container)
@@ -418,12 +411,12 @@ class TestBatchExtensionsLive(VCRTestBase):
         task_id = 'myTask'
         self.file_upload_helper(job_id, pool_id, task_id, 'windows-2012-r2', False)
 
-        # file egress should work on ubuntu 14.04
+        # file egress should work on ubuntu 16.04
         self.clear_container('fgrp-output')
-        job_id = 'ncj-ubuntu1404-1'
-        pool_id = 'ncj-ubuntu1404'
+        job_id = 'ncj-ubuntu1604-1'
+        pool_id = 'ncj-ubuntu1604'
         task_id = 'myTask'
-        self.file_upload_helper(job_id, pool_id, task_id, 'ubuntu14', True)
+        self.file_upload_helper(job_id, pool_id, task_id, 'ubuntu16', True)
 
         # should work on Windows 2012 R2
         self.clear_container('fgrp-output')
