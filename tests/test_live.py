@@ -323,7 +323,7 @@ class TestBatchExtensionsLive(VCRTestBase):
             sku_id = '2016-datacenter'
         node_agent_sku_id = sku_filter_function(sku_results)
 
-        is_windows = True if publisher == 'microsoftwindowsserver' else False
+        is_windows = True if publisher.lower() == 'microsoftwindowsserver' else False
         print('Allocating pool {}, {}, {} with agent {}'.
               format(publisher, offer, sku_id, node_agent_sku_id))
 
