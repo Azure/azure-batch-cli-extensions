@@ -415,10 +415,7 @@ def _get_template_params(template, param_values):
                 # ARM: '<PropertyName>' : { 'value' : '<PropertyValue>' }
                 # Dictionary: '<PropertyName>' : <PropertyValue>'
                 value = param_values[param]
-                if isinstance(value, dict) and value.get('value') != None:
-                    param_keys[param] = value.get('value')
-                else:
-                    param_keys[param] = value
+                param_keys[param] = value.get('value') if isinstance(value, dict) else value
             except KeyError:
                 param_keys[param] = values.get('defaultValue')
     except KeyError:
