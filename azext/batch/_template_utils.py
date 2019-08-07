@@ -382,6 +382,8 @@ def _validate_parameter(name, content, value):
             value = _validate_bool(value)
         elif content['type'] == 'string':
             value = _validate_string(value, content)
+        elif content['type'] == 'object':
+            pass
         else:
             raise ValueError("The parameter '{}' specifies an unsupported "
                              "type: {}".format(name, content['type']))
@@ -456,9 +458,8 @@ def _parse_arm_parameter(name, template_obj, parameters):
                 template_obj,
                 parameters)
     except KeyError:
-        #this is ok in the case when the parameter name isn't defined in the template_obj ahead of time
-        pass
-        #raise ValueError("Template does not define parameter '{}'".format(param_name))
+        if param_def.get('type') != 'object':
+            raise ValueError("Template does not define parameter '{}'".format(param_name))
 
     user_value = param_def.get('defaultValue') if isinstance(param_def, dict) else param_def
     if parameters and param_name in parameters:

@@ -1607,6 +1607,38 @@ class TestBatchExtensions(unittest.TestCase):
         assert out["value2"] == "Small"
         assert out["value3"] == "firstSubnet"
 
+    def test_template_parsing_variables_undefined_in_parameter(self):
+        obj = {
+            "parameters": {
+                "containerImageParam": {
+                    "type": "object"
+                }
+            },
+            "variables": {
+                "osType": {
+                    "containerConfiguration": { 
+                      "containerImageNames": [ 
+                        "[parameters('containerImageParam').containerImage]"
+                      ]
+                    }
+                }
+            },
+            "pool": {
+                "virtualMachineConfiguration": "[variables('osType')]",
+                "applicationLicenses":  [
+                  "[parameters('containerImageParam').renderer]"
+                ]
+            }
+        }
+        param = {
+            "containerImageParam": {
+                "containerImage": "testContainerImage",
+                "renderer": "testRenderer"
+            }    
+        }
+        out = utils.expand_template(obj, param)
+        assert out["pool"]["virtualMachineConfiguration"]["containerConfiguration"]["containerImageNames"] == ["testContainerImage"]
+        assert out["pool"]["applicationLicenses"] == ["testRenderer"]
 
     def test_batch_template_reject(self):
         with open(os.path.join(self.data_dir, 'batch.job.simple.apiversionfail.json'), 'r') as template:
