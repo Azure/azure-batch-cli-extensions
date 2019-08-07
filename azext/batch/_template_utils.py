@@ -414,7 +414,7 @@ def _get_template_params(template, param_values):
                 # Dictionary: '<PropertyName>' : <PropertyValue>'
                 value = param_values[param]
                 if isinstance(value, dict) and value.get('value') != None:
-                    param_keys[param] = armStyleValue
+                    param_keys[param] = value.get('value')
                 else:
                     param_keys[param] = value
             except KeyError:
