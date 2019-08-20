@@ -168,7 +168,7 @@ class TestBatchExtensions(unittest.TestCase):
         }
         temaplate_string = json.dumps(template)
         parameters = {'code': True}
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             utils._parse_template(temaplate_string, template, parameters)  # pylint:disable=protected-access
 
     def test_batch_extensions_variables(self):
@@ -1558,6 +1558,29 @@ class TestBatchExtensions(unittest.TestCase):
                         "test"
                     ]
                 },
+                "VNetSettings": {
+                    "type": "object",
+                    "defaultValue": {
+                        "name": "VNet1",
+                        "location": "eastus",
+                        "addressPrefixes": [
+                            {
+                                "name": "firstPrefix",
+                                "addressPrefix": "10.0.0.0/22"
+                            }
+                        ],
+                        "subnets": [
+                            {
+                                "name": "firstSubnet",
+                                "addressPrefix": "10.0.0.0/24"
+                            },
+                            {
+                                "name": "secondSubnet",
+                                "addressPrefix": "10.0.1.0/24"
+                            }
+                        ]
+                    }
+                },
                 "env": {
                     "type": "string",
                     "allowedValues": [
@@ -1574,14 +1597,48 @@ class TestBatchExtensions(unittest.TestCase):
 
             },
             "value1":"[variables('environmentSettings')[parameters('environmentName')].instanceSize]",
-            "value2":"[variables('environmentSettings').test.instanceSize]"
+            "value2":"[variables('environmentSettings').test.instanceSize]",
+            "value3":"[parameters('VNetSettings').subnets[0].name]"
         }
         param = {"environmentName": "test",
                  "env": "environmentSettings"}
         out = utils.expand_template(obj, param)
         assert out["value1"] == "Small"
         assert out["value2"] == "Small"
+        assert out["value3"] == "firstSubnet"
 
+    def test_template_parsing_variables_undefined_in_parameter(self):
+        obj = {
+            "parameters": {
+                "containerImageParam": {
+                    "type": "object"
+                }
+            },
+            "variables": {
+                "osType": {
+                    "containerConfiguration": { 
+                      "containerImageNames": [ 
+                        "[parameters('containerImageParam').containerImage]"
+                      ]
+                    }
+                }
+            },
+            "pool": {
+                "virtualMachineConfiguration": "[variables('osType')]",
+                "applicationLicenses":  [
+                  "[parameters('containerImageParam').renderer]"
+                ]
+            }
+        }
+        param = {
+            "containerImageParam": {
+                "containerImage": "testContainerImage",
+                "renderer": "testRenderer"
+            }    
+        }
+        out = utils.expand_template(obj, param)
+        assert out["pool"]["virtualMachineConfiguration"]["containerConfiguration"]["containerImageNames"] == ["testContainerImage"]
+        assert out["pool"]["applicationLicenses"] == ["testRenderer"]
 
     def test_batch_template_reject(self):
         with open(os.path.join(self.data_dir, 'batch.job.simple.apiversionfail.json'), 'r') as template:

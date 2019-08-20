@@ -382,15 +382,20 @@ def _validate_parameter(name, content, value):
             value = _validate_bool(value)
         elif content['type'] == 'string':
             value = _validate_string(value, content)
+        elif content['type'] == 'object':
+            pass
+        else:
+            raise ValueError("The parameter '{}' specifies an unsupported "
+                             "type: {}".format(name, content['type']))
         if value not in content.get('allowedValues', [value]):
             raise ValueError("Allowed values: {}".format(', '.join(content['allowedValues'])))
     except TypeError:
         raise TypeError("The value '{}' of parameter '{}' is not a {}".format(
-            name, value, content['type']))
+            value, name, content['type']))
     except ValueError as value_error:
         raise ValueError(
             "The value '{}' of parameter '{}' does not meet the requirement: {}".format(
-                name, value, str(value_error)))
+                value, name, str(value_error)))
     else:
         return value
 
@@ -410,7 +415,10 @@ def _get_template_params(template, param_values):
                 # ARM: '<PropertyName>' : { 'value' : '<PropertyValue>' }
                 # Dictionary: '<PropertyName>' : <PropertyValue>'
                 value = param_values[param]
-                param_keys[param] = value.get('value') if isinstance(value, dict) else value
+                if isinstance(value, dict) and value.get('value') != None:
+                    param_keys[param] = value.get('value')
+                else:
+                    param_keys[param] = value
             except KeyError:
                 param_keys[param] = values.get('defaultValue')
     except KeyError:
@@ -445,23 +453,31 @@ def _parse_arm_parameter(name, template_obj, parameters):
         # Parse nested object if exists
         if len(name) > param_name_end+1:
             param_def = _parse_nested_object(
-                param_def,
+                param_def.get('defaultValue', param_def),
                 name[param_name_end+1:],
                 template_obj,
                 parameters)
-
     except KeyError:
-        raise ValueError("Template does not define parameter '{}'".format(param_name))
-    user_value = param_def.get('defaultValue')
+        if param_def.get('type') != 'object':
+            raise ValueError("Template does not define parameter '{}'".format(param_name))
+
+    user_value = param_def.get('defaultValue') if isinstance(param_def, dict) else param_def
     if parameters and param_name in parameters:
         # Support both ARM and dictionary syntax
         # ARM: '<PropertyName>' : { 'value' : '<PropertyValue>' }
         # Dictionary: '<PropertyName>' : <PropertyValue>'
-        user_value = parameters[param_name]
         try:
-            user_value = user_value['value']
-        except TypeError:
+            parameters_value = parameters[param_name]
+            if len(name) > param_name_end + 1:
+                parameters_value = _parse_nested_object(
+                    parameters_value,
+                    name[param_name_end + 1:],
+                    template_obj,
+                    parameters)
+            user_value = parameters_value
+        except (TypeError, KeyError):
             pass
+
     if user_value is None:
         raise errors.MissingParameterValue(
             "No value supplied for parameter '{}' and no default value".format(param_name),
@@ -472,17 +488,12 @@ def _parse_arm_parameter(name, template_obj, parameters):
         # additional parameter substitutions
         return _parse_template(json.dumps(user_value), template_obj, parameters)
     try:
-        if param_def['type'] == 'int':
-            return _validate_int(user_value, param_def)
-        if param_def['type'] == 'bool':
-            return _validate_bool(user_value)
-        if param_def['type'] == 'string':
-            return _validate_string(user_value, param_def)
+        if not isinstance(param_def, dict):
+            return param_def
+        return _validate_parameter(param_name, param_def, user_value)
     except TypeError:
         raise TypeError("Value '{}' for parameter '{}' must be a {}.".format(
             user_value, param_name, param_def['type']))
-    else:
-        raise TypeError("Parameter type '{}' not supported.".format(param_def['type']))
 
 
 def _parse_nested_object(obj, references, template_obj, parameters):
@@ -523,6 +534,8 @@ def _parse_nested_object(obj, references, template_obj, parameters):
 
     while obj_refs:
         ref = obj_refs.pop(0)
+        if isinstance(ret_obj, list):
+            ref = int(ref)
         ret_obj = ret_obj[ref]
 
     return ret_obj
