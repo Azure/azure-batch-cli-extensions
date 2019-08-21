@@ -654,7 +654,9 @@ class ExtendedPoolParameter(models.PoolAddParameter):
         'network_configuration': {'key': 'networkConfiguration', 'type': 'NetworkConfiguration'},
         'start_task': {'key': 'startTask', 'type': 'StartTask'},
         'certificate_references': {'key': 'certificateReferences', 'type': '[CertificateReference]'},
-        'application_package_references': {'key': 'applicationPackageReferences', 'type': '[ApplicationPackageReference]'},
+        'application_package_references': {
+            'key': 'applicationPackageReferences',
+            'type': '[ApplicationPackageReference]'},
         'application_licenses': {'key': 'applicationLicenses', 'type': '[str]'},
         'max_tasks_per_node': {'key': 'maxTasksPerNode', 'type': 'int'},
         'task_scheduling_policy': {'key': 'taskSchedulingPolicy', 'type': 'TaskSchedulingPolicy'},
