@@ -3,6 +3,12 @@
 SDK Release History
 ===================
 
+7.0.0 (2019-08-20)
+------------------
+
+* Update to match latest Python SDK taking associated breaking changes.
+* Add support in template parsing to support ARM object syntax.
+
 6.0.1 (2019-06-20)
 ------------------
 
