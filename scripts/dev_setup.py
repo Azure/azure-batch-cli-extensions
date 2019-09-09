@@ -28,7 +28,7 @@ print(os.environ)
 print('Root directory \'{}\'\n'.format(root_dir))
 
 # install to edge build of azure-cli
-exec_command('docker run -v ${HOME}:/root -it --rm azuresdk/azure-cli-python:dev')
+exec_command('docker run -v ./:/root -it --rm azuresdk/azure-cli-python:dev')
 
 # install general requirements
 exec_command('pip install -r requirements.txt')
