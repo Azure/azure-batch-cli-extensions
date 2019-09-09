@@ -27,11 +27,11 @@ print('Running dev setup...')
 print(os.environ)
 print('Root directory \'{}\'\n'.format(root_dir))
 
+# install to edge build of azure-cli
+exec_command('docker run -v ${HOME}:/root -it --rm azuresdk/azure-cli-python:dev')
+
 # install general requirements
 exec_command('pip install -r requirements.txt')
-
-# install to edge build of azure-cli
-exec_command('pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge --no-cache-dir')
 
 # upgrade to latest azure-batch
 exec_command('pip install --upgrade azure-batch')
