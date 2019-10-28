@@ -65,17 +65,6 @@ PROPS_ON_COLLECTION_TASK = PROPS_ON_REPEAT_TASK.union({
     'dependsOn'})
 
 
-# Ensure the first member of this array is the official REST Version
-class SupportedRestApi(Enum):
-    Jun2019 = ["2019-06-01.9.0", "2019-06-01"]
-    Aug2019 = ["2019-08-01.10.0", "2019-08-01"]
-
-
-class SupportedTemplateApi(Enum):
-    Latest = ["latest"]
-
-
-SupportRestApiToSdkVersion = {
-    SupportedRestApi.Jun2019: "5",
-    SupportedRestApi.Aug2019: "latest",
-}
+# Dates used as cutoffs for different SDK extension versions
+class KnownTemplateVersion(Enum):
+    Dec2018 = "2018-12-01"
