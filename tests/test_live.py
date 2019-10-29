@@ -144,18 +144,21 @@ class TestBatchExtensionsLive(VCRTestBase):
         print('waiting for pool to reach steady state')
 
         while True:
-            pool = self.batch_client.pool.get(pool_id)
-            if pool.allocation_state == AllocationState.steady:
-                print('pool reached steady state')
-                return
+            try:
+                pool = self.batch_client.pool.get(pool_id)
+            except BatchErrorException:
+                pass
             else:
-                wait_for = 3
-                timeout = timeout - wait_for
-                if timeout < 0:
-                    raise RuntimeError('Timed out')
-                else:
-                    import time
-                    time.sleep(wait_for)
+                if pool.allocation_state == AllocationState.steady:
+                    print('pool reached steady state')
+                    return
+            wait_for = 3
+            timeout = timeout - wait_for
+            if timeout < 0:
+                raise RuntimeError('Timed out')
+            else:
+                import time
+                time.sleep(wait_for)
 
     def wait_for_vms_idle(self, pool_id, timeout):
         print('waiting for vms to be idle')
@@ -430,7 +433,7 @@ class TestBatchExtensionsLive(VCRTestBase):
             json_obj = json.load(template)
         expanded_template = self.batch_client.pool.expand_template(json_obj)
         pool_param = self.batch_client.pool.poolparameter_from_json(expanded_template)
-        self.batch_client.pool.add(pool_param)
+        pool = self.batch_client.pool.add(pool_param)
         self.wait_for_pool_steady(pool_param.properties.id, 5 * 60)
         self.batch_client.pool.delete(pool_param.properties.id)
 

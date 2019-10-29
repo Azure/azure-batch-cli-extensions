@@ -3,9 +3,3 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from .batch_extensions_client import BatchExtensionsClient
-from .version import VERSION
-
-__all__ = ['BatchExtensionsClient']
-
-__version__ = VERSION

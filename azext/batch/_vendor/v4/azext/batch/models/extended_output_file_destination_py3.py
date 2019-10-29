@@ -3,7 +3,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from msrest.serialization import Model
+from ....msrest.serialization import Model
 
 
 class ExtendedOutputFileDestination(Model):

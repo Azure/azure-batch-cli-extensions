@@ -4,7 +4,7 @@
 # --------------------------------------------------------------------------------------------
 
 import os
-from msrest.serialization import Model
+from ....msrest.serialization import Model
 
 
 class ApplicationTemplateInfo(Model):

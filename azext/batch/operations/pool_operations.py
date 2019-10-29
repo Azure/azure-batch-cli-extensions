@@ -6,7 +6,6 @@
 import importlib
 import logging
 
-from azure.batch.operations.pool_operations import PoolOperations
 from datetime import datetime as dt
 from azure.batch.operations._pool_operations import PoolOperations
 from mock import patch

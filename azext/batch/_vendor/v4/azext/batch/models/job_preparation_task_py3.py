@@ -5,7 +5,7 @@
 
 # pylint: disable=redefined-builtin
 
-from msrest.serialization import Model
+from ....msrest.serialization import Model
 
 
 class JobPreparationTask(Model):

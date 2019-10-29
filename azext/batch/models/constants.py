@@ -67,6 +67,7 @@ PROPS_ON_COLLECTION_TASK = PROPS_ON_REPEAT_TASK.union({
 
 # Ensure the first member of this array is the official REST Version
 class SupportedRestApi(Enum):
+    Nov2018 = ["2018-08-01.7.0", "2018-08-01"]
     Jun2019 = ["2019-06-01.9.0", "2019-06-01"]
     Aug2019 = ["2019-08-01.10.0", "2019-08-01"]
 
@@ -76,6 +77,7 @@ class SupportedTemplateApi(Enum):
 
 
 SupportRestApiToSdkVersion = {
+    SupportedRestApi.Nov2018: "4",
     SupportedRestApi.Jun2019: "5",
     SupportedRestApi.Aug2019: "latest",
 }
