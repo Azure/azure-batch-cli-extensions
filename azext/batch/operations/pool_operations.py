@@ -6,10 +6,7 @@
 import importlib
 import logging
 
-from datetime import datetime as dt
 from azure.batch.operations._pool_operations import PoolOperations
-from mock import patch
-from msrest import Serializer, Deserializer
 
 from .. import models
 from ..models.constants import SupportedRestApi, SupportRestApiToSdkVersion
@@ -189,16 +186,6 @@ class ExtendedPoolOperations(PoolOperations):
                     **operation_config)
                 self.api_version = original_api_version
                 return ret
-                return self._add(
-                    pool,
-                    pool_add_options,
-                    custom_headers,
-                    raw,
-                    _pool_utils,
-                    _template_utils,
-                    _file_utils,
-                    models,
-                    **operation_config)
         except Exception:  # pylint: disable=broad-except
             if original_api_version:
                 self.api_version = original_api_version
