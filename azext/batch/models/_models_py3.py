@@ -5,10 +5,17 @@
 
 # pylint: disable=too-many-lines
 
+import importlib
 import os
-import azure.batch.models as models
 from msrest.serialization import Model
 from .constants import ATTRS_RESERVED_FOR_TEMPLATES
+
+models_base = "azext.generated.sdk.batch.v2019_08_01.models.{}"
+JobAddParameter = importlib.import_module(models_base.format("JobAddParameter"))
+PoolAddParameter = importlib.import_module(models_base.format("PoolAddParameter"))
+TaskAddParameter = importlib.import_module(models_base.format("TaskAddParameter"))
+PoolSpecification = importlib.import_module(models_base.format("PoolSpecification"))
+ResourceFile = importlib.import_module(models_base.format("ResourceFile"))
 
 
 class TaskFactoryBase(Model):
@@ -326,7 +333,7 @@ class ChocolateyPackageReference(PackageReferenceBase):
         self.type = 'chocolateyPackage'
 
 
-class ExtendedJobParameter(models.JobAddParameter):
+class ExtendedJobParameter(Model):
     """An Azure Batch job to add.
 
     :param id: A string that uniquely identifies the job within the account.
@@ -430,6 +437,9 @@ class ExtendedJobParameter(models.JobAddParameter):
     'on_task_failure', 'task_factory', 'job_preparation_task', 'job_release_task'.
     :type application_template_info: :class:`ApplicationTemplateInfo
      <azext.batch.models.ApplicationTemplateInfo>`
+    :param base_model: A reference to the object this class should extend
+    :type base_model: :class:`Model
+     <msrest.serialization.Model>`
     """
 
     _validation = {
@@ -452,15 +462,17 @@ class ExtendedJobParameter(models.JobAddParameter):
         'metadata': {'key': 'metadata', 'type': '[MetadataItem]'},
         'uses_task_dependencies': {'key': 'usesTaskDependencies', 'type': 'bool'},
         'task_factory': {'key': 'taskFactory', 'type': 'TaskFactoryBase'},
-        'application_template_info': {'key': 'applicationTemplateInfo', 'type': 'ApplicationTemplateInfo'}
+        'application_template_info': {'key': 'applicationTemplateInfo', 'type': 'ApplicationTemplateInfo'},
+        'base_model': {'key': 'baseModel', 'type': 'Model'}
     }
 
     def __init__(self, *, id: str, pool_info, display_name: str=None, priority: int=None, constraints=None,
                  job_manager_task=None, job_preparation_task=None, job_release_task=None,
                  common_environment_settings=None, on_all_tasks_complete=None, on_task_failure=None,
                  metadata=None, uses_task_dependencies: bool=None, task_factory=None,
-                 application_template_info=None, **kwargs) -> None:
-        super(ExtendedJobParameter, self).__init__(
+                 application_template_info=None, base_model=JobAddParameter, **kwargs) -> None:
+        base_model.__init__(
+            self,
             id=id,
             display_name=display_name,
             priority=priority,
@@ -499,11 +511,15 @@ class ExtendedOutputFileDestination(Model):
      combined with container.
     :type auto_storage: :class:`OutputFileAutoStorageDestination
      <azext.batch.models.OutputFileAutoStorageDestination>`
+    :param base_model: A reference to the object this class should extend
+    :type base_model: :class:`Model
+     <msrest.serialization.Model>`
     """
 
     _attribute_map = {
         'container': {'key': 'container', 'type': 'OutputFileBlobContainerDestination'},
         'auto_storage': {'key': 'autoStorage', 'type': 'OutputFileAutoStorageDestination'},
+        'base_model': {'key': 'baseModel', 'type': 'Model'}
     }
 
     def __init__(self, *, container=None, auto_storage=None, **kwargs) -> None:
@@ -514,7 +530,7 @@ class ExtendedOutputFileDestination(Model):
         self.auto_storage = auto_storage
 
 
-class ExtendedPoolParameter(models.PoolAddParameter):
+class ExtendedPoolParameter(Model):
     """A pool in the Azure Batch service to add.
 
     :param id: Required. A string that uniquely identifies the Pool within the
@@ -653,6 +669,9 @@ class ExtendedPoolParameter(models.PoolAddParameter):
      operating system.
     :type package_references: list of :class:`PackageReferenceBase
      <azext.batch.models.PackageReferenceBase>`
+    :param base_model: A reference to the object this class should extend
+    :type base_model: :class:`Model
+     <msrest.serialization.Model>`
     """
 
     _validation = {
@@ -683,7 +702,8 @@ class ExtendedPoolParameter(models.PoolAddParameter):
         'user_accounts': {'key': 'userAccounts', 'type': '[UserAccount]'},
         'metadata': {'key': 'metadata', 'type': '[MetadataItem]'},
         'mount_configuration': {'key': 'mountConfiguration', 'type': '[MountConfiguration]'},
-        'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
+        'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'},
+        'base_model': {'key': 'baseModel', 'type': 'Model'}
     }
 
     def __init__(self, *, id: str, vm_size: str, display_name: str=None, cloud_service_configuration=None,
@@ -692,9 +712,10 @@ class ExtendedPoolParameter(models.PoolAddParameter):
                  auto_scale_evaluation_interval=None, enable_inter_node_communication: bool=None, network_configuration=None,
                  start_task=None, certificate_references=None, application_package_references=None, application_licenses=None,
                  max_tasks_per_node: int=None, task_scheduling_policy=None, user_accounts=None, metadata=None,
-                 mount_configuration=None, package_references=None,
+                 mount_configuration=None, package_references=None, base_model=PoolAddParameter,
                  **kwargs) -> None:
-        super(ExtendedPoolParameter, self).__init__(
+        base_model.__init__(
+            self,
             id=id,
             display_name=display_name,
             vm_size=vm_size,
@@ -721,7 +742,7 @@ class ExtendedPoolParameter(models.PoolAddParameter):
         self.package_references = package_references
 
 
-class ExtendedPoolSpecification(models.PoolSpecification):
+class ExtendedPoolSpecification(Model):
     """Specification for creating a new pool.
 
     :param display_name: The display name for the pool. The display name need
@@ -856,6 +877,9 @@ class ExtendedPoolSpecification(models.PoolSpecification):
      operating system.
     :type package_references: list of :class:`PackageReferenceBase
      <azext.batch.models.PackageReferenceBase>`
+    :param base_model: A reference to the object this class should extend
+    :type base_model: :class:`Model
+     <msrest.serialization.Model>`
     """
 
     _validation = {
@@ -886,7 +910,8 @@ class ExtendedPoolSpecification(models.PoolSpecification):
         'application_licenses': {'key': 'applicationLicenses', 'type': '[str]'},
         'user_accounts': {'key': 'userAccounts', 'type': '[UserAccount]'},
         'metadata': {'key': 'metadata', 'type': '[MetadataItem]'},
-        'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
+        'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'},
+        'base_model': {'key': 'baseModel', 'type': 'Model'}
     }
 
     def __init__(self, *, vm_size: str, display_name: str=None, cloud_service_configuration=None,
@@ -895,8 +920,10 @@ class ExtendedPoolSpecification(models.PoolSpecification):
                  enable_auto_scale: bool=None, auto_scale_formula: str=None, auto_scale_evaluation_interval=None,
                  enable_inter_node_communication: bool=None, network_configuration=None, start_task=None,
                  certificate_references=None, application_package_references=None, application_licenses=None,
-                 user_accounts=None, metadata=None, package_references=None, **kwargs) -> None:
-        super(ExtendedPoolSpecification, self).__init__(
+                 user_accounts=None, metadata=None, package_references=None, base_model=PoolSpecification,
+                 **kwargs) -> None:
+        base_model.__init__(
+            self,
             display_name=display_name,
             vm_size=vm_size,
             cloud_service_configuration=cloud_service_configuration,
@@ -921,7 +948,7 @@ class ExtendedPoolSpecification(models.PoolSpecification):
         self.package_references = package_references
 
 
-class ExtendedResourceFile(models.ResourceFile):
+class ExtendedResourceFile(Model):
     """A file to be downloaded from Azure blob storage to a compute node.
 
     :param http_url: The URL of the file within Azure Blob Storage. This
@@ -969,6 +996,9 @@ class ExtendedResourceFile(models.ResourceFile):
      a Azure Storage container or an auto-storage file group.
     :type source: :class:`FileSource
      <azext.batch.models.FileSource>`
+    :param base_model: A reference to the object this class should extend
+    :type base_model: :class:`Model
+     <msrest.serialization.Model>`
     """
 
     _attribute_map = {
@@ -978,7 +1008,9 @@ class ExtendedResourceFile(models.ResourceFile):
         'storage_container_url': {'key': 'storageContainerUrl', 'type': 'str'},
         'file_path': {'key': 'filePath', 'type': 'str'},
         'file_mode': {'key': 'fileMode', 'type': 'str'},
-        'source': {'key': 'source', 'type': 'FileSource'}
+        'blob_source': {'key': 'blobSource', 'type': 'str'},
+        'source': {'key': 'source', 'type': 'FileSource'},
+        'base_model': {'key': 'baseModel', 'type': 'Model'}
     }
 
     def __init__(self,
@@ -989,8 +1021,11 @@ class ExtendedResourceFile(models.ResourceFile):
                  blob_prefix: str=None,
                  file_path: str=None,
                  file_mode: str=None,
-                 source=None, **kwargs) -> None:
-        super(ExtendedResourceFile, self).__init__(
+                 source=None,
+                 base_model=ResourceFile,
+                 **kwargs) -> None:
+        base_model.__init__(
+            self,
             http_url=http_url,
             auto_storage_container_name=auto_storage_container_name,
             storage_container_url=storage_container_url,
@@ -1001,7 +1036,7 @@ class ExtendedResourceFile(models.ResourceFile):
         self.source = source
 
 
-class ExtendedTaskParameter(models.TaskAddParameter):
+class ExtendedTaskParameter(Model):
     """An Azure Batch task to add.
 
     :param id: A string that uniquely identifies the task within the job. The
@@ -1107,6 +1142,9 @@ class ExtendedTaskParameter(models.TaskAddParameter):
      operating system.
     :type package_references: list of :class:`PackageReferenceBase
      <azext.batch.models.PackageReferenceBase>`
+    :param base_model: A reference to the object this class should extend
+    :type base_model: :class:`Model
+     <msrest.serialization.Model>`
     """
 
     _validation = {
@@ -1132,7 +1170,8 @@ class ExtendedTaskParameter(models.TaskAddParameter):
                                            'type': '[ApplicationPackageReference]'},
         'authentication_token_settings': {'key': 'authenticationTokenSettings',
                                           'type': 'AuthenticationTokenSettings'},
-        'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'}
+        'package_references': {'key': 'packageReferences', 'type': '[PackageReferenceBase]'},
+        'base_model': {'key': 'baseModel', 'type': 'Model'}
     }
 
     def __init__(self, *, id: str, command_line: str, display_name: str=None, container_settings=None,
@@ -1140,8 +1179,9 @@ class ExtendedTaskParameter(models.TaskAddParameter):
                  affinity_info=None, constraints=None, user_identity=None,
                  multi_instance_settings=None, depends_on=None,
                  application_package_references=None, authentication_token_settings=None,
-                 package_references=None, **kwargs) -> None:
-        super(ExtendedTaskParameter, self).__init__(
+                 package_references=None, base_model=TaskAddParameter, **kwargs) -> None:
+        base_model.__init__(
+            self,
             id=id,
             display_name=display_name,
             command_line=command_line,

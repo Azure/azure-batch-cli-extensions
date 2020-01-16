@@ -54,7 +54,7 @@ if __name__ == '__main__':
     with open(path_to_pool, 'r') as template:
         pool_json = json.load(template)
     pool_parameters = {'poolId': pool_id}
-    pool_json = client.pool.expand_template(pool_json, pool_parameters)
+    pool_json = client.pool_extensions.expand_template(pool_json, pool_parameters)
     pool = operations.ExtendedPoolOperations.poolparameter_from_json(pool_json)
     try:
         client.pool.add(pool)

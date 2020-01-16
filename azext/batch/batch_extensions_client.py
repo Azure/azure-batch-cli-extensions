@@ -8,7 +8,7 @@ import copy
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error,relative-import
 from msrest import Serializer, Deserializer
 
-from azure.batch import BatchServiceClient
+from ..generated.sdk.batch import BatchServiceClient
 from azure.mgmt.batch import BatchManagementClient
 from azure.mgmt.storage import StorageManagementClient
 from azure.storage.blob import BlockBlobService
@@ -76,12 +76,9 @@ class BatchExtensionsClient(BatchServiceClient):
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
 
-        self.pool = ExtendedPoolOperations(
-            self, self._client, self.config, self._serialize, self._deserialize, self._storage_account)
-        self.job = ExtendedJobOperations(
-            self, self._client, self.config, self._serialize, self._deserialize, self._storage_account)
-        self.file = ExtendedFileOperations(
-            self, self._client, self.config, self._serialize, self._deserialize, self._storage_account)
+        self.pool_extensions = ExtendedPoolOperations(self, self._client, self.config, self._serialize, self._deserialize, self._storage_account)
+        self.job_extensions = ExtendedJobOperations(self, self._client, self.config, self._serialize, self._deserialize, self._storage_account)
+        self.file_extensions = ExtendedFileOperations(self, self._client, self.config, self._serialize, self._deserialize, self._storage_account)
 
     def _get_cli_profile(self, subscription_id):  # pylint:disable=no-self-use
         try:

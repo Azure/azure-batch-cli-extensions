@@ -3,7 +3,7 @@
     "type": "Microsoft.Batch/batchAccounts/pools",
     "apiVersion": "2018-08-01",
     "properties": {
-      "id": "blobsource",
+      "id": "blobsource2",
       "displayName": "Blender Ubuntu standard pool",
       "vmSize": "Standard_D1_v2",
       "virtualMachineConfiguration": {

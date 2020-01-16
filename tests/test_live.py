@@ -346,7 +346,7 @@ class TestBatchExtensionsLive(VCRTestBase):
 
         try:
             add_pool = self.batch_client._deserialize('PoolAddParameter', pool)  # pylint:disable=protected-access
-            self.batch_client.pool.add(add_pool)
+            self.batch_client.pool_extensions.add(add_pool)
             print('Successfully created pool {}'.format(pool_id))
         except BatchErrorException as ex:
             if ex.error.code == 'PoolExists':
@@ -431,9 +431,9 @@ class TestBatchExtensionsLive(VCRTestBase):
         # Batch Explorer workflow
         with open(os.path.join(self.data_dir, 'batch.pool.simple.resourcefile-legacy.json'), 'r') as template:
             json_obj = json.load(template)
-        expanded_template = self.batch_client.pool.expand_template(json_obj)
-        pool_param = self.batch_client.pool.poolparameter_from_json(expanded_template)
-        pool = self.batch_client.pool.add(pool_param)
+        expanded_template = self.batch_client.pool_extensions.expand_template(json_obj)
+        pool_param = self.batch_client.pool_extensions.poolparameter_from_json(expanded_template)
+        pool = self.batch_client.pool_extensions.add(pool_param)
         self.wait_for_pool_steady(pool_param.properties.id, 5 * 60)
         self.batch_client.pool.delete(pool_param.properties.id)
 

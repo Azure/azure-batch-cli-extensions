@@ -1654,9 +1654,3 @@ class TestBatchExtensions(unittest.TestCase):
             parameter_obj = json.load(parameter)
         pool_ops = operations.ExtendedPoolOperations(None, None, None, self._serialize, self._deserialize, None)
         pool_template_json = pool_ops.expand_template(template_obj, parameter_obj)
-
-        with self.assertRaises(NotImplementedError):
-            job_ops.jobparameter_from_json(job_template_json)
-
-        with self.assertRaises(NotImplementedError):
-            pool_ops.poolparameter_from_json(pool_template_json)

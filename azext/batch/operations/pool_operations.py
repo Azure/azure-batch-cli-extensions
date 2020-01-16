@@ -8,7 +8,7 @@ import logging
 
 from azure.batch.operations._pool_operations import PoolOperations
 
-from .. import models
+from ..models import PoolTemplate, ExtendedPoolParameter
 from ..models.constants import SupportedRestApi, SupportRestApiToSdkVersion
 from .. import _file_utils
 from .. import _pool_utils
@@ -16,7 +16,7 @@ from .. import _template_utils
 
 logger = logging.getLogger(__name__)
 
-class ExtendedPoolOperations(PoolOperations):
+class ExtendedPoolOperations:
     """PoolOperations operations.
 
     :param parent: The parent BatchExtensionsClient object.
@@ -27,7 +27,6 @@ class ExtendedPoolOperations(PoolOperations):
     :param get_storage_account: A callable to retrieve a storage client object.
     """
     def __init__(self, parent, client, config, serializer, deserializer, get_storage_account):
-        super(ExtendedPoolOperations, self).__init__(client, config, serializer, deserializer)
         self._parent = parent
         self.get_storage_client = get_storage_account
 
@@ -68,18 +67,17 @@ class ExtendedPoolOperations(PoolOperations):
                     break
 
             if api_version and SupportRestApiToSdkVersion[api_version] != "latest":
-                vendor_base = "azext.batch._vendor.v{}.azext.batch".format(
+                models_base = "azext.generated.sdk.batch.v{}.models".format(
                     SupportRestApiToSdkVersion[api_version])
-                models_str = "{}.models".format(vendor_base)
-                vendored_models = importlib.import_module(models_str)
-                return ExtendedPoolOperations._poolparameter_from_json(json_data, vendored_models)
+                importlib.import_module(models_base)
+                return ExtendedPoolOperations._poolparameter_from_json(json_data)
             else:
                 logging.warning("Invalid apiVersion, defaulting to latest")
-        return ExtendedPoolOperations._poolparameter_from_json(json_data, models)
+        return ExtendedPoolOperations._poolparameter_from_json(json_data)
 
 
     @staticmethod
-    def _poolparameter_from_json(json_data, models_impl):
+    def _poolparameter_from_json(json_data):
         """Create an ExtendedPoolParameter object from a JSON specification.
         :param dict json_data: The JSON specification of an AddPoolParameter or an
          ExtendedPoolParameter or a PoolTemplate.
@@ -88,9 +86,9 @@ class ExtendedPoolOperations(PoolOperations):
         result = 'PoolTemplate' if json_data.get('properties') else 'ExtendedPoolParameter'
         try:
             if result == 'PoolTemplate':
-                pool = models_impl.PoolTemplate.from_dict(json_data)
+                pool = PoolTemplate.from_dict(json_data)
             else:
-                pool = models_impl.ExtendedPoolParameter.from_dict(json_data)
+                pool = ExtendedPoolParameter.from_dict(json_data)
             if pool is None:
                 raise ValueError("JSON data is not in correct format.")
             return pool
@@ -128,68 +126,43 @@ class ExtendedPoolOperations(PoolOperations):
         """
         original_api_version = None
         api_version = None
-        vendored_pool_utils = None
-        vendored_file_utils = None
-        vendored_template_utils = None
         vendored_models = None
-
         api_version_raw = getattr(pool, 'api_version', None)
         if api_version_raw:
             for valid_version in SupportedRestApi:
                 if api_version_raw in valid_version.value:
                     api_version = valid_version
                     break
-
             if not api_version:
                 logging.warning("Invalid apiVersion, defaulting to latest")
 
-            if api_version and SupportRestApiToSdkVersion[api_version] != "latest":
-                vendor_base = "azext.batch._vendor.v{}.azext.batch".format(
-                    SupportRestApiToSdkVersion[api_version])
-
-                models_str = "{}.models".format(vendor_base)
-                vendored_models = importlib.import_module(models_str)
-
-                pool_utils_str = "{}._pool_utils".format(vendor_base)
-                vendored_pool_utils = importlib.import_module(pool_utils_str)
-
-                file_utils_str = "{}._file_utils".format(vendor_base)
-                vendored_file_utils = importlib.import_module(file_utils_str)
-
-                template_utils_str = "{}._template_utils".format(
-                    vendor_base)
-                vendored_template_utils = importlib.import_module(
-                    template_utils_str)
-
-                if isinstance(pool, vendored_models.PoolTemplate):
-                    pool = pool.properties
-            else:
-                api_version = None
-                logging.warning("Invalid apiVersion, defaulting to latest")
-
-        if isinstance(pool, models.PoolTemplate):
+        if isinstance(pool, PoolTemplate):
             pool = pool.properties
 
         try:
             if api_version:
-                original_api_version = self.api_version
-                self.api_version = api_version.value[0]
+                original_api_version = self._parent.api_version
+                self._parent.api_version = api_version.value[0]
                 ret = self._add(
                     pool,
                     pool_add_options,
                     custom_headers,
                     raw,
-                    vendored_pool_utils,
-                    vendored_template_utils,
-                    vendored_file_utils,
-                    vendored_models,
+                    api_version.value[0],
                     **operation_config)
-                self.api_version = original_api_version
+                self._parent.api_version = original_api_version
                 return ret
+            else:
+                return self._add(
+                    pool,
+                    pool_add_options,
+                    custom_headers,
+                    raw,
+                    **operation_config)
         except Exception:  # pylint: disable=broad-except
             if original_api_version:
-                self.api_version = original_api_version
-                raise
+                self._parent.api_version = original_api_version
+            raise
     add.metadata = {'url': '/pools'}
 
     def _add(self,
@@ -197,10 +170,7 @@ class ExtendedPoolOperations(PoolOperations):
              pool_add_options,
              custom_headers,
              raw,
-             pool_utils,
-             template_utils,
-             file_utils,
-             models_impl,
+             api_version=None,
              **operation_config):
         """ Internal add method for pool
 
@@ -227,18 +197,17 @@ class ExtendedPoolOperations(PoolOperations):
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
-        pool_os_flavor = pool_utils.get_pool_target_os_type(pool)
+        models = self._parent.models(api_version)
+        pool_os_flavor = _pool_utils.get_pool_target_os_type(pool)
         # Handle package manangement
         if hasattr(pool, 'package_references') and pool.package_references:
-            cmds = [template_utils.process_pool_package_references(pool)]
+            cmds = [_template_utils.process_pool_package_references(pool)]
             # Update the start task command
-            pool.start_task = models_impl.StartTask(**template_utils.construct_setup_task(
+            pool.start_task = models.StartTask(**_template_utils.construct_setup_task(
                 pool.start_task, cmds, pool_os_flavor))
 
         # Handle any extended resource file references.
-        fileutils = file_utils.FileUtils(self.get_storage_client)
-        template_utils.post_processing(pool, fileutils, pool_os_flavor)
+        fileutils = _file_utils.FileUtils(self.get_storage_client)
+        _template_utils.post_processing(pool, fileutils, pool_os_flavor)
 
-        return super(ExtendedPoolOperations, self).add(pool, pool_add_options,
-                                                       custom_headers, raw,
-                                                       **operation_config)
+        return self._parent.pool.add(pool, pool_add_options, custom_headers, raw, **operation_config)
