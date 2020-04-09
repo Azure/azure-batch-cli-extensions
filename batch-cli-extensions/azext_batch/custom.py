@@ -18,9 +18,20 @@ logger = get_logger(__name__)
 # pylint: disable=redefined-builtin
 
 
+def disk_encryption_target_format(value):
+    """Space seperated target disks to be encrypted. Values can either be OsDisk or TemporaryDisk"""
+    from azext.batch.models import DiskEncryptionTarget
+    if value == 'OsDisk':
+        return DiskEncryptionTarget.os_disk
+    if value == 'TemporaryDisk':
+        return DiskEncryptionTarget.temporary_disk
+    message = 'Argument {} is not a valid disk_encryption_target'
+    raise ValueError(message.format(value))
+
+
 def create_pool(client, template=None, parameters=None, json_file=None, id=None, vm_size=None,  # pylint:disable=too-many-arguments, too-many-locals
                 target_dedicated_nodes=None, target_low_priority_nodes=None, auto_scale_formula=None,  # pylint: disable=redefined-builtin
-                enable_inter_node_communication=False, os_family=None, image=None,
+                enable_inter_node_communication=False, os_family=None, image=None, disk_encryption_targets=None,
                 node_agent_sku_id=None, resize_timeout=None, start_task_command_line=None,
                 start_task_resource_files=None, start_task_wait_for_success=False, application_licenses=None,
                 certificate_references=None, application_package_references=None, metadata=None):
@@ -28,7 +39,8 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
     from azext.batch.errors import MissingParameterValue
     from azext.batch.models import (
         PoolAddOptions, StartTask, ImageReference,
-        CloudServiceConfiguration, VirtualMachineConfiguration)
+        CloudServiceConfiguration, VirtualMachineConfiguration,
+        DiskEncryptionConfiguration)
     if template or json_file:
         if template:
             json_obj = None
@@ -81,6 +93,13 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                     pool.virtual_machine_configuration = VirtualMachineConfiguration(
                         image_reference=ImageReference(publisher=publisher, offer=offer, sku=sku, version=version),
                         node_agent_sku_id=node_agent_sku_id)
+                    if disk_encryption_targets:
+                        targets = disk_encryption_targets.split(' ')
+                        parsed_targets = []
+                        for target in targets:
+                            parsed_targets.append(
+                                disk_encryption_target_format(target))
+                        pool.virtual_machine_configuration.disk_configuration = DiskEncryptionConfiguration(targets=parsed_targets)
                 except ValueError:
                     if '/' not in image:
                         message = ("Incorrect format for VM image. Should be in the format: \n"

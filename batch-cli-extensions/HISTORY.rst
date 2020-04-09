@@ -3,6 +3,11 @@
 Release History
 ===============
 
+6.0.0 (2020-04-??)
+------------------
+
+* Update SDK dependency to get latest models and defaults
+
 5.0.1 (2019-08-20)
 ------------------
 
