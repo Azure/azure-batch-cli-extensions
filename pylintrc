@@ -1,5 +1,6 @@
 [MASTER]
 ignore-patterns=test_*,.*?_py3.py
+ignore=_vendor
 reports=no
 
 [MESSAGES CONTROL]

@@ -3,16 +3,20 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from datetime import datetime as dt
+import importlib
+import logging
+
 from azure.batch.operations._pool_operations import PoolOperations
 
-from .. import models
-from .. import _file_utils as file_utils
-from .. import _pool_utils as pool_utils
-from .. import _template_utils as templates
-from ..models.constants import KnownTemplateVersion
+from ..models import PoolTemplate, ExtendedPoolParameter
+from ..models.constants import SupportedRestApi, SupportRestApiToSdkVersion
+from .. import _file_utils
+from .. import _pool_utils
+from .. import _template_utils
 
-class ExtendedPoolOperations(PoolOperations):
+logger = logging.getLogger(__name__)
+
+class ExtendedPoolOperations:
     """PoolOperations operations.
 
     :param parent: The parent BatchExtensionsClient object.
@@ -23,7 +27,6 @@ class ExtendedPoolOperations(PoolOperations):
     :param get_storage_account: A callable to retrieve a storage client object.
     """
     def __init__(self, parent, client, config, serializer, deserializer, get_storage_account):
-        super(ExtendedPoolOperations, self).__init__(client, config, serializer, deserializer)
         self._parent = parent
         self.get_storage_client = get_storage_account
 
@@ -41,11 +44,13 @@ class ExtendedPoolOperations(PoolOperations):
             raise ValueError("parameters isn't a JSON dictionary")
         elif not parameters:
             parameters = {}
-        expanded_pool_object = templates.expand_template(template, parameters)
+        expanded_pool_object = _template_utils.expand_template(template, parameters)
         try:
+            # If JobParameter only return content
             return expanded_pool_object['pool']
         except KeyError:
-            raise ValueError("Template missing required 'pool' element")
+            # Else return full template
+            return expanded_pool_object
 
     @staticmethod
     def poolparameter_from_json(json_data):
@@ -53,20 +58,37 @@ class ExtendedPoolOperations(PoolOperations):
         :param dict json_data: The JSON specification of an AddPoolParameter or an
          ExtendedPoolParameter or a PoolTemplate.
         """
+        api_version_raw = json_data.get('apiVersion')
+        if api_version_raw:
+            api_version = None
+            for valid_version in SupportedRestApi:
+                if api_version_raw in valid_version.value:
+                    api_version = valid_version
+                    break
+
+            if api_version and SupportRestApiToSdkVersion[api_version] != "latest":
+                models_base = "azext.generated.sdk.batch.v{}.models".format(
+                    SupportRestApiToSdkVersion[api_version])
+                importlib.import_module(models_base)
+                return ExtendedPoolOperations._poolparameter_from_json(json_data)
+            else:
+                logging.warning("Invalid apiVersion, defaulting to latest")
+        return ExtendedPoolOperations._poolparameter_from_json(json_data)
+
+
+    @staticmethod
+    def _poolparameter_from_json(json_data):
+        """Create an ExtendedPoolParameter object from a JSON specification.
+        :param dict json_data: The JSON specification of an AddPoolParameter or an
+         ExtendedPoolParameter or a PoolTemplate.
+        :param module models: models to deserialize from
+        """
         result = 'PoolTemplate' if json_data.get('properties') else 'ExtendedPoolParameter'
-        json_data = templates.convert_blob_source_to_http_url(json_data)
         try:
             if result == 'PoolTemplate':
-                if 'apiVersion' in json_data:
-                    max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
-                    specified_datetime = dt.strptime(json_data['apiVersion'], "%Y-%m-%d")
-                    if max_datetime < specified_datetime:
-                        raise NotImplementedError(
-                            "This SDK does not have template API version {} implemented".format(
-                                json_data['apiVersion']))
-                pool = models.PoolTemplate.from_dict(json_data)
+                pool = PoolTemplate.from_dict(json_data)
             else:
-                pool = models.ExtendedPoolParameter.from_dict(json_data)
+                pool = ExtendedPoolParameter.from_dict(json_data)
             if pool is None:
                 raise ValueError("JSON data is not in correct format.")
             return pool
@@ -75,8 +97,7 @@ class ExtendedPoolOperations(PoolOperations):
         except Exception as exp:
             raise ValueError("Unable to deserialize to {}: {}".format(result, exp))
 
-    def add(
-            self, pool, pool_add_options=None, custom_headers=None, raw=False, **operation_config):
+    def add(self, pool, pool_add_options=None, custom_headers=None, raw=False, **operation_config):
         """Adds a pool to the specified account.
 
         When naming pools, avoid including sensitive information such as user
@@ -103,27 +124,90 @@ class ExtendedPoolOperations(PoolOperations):
         :raises:
          :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
         """
-        if isinstance(pool, models.PoolTemplate):
-            if pool.api_version:
-                max_datetime = dt.strptime(KnownTemplateVersion.Dec2018.value, "%Y-%m-%d")
-                specified_datetime = dt.strptime(pool.api_version, "%Y-%m-%d")
-                if max_datetime < specified_datetime:
-                    raise NotImplementedError("This SDK does not have template API version {} implemetned".format(
-                        pool.api_version))
+        original_api_version = None
+        api_version = None
+        vendored_models = None
+        api_version_raw = getattr(pool, 'api_version', None)
+        if api_version_raw:
+            for valid_version in SupportedRestApi:
+                if api_version_raw in valid_version.value:
+                    api_version = valid_version
+                    break
+            if not api_version:
+                logging.warning("Invalid apiVersion, defaulting to latest")
+
+        if isinstance(pool, PoolTemplate):
             pool = pool.properties
 
+        try:
+            if api_version:
+                original_api_version = self._parent.api_version
+                self._parent.api_version = api_version.value[0]
+                ret = self._add(
+                    pool,
+                    pool_add_options,
+                    custom_headers,
+                    raw,
+                    api_version.value[0],
+                    **operation_config)
+                self._parent.api_version = original_api_version
+                return ret
+            else:
+                return self._add(
+                    pool,
+                    pool_add_options,
+                    custom_headers,
+                    raw,
+                    **operation_config)
+        except Exception:  # pylint: disable=broad-except
+            if original_api_version:
+                self._parent.api_version = original_api_version
+            raise
+    add.metadata = {'url': '/pools'}
 
-        pool_os_flavor = pool_utils.get_pool_target_os_type(pool)
+    def _add(self,
+             pool,
+             pool_add_options,
+             custom_headers,
+             raw,
+             api_version=None,
+             **operation_config):
+        """ Internal add method for pool
+
+        :param pool: The pool to be added.
+        :type pool: :class:`PoolAddParameter<azure.batch.models.PoolAddParameter>` or
+         :class:`ExtendedPoolParameter<azext.batch.models.ExtendedPoolParameter>`
+         or :class:`PoolTemplate<azure.batch.models.PoolTemplate>`
+        :param pool_add_options: Additional parameters for the operation
+        :type pool_add_options: :class:`PoolAddOptions
+         <azure.batch.models.PoolAddOptions>`
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: returns the direct response alongside the
+         deserialized response
+        :param operation_config: :ref:`Operation configuration
+         overrides<msrest:optionsforoperations>`.
+        :param pool_utils: pool utility methods
+        :param template_utils: template utility methods
+        :param file_utils: file utility methods
+        :return: None or
+         :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>` if
+         raw=true
+        :rtype: None or
+         :class:`ClientRawResponse<msrest.pipeline.ClientRawResponse>`
+        :raises:
+         :class:`BatchErrorException<azure.batch.models.BatchErrorException>`
+        """
+        models = self._parent.models(api_version)
+        pool_os_flavor = _pool_utils.get_pool_target_os_type(pool)
         # Handle package manangement
         if hasattr(pool, 'package_references') and pool.package_references:
-            cmds = [templates.process_pool_package_references(pool)]
+            cmds = [_template_utils.process_pool_package_references(pool)]
             # Update the start task command
-            pool.start_task = models.StartTask(**templates.construct_setup_task(
+            pool.start_task = models.StartTask(**_template_utils.construct_setup_task(
                 pool.start_task, cmds, pool_os_flavor))
 
         # Handle any extended resource file references.
-        fileutils = file_utils.FileUtils(self.get_storage_client)
-        templates.post_processing(pool, fileutils, pool_os_flavor)
+        fileutils = _file_utils.FileUtils(self.get_storage_client)
+        _template_utils.post_processing(pool, fileutils, pool_os_flavor)
 
-        return super(ExtendedPoolOperations, self).add(pool, pool_add_options, custom_headers, raw, **operation_config)
-    add.metadata = {'url': '/pools'}
+        return self._parent.pool.add(pool, pool_add_options, custom_headers, raw, **operation_config)

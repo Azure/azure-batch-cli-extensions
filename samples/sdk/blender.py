@@ -47,7 +47,7 @@ if __name__ == '__main__':
     # Load template file and parameters
     path_to_template = os.path.join(SAMPLE_DIR, "blender", "render.json")
     path_to_parameters = os.path.join(SAMPLE_DIR, "blender", "parameters.json")
-    job_json = client.job.expand_template(path_to_template, path_to_parameters)
+    job_json = client.job_extensions.expand_template(path_to_template, path_to_parameters)
 
     # Create job
     job = operations.ExtendedJobOperations.jobparameter_from_json(job_json)

@@ -625,12 +625,13 @@ class TestBatchExtensions(unittest.TestCase):
         utils._expand_parametric_sweep(template)  # pylint: disable=protected-access
 
     def test_batch_extensions_preserve_resourcefiles(self):
-        fileutils = file_utils.FileUtils(None)
+        fileutils = file_utils.FileUtils(MagicMock(spec=BlockBlobService))
         request = Mock(
             resource_files=[
                 Mock(
                     http_url='abc',
-                    file_path='xyz')
+                    file_path='xyz',
+                    source=None)
             ])
         transformed = utils.post_processing(request, fileutils, pool_utils.PoolOperatingSystemFlavor.LINUX)
         self.assertEqual(transformed, request)
@@ -638,27 +639,26 @@ class TestBatchExtensions(unittest.TestCase):
             common_resource_files=[
                 Mock(
                     http_url='abc',
-                    file_path='xyz')
+                    file_path='xyz',
+                    source=None)
             ],
             job_manager_task=Mock(
                 resource_files=[
                     Mock(
                         http_url='foo',
-                        file_path='bar')
+                        file_path='bar',
+                        source=None)
                 ]
             )
         )
         transformed = utils.post_processing(request, fileutils, pool_utils.PoolOperatingSystemFlavor.WINDOWS)
         self.assertEqual(transformed, request)
         request = [  # pylint: disable=redefined-variable-type
-            Mock(resource_files=[Mock(http_url='abc', file_path='xyz')]),
-            Mock(resource_files=[Mock(http_url='abc', file_path='xyz')])
+            Mock(resource_files=[Mock(http_url='abc', file_path='xyz', source=None)]),
+            Mock(resource_files=[Mock(http_url='abc', file_path='xyz', source=None)])
         ]
         transformed = utils.post_processing(request, fileutils, pool_utils.PoolOperatingSystemFlavor.WINDOWS)
         self.assertEqual(transformed, request)
-        request = Mock(resource_files=[Mock(http_url='abc', file_path=None)])
-        with self.assertRaises(ValueError):
-            utils.post_processing(request, fileutils, pool_utils.PoolOperatingSystemFlavor.WINDOWS)
 
     def test_batch_extensions_validate_parameter(self):
         content = {
@@ -1654,9 +1654,3 @@ class TestBatchExtensions(unittest.TestCase):
             parameter_obj = json.load(parameter)
         pool_ops = operations.ExtendedPoolOperations(None, None, None, self._serialize, self._deserialize, None)
         pool_template_json = pool_ops.expand_template(template_obj, parameter_obj)
-
-        with self.assertRaises(NotImplementedError):
-            job_ops.jobparameter_from_json(job_template_json)
-
-        with self.assertRaises(NotImplementedError):
-            pool_ops.poolparameter_from_json(pool_template_json)

@@ -1,7 +1,7 @@
 {
   "job": {
     "type": "Microsoft.Batch/batchAccounts/jobs",
-    "apiVersion": "2018-12-01",
+    "apiVersion": "2018-08-01.7.0",
     "properties": {
       "id": "job123",
       "onAllTasksComplete": "terminateJob",
@@ -33,7 +33,7 @@
             "commandLine": "/bin/bash -c 'cat {fileName}'",
             "resourceFiles": [
               {
-                "httpUrl": "https://testacct.blob.core.windows.net/",
+                "blobSource": "https://testacct.blob.core.windows.net/",
                 "filePath": "location"
               }
             ]

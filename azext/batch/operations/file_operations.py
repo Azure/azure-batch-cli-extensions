@@ -8,13 +8,12 @@ from __future__ import unicode_literals
 import errno
 import os
 
-from azure.batch.operations._file_operations import FileOperations
 from azure.storage.blob.models import Include
 
 from .. import _file_utils as file_utils
 
 
-class ExtendedFileOperations(FileOperations):
+class ExtendedFileOperations:
     """FileOperations operations.
 
     :param parent: The parent BatchExtensionsClient object.
@@ -25,7 +24,6 @@ class ExtendedFileOperations(FileOperations):
     :param get_storage_account: A callable to retrieve a storage client object.
     """
     def __init__(self, parent, client, config, serializer, deserializer, get_storage_account):
-        super(ExtendedFileOperations, self).__init__(client, config, serializer, deserializer)
         self._parent = parent
         self.get_storage_client = get_storage_account
 

@@ -7,7 +7,6 @@ from azure.cli.core.util import get_file_json
 from knack.log import get_logger
 from knack.prompting import prompt
 
-from azext.batch import _template_utils as templates
 from azext.batch.errors import CreateTasksErrorException
 from azext.batch.models import PoolAddParameter, JobAddParameter, JobConstraints
 from azext.batch.operations import ExtendedPoolOperations, ExtendedJobOperations
@@ -26,9 +25,6 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                 certificate_references=None, application_package_references=None, metadata=None):
     # pylint: disable=too-many-branches, too-many-statements
     from azext.batch.errors import MissingParameterValue
-    from azext.batch.models import (
-        PoolAddOptions, StartTask, ImageReference,
-        CloudServiceConfiguration, VirtualMachineConfiguration)
     if template or json_file:
         if template:
             json_obj = None
@@ -36,23 +32,23 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
             template_obj = get_file_json(template)
             while json_obj is None:
                 try:
-                    json_obj = client.pool.expand_template(template_obj, parameters)
+                    json_obj = client.pool_extensions.expand_template(template_obj, parameters)
                 except MissingParameterValue as error:
                     param_prompt = error.parameter_name
                     param_prompt += " ({}): ".format(error.parameter_description)
                     parameters[error.parameter_name] = prompt(param_prompt)
                 except TypeError as error:
                     raise ValueError(str(error))
-                else:
-                    json_obj = json_obj.get('properties', json_obj)
         else:
             json_obj = get_file_json(json_file)
         # validate the json file
         pool = ExtendedPoolOperations.poolparameter_from_json(json_obj)
         if pool is None:
             raise ValueError("JSON pool parameter is not in correct format.")
-        templates.validate_json_object(json_obj, pool)
     else:
+        from azext.batch.models import (
+            PoolAddOptions, StartTask, ImageReference,
+            CloudServiceConfiguration, VirtualMachineConfiguration)
         if not id:
             raise ValueError('Please supply template, json_file, or id')
 
@@ -120,7 +116,6 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
                job_manager_task_id=None, job_manager_task_resource_files=None):
     # pylint: disable=too-many-branches, too-many-statements
     from azext.batch.errors import MissingParameterValue
-    from azext.batch.models import JobManagerTask, JobAddOptions, PoolInformation
     if template or json_file:
         if template:
             json_obj = None
@@ -128,27 +123,20 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
             template_obj = get_file_json(template)
             while json_obj is None:
                 try:
-                    json_obj = client.job.expand_template(template_obj, parameters)
+                    json_obj = client.job_extensions.expand_template(template_obj, parameters)
                 except MissingParameterValue as error:
                     param_prompt = error.parameter_name
                     param_prompt += " ({}): ".format(error.parameter_description)
                     parameters[error.parameter_name] = prompt(param_prompt)
                 except TypeError as error:
                     raise ValueError(str(error))
-                else:
-                    json_obj = json_obj.get('properties', json_obj)
         else:
             json_obj = get_file_json(json_file)
-        # validate the json file
-        try:
-            job = ExtendedJobOperations.jobparameter_from_json(json_obj)
-        except NotImplementedError:
-            logger.error("The specified template API version is not supported by the current SDK extension")
-            raise
+        job = ExtendedJobOperations.jobparameter_from_json(json_obj)
         if job is None:
             raise ValueError("JSON job parameter is not in correct format.")
-        templates.validate_json_object(json_obj, job)
     else:
+        from azext.batch.models import JobManagerTask, JobAddOptions, PoolInformation
         if not id:
             raise ValueError('Please supply template, json_file, or id')
 
@@ -172,11 +160,10 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
 
     add_option = JobAddOptions()
     try:
-        client.job.add(job, add_option, threads=multiprocessing.cpu_count()//2)
+        client.job_extensions.add(job, add_option, threads=multiprocessing.cpu_count()//2)
     except CreateTasksErrorException as e:
         for error in e.failures:
             logger.warning(error.task_id + " failed to be added due to " + error.error.code)
-
 create_job.__doc__ = JobAddParameter.__doc__ + "\n" + JobConstraints.__doc__
 
 

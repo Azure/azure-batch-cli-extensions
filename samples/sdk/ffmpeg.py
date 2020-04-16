@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
     ## Create pool from template
     pool_template =  os.path.join(SAMPLE_DIR, 'ffmpeg', 'pool.json')
-    pool_json = client.pool.expand_template(pool_template)
+    pool_json = client.pool_extensions.expand_template(pool_template)
     pool_param = operations.ExtendedPoolOperations.poolparameter_from_json(pool_json)
     client.pool.add(pool_param)
 
@@ -72,7 +72,7 @@ if __name__ == '__main__':
             "value": pool_param.properties.id
         }
     }
-    job_def = client.job.expand_template(job_template, parameters)
+    job_def = client.job_extensions.expand_template(job_template, parameters)
     job_param = operations.ExtendedJobOperations.jobparameter_from_json(job_def)
     client.job.add(job_param)
 

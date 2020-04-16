@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 import copy
 import itertools
 import json
-from logging import getLogger
+import logging
 import re
 from msrest.serialization import Model
 try:
@@ -21,7 +21,7 @@ from . import errors
 from . import _pool_utils as pool_utils
 from . import models
 
-logger = getLogger(__name__)
+logger = logging.getLogger(__name__)
 try:
     _UNICODE_TYPE = unicode
 except NameError:

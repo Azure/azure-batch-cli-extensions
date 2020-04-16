@@ -7,8 +7,7 @@
 
 # Not ideal syntax - but saves us having to check and repopulate this
 # list every time the SDK is regenerated.
-from azure.batch.models import *
-
+from ...generated.sdk.batch.v2019_08_01.models import *
 try:
     from ._models_py3 import ExtendedTaskParameter
     from ._models_py3 import ExtendedJobParameter
