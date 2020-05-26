@@ -9,7 +9,7 @@ import errno
 import os
 
 from azure.batch.operations._file_operations import FileOperations
-from azure.storage.blob.models import Include
+from azure.multiapi.storage.v2018_11_09.blob.models import Include
 
 from .. import _file_utils as file_utils
 
