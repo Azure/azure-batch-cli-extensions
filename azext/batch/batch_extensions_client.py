@@ -11,7 +11,7 @@ from msrest import Serializer, Deserializer
 from azure.batch import BatchServiceClient
 from azure.mgmt.batch import BatchManagementClient
 from azure.mgmt.storage import StorageManagementClient
-from azure.storage.blob import BlockBlobService
+from azure.multiapi.storage.v2018_11_09.blob import BlockBlobService
 from azure.common.credentials import get_cli_profile
 
 from .version import VERSION

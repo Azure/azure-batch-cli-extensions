@@ -13,8 +13,8 @@ import azure.batch.batch_auth as batchauth
 import azext.batch as batch
 from tests.vcr_test_base import VCRTestBase
 from azure.common import AzureMissingResourceHttpError
-from azure.storage.common import CloudStorageAccount
-from azure.storage.blob import BlobPermissions
+from azure.multiapi.storage.v2018_11_09.common import CloudStorageAccount
+from azure.multiapi.storage.v2018_11_09.blob import BlobPermissions
 
 class TestFileUpload(VCRTestBase):
     def __init__(self, test_method):

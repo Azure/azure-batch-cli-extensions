@@ -15,7 +15,7 @@ import pathlib
 from six.moves.urllib.parse import urlsplit  # pylint: disable=import-error,relative-import
 from six.moves.urllib.parse import quote  # pylint: disable=import-error,no-name-in-module,relative-import
 
-from azure.storage.blob import BlobPermissions, BlockBlobService
+from azure.multiapi.storage.v2018_11_09.blob import BlobPermissions, BlockBlobService
 from . import models
 
 def construct_sas_url(blob, uri):

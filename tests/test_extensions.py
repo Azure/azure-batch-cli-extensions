@@ -13,8 +13,8 @@ from mock import patch, Mock, MagicMock
 from msrest import Serializer, Deserializer
 from azure.batch.operations._task_operations import TaskOperations
 from azure.batch.operations._pool_operations import PoolOperations
-from azure.storage.common import CloudStorageAccount
-from azure.storage.blob.blockblobservice import BlockBlobService
+from azure.multiapi.storage.v2018_11_09.common import CloudStorageAccount
+from azure.multiapi.storage.v2018_11_09.blob.blockblobservice import BlockBlobService
 from azure.batch.batch_auth import SharedKeyCredentials
 from azure.batch.models import BatchErrorException, BatchError, TaskAddCollectionResult, TaskAddResult, TaskAddStatus
 from azure.batch import models as base_sdk_models
