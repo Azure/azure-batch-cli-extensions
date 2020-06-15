@@ -4,11 +4,11 @@
         {
             "request": {
                 "method": "GET",
-                "uri": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2?api-version=2019-08-01",
+                "uri": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2?api-version=2020-05-01",
                 "body": null,
                 "headers": {
                     "User-Agent": [
-                        "python/3.7.3 (Windows-10-10.0.18362-SP0) msrest/0.6.10 msrest_azure/0.6.2 azure-mgmt-batch/7.0.0 Azure-SDK-For-Python"
+                        "python/3.7.3 (Windows-10-10.0.18362-SP0) msrest/0.6.10 msrest_azure/0.6.2 azure-mgmt-batch/9.0.0 Azure-SDK-For-Python"
                     ],
                     "Accept-Encoding": [
                         "gzip, deflate"
@@ -20,10 +20,10 @@
                         "keep-alive"
                     ],
                     "Authorization": [
-                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IllNRUxIVDBndmIwbXhvU0RvWWZvbWpxZmpZVSIsImtpZCI6IllNRUxIVDBndmIwbXhvU0RvWWZvbWpxZmpZVSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTg2NDcwMzQwLCJuYmYiOjE1ODY0NzAzNDAsImV4cCI6MTU4NjQ3NDI0MCwiX2NsYWltX25hbWVzIjp7Imdyb3VwcyI6InNyYzEifSwiX2NsYWltX3NvdXJjZXMiOnsic3JjMSI6eyJlbmRwb2ludCI6Imh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3VzZXJzLzI3MjQ0OTM1LWE0YjktNDBhNC1hMjcyLTQyOTQyYjY3ZWNmMS9nZXRNZW1iZXJPYmplY3RzIn19LCJhY3IiOiIxIiwiYWlvIjoiQVZRQXEvOFBBQUFBZHdvK3AzUnJFOTdneHdRMnNMdnEzY3FjZmhaOUZic3J3STFQVVNYa2FYeFJabGxITGgrUW05Wk8vektad1JSdXFUd0lFUDdNSnFuWnIzcmRzQ3BTMTVxM2o3K3AxOC9JWHFlSGNaSDVNalU9IiwiYW1yIjpbIndpYSIsIm1mYSJdLCJhcHBpZCI6IjA0YjA3Nzk1LThkZGItNDYxYS1iYmVlLTAyZjllMWJmN2I0NiIsImFwcGlkYWNyIjoiMCIsImRldmljZWlkIjoiMWQ1MGM1ZGYtZmQwMS00YTY0LTg4NTktODQ3MjM3NThhMjQ0IiwiZmFtaWx5X25hbWUiOiJLbGVpbiIsImdpdmVuX25hbWUiOiJCcmFuZG9uIiwiaXBhZGRyIjoiMTY3LjIyMC4yLjIxNyIsIm5hbWUiOiJCcmFuZG9uIEtsZWluIiwib2lkIjoiMjcyNDQ5MzUtYTRiOS00MGE0LWEyNzItNDI5NDJiNjdlY2YxIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIxMjc1MjExODQtMTYwNDAxMjkyMC0xODg3OTI3NTI3LTMwODY5MTc0IiwicHVpZCI6IjEwMDMwMDAwQTkxNzc4OUUiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiIzLWlWTFpVcWc4cllVRTR5S0V2T0pLREtDdmdSNElSb0FyYVc5UVpiTUZBIiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidW5pcXVlX25hbWUiOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1cG4iOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJYSUxBa2JkcmNFR0stV1FaNjNVYUFBIiwidmVyIjoiMS4wIn0.Ho9A8Zj_Vi7To0Q6iz3pHG2zSbhaTFvGOTevChRPxWrQ8_FsIcMnKnI0ipklfvSpiRx-ePfp5KUXSr220AAk9M_CPavfx3bMPIPj6yMsoLhHOYkM0RyfKe0zuZImSFS-DDH_oCX9_ouN-u6MtpC5wu7f-v8WTED0XigDFp8ngoHRZB20dkUcYHQajdmVxNKtaD0lVyA48gaTmndsAOROO_7fOTQ-QM19uXjICuPRwKMPOsYZo_wPtiAtkRZknzT7evr6W8p1zLzIKF6qQMpg7F6Xpn7Fxfrxv4eQsF93a2pzinVsP-rTnWpysElOoJxDl_YVl4RgG6aHBYHYIZnx5w"
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlNzWnNCTmhaY0YzUTlTNHRycFFCVEJ5TlJSSSIsImtpZCI6IlNzWnNCTmhaY0YzUTlTNHRycFFCVEJ5TlJSSSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTkyMjQzNzk4LCJuYmYiOjE1OTIyNDM3OTgsImV4cCI6MTU5MjMzMDQ5OCwiYWlvIjoiNDJkZ1lGaHhUU2w4UFdmaGs4aC81NU5URm5ndkF3QT0iLCJhcHBpZCI6ImJmYTBkZjVmLTQ3ODItNDgyOS04NmUwLTE5YTgyODI3YjA5NiIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJvaWQiOiJhMmNkMTc1Zi00OGVhLTRmODktOGRmOC1iMDY3Mjg0MTdlZDgiLCJyaCI6IjAuQVFFQXY0ajVjdkdHcjBHUnF5MTgwQkhiUjFfZm9MLUNSeWxJaHVBWnFDZ25zSllhQUFBLiIsInN1YiI6ImEyY2QxNzVmLTQ4ZWEtNGY4OS04ZGY4LWIwNjcyODQxN2VkOCIsInRpZCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsInV0aSI6Im1LSmZGdnM4dmtXcWRmd0NQdTRBQUEiLCJ2ZXIiOiIxLjAifQ.hRq_ft_2qvFHGymWvc5DcFrBwc7ZFBleB8ZLyS4uZJbUI7Idz40hfwBNPajIT3h2C2Lh9N1tUWoVtuALno8oAnWkMwsCp5EVoVxpkbeaPe7nffks82w6TTBQRFs6yQ40EElPL8L4iKQh9Gfus7SiX4OBW6q4vGDzZKqrUlTCE3Fb1I4hgOEgJkN40Ib2l6DFsEieQ7RLyBcDAj_laiA2OpdDorRTWJ6wI8nLxjFYslH3Q6dx5ioDAAdDeSTFLZTIu2tJerT-YT0r1hk39Un9Sf7OBBbekRZYHj64Z-5WAOARb07WOItu45ox8AZLaXbmY5qWvZK7-nkj596ZEaA5hA"
                     ],
                     "x-ms-client-request-id": [
-                        "e0f4b7f6-7aaf-11ea-944b-44032c851686"
+                        "429d3924-af32-11ea-b3bc-44032c851686"
                     ],
                     "accept-language": [
                         "en-US"
@@ -36,48 +36,48 @@
                     "message": "OK"
                 },
                 "headers": {
-                    "Server": [
-                        "Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Pragma": [
-                        "no-cache"
-                    ],
-                    "X-Content-Type-Options": [
-                        "nosniff"
-                    ],
-                    "Vary": [
-                        "Accept-Encoding"
-                    ],
-                    "Transfer-Encoding": [
-                        "chunked"
-                    ],
-                    "Last-Modified": [
-                        "Thu, 09 Jan 2020 20:16:08 GMT"
-                    ],
-                    "Expires": [
-                        "-1"
-                    ],
-                    "Date": [
-                        "Thu, 09 Apr 2020 22:17:22 GMT"
-                    ],
                     "Cache-Control": [
                         "no-cache"
-                    ],
-                    "ETag": [
-                        "\"0x8D79540C37A571C\""
                     ],
                     "Strict-Transport-Security": [
                         "max-age=31536000; includeSubDomains"
                     ],
+                    "ETag": [
+                        "\"0x8D8110413FDD02A\""
+                    ],
+                    "X-Content-Type-Options": [
+                        "nosniff"
+                    ],
+                    "Server": [
+                        "Microsoft-HTTPAPI/2.0"
+                    ],
+                    "Date": [
+                        "Mon, 15 Jun 2020 18:01:39 GMT"
+                    ],
                     "Content-Type": [
                         "application/json; charset=utf-8"
                     ],
+                    "Last-Modified": [
+                        "Mon, 15 Jun 2020 08:14:08 GMT"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Pragma": [
+                        "no-cache"
+                    ],
+                    "Transfer-Encoding": [
+                        "chunked"
+                    ],
+                    "Expires": [
+                        "-1"
+                    ],
                     "content-length": [
-                        "2165"
+                        "2447"
                     ]
                 },
                 "body": {
-                    "string": "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2\",\"name\":\"sdktest2\",\"type\":\"Microsoft.Batch/batchAccounts\",\"location\":\"westcentralus\",\"properties\":{\"accountEndpoint\":\"sdktest2.westcentralus.batch.azure.com\",\"provisioningState\":\"Succeeded\",\"dedicatedCoreQuota\":20,\"dedicatedCoreQuotaPerVMFamily\":[{\"name\":\"standardA0_A7Family\",\"coreQuota\":20},{\"name\":\"standardDv2Family\",\"coreQuota\":20},{\"name\":\"standardA8_A11Family\",\"coreQuota\":0},{\"name\":\"standardDFamily\",\"coreQuota\":0},{\"name\":\"standardGFamily\",\"coreQuota\":0},{\"name\":\"basicAFamily\",\"coreQuota\":0},{\"name\":\"standardFFamily\",\"coreQuota\":0},{\"name\":\"standardNVFamily\",\"coreQuota\":0},{\"name\":\"standardNVPromoFamily\",\"coreQuota\":0},{\"name\":\"standardNCFamily\",\"coreQuota\":0},{\"name\":\"standardNCPromoFamily\",\"coreQuota\":0},{\"name\":\"standardHFamily\",\"coreQuota\":0},{\"name\":\"standardHPromoFamily\",\"coreQuota\":0},{\"name\":\"standardAv2Family\",\"coreQuota\":0},{\"name\":\"standardMSFamily\",\"coreQuota\":0},{\"name\":\"standardDv3Family\",\"coreQuota\":0},{\"name\":\"standardEv3Family\",\"coreQuota\":0},{\"name\":\"standardDSFamily\",\"coreQuota\":0},{\"name\":\"standardDSv2Family\",\"coreQuota\":0},{\"name\":\"standardDSv3Family\",\"coreQuota\":0},{\"name\":\"standardFSFamily\",\"coreQuota\":0},{\"name\":\"standardESv3Family\",\"coreQuota\":0},{\"name\":\"standardGSFamily\",\"coreQuota\":0},{\"name\":\"standardLSFamily\",\"coreQuota\":0},{\"name\":\"standardNCSv2Family\",\"coreQuota\":0},{\"name\":\"standardNDSFamily\",\"coreQuota\":0},{\"name\":\"standardNCSv3Family\",\"coreQuota\":0},{\"name\":\"standardFSv2Family\",\"coreQuota\":0},{\"name\":\"standardHBSFamily\",\"coreQuota\":0},{\"name\":\"standardHCSFamily\",\"coreQuota\":0},{\"name\":\"standardNVSv3Family\",\"coreQuota\":0},{\"name\":\"standardHBrsv2Family\",\"coreQuota\":0}],\"dedicatedCoreQuotaPerVMFamilyEnforced\":false,\"lowPriorityCoreQuota\":100,\"poolQuota\":100,\"activeJobAndJobScheduleQuota\":300,\"autoStorage\":{\"storageAccountId\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Storage/storageAccounts/sdkteststore2\",\"lastKeySync\":\"2020-01-09T20:16:08.6234908Z\"},\"poolAllocationMode\":\"BatchService\"},\"tags\":{\"rawr\":\"test\"}}"
+                    "string": "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2\",\"name\":\"sdktest2\",\"type\":\"Microsoft.Batch/batchAccounts\",\"location\":\"westcentralus\",\"properties\":{\"accountEndpoint\":\"sdktest2.westcentralus.batch.azure.com\",\"provisioningState\":\"Succeeded\",\"dedicatedCoreQuota\":20,\"dedicatedCoreQuotaPerVMFamily\":[{\"name\":\"standardA0_A7Family\",\"coreQuota\":20},{\"name\":\"standardDv2Family\",\"coreQuota\":20},{\"name\":\"standardA8_A11Family\",\"coreQuota\":0},{\"name\":\"standardDFamily\",\"coreQuota\":0},{\"name\":\"standardGFamily\",\"coreQuota\":0},{\"name\":\"basicAFamily\",\"coreQuota\":0},{\"name\":\"standardFFamily\",\"coreQuota\":0},{\"name\":\"standardNVFamily\",\"coreQuota\":0},{\"name\":\"standardNVPromoFamily\",\"coreQuota\":0},{\"name\":\"standardNCFamily\",\"coreQuota\":0},{\"name\":\"standardNCPromoFamily\",\"coreQuota\":0},{\"name\":\"standardHFamily\",\"coreQuota\":0},{\"name\":\"standardHPromoFamily\",\"coreQuota\":0},{\"name\":\"standardAv2Family\",\"coreQuota\":0},{\"name\":\"standardMSFamily\",\"coreQuota\":0},{\"name\":\"standardDv3Family\",\"coreQuota\":0},{\"name\":\"standardEv3Family\",\"coreQuota\":0},{\"name\":\"standardDSFamily\",\"coreQuota\":0},{\"name\":\"standardDSv2Family\",\"coreQuota\":0},{\"name\":\"standardDSv3Family\",\"coreQuota\":0},{\"name\":\"standardFSFamily\",\"coreQuota\":0},{\"name\":\"standardESv3Family\",\"coreQuota\":0},{\"name\":\"standardGSFamily\",\"coreQuota\":0},{\"name\":\"standardLSFamily\",\"coreQuota\":0},{\"name\":\"standardLSv2Family\",\"coreQuota\":0},{\"name\":\"standardNCSv2Family\",\"coreQuota\":0},{\"name\":\"standardNDSFamily\",\"coreQuota\":0},{\"name\":\"standardNCSv3Family\",\"coreQuota\":0},{\"name\":\"standardFSv2Family\",\"coreQuota\":0},{\"name\":\"standardHBSFamily\",\"coreQuota\":0},{\"name\":\"standardHCSFamily\",\"coreQuota\":0},{\"name\":\"standardNVSv3Family\",\"coreQuota\":0},{\"name\":\"standardHBrsv2Family\",\"coreQuota\":0},{\"name\":\"standardDASv4Family\",\"coreQuota\":0},{\"name\":\"standardEAv4Family\",\"coreQuota\":0},{\"name\":\"standardEASv4Family\",\"coreQuota\":0}],\"dedicatedCoreQuotaPerVMFamilyEnforced\":false,\"lowPriorityCoreQuota\":100,\"poolQuota\":100,\"activeJobAndJobScheduleQuota\":300,\"autoStorage\":{\"storageAccountId\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Storage/storageAccounts/sdkteststore2\",\"lastKeySync\":\"2020-06-15T08:14:08.5867562Z\"},\"poolAllocationMode\":\"BatchService\",\"publicNetworkAccess\":\"Enabled\",\"encryption\":{\"keySource\":\"Microsoft.Batch\"}},\"tags\":{\"rawr\":\"test\"},\"identity\":{\"type\":\"None\"}}"
                 }
             }
         },
@@ -100,13 +100,13 @@
                         "keep-alive"
                     ],
                     "Authorization": [
-                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IllNRUxIVDBndmIwbXhvU0RvWWZvbWpxZmpZVSIsImtpZCI6IllNRUxIVDBndmIwbXhvU0RvWWZvbWpxZmpZVSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTg2NDcwMzQwLCJuYmYiOjE1ODY0NzAzNDAsImV4cCI6MTU4NjQ3NDI0MCwiX2NsYWltX25hbWVzIjp7Imdyb3VwcyI6InNyYzEifSwiX2NsYWltX3NvdXJjZXMiOnsic3JjMSI6eyJlbmRwb2ludCI6Imh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3VzZXJzLzI3MjQ0OTM1LWE0YjktNDBhNC1hMjcyLTQyOTQyYjY3ZWNmMS9nZXRNZW1iZXJPYmplY3RzIn19LCJhY3IiOiIxIiwiYWlvIjoiQVZRQXEvOFBBQUFBZHdvK3AzUnJFOTdneHdRMnNMdnEzY3FjZmhaOUZic3J3STFQVVNYa2FYeFJabGxITGgrUW05Wk8vektad1JSdXFUd0lFUDdNSnFuWnIzcmRzQ3BTMTVxM2o3K3AxOC9JWHFlSGNaSDVNalU9IiwiYW1yIjpbIndpYSIsIm1mYSJdLCJhcHBpZCI6IjA0YjA3Nzk1LThkZGItNDYxYS1iYmVlLTAyZjllMWJmN2I0NiIsImFwcGlkYWNyIjoiMCIsImRldmljZWlkIjoiMWQ1MGM1ZGYtZmQwMS00YTY0LTg4NTktODQ3MjM3NThhMjQ0IiwiZmFtaWx5X25hbWUiOiJLbGVpbiIsImdpdmVuX25hbWUiOiJCcmFuZG9uIiwiaXBhZGRyIjoiMTY3LjIyMC4yLjIxNyIsIm5hbWUiOiJCcmFuZG9uIEtsZWluIiwib2lkIjoiMjcyNDQ5MzUtYTRiOS00MGE0LWEyNzItNDI5NDJiNjdlY2YxIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIxMjc1MjExODQtMTYwNDAxMjkyMC0xODg3OTI3NTI3LTMwODY5MTc0IiwicHVpZCI6IjEwMDMwMDAwQTkxNzc4OUUiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiIzLWlWTFpVcWc4cllVRTR5S0V2T0pLREtDdmdSNElSb0FyYVc5UVpiTUZBIiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidW5pcXVlX25hbWUiOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1cG4iOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJYSUxBa2JkcmNFR0stV1FaNjNVYUFBIiwidmVyIjoiMS4wIn0.Ho9A8Zj_Vi7To0Q6iz3pHG2zSbhaTFvGOTevChRPxWrQ8_FsIcMnKnI0ipklfvSpiRx-ePfp5KUXSr220AAk9M_CPavfx3bMPIPj6yMsoLhHOYkM0RyfKe0zuZImSFS-DDH_oCX9_ouN-u6MtpC5wu7f-v8WTED0XigDFp8ngoHRZB20dkUcYHQajdmVxNKtaD0lVyA48gaTmndsAOROO_7fOTQ-QM19uXjICuPRwKMPOsYZo_wPtiAtkRZknzT7evr6W8p1zLzIKF6qQMpg7F6Xpn7Fxfrxv4eQsF93a2pzinVsP-rTnWpysElOoJxDl_YVl4RgG6aHBYHYIZnx5w"
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlNzWnNCTmhaY0YzUTlTNHRycFFCVEJ5TlJSSSIsImtpZCI6IlNzWnNCTmhaY0YzUTlTNHRycFFCVEJ5TlJSSSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTkyMjQzODAwLCJuYmYiOjE1OTIyNDM4MDAsImV4cCI6MTU5MjMzMDUwMCwiYWlvIjoiNDJkZ1lEaXc4TnlTbWkrNkYxSmlmeWJMM3JsMEZBQT0iLCJhcHBpZCI6ImJmYTBkZjVmLTQ3ODItNDgyOS04NmUwLTE5YTgyODI3YjA5NiIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJvaWQiOiJhMmNkMTc1Zi00OGVhLTRmODktOGRmOC1iMDY3Mjg0MTdlZDgiLCJyaCI6IjAuQVFFQXY0ajVjdkdHcjBHUnF5MTgwQkhiUjFfZm9MLUNSeWxJaHVBWnFDZ25zSllhQUFBLiIsInN1YiI6ImEyY2QxNzVmLTQ4ZWEtNGY4OS04ZGY4LWIwNjcyODQxN2VkOCIsInRpZCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsInV0aSI6IjA4bFRaU0NzNUVLaS1VbEZHeVlCQUEiLCJ2ZXIiOiIxLjAifQ.BwugoCAlsy4Gelp3OUo-2wi3i1WcALvRiMa-RY6MIs4QwIXF3Piwy33XAVOjmMyRFhS8-QrP4OQT29G5Xq7tLHW_joyJGotZZNabA2OEhaaiu9ipHoBiwpMtp9Bj_29DMHGlG1cbHrocuVWSpwZ1tmeUvdrQ_wn3iVK_pgLyVrCPo99KcTZQedDNy-Y3qf6hSIeJ9UvTjWq45-X9JKi0z-HCibSynOZE39CxQbbYxzeXQPq3YG8jFbnxhSnShrXxveDNTDpK2Vz0V3FrGnjthh3l54mtmPArV_nuwbrhiCYWr9G_ScEvNNvAnMoWl6w-ogpx-Ucf6VjXItL6SqsJYw"
                     ],
                     "Content-Type": [
                         "application/json; charset=utf-8"
                     ],
                     "x-ms-client-request-id": [
-                        "e2796328-7aaf-11ea-bb9a-44032c851686"
+                        "436aa29c-af32-11ea-9397-44032c851686"
                     ],
                     "accept-language": [
                         "en-US"
@@ -122,38 +122,38 @@
                     "message": "OK"
                 },
                 "headers": {
-                    "x-ms-ratelimit-remaining-subscription-resource-requests": [
-                        "11999"
-                    ],
-                    "Server": [
-                        "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Pragma": [
-                        "no-cache"
-                    ],
-                    "X-Content-Type-Options": [
-                        "nosniff"
-                    ],
-                    "Vary": [
-                        "Accept-Encoding"
-                    ],
-                    "Transfer-Encoding": [
-                        "chunked"
-                    ],
-                    "Date": [
-                        "Thu, 09 Apr 2020 22:17:22 GMT"
-                    ],
-                    "Expires": [
-                        "-1"
-                    ],
                     "Cache-Control": [
                         "no-cache"
+                    ],
+                    "x-ms-ratelimit-remaining-subscription-resource-requests": [
+                        "11999"
                     ],
                     "Strict-Transport-Security": [
                         "max-age=31536000; includeSubDomains"
                     ],
+                    "X-Content-Type-Options": [
+                        "nosniff"
+                    ],
+                    "Server": [
+                        "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+                    ],
+                    "Date": [
+                        "Mon, 15 Jun 2020 18:01:39 GMT"
+                    ],
                     "Content-Type": [
                         "application/json"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Pragma": [
+                        "no-cache"
+                    ],
+                    "Transfer-Encoding": [
+                        "chunked"
+                    ],
+                    "Expires": [
+                        "-1"
                     ],
                     "content-length": [
                         "288"
@@ -180,13 +180,13 @@
                         "2017-07-29"
                     ],
                     "x-ms-client-request-id": [
-                        "e2aa8542-7aaf-11ea-a3bb-44032c851686"
+                        "43d5c376-af32-11ea-9841-44032c851686"
                     ],
                     "x-ms-date": [
-                        "Thu, 09 Apr 2020 22:17:22 GMT"
+                        "Mon, 15 Jun 2020 18:01:40 GMT"
                     ],
                     "Authorization": [
-                        "SharedKey sdkteststore2:ZKbDj17QzYTnwgsyT2TGTlcN4NTz2tdR+9t/rbb0X28="
+                        "SharedKey sdkteststore2:lmO6Sd78KXLDgf2rhdj5A3jUFDtlYlQchlA0QrUCF8E="
                     ],
                     "Content-Length": [
                         "0"
@@ -202,24 +202,24 @@
                     "x-ms-error-code": [
                         "ContainerAlreadyExists"
                     ],
+                    "Date": [
+                        "Mon, 15 Jun 2020 18:01:40 GMT"
+                    ],
                     "Server": [
                         "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
                     ],
                     "Content-Length": [
                         "230"
                     ],
-                    "Date": [
-                        "Thu, 09 Apr 2020 22:17:22 GMT"
+                    "Content-Type": [
+                        "application/xml"
                     ],
                     "x-ms-version": [
                         "2017-07-29"
-                    ],
-                    "Content-Type": [
-                        "application/xml"
                     ]
                 },
                 "body": {
-                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The specified container already exists.\nRequestId:d0666f9a-401e-0024-26bc-0efd4e000000\nTime:2020-04-09T22:17:23.0583640Z</Message></Error>"
+                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The specified container already exists.\nRequestId:260e19fb-501e-0074-273f-43e246000000\nTime:2020-06-15T18:01:41.3800405Z</Message></Error>"
                 }
             }
         },
@@ -239,13 +239,13 @@
                         "2017-07-29"
                     ],
                     "x-ms-client-request-id": [
-                        "e2c909a6-7aaf-11ea-bb6c-44032c851686"
+                        "44418176-af32-11ea-9a2e-44032c851686"
                     ],
                     "x-ms-date": [
-                        "Thu, 09 Apr 2020 22:17:23 GMT"
+                        "Mon, 15 Jun 2020 18:01:41 GMT"
                     ],
                     "Authorization": [
-                        "SharedKey sdkteststore2:i+D7Ab+o1/VOBTwfYx6hcAq+CtPcA7gSgGIh7Vqv/ng="
+                        "SharedKey sdkteststore2:3t+4wxCzUisvkPNEekIe2NqMnsNC5uotpIsuLc9/ltM="
                     ]
                 }
             },
@@ -255,26 +255,26 @@
                     "message": "OK"
                 },
                 "headers": {
+                    "ETag": [
+                        "\"0x8D76D34FC8AD656\""
+                    ],
+                    "Date": [
+                        "Mon, 15 Jun 2020 18:01:41 GMT"
+                    ],
                     "Server": [
                         "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Content-Length": [
-                        "0"
-                    ],
-                    "x-ms-meta-lastmodified": [
-                        "1524153754.2560813"
                     ],
                     "Last-Modified": [
                         "Tue, 19 Nov 2019 21:11:03 GMT"
                     ],
-                    "Date": [
-                        "Thu, 09 Apr 2020 22:17:22 GMT"
+                    "Content-Length": [
+                        "0"
                     ],
                     "x-ms-version": [
                         "2017-07-29"
                     ],
-                    "ETag": [
-                        "\"0x8D76D34FC8AD656\""
+                    "x-ms-meta-lastmodified": [
+                        "1524153754.2560813"
                     ]
                 },
                 "body": {
@@ -285,11 +285,11 @@
         {
             "request": {
                 "method": "GET",
-                "uri": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2?api-version=2019-08-01",
+                "uri": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2?api-version=2020-05-01",
                 "body": null,
                 "headers": {
                     "User-Agent": [
-                        "python/3.7.3 (Windows-10-10.0.18362-SP0) msrest/0.6.10 msrest_azure/0.6.2 azure-mgmt-batch/7.0.0 Azure-SDK-For-Python"
+                        "python/3.7.3 (Windows-10-10.0.18362-SP0) msrest/0.6.10 msrest_azure/0.6.2 azure-mgmt-batch/9.0.0 Azure-SDK-For-Python"
                     ],
                     "Accept-Encoding": [
                         "gzip, deflate"
@@ -301,10 +301,10 @@
                         "keep-alive"
                     ],
                     "Authorization": [
-                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IllNRUxIVDBndmIwbXhvU0RvWWZvbWpxZmpZVSIsImtpZCI6IllNRUxIVDBndmIwbXhvU0RvWWZvbWpxZmpZVSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTg2NDcwMzQwLCJuYmYiOjE1ODY0NzAzNDAsImV4cCI6MTU4NjQ3NDI0MCwiX2NsYWltX25hbWVzIjp7Imdyb3VwcyI6InNyYzEifSwiX2NsYWltX3NvdXJjZXMiOnsic3JjMSI6eyJlbmRwb2ludCI6Imh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3VzZXJzLzI3MjQ0OTM1LWE0YjktNDBhNC1hMjcyLTQyOTQyYjY3ZWNmMS9nZXRNZW1iZXJPYmplY3RzIn19LCJhY3IiOiIxIiwiYWlvIjoiQVZRQXEvOFBBQUFBZHdvK3AzUnJFOTdneHdRMnNMdnEzY3FjZmhaOUZic3J3STFQVVNYa2FYeFJabGxITGgrUW05Wk8vektad1JSdXFUd0lFUDdNSnFuWnIzcmRzQ3BTMTVxM2o3K3AxOC9JWHFlSGNaSDVNalU9IiwiYW1yIjpbIndpYSIsIm1mYSJdLCJhcHBpZCI6IjA0YjA3Nzk1LThkZGItNDYxYS1iYmVlLTAyZjllMWJmN2I0NiIsImFwcGlkYWNyIjoiMCIsImRldmljZWlkIjoiMWQ1MGM1ZGYtZmQwMS00YTY0LTg4NTktODQ3MjM3NThhMjQ0IiwiZmFtaWx5X25hbWUiOiJLbGVpbiIsImdpdmVuX25hbWUiOiJCcmFuZG9uIiwiaXBhZGRyIjoiMTY3LjIyMC4yLjIxNyIsIm5hbWUiOiJCcmFuZG9uIEtsZWluIiwib2lkIjoiMjcyNDQ5MzUtYTRiOS00MGE0LWEyNzItNDI5NDJiNjdlY2YxIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIxMjc1MjExODQtMTYwNDAxMjkyMC0xODg3OTI3NTI3LTMwODY5MTc0IiwicHVpZCI6IjEwMDMwMDAwQTkxNzc4OUUiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiIzLWlWTFpVcWc4cllVRTR5S0V2T0pLREtDdmdSNElSb0FyYVc5UVpiTUZBIiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidW5pcXVlX25hbWUiOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1cG4iOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJYSUxBa2JkcmNFR0stV1FaNjNVYUFBIiwidmVyIjoiMS4wIn0.Ho9A8Zj_Vi7To0Q6iz3pHG2zSbhaTFvGOTevChRPxWrQ8_FsIcMnKnI0ipklfvSpiRx-ePfp5KUXSr220AAk9M_CPavfx3bMPIPj6yMsoLhHOYkM0RyfKe0zuZImSFS-DDH_oCX9_ouN-u6MtpC5wu7f-v8WTED0XigDFp8ngoHRZB20dkUcYHQajdmVxNKtaD0lVyA48gaTmndsAOROO_7fOTQ-QM19uXjICuPRwKMPOsYZo_wPtiAtkRZknzT7evr6W8p1zLzIKF6qQMpg7F6Xpn7Fxfrxv4eQsF93a2pzinVsP-rTnWpysElOoJxDl_YVl4RgG6aHBYHYIZnx5w"
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlNzWnNCTmhaY0YzUTlTNHRycFFCVEJ5TlJSSSIsImtpZCI6IlNzWnNCTmhaY0YzUTlTNHRycFFCVEJ5TlJSSSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTkyMjQzODAxLCJuYmYiOjE1OTIyNDM4MDEsImV4cCI6MTU5MjMzMDUwMSwiYWlvIjoiNDJkZ1lQaGU1RzM3dmQxcTdxWWlCNmZJN29QMkFBPT0iLCJhcHBpZCI6ImJmYTBkZjVmLTQ3ODItNDgyOS04NmUwLTE5YTgyODI3YjA5NiIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJvaWQiOiJhMmNkMTc1Zi00OGVhLTRmODktOGRmOC1iMDY3Mjg0MTdlZDgiLCJyaCI6IjAuQVFFQXY0ajVjdkdHcjBHUnF5MTgwQkhiUjFfZm9MLUNSeWxJaHVBWnFDZ25zSllhQUFBLiIsInN1YiI6ImEyY2QxNzVmLTQ4ZWEtNGY4OS04ZGY4LWIwNjcyODQxN2VkOCIsInRpZCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsInV0aSI6InhWOEJ0WXgxQ1VxZ2xvT1JLTU1BQUEiLCJ2ZXIiOiIxLjAifQ.cGOzFjh8rW8LpO2oT9FivUqi1kwltLWfH3K7nHpZfg1WO_L6nHgmVvHSEocPLaz3FC9KZthmt9Fsh1zHsxEZFS6u5XUbZv0Yl5FXQs2q1Wq_D0B4HWtjr2M5VTaIbyAAqAbewE0BQJagIEu4Ba3RLRZ0Krwkbt4d3lYwpR369bzSIKVY8tPkxQpji-XxNT-FVxlSv9g4vl2EEMIXRUo994Fgc1mpBggDLRN_P1OadQLalgDydKmdtirKYXAog4yabYd28kaXm65gY-HtaG1v-n0Yue0a6_23MT6JbOEsbiDethlx0dOANM3-RDo_qhPbfz98rBhpchlzG4UCOhGJhA"
                     ],
                     "x-ms-client-request-id": [
-                        "e2f535ac-7aaf-11ea-b2c6-44032c851686"
+                        "4473dc2e-af32-11ea-8636-44032c851686"
                     ],
                     "accept-language": [
                         "en-US"
@@ -317,48 +317,48 @@
                     "message": "OK"
                 },
                 "headers": {
-                    "Server": [
-                        "Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Pragma": [
-                        "no-cache"
-                    ],
-                    "X-Content-Type-Options": [
-                        "nosniff"
-                    ],
-                    "Vary": [
-                        "Accept-Encoding"
-                    ],
-                    "Transfer-Encoding": [
-                        "chunked"
-                    ],
-                    "Last-Modified": [
-                        "Thu, 09 Jan 2020 20:16:08 GMT"
-                    ],
-                    "Expires": [
-                        "-1"
-                    ],
-                    "Date": [
-                        "Thu, 09 Apr 2020 22:17:23 GMT"
-                    ],
                     "Cache-Control": [
                         "no-cache"
-                    ],
-                    "ETag": [
-                        "\"0x8D79540C37A571C\""
                     ],
                     "Strict-Transport-Security": [
                         "max-age=31536000; includeSubDomains"
                     ],
+                    "ETag": [
+                        "\"0x8D8110413FDD02A\""
+                    ],
+                    "X-Content-Type-Options": [
+                        "nosniff"
+                    ],
+                    "Server": [
+                        "Microsoft-HTTPAPI/2.0"
+                    ],
+                    "Date": [
+                        "Mon, 15 Jun 2020 18:01:41 GMT"
+                    ],
                     "Content-Type": [
                         "application/json; charset=utf-8"
                     ],
+                    "Last-Modified": [
+                        "Mon, 15 Jun 2020 08:14:08 GMT"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Pragma": [
+                        "no-cache"
+                    ],
+                    "Transfer-Encoding": [
+                        "chunked"
+                    ],
+                    "Expires": [
+                        "-1"
+                    ],
                     "content-length": [
-                        "2165"
+                        "2447"
                     ]
                 },
                 "body": {
-                    "string": "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2\",\"name\":\"sdktest2\",\"type\":\"Microsoft.Batch/batchAccounts\",\"location\":\"westcentralus\",\"properties\":{\"accountEndpoint\":\"sdktest2.westcentralus.batch.azure.com\",\"provisioningState\":\"Succeeded\",\"dedicatedCoreQuota\":20,\"dedicatedCoreQuotaPerVMFamily\":[{\"name\":\"standardA0_A7Family\",\"coreQuota\":20},{\"name\":\"standardDv2Family\",\"coreQuota\":20},{\"name\":\"standardA8_A11Family\",\"coreQuota\":0},{\"name\":\"standardDFamily\",\"coreQuota\":0},{\"name\":\"standardGFamily\",\"coreQuota\":0},{\"name\":\"basicAFamily\",\"coreQuota\":0},{\"name\":\"standardFFamily\",\"coreQuota\":0},{\"name\":\"standardNVFamily\",\"coreQuota\":0},{\"name\":\"standardNVPromoFamily\",\"coreQuota\":0},{\"name\":\"standardNCFamily\",\"coreQuota\":0},{\"name\":\"standardNCPromoFamily\",\"coreQuota\":0},{\"name\":\"standardHFamily\",\"coreQuota\":0},{\"name\":\"standardHPromoFamily\",\"coreQuota\":0},{\"name\":\"standardAv2Family\",\"coreQuota\":0},{\"name\":\"standardMSFamily\",\"coreQuota\":0},{\"name\":\"standardDv3Family\",\"coreQuota\":0},{\"name\":\"standardEv3Family\",\"coreQuota\":0},{\"name\":\"standardDSFamily\",\"coreQuota\":0},{\"name\":\"standardDSv2Family\",\"coreQuota\":0},{\"name\":\"standardDSv3Family\",\"coreQuota\":0},{\"name\":\"standardFSFamily\",\"coreQuota\":0},{\"name\":\"standardESv3Family\",\"coreQuota\":0},{\"name\":\"standardGSFamily\",\"coreQuota\":0},{\"name\":\"standardLSFamily\",\"coreQuota\":0},{\"name\":\"standardNCSv2Family\",\"coreQuota\":0},{\"name\":\"standardNDSFamily\",\"coreQuota\":0},{\"name\":\"standardNCSv3Family\",\"coreQuota\":0},{\"name\":\"standardFSv2Family\",\"coreQuota\":0},{\"name\":\"standardHBSFamily\",\"coreQuota\":0},{\"name\":\"standardHCSFamily\",\"coreQuota\":0},{\"name\":\"standardNVSv3Family\",\"coreQuota\":0},{\"name\":\"standardHBrsv2Family\",\"coreQuota\":0}],\"dedicatedCoreQuotaPerVMFamilyEnforced\":false,\"lowPriorityCoreQuota\":100,\"poolQuota\":100,\"activeJobAndJobScheduleQuota\":300,\"autoStorage\":{\"storageAccountId\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Storage/storageAccounts/sdkteststore2\",\"lastKeySync\":\"2020-01-09T20:16:08.6234908Z\"},\"poolAllocationMode\":\"BatchService\"},\"tags\":{\"rawr\":\"test\"}}"
+                    "string": "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Batch/batchAccounts/sdktest2\",\"name\":\"sdktest2\",\"type\":\"Microsoft.Batch/batchAccounts\",\"location\":\"westcentralus\",\"properties\":{\"accountEndpoint\":\"sdktest2.westcentralus.batch.azure.com\",\"provisioningState\":\"Succeeded\",\"dedicatedCoreQuota\":20,\"dedicatedCoreQuotaPerVMFamily\":[{\"name\":\"standardA0_A7Family\",\"coreQuota\":20},{\"name\":\"standardDv2Family\",\"coreQuota\":20},{\"name\":\"standardA8_A11Family\",\"coreQuota\":0},{\"name\":\"standardDFamily\",\"coreQuota\":0},{\"name\":\"standardGFamily\",\"coreQuota\":0},{\"name\":\"basicAFamily\",\"coreQuota\":0},{\"name\":\"standardFFamily\",\"coreQuota\":0},{\"name\":\"standardNVFamily\",\"coreQuota\":0},{\"name\":\"standardNVPromoFamily\",\"coreQuota\":0},{\"name\":\"standardNCFamily\",\"coreQuota\":0},{\"name\":\"standardNCPromoFamily\",\"coreQuota\":0},{\"name\":\"standardHFamily\",\"coreQuota\":0},{\"name\":\"standardHPromoFamily\",\"coreQuota\":0},{\"name\":\"standardAv2Family\",\"coreQuota\":0},{\"name\":\"standardMSFamily\",\"coreQuota\":0},{\"name\":\"standardDv3Family\",\"coreQuota\":0},{\"name\":\"standardEv3Family\",\"coreQuota\":0},{\"name\":\"standardDSFamily\",\"coreQuota\":0},{\"name\":\"standardDSv2Family\",\"coreQuota\":0},{\"name\":\"standardDSv3Family\",\"coreQuota\":0},{\"name\":\"standardFSFamily\",\"coreQuota\":0},{\"name\":\"standardESv3Family\",\"coreQuota\":0},{\"name\":\"standardGSFamily\",\"coreQuota\":0},{\"name\":\"standardLSFamily\",\"coreQuota\":0},{\"name\":\"standardLSv2Family\",\"coreQuota\":0},{\"name\":\"standardNCSv2Family\",\"coreQuota\":0},{\"name\":\"standardNDSFamily\",\"coreQuota\":0},{\"name\":\"standardNCSv3Family\",\"coreQuota\":0},{\"name\":\"standardFSv2Family\",\"coreQuota\":0},{\"name\":\"standardHBSFamily\",\"coreQuota\":0},{\"name\":\"standardHCSFamily\",\"coreQuota\":0},{\"name\":\"standardNVSv3Family\",\"coreQuota\":0},{\"name\":\"standardHBrsv2Family\",\"coreQuota\":0},{\"name\":\"standardDASv4Family\",\"coreQuota\":0},{\"name\":\"standardEAv4Family\",\"coreQuota\":0},{\"name\":\"standardEASv4Family\",\"coreQuota\":0}],\"dedicatedCoreQuotaPerVMFamilyEnforced\":false,\"lowPriorityCoreQuota\":100,\"poolQuota\":100,\"activeJobAndJobScheduleQuota\":300,\"autoStorage\":{\"storageAccountId\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sdktest/providers/Microsoft.Storage/storageAccounts/sdkteststore2\",\"lastKeySync\":\"2020-06-15T08:14:08.5867562Z\"},\"poolAllocationMode\":\"BatchService\",\"publicNetworkAccess\":\"Enabled\",\"encryption\":{\"keySource\":\"Microsoft.Batch\"}},\"tags\":{\"rawr\":\"test\"},\"identity\":{\"type\":\"None\"}}"
                 }
             }
         },
@@ -381,13 +381,13 @@
                         "keep-alive"
                     ],
                     "Authorization": [
-                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IllNRUxIVDBndmIwbXhvU0RvWWZvbWpxZmpZVSIsImtpZCI6IllNRUxIVDBndmIwbXhvU0RvWWZvbWpxZmpZVSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTg2NDcwMzQwLCJuYmYiOjE1ODY0NzAzNDAsImV4cCI6MTU4NjQ3NDI0MCwiX2NsYWltX25hbWVzIjp7Imdyb3VwcyI6InNyYzEifSwiX2NsYWltX3NvdXJjZXMiOnsic3JjMSI6eyJlbmRwb2ludCI6Imh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3VzZXJzLzI3MjQ0OTM1LWE0YjktNDBhNC1hMjcyLTQyOTQyYjY3ZWNmMS9nZXRNZW1iZXJPYmplY3RzIn19LCJhY3IiOiIxIiwiYWlvIjoiQVZRQXEvOFBBQUFBZHdvK3AzUnJFOTdneHdRMnNMdnEzY3FjZmhaOUZic3J3STFQVVNYa2FYeFJabGxITGgrUW05Wk8vektad1JSdXFUd0lFUDdNSnFuWnIzcmRzQ3BTMTVxM2o3K3AxOC9JWHFlSGNaSDVNalU9IiwiYW1yIjpbIndpYSIsIm1mYSJdLCJhcHBpZCI6IjA0YjA3Nzk1LThkZGItNDYxYS1iYmVlLTAyZjllMWJmN2I0NiIsImFwcGlkYWNyIjoiMCIsImRldmljZWlkIjoiMWQ1MGM1ZGYtZmQwMS00YTY0LTg4NTktODQ3MjM3NThhMjQ0IiwiZmFtaWx5X25hbWUiOiJLbGVpbiIsImdpdmVuX25hbWUiOiJCcmFuZG9uIiwiaXBhZGRyIjoiMTY3LjIyMC4yLjIxNyIsIm5hbWUiOiJCcmFuZG9uIEtsZWluIiwib2lkIjoiMjcyNDQ5MzUtYTRiOS00MGE0LWEyNzItNDI5NDJiNjdlY2YxIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIxMjc1MjExODQtMTYwNDAxMjkyMC0xODg3OTI3NTI3LTMwODY5MTc0IiwicHVpZCI6IjEwMDMwMDAwQTkxNzc4OUUiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiIzLWlWTFpVcWc4cllVRTR5S0V2T0pLREtDdmdSNElSb0FyYVc5UVpiTUZBIiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidW5pcXVlX25hbWUiOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1cG4iOiJicmtsZWluQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJYSUxBa2JkcmNFR0stV1FaNjNVYUFBIiwidmVyIjoiMS4wIn0.Ho9A8Zj_Vi7To0Q6iz3pHG2zSbhaTFvGOTevChRPxWrQ8_FsIcMnKnI0ipklfvSpiRx-ePfp5KUXSr220AAk9M_CPavfx3bMPIPj6yMsoLhHOYkM0RyfKe0zuZImSFS-DDH_oCX9_ouN-u6MtpC5wu7f-v8WTED0XigDFp8ngoHRZB20dkUcYHQajdmVxNKtaD0lVyA48gaTmndsAOROO_7fOTQ-QM19uXjICuPRwKMPOsYZo_wPtiAtkRZknzT7evr6W8p1zLzIKF6qQMpg7F6Xpn7Fxfrxv4eQsF93a2pzinVsP-rTnWpysElOoJxDl_YVl4RgG6aHBYHYIZnx5w"
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlNzWnNCTmhaY0YzUTlTNHRycFFCVEJ5TlJSSSIsImtpZCI6IlNzWnNCTmhaY0YzUTlTNHRycFFCVEJ5TlJSSSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTkyMjQzODAyLCJuYmYiOjE1OTIyNDM4MDIsImV4cCI6MTU5MjMzMDUwMiwiYWlvIjoiNDJkZ1lMaHZ1MW05dHZwQXlkbDgzeGJudjh3ckFRPT0iLCJhcHBpZCI6ImJmYTBkZjVmLTQ3ODItNDgyOS04NmUwLTE5YTgyODI3YjA5NiIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJvaWQiOiJhMmNkMTc1Zi00OGVhLTRmODktOGRmOC1iMDY3Mjg0MTdlZDgiLCJyaCI6IjAuQVFFQXY0ajVjdkdHcjBHUnF5MTgwQkhiUjFfZm9MLUNSeWxJaHVBWnFDZ25zSllhQUFBLiIsInN1YiI6ImEyY2QxNzVmLTQ4ZWEtNGY4OS04ZGY4LWIwNjcyODQxN2VkOCIsInRpZCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsInV0aSI6InMyaEtlaW5CLUV5cTNiMnhlVlFCQUEiLCJ2ZXIiOiIxLjAifQ.EqHDgvaRCL81h7OchWWwWfVqbrtN4QWpCWQtSRNySy7utwKwI5yFSGdgjbcTo0WMtPlrxrIw6BBjomObA-FEDAMvzFjuheD7L4ayR2iLt55SU4DWU9VJ-GfmA9-IgJi1GuL8YMQhweTvUMhdVp8ve084NSwGxtQ6e4LtpPmIP08u3JcLZ9fB72r9YYttGKHzplBHHCiAlObIvdRndaRGyBGgH9x15OfuW8QaTEOITBqxYeUDu_YPLtrd-PZtdQq5m2mX3BP5iaeWfGNDpDrIXVLP-8qhPMWrF8iX1GQd7iyielazGhQN94kKT58WprcdvNISc9iWrGNm3rsoFuPIeA"
                     ],
                     "Content-Type": [
                         "application/json; charset=utf-8"
                     ],
                     "x-ms-client-request-id": [
-                        "e340fbb8-7aaf-11ea-afc6-44032c851686"
+                        "44e67882-af32-11ea-a14e-44032c851686"
                     ],
                     "accept-language": [
                         "en-US"
@@ -403,38 +403,38 @@
                     "message": "OK"
                 },
                 "headers": {
-                    "x-ms-ratelimit-remaining-subscription-resource-requests": [
-                        "11999"
-                    ],
-                    "Server": [
-                        "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Pragma": [
-                        "no-cache"
-                    ],
-                    "X-Content-Type-Options": [
-                        "nosniff"
-                    ],
-                    "Vary": [
-                        "Accept-Encoding"
-                    ],
-                    "Transfer-Encoding": [
-                        "chunked"
-                    ],
-                    "Date": [
-                        "Thu, 09 Apr 2020 22:17:24 GMT"
-                    ],
-                    "Expires": [
-                        "-1"
-                    ],
                     "Cache-Control": [
                         "no-cache"
+                    ],
+                    "x-ms-ratelimit-remaining-subscription-resource-requests": [
+                        "11999"
                     ],
                     "Strict-Transport-Security": [
                         "max-age=31536000; includeSubDomains"
                     ],
+                    "X-Content-Type-Options": [
+                        "nosniff"
+                    ],
+                    "Server": [
+                        "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+                    ],
+                    "Date": [
+                        "Mon, 15 Jun 2020 18:01:43 GMT"
+                    ],
                     "Content-Type": [
                         "application/json"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Pragma": [
+                        "no-cache"
+                    ],
+                    "Transfer-Encoding": [
+                        "chunked"
+                    ],
+                    "Expires": [
+                        "-1"
                     ],
                     "content-length": [
                         "288"
@@ -461,13 +461,13 @@
                         "2017-07-29"
                     ],
                     "x-ms-client-request-id": [
-                        "e376ee5c-7aaf-11ea-a48b-44032c851686"
+                        "4568b5ca-af32-11ea-806e-44032c851686"
                     ],
                     "x-ms-date": [
-                        "Thu, 09 Apr 2020 22:17:24 GMT"
+                        "Mon, 15 Jun 2020 18:01:43 GMT"
                     ],
                     "Authorization": [
-                        "SharedKey sdkteststore2:FJrzmdlNdegpPa6MvTlcvY/360djzxJFZ28f/bBCV3M="
+                        "SharedKey sdkteststore2:4x4lXCyTq1j6/Qbc2OYBqF055WnrKf6KBKSVsLbXOIc="
                     ],
                     "Content-Length": [
                         "0"
@@ -483,24 +483,24 @@
                     "x-ms-error-code": [
                         "ContainerAlreadyExists"
                     ],
+                    "Date": [
+                        "Mon, 15 Jun 2020 18:01:43 GMT"
+                    ],
                     "Server": [
                         "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
                     ],
                     "Content-Length": [
                         "230"
                     ],
-                    "Date": [
-                        "Thu, 09 Apr 2020 22:17:23 GMT"
+                    "Content-Type": [
+                        "application/xml"
                     ],
                     "x-ms-version": [
                         "2017-07-29"
-                    ],
-                    "Content-Type": [
-                        "application/xml"
                     ]
                 },
                 "body": {
-                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The specified container already exists.\nRequestId:5d013569-601e-0092-2cbc-0ef3b6000000\nTime:2020-04-09T22:17:24.3767629Z</Message></Error>"
+                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The specified container already exists.\nRequestId:72e202e3-401e-0049-693f-435760000000\nTime:2020-06-15T18:01:43.4848715Z</Message></Error>"
                 }
             }
         },
@@ -520,13 +520,13 @@
                         "2017-07-29"
                     ],
                     "x-ms-client-request-id": [
-                        "e3926a50-7aaf-11ea-b97e-44032c851686"
+                        "458257d0-af32-11ea-ada3-44032c851686"
                     ],
                     "x-ms-date": [
-                        "Thu, 09 Apr 2020 22:17:24 GMT"
+                        "Mon, 15 Jun 2020 18:01:43 GMT"
                     ],
                     "Authorization": [
-                        "SharedKey sdkteststore2:inzjNigqBvBvvjzu9vz5dc6zwbg9MZOAJvUHP+6DciU="
+                        "SharedKey sdkteststore2:fBHoHE8Kh6iKhWivp4TrAnFEVOxUe8aD13VowH/+7Q8="
                     ]
                 }
             },
@@ -536,26 +536,26 @@
                     "message": "OK"
                 },
                 "headers": {
+                    "ETag": [
+                        "\"0x8D76D34FD38C1F0\""
+                    ],
+                    "Date": [
+                        "Mon, 15 Jun 2020 18:01:43 GMT"
+                    ],
                     "Server": [
                         "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Content-Length": [
-                        "0"
-                    ],
-                    "x-ms-meta-lastmodified": [
-                        "1524153754.2560813"
                     ],
                     "Last-Modified": [
                         "Tue, 19 Nov 2019 21:11:05 GMT"
                     ],
-                    "Date": [
-                        "Thu, 09 Apr 2020 22:17:23 GMT"
+                    "Content-Length": [
+                        "0"
                     ],
                     "x-ms-version": [
                         "2017-07-29"
                     ],
-                    "ETag": [
-                        "\"0x8D76D34FD38C1F0\""
+                    "x-ms-meta-lastmodified": [
+                        "1524153754.2560813"
                     ]
                 },
                 "body": {

@@ -344,11 +344,7 @@ class FileUtils(object):
             blobs = self.list_container_contents(resource_file.source, container, storage_client)
             return convert_blobs_to_resource_files(blobs, resource_file)
         if resource_file.source.container_url:
-            # Input data storage in arbitrary container
-            uri = urlsplit(resource_file.source.container_url)
-            container = uri.pathname.split('/')[1]
-            blobs = self.list_container_contents(resource_file.source, container, storage_client)
-            return convert_blobs_to_resource_files(blobs, resource_file)
+            return resource_file.source.container_url
         if resource_file.source.url:
             # TODO: Input data from an arbitrary HTTP GET source
             raise ValueError('Not implemented')

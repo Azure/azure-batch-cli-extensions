@@ -29,7 +29,7 @@ CLASSIFIERS = [
 DEPENDENCIES = [
     'msrestazure>=0.4.14,<1',
     'azure-batch>=9.0,<10',
-    'azure-mgmt-batch>=7.0,<8',
+    'azure-mgmt-batch>=9.0,<10',
     'azure-storage-blob>=1.1.0,<2',
     'azure-mgmt-storage>=2.0,<3'
 ]
