@@ -3,6 +3,11 @@
 SDK Release History
 ===================
 
+8.0.0 (2020-06-15)
+------------------
+
+* Update to match latest Python SDK taking associated breaking changes.
+
 7.0.0 (2019-08-20)
 ------------------
 
