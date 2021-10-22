@@ -11,7 +11,8 @@ The data will also be stored in a way so as to preserve the local directory stru
 this to be recreated on the compute node.
 
 Example local input data:
-```
+
+```console
 data/img_processing/1.png
 data/img_processing/2.png
 data/img_processing/3.png
@@ -21,7 +22,8 @@ data/1.png
 ```
 
 Example command:
-```bash
+
+```azurecli
 az batch file upload --local-path C:\data\**\*.png --file-group raw-images
 
 az batch file upload --local-path /tmp/data/**/*.png --file-group raw-images
@@ -33,7 +35,8 @@ be retained.
 If any of the data already exists in the file group, only data that has since been modified will be uploaded to overwrite existing files.
 
 Resulting structure:
-```
+
+```console
 raw-images/img_processing/1.png
 raw-images/img_processing/2.png
 raw-images/img_processing/3.png
@@ -48,20 +51,23 @@ raw-images/1.png
 
 This will discard the local directory structure and upload files to a flattened structure.
 Example command:
-```bash
+
+```azurecli
 az batch file upload --local-path C:\data\**\*.png --file-group raw-images --flatten
 
 az batch file upload --local-path /tmp/data/**/*.png --file-group raw-images --flatten
 ```
 
 Resulting structure:
-```
+
+```console
 raw-images/1.png
 raw-images/2.png
 raw-images/3.png
 raw-images/alpha.png
 raw-images/rgb.png
 ```
+
 Notice that in the above example we have a name collision. When `flatten` is used, multiple files of the same name that were 
 previously distinguished by a unique file path will not be supported regardless of the content of the file. 
 Files of the same name will be compared by their date of last modification, and only the most recently modified will be stored.
@@ -71,14 +77,16 @@ Files of the same name will be compared by their date of last modification, and 
 
 This will upload any data into a subdirectory within the file group. This directory will also
 be created on the compute node. Example command:
-```bash
+
+```azurecli
 az batch file upload --local-path C:\data\**\*.png --file-group raw-images --path first_pass
 
 az batch file upload --local-path /tmp/data/**/*.png --file-group raw-images --path first_pass
 ```
 
 Resulting structure:
-```
+
+```console
 raw-images/first_pass/img_processing/1.png
 raw-images/first_pass/img_processing/2.png
 raw-images/first_pass/img_processing/3.png
@@ -88,14 +96,16 @@ raw-images/first_pass/1.png
 ```
 
 You can also combine `path` and `flatten` like so:
-```bash
+
+```azurecli
 az batch file upload --local-path C:\data\**\*.png --file-group raw-images --path first_pass --flatten
 
 az batch file upload --local-path /tmp/data/**/*.png --file-group raw-images --path first_pass -flatten
 ```
 
 Resulting structure:
-```
+
+```console
 raw-images/first_pass/1.png
 raw-images/first_pass/2.png
 raw-images/first_pass/3.png
@@ -111,7 +121,8 @@ Input data stored in linked storage under a file group can be simply referenced 
 by using some new ResourceFile properties.
 
 Example input data in in the file group `raw-images`:
-```
+
+```console
 raw-images/first_pass/img_processing/1.png
 raw-images/first_pass/img_processing/2.png
 raw-images/first_pass/img_processing/3.png
@@ -123,6 +134,7 @@ image-config-data/second_pass/img_config_2016.cfg
 ```
 
 Example JSON:
+
 ```json
 "resourceFiles": [
   {
@@ -137,10 +149,12 @@ Example JSON:
   }
 ]
 ```
+
 The above schema will include all the data found in the specified file groups with the job.
 
 Files on node (where `wd` refers to the task current working directory):
-```
+
+```console
 wd/first_pass/img_processing/1.png
 wd/first_pass/img_processing/2.png
 wd/first_pass/img_processing/3.png
@@ -170,8 +184,10 @@ whole filename, partial filename, or a subdirectory.
   }
 ]
 ```
+
 Files on node:
-```
+
+```console
 wd/first_pass/img_processing/1.png
 wd/first_pass/img_processing/2.png
 wd/first_pass/img_processing/3.png
@@ -204,8 +220,10 @@ within the specified directory.
   }
 ]
 ```
+
 Files on node:
-```
+
+```console
 wd/images/first_pass/img_processing/1.png
 wd/images/first_pass/img_processing/2.png
 wd/images/first_pass/img_processing/3.png
