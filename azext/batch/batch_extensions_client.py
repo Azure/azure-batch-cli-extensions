@@ -52,7 +52,7 @@ class BatchExtensionsClient(BatchServiceClient):
 
     def __init__(self, credentials=None, batch_url=None, subscription_id=None,
                  resource_group=None, batch_account=None, storage_client=None,
-                 storage_endpoint=None, mgmt_credentials=None, mgmt_base_url=None):
+                 storage_endpoint=None, mgmt_credentials=None, mgmt_base_url="https://management.azure.com"):
         credentials, mgmt_credentials, subscription_id = self._configure_credentials(
             credentials, mgmt_credentials, subscription_id)
         super(BatchExtensionsClient, self).__init__(credentials, batch_url=batch_url)

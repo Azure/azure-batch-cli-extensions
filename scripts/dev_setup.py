@@ -37,7 +37,7 @@ exec_command('pip install --pre azure-cli --extra-index-url https://azurecliprod
 exec_command('pip install --upgrade azure-batch')
 
 # install automation package
-exec_command('pip install -e ./scripts')
+exec_command('pip install --upgrade -e ./scripts')
 
 # install reference to extension module package
 exec_command('pip install -e {}'.format(root_dir))

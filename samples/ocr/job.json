@@ -28,7 +28,7 @@
     },
     "job": {
         "type": "Microsoft.Batch/batchAccounts/jobs",
-        "apiVersion": "2018-12-01",
+        "apiVersion": "2022-06-01",
         "properties": {
             "id": "[parameters('jobId')]",
             "poolInfo": {

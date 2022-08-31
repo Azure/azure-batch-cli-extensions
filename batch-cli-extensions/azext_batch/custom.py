@@ -3,6 +3,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 import multiprocessing
+import os
 from azure.cli.core.util import get_file_json
 from knack.log import get_logger
 from knack.prompting import prompt
@@ -28,19 +29,29 @@ def disk_encryption_target_format(value):
     message = 'Argument {} is not a valid disk_encryption_target'
     raise ValueError(message.format(value))
 
+def node_placement_policy_format(value):
+    """If not specified, Batch will use the regional policy. Possible values include: regional,zonal"""
+    from azext.batch.models import NodePlacementPolicyType
+    if value == 'regional':
+        return NodePlacementPolicyType.regional
+    if value == 'zonal':
+        return NodePlacementPolicyType.zonal
+    message = 'Argument {} is not a valid node_placement_policy'
+    raise ValueError(message.format(value))
 
 def create_pool(client, template=None, parameters=None, json_file=None, id=None, vm_size=None,  # pylint:disable=too-many-arguments, too-many-locals
                 target_dedicated_nodes=None, target_low_priority_nodes=None, auto_scale_formula=None,  # pylint: disable=redefined-builtin
                 enable_inter_node_communication=False, os_family=None, image=None, disk_encryption_targets=None,
                 node_agent_sku_id=None, resize_timeout=None, start_task_command_line=None,
                 start_task_resource_files=None, start_task_wait_for_success=False, application_licenses=None,
-                certificate_references=None, application_package_references=None, metadata=None):
+                certificate_references=None, application_package_references=None, metadata=None, targets=None, 
+                policy=None, os_version=None, task_slots_per_node=None):
     # pylint: disable=too-many-branches, too-many-statements
     from azext.batch.errors import MissingParameterValue
     from azext.batch.models import (
         PoolAddOptions, StartTask, ImageReference,
         CloudServiceConfiguration, VirtualMachineConfiguration,
-        DiskEncryptionConfiguration)
+        DiskEncryptionConfiguration, NodePlacementConfiguration)
     if template or json_file:
         if template:
             json_obj = None
@@ -78,9 +89,9 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
             pool.enable_auto_scale = False
 
         pool.enable_inter_node_communication = enable_inter_node_communication
-
+        pool.task_slots_per_node = task_slots_per_node
         if os_family:
-            pool.cloud_service_configuration = CloudServiceConfiguration(os_family=os_family)
+            pool.cloud_service_configuration = CloudServiceConfiguration(os_family=os_family,os_version=os_version)
         else:
             if image:
                 version = 'latest'
@@ -94,12 +105,21 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                         image_reference=ImageReference(publisher=publisher, offer=offer, sku=sku, version=version),
                         node_agent_sku_id=node_agent_sku_id)
                     if disk_encryption_targets:
-                        targets = disk_encryption_targets.split(' ')
+                        targets_list = disk_encryption_targets.split(' ')
                         parsed_targets = []
-                        for target in targets:
+                        for target in targets_list:
                             parsed_targets.append(
                                 disk_encryption_target_format(target))
                         pool.virtual_machine_configuration.disk_configuration = DiskEncryptionConfiguration(targets=parsed_targets)
+                    if targets:
+                        targets_list = targets.split(' ')
+                        parsed_targets = []
+                        for target in targets_list:
+                            parsed_targets.append(
+                                disk_encryption_target_format(target))
+                        pool.virtual_machine_configuration.disk_configuration = DiskEncryptionConfiguration(targets=parsed_targets)
+                    if policy:
+                        pool.virtual_machine_configuration.node_placement_configuration = NodePlacementConfiguration(node_placement_policy_format(policy))
                 except ValueError:
                     if '/' not in image:
                         message = ("Incorrect format for VM image. Should be in the format: \n"
@@ -136,7 +156,8 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
                pool_id=None, priority=None, uses_task_dependencies=False, metadata=None,
                job_max_wall_clock_time=None, job_max_task_retry_count=None,
                job_manager_task_command_line=None, job_manager_task_environment_settings=None,
-               job_manager_task_id=None, job_manager_task_resource_files=None):
+               job_manager_task_id=None, job_manager_task_resource_files=None, allow_task_preemption=None,
+               max_parallel_tasks=None, required_slots=None):
     # pylint: disable=too-many-branches, too-many-statements
     from azext.batch.errors import MissingParameterValue
     from azext.batch.models import JobManagerTask, JobAddOptions, PoolInformation
@@ -181,12 +202,21 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
 
         if metadata:
             job.metadata = metadata
+        
+        if allow_task_preemption:
+            job.allow_task_preemption = allow_task_preemption
 
+        if max_parallel_tasks:
+            job.max_parallel_tasks = max_parallel_tasks
+        
         if job_manager_task_command_line and job_manager_task_id:
             job_manager_task = JobManagerTask(id=job_manager_task_id,
                                               command_line=job_manager_task_command_line,
                                               resource_files=job_manager_task_resource_files,
                                               environment_settings=job_manager_task_environment_settings)  # pylint: disable=line-too-long
+            if required_slots:
+                job_manager_task.required_slots = required_slots
+            
             job.job_manager_task = job_manager_task
 
     add_option = JobAddOptions()
