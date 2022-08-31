@@ -5,9 +5,17 @@
 
 # pylint: disable=line-too-long
 import os
+import re
 import tempfile
 
 COMMAND_MODULE_PREFIX = 'azure-cli-'
+SIG_REPLACEMENT = 'sig=fakeSig'
+SIG_PATTERN = r'sig=(.+?)\\'
+
+KEY_PATTERN1= r'\\"key1\\",\\"value\\":\\(.+?)\\'
+KEY_PATTERN2= r'\\"key2\\",\\"value\\":\\(.+?)\\'
+Key_REPLACEMENT = '"fakeKey"'
+
 path_to_recordings = os.path.abspath(os.path.join(os.path.abspath(__file__),
                                                        '..', '..','tests','recordings'))
 command_modules = []
@@ -25,6 +33,22 @@ for name in os.listdir(path_to_recordings):
     t = tempfile.NamedTemporaryFile('r+')
     with open(src_path, 'r') as f:
         for line in f:
+
+            search_result = re.search(KEY_PATTERN1, line, re.I)
+            if search_result and search_result.group(1):
+                linex = search_result.group(1)
+                line = line.replace(search_result.group(1), Key_REPLACEMENT)
+            
+            search_result = re.search(KEY_PATTERN2, line, re.I)
+            if search_result and search_result.group(1):
+                linex = search_result.group(1)
+                line = line.replace(search_result.group(1), Key_REPLACEMENT)
+
+            search_result = re.search(SIG_PATTERN, line, re.I)
+            if search_result and search_result.group(1):
+                linex = search_result.group(1)
+                line = line.replace(search_result.group(1), SIG_REPLACEMENT)
+
             if 'bearer' in line.lower():
                 insecure_cassettes.append(name)
             else: 

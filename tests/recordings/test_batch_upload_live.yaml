@@ -253,7 +253,7 @@
                     ]
                 },
                 "body": {
-                    "string": "{\"keys\":[{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key1\",\"value\":\"IoWN4f4ziwa90/IKPq4lALsfIoMGJka8LfV5onDb22g1xzpGqKYOYNhbaUIAuSwedrK6M2Dbub+6/IezrF/FCw==\",\"permissions\":\"FULL\"},{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key2\",\"value\":\"BSKBWLOQB1kWx6N1pHyc5Dqx3XVoKFL1M5GkU0o0TQ+JwVWRRZsCyozaOPpHiLWJl/+KjJVEtgQWs6SGIxnmdA==\",\"permissions\":\"FULL\"}]}"
+                    "string": "{\"keys\":[{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key1\",\"value\":\"fakeKey"\",\"permissions\":\"FULL\"},{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key2\",\"value\":\"fakeKey"\",\"permissions\":\"FULL\"}]}"
                 }
             }
         },
@@ -590,7 +590,7 @@
                     ]
                 },
                 "body": {
-                    "string": "{\"keys\":[{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key1\",\"value\":\"IoWN4f4ziwa90/IKPq4lALsfIoMGJka8LfV5onDb22g1xzpGqKYOYNhbaUIAuSwedrK6M2Dbub+6/IezrF/FCw==\",\"permissions\":\"FULL\"},{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key2\",\"value\":\"BSKBWLOQB1kWx6N1pHyc5Dqx3XVoKFL1M5GkU0o0TQ+JwVWRRZsCyozaOPpHiLWJl/+KjJVEtgQWs6SGIxnmdA==\",\"permissions\":\"FULL\"}]}"
+                    "string": "{\"keys\":[{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key1\",\"value\":\"fakeKey"\",\"permissions\":\"FULL\"},{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key2\",\"value\":\"fakeKey"\",\"permissions\":\"FULL\"}]}"
                 }
             }
         },
