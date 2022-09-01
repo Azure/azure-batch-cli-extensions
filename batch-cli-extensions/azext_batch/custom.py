@@ -44,8 +44,8 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                 enable_inter_node_communication=False, os_family=None, image=None, disk_encryption_targets=None,
                 node_agent_sku_id=None, resize_timeout=None, start_task_command_line=None,
                 start_task_resource_files=None, start_task_wait_for_success=False, application_licenses=None,
-                certificate_references=None, application_package_references=None, metadata=None, targets=None, 
-                policy=None, os_version=None, task_slots_per_node=None):
+                certificate_references=None, application_package_references=None, metadata=None, disk_encryption_configuration_targets=None, 
+                node_placement_policy=None, os_version=None, task_slots_per_node=None):
     # pylint: disable=too-many-branches, too-many-statements
     from azext.batch.errors import MissingParameterValue
     from azext.batch.models import (
@@ -111,15 +111,15 @@ def create_pool(client, template=None, parameters=None, json_file=None, id=None,
                             parsed_targets.append(
                                 disk_encryption_target_format(target))
                         pool.virtual_machine_configuration.disk_configuration = DiskEncryptionConfiguration(targets=parsed_targets)
-                    if targets:
-                        targets_list = targets.split(' ')
+                    if disk_encryption_configuration_targets:
+                        targets_list = disk_encryption_configuration_targets.split(' ')
                         parsed_targets = []
                         for target in targets_list:
                             parsed_targets.append(
                                 disk_encryption_target_format(target))
                         pool.virtual_machine_configuration.disk_configuration = DiskEncryptionConfiguration(targets=parsed_targets)
-                    if policy:
-                        pool.virtual_machine_configuration.node_placement_configuration = NodePlacementConfiguration(node_placement_policy_format(policy))
+                    if node_placement_policy:
+                        pool.virtual_machine_configuration.node_placement_configuration = NodePlacementConfiguration(node_placement_policy_format(node_placement_policy))
                 except ValueError:
                     if '/' not in image:
                         message = ("Incorrect format for VM image. Should be in the format: \n"
@@ -200,14 +200,9 @@ def create_job(client, template=None, parameters=None, json_file=None, id=None, 
                                          max_task_retry_count=job_max_task_retry_count)
             job.constraints = constraints
 
-        if metadata:
-            job.metadata = metadata
-        
-        if allow_task_preemption:
-            job.allow_task_preemption = allow_task_preemption
-
-        if max_parallel_tasks:
-            job.max_parallel_tasks = max_parallel_tasks
+        job.metadata = metadata
+        job.allow_task_preemption = allow_task_preemption
+        job.max_parallel_tasks = max_parallel_tasks
         
         if job_manager_task_command_line and job_manager_task_id:
             job_manager_task = JobManagerTask(id=job_manager_task_id,

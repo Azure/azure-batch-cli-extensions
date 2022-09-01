@@ -31,10 +31,10 @@ def load_arguments(self, _):
         c.extra('disk_encryption_targets',
                 arg_group="Pool: Virtual Machine Configuration",
                 help='A space seperated list of DiskEncryptionTargets. current possible values include OsDisk and TemporaryDisk.')
-        c.extra('targets',
+        c.extra('disk_encryption_configuration_targets', options_list=('--targets',),
                 arg_group="Pool: Virtual Machine Configuration: Disk Encryption Configuration Arguments",
                 help='If omitted, no disks on the compute nodes in the pool will be encrypted. On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. Space seperated target disks to be encrypted. Values can either be OsDisk or TemporaryDisk.')
-        c.extra('policy',
+        c.extra('node_placement_policy', options_list=('--policy',),
                 arg_group="Pool: Virtual Machine Configuration: Node Placement Configuration Arguments",
                 help='Node placement Policy type on Batch Pools. Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy.  Allowed values: regional, zonal.')
         c.argument('node_agent_sku_id', arg_group="Pool: Virtual Machine Configuration", help='The SKU of the Batch node agent to be provisioned on compute nodes in the pool. The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the \'List supported node agent SKUs\' operation.')
