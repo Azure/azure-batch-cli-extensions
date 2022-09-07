@@ -3,9 +3,80 @@
     "interactions": [
         {
             "request": {
+                "method": "GET",
+                "uri": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/v2.0/.well-known/openid-configuration",
+                "body": null,
+                "headers": {
+                    "User-Agent": [
+                        "python-requests/2.22.0"
+                    ],
+                    "Accept-Encoding": [
+                        "gzip, deflate"
+                    ],
+                    "Accept": [
+                        "*/*"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 200,
+                    "message": "OK"
+                },
+                "headers": {
+                    "P3P": [
+                        "CP=\"DSP CUR OTPi IND OTRi ONL FIN\""
+                    ],
+                    "Cache-Control": [
+                        "max-age=86400, private"
+                    ],
+                    "Strict-Transport-Security": [
+                        "max-age=31536000; includeSubDomains"
+                    ],
+                    "X-Content-Type-Options": [
+                        "nosniff"
+                    ],
+                    "X-XSS-Protection": [
+                        "0"
+                    ],
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:43:57 GMT"
+                    ],
+                    "Access-Control-Allow-Methods": [
+                        "GET, OPTIONS"
+                    ],
+                    "x-ms-ests-server": [
+                        "2.1.13622.6 - EUS ProdSlices"
+                    ],
+                    "Access-Control-Allow-Origin": [
+                        "*"
+                    ],
+                    "Set-Cookie": [
+                        "fpc=AqWQeUKjDwxIuoeHWDPTjMM; expires=Thu, 06-Oct-2022 23:43:57 GMT; path=/; secure; HttpOnly; SameSite=None",
+                        "esctx=AQABAAAAAAD--DLA3VO7QrddgJg7Wevrex3wevQtIAxLG0sY5-1JHVmIhrYfVuMurGWywFmwOOKNwaCeHwLGAVcnjRvT1JdqAOid3sWNLqA-WOUibK8ZnhQdRFodNDPGvvYOs2LgczQkQaxkSvZfut62BF-Y2bgt_0btKPRnBy-w-l1_f4J7s2E9HMtYwT4n71dtewOk_yIgAA; domain=.login.microsoftonline.com; path=/; secure; HttpOnly; SameSite=None",
+                        "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
+                        "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
+                    ],
+                    "Content-Type": [
+                        "application/json; charset=utf-8"
+                    ],
+                    "Content-Length": [
+                        "1753"
+                    ]
+                },
+                "body": {
+                    "string": "{\"token_endpoint\":\"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/v2.0/token\",\"token_endpoint_auth_methods_supported\":[\"client_secret_post\",\"private_key_jwt\",\"client_secret_basic\"],\"jwks_uri\":\"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/discovery/v2.0/keys\",\"response_modes_supported\":[\"query\",\"fragment\",\"form_post\"],\"subject_types_supported\":[\"pairwise\"],\"id_token_signing_alg_values_supported\":[\"RS256\"],\"response_types_supported\":[\"code\",\"id_token\",\"code id_token\",\"id_token token\"],\"scopes_supported\":[\"openid\",\"profile\",\"email\",\"offline_access\"],\"issuer\":\"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/v2.0\",\"request_uri_parameter_supported\":false,\"userinfo_endpoint\":\"https://graph.microsoft.com/oidc/userinfo\",\"authorization_endpoint\":\"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/v2.0/authorize\",\"device_authorization_endpoint\":\"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/v2.0/devicecode\",\"http_logout_supported\":true,\"frontchannel_logout_supported\":true,\"end_session_endpoint\":\"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/v2.0/logout\",\"claims_supported\":[\"sub\",\"iss\",\"cloud_instance_name\",\"cloud_instance_host_name\",\"cloud_graph_host_name\",\"msgraph_host\",\"aud\",\"exp\",\"iat\",\"auth_time\",\"acr\",\"nonce\",\"preferred_username\",\"name\",\"tid\",\"ver\",\"at_hash\",\"c_hash\",\"email\"],\"kerberos_endpoint\":\"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/kerberos\",\"tenant_region_scope\":\"WW\",\"cloud_instance_name\":\"microsoftonline.com\",\"cloud_graph_host_name\":\"graph.windows.net\",\"msgraph_host\":\"graph.microsoft.com\",\"rbac_url\":\"https://pas.windows.net\"}"
+                }
+            }
+        },
+        {
+            "request": {
                 "method": "POST",
                 "uri": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/v2.0/token",
-                "body": "client_id=04b07795-8ddb-461a-bbee-02f9e1bf7b46&grant_type=refresh_token&client_info=1&refresh_token=0.ARoAv4j5cvGGr0GRqy180BHbR5V3sATbjRpGu-4C-eG_e0YaAGs.AgABAAEAAAD--DLA3VO7QrddgJg7WevrAgDs_wQA9P--yviTyULHQyFszV34ZEdvKbUkOpg0IXJtcGAwh2Fw0u1-S2tRQ-53bfznubrS2srJwOX15W3C3GmBF5jpYE7KXUowQMf7viZSyMX9EsT_k6SGGkSocWhfYIx54bCmke_tJcZ_-p57OQ-2AZrRR3wYce7lemnOlRZDS5A2WpwyEnyNhoGDJCQMr2THvoi2e854AU938PheI_CjpBxct1LIpmsjOLHoDSCf0XcpTfZLYbNHwEyb7USi8-7ykPugdFm3ZXCE-1Eh-sSNrAfNMAIbLB6MTwHsQigAk9TykksAMvwhJFBsK8lOklHOn61d3ckN_BH3ucfPCGloCUcOg_vquxHcunwWuZCWSta0MZT-y9yRzv3AtVFAcfYI3yvRpqYu4T4Tj3c-k2PD9fFDeDh0TW1p-8_6MxKvUA16_19UkvZqLF3Pn7vEA7tVqlibA5w1OnxZNKFpy7yN4amwfK4YAkQ8Fw99U2ifwYCSFkcWld25c8JUPEiZwXWQgykcUMV7I5oaJXGdavrO4fGufKOoon5NsKQzXDLy--9QiJ95zWWFtiLCtXR9V5Ux48nwrS_MI1PpYy41PVUZiHW1e2zaksGpd4qlm56yL3XJRIW4G4Jr8R8s8lUtVmTLZvxTs7kKMCUfR6IbRaA95IlQtdB_-xXsu-6TQ1VJG-XIC1aszyeuC7FnvnWKaGMkL4cZMPJe6Qw7aeewP5Z3JM2Iy-KuM-5hxn84z-F7nFRDss-SxOjYJ1vqp1teZ_-1n78D9gwdYjqNCPLaJu7KyOsZBB-1OUhQLdMVTzvXe8QBBAq3PYYHoBv-V1R7qo_2n4sbAyE5td1f2YEx0ErsTKVNF2DKHb5lt2b8cpAqcDAcKVzE-VDhlhKzpGnQO2trCahfhlnIzFGfjXt_wDvLIbtFpDyIPPtTc7LvXvgLLZKuTh9u6av1K4JNC56TGaf7XuQYd_i83rszmIG-TRzzd7trzgYbxyQ7IjZbBIZm3-FJqhUas4zW6CqTAKr5FUKX_qzAMNMLQoj1s9HI2oVgbzvI__sp9qc6itScTjcKiIiF0ovtRLiJuCfy9z2UxHSzSzIqu79C39ZtGf_hPuizNWgKPyiLB8H_DgAi&scope=https%3A%2F%2Fmanagement.azure.com%2F.default+offline_access+openid+profile",
+                "body": "client_id=04b07795-8ddb-461a-bbee-02f9e1bf7b46&grant_type=refresh_token&client_info=1&refresh_token=0.ARoAv4j5cvGGr0GRqy180BHbR5V3sATbjRpGu-4C-eG_e0YaAGs.AgABAAEAAAD--DLA3VO7QrddgJg7WevrAgDs_wQA9P8WtYdULiww7UuhOzn6HRY-fi_tOPuOMm0tBmchHR7g8yZiMl6ykOhxMEphLYNDyyIKV1OG9f3nE63zb2vurKkmXCRpnzJweF7dhdllYpPzRql95F4TbKeG3LuSONr57Yan21KA9oHOCzoXhaC3pDtNvck3dZZqeKxVDKueGQ_oyM-2i61dT6eNSz4t92rjJMg8Exjnv9iLzePSCBg9zrwtcegsGCIFgxvQSC54RkfhHLcbMdU_44ddNZxS0Ere2CHKOXS5Wt3IBmZ0r0LodI0FE-_HYK8kw4hIXTNg1lbD-JFkmnXz3jUdJ3-YoENZeh3p8VlcgAxo7Zj1j2zauXqmll4Ump49njtEoWDWbbFajHdGGusPspwp0n-Xq4pQFwhKLMjubebtNmkkCKlZNERVcTrD_MMBre4ausKCrD0MmBlbntyUgpaSrngxBxDaIwHktjYDTZq2ElgYfkqZbNdx6xdZJQVQqRJ42eo5KNwnqRD0cE5oDwnPYnqxTKC4J0XNt7-HQX90hfRUJczADJhcNclqUcerRxX_J_8zOLpbfIstNv3Ca7KhnJqGvFoGJHjTCxkw0BM3i-jdjW-NxLNnKE3nsb4ZUTI2gM2nAieDuJJ4wO2bb-yjXSFBM_U_PTXsrJ4RwBbcdiN2oXzlqtadeKLCHlPY-KR774RdNedBy7EZ-sJ-h_DVDJ-2e7Fl6PbVEnjIS1fOXyeKFrRhUdfqOS05j12_VOrgzwOa23TyRR4_QQWcLl_vjxEYk4MVp9nyLeJfYY5WI3Z6EXThQti7aZTzxB3iTk-OdHNr09fYp9MUyftnIzmt08jXfR-3xgnLK-JeK_bD4Os74Avu1jT4IC-HX2PrcLjxOxGgyWaWmaTNhxmmkWZdqNSIKwvfm0-0rVtSCezq4t-ESh6V1Y3-AeIfwNXyLFBFVvNOrHbithO-mblvebp983Pe60H48Lm4RI0j2Rbl2wOnyGXZ_EC4fV2tTEYtrcLQC-C9ltcgcorrdNTdrOYfvLGVhTunpi5uZ78Kki5fqI5RrQQUwy2zvfQncMdeLDfVhq398AcuVhqB-K23dqqazyGtkD4pfyRE9tLmX4q-tI8abUy_GZcQqqQIyd5PyxwIbNE&scope=https%3A%2F%2Fmanagement.azure.com%2F.default+offline_access+openid+profile",
                 "headers": {
                     "User-Agent": [
                         "python-requests/2.22.0"
@@ -35,7 +106,7 @@
                         "retry-after, h429"
                     ],
                     "client-request-id": [
-                        "a2f045bf-04b4-4adb-b16c-100f41e3d449"
+                        "4ade91dd-1cf1-4730-a13e-21e921d2a462"
                     ],
                     "x-client-current-telemetry": [
                         "4|84,3|"
@@ -47,7 +118,7 @@
                         "Oid:ac839cc2-33ee-4879-a5b5-2895202ccb29@72f988bf-86f1-41af-91ab-2d7cd011db47"
                     ],
                     "Content-Length": [
-                        "1396"
+                        "1403"
                     ],
                     "Content-Type": [
                         "application/x-www-form-urlencoded"
@@ -60,46 +131,46 @@
                     "message": "OK"
                 },
                 "headers": {
-                    "Pragma": [
-                        "no-cache"
-                    ],
-                    "Expires": [
-                        "-1"
-                    ],
-                    "x-ms-clitelem": [
-                        "1,0,0,13429009.3694,"
-                    ],
-                    "X-XSS-Protection": [
-                        "0"
-                    ],
-                    "Strict-Transport-Security": [
-                        "max-age=31536000; includeSubDomains"
-                    ],
-                    "x-ms-ests-server": [
-                        "2.1.13622.4 - WUS2 ProdSlices"
+                    "P3P": [
+                        "CP=\"DSP CUR OTPi IND OTRi ONL FIN\""
                     ],
                     "Cache-Control": [
                         "no-store, no-cache"
                     ],
+                    "Pragma": [
+                        "no-cache"
+                    ],
+                    "Strict-Transport-Security": [
+                        "max-age=31536000; includeSubDomains"
+                    ],
+                    "X-Content-Type-Options": [
+                        "nosniff"
+                    ],
+                    "X-XSS-Protection": [
+                        "0"
+                    ],
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:43:58 GMT"
+                    ],
+                    "x-ms-ests-server": [
+                        "2.1.13622.4 - EUS ProdSlices"
+                    ],
+                    "x-ms-clitelem": [
+                        "1,0,0,603851076.0948,"
+                    ],
                     "Set-Cookie": [
-                        "fpc=Av5hy3EwZntAhg5wiBPhrzlmvuRuAQAAAKRyoNoOAAAA; expires=Thu, 29-Sep-2022 21:05:41 GMT; path=/; secure; HttpOnly; SameSite=None",
+                        "fpc=AoQLJnKLwVdBjjp169QF2_BmvuRuAQAAAD7SqdoOAAAA; expires=Thu, 06-Oct-2022 23:43:59 GMT; path=/; secure; HttpOnly; SameSite=None",
                         "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
                         "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
                     ],
                     "Content-Type": [
                         "application/json; charset=utf-8"
                     ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:40 GMT"
-                    ],
                     "Content-Length": [
-                        "5147"
+                        "5131"
                     ],
-                    "X-Content-Type-Options": [
-                        "nosniff"
-                    ],
-                    "P3P": [
-                        "CP=\"DSP CUR OTPi IND OTRi ONL FIN\""
+                    "Expires": [
+                        "-1"
                     ]
                 },
                 "body": {
@@ -125,7 +196,7 @@
                         "keep-alive"
                     ],
                     "x-ms-client-request-id": [
-                        "80cd9f68-28a7-11ed-9024-f4939fefc738"
+                        "c6b733d1-2e3d-11ed-bc07-f4939fefc738"
                     ],
                     "Authorization": [
                     ]
@@ -137,41 +208,41 @@
                     "message": "OK"
                 },
                 "headers": {
-                    "Pragma": [
+                    "Cache-Control": [
                         "no-cache"
                     ],
-                    "Expires": [
-                        "-1"
+                    "Pragma": [
+                        "no-cache"
                     ],
                     "Strict-Transport-Security": [
                         "max-age=31536000; includeSubDomains"
                     ],
-                    "Vary": [
-                        "Accept-Encoding"
-                    ],
-                    "Cache-Control": [
-                        "no-cache"
-                    ],
-                    "Server": [
-                        "Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Content-Type": [
-                        "application/json; charset=utf-8"
-                    ],
-                    "Last-Modified": [
-                        "Thu, 25 Aug 2022 22:54:43 GMT"
-                    ],
                     "X-Content-Type-Options": [
                         "nosniff"
+                    ],
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:44:00 GMT"
                     ],
                     "ETag": [
                         "\"0x8DA86ECCD0DCE92\""
                     ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:42 GMT"
+                    "Last-Modified": [
+                        "Thu, 25 Aug 2022 22:54:43 GMT"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Server": [
+                        "Microsoft-HTTPAPI/2.0"
                     ],
                     "Transfer-Encoding": [
                         "chunked"
+                    ],
+                    "Content-Type": [
+                        "application/json; charset=utf-8"
+                    ],
+                    "Expires": [
+                        "-1"
                     ],
                     "content-length": [
                         "3617"
@@ -200,7 +271,7 @@
                         "keep-alive"
                     ],
                     "x-ms-client-request-id": [
-                        "82a5a651-28a7-11ed-ba57-f4939fefc738"
+                        "c875b810-2e3d-11ed-abf3-f4939fefc738"
                     ],
                     "Authorization": [
                     ],
@@ -215,45 +286,45 @@
                     "message": "OK"
                 },
                 "headers": {
-                    "Pragma": [
+                    "Cache-Control": [
                         "no-cache"
                     ],
-                    "Expires": [
-                        "-1"
+                    "Pragma": [
+                        "no-cache"
                     ],
                     "Strict-Transport-Security": [
                         "max-age=31536000; includeSubDomains"
                     ],
-                    "Vary": [
-                        "Accept-Encoding"
-                    ],
-                    "Cache-Control": [
-                        "no-cache"
-                    ],
-                    "Server": [
-                        "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Content-Type": [
-                        "application/json"
-                    ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:44 GMT"
+                    "x-ms-ratelimit-remaining-subscription-resource-requests": [
+                        "11999"
                     ],
                     "X-Content-Type-Options": [
                         "nosniff"
                     ],
-                    "x-ms-ratelimit-remaining-subscription-resource-requests": [
-                        "11999"
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:44:02 GMT"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Server": [
+                        "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
                     ],
                     "Transfer-Encoding": [
                         "chunked"
+                    ],
+                    "Content-Type": [
+                        "application/json"
+                    ],
+                    "Expires": [
+                        "-1"
                     ],
                     "content-length": [
                         "380"
                     ]
                 },
                 "body": {
-                    "string": "{\"keys\":[{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key1\",\"value\":\"fakeKey"\",\"permissions\":\"FULL\"},{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key2\",\"value\":\"fakeKey"\",\"permissions\":\"FULL\"}]}"
+                    "string": "{\"keys\":[{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key1\",\"value\":\"fakeKey\",\"permissions\":\"FULL\"},{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key2\",\"value\":\"fakeKey\",\"permissions\":\"FULL\"}]}"
                 }
             }
         },
@@ -273,10 +344,10 @@
                         "2018-11-09"
                     ],
                     "x-ms-client-request-id": [
-                        "8376ae69-28a7-11ed-8227-f4939fefc738"
+                        "c94ca2f4-2e3d-11ed-9f44-f4939fefc738"
                     ],
                     "x-ms-date": [
-                        "Tue, 30 Aug 2022 21:05:44 GMT"
+                        "Tue, 06 Sep 2022 23:44:02 GMT"
                     ],
                     "Authorization": [
                     ],
@@ -291,23 +362,23 @@
                     "message": "Created"
                 },
                 "headers": {
-                    "Server": [
-                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:46 GMT"
-                    ],
                     "x-ms-version": [
                         "2018-11-09"
                     ],
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:44:03 GMT"
+                    ],
+                    "ETag": [
+                        "\"0x8DA9061AE45C50A\""
+                    ],
                     "Last-Modified": [
-                        "Tue, 30 Aug 2022 21:05:46 GMT"
+                        "Tue, 06 Sep 2022 23:44:03 GMT"
+                    ],
+                    "Server": [
+                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
                     ],
                     "Content-Length": [
                         "0"
-                    ],
-                    "ETag": [
-                        "\"0x8DA8ACB68765EE3\""
                     ]
                 },
                 "body": {
@@ -331,10 +402,10 @@
                         "2018-11-09"
                     ],
                     "x-ms-client-request-id": [
-                        "84561608-28a7-11ed-b7dc-f4939fefc738"
+                        "ca1dfe28-2e3d-11ed-a466-f4939fefc738"
                     ],
                     "x-ms-date": [
-                        "Tue, 30 Aug 2022 21:05:46 GMT"
+                        "Tue, 06 Sep 2022 23:44:03 GMT"
                     ],
                     "Authorization": [
                     ]
@@ -346,17 +417,17 @@
                     "message": "The specified blob does not exist."
                 },
                 "headers": {
-                    "x-ms-error-code": [
-                        "BlobNotFound"
+                    "x-ms-version": [
+                        "2018-11-09"
+                    ],
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:44:03 GMT"
                     ],
                     "Server": [
                         "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
                     ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:46 GMT"
-                    ],
-                    "x-ms-version": [
-                        "2018-11-09"
+                    "x-ms-error-code": [
+                        "BlobNotFound"
                     ],
                     "Content-Type": [
                         "application/xml"
@@ -366,7 +437,7 @@
                     ]
                 },
                 "body": {
-                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\nRequestId:9a56c663-901e-0048-7eb4-bccc2b000000\nTime:2022-08-30T21:05:46.3768066Z</Message></Error>"
+                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\nRequestId:6307208b-a01e-0004-354a-c20b34000000\nTime:2022-09-06T23:44:03.8151383Z</Message></Error>"
                 }
             }
         },
@@ -398,10 +469,10 @@
                         "2018-11-09"
                     ],
                     "x-ms-client-request-id": [
-                        "8470a06e-28a7-11ed-88f1-f4939fefc738"
+                        "ca380930-2e3d-11ed-a38b-f4939fefc738"
                     ],
                     "x-ms-date": [
-                        "Tue, 30 Aug 2022 21:05:46 GMT"
+                        "Tue, 06 Sep 2022 23:44:03 GMT"
                     ],
                     "Authorization": [
                     ]
@@ -413,29 +484,29 @@
                     "message": "Created"
                 },
                 "headers": {
-                    "Content-MD5": [
-                        "xMpCOKC5I4INzFCab3WEmw=="
-                    ],
-                    "Server": [
-                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:46 GMT"
+                    "x-ms-request-server-encrypted": [
+                        "true"
                     ],
                     "x-ms-version": [
                         "2018-11-09"
                     ],
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:44:03 GMT"
+                    ],
+                    "ETag": [
+                        "\"0x8DA9061AE7ACB02\""
+                    ],
                     "Last-Modified": [
-                        "Tue, 30 Aug 2022 21:05:46 GMT"
+                        "Tue, 06 Sep 2022 23:44:03 GMT"
+                    ],
+                    "Server": [
+                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
+                    ],
+                    "Content-MD5": [
+                        "xMpCOKC5I4INzFCab3WEmw=="
                     ],
                     "Content-Length": [
                         "0"
-                    ],
-                    "ETag": [
-                        "\"0x8DA8ACB68AC86F1\""
-                    ],
-                    "x-ms-request-server-encrypted": [
-                        "true"
                     ]
                 },
                 "body": {
@@ -462,7 +533,7 @@
                         "keep-alive"
                     ],
                     "x-ms-client-request-id": [
-                        "849be44e-28a7-11ed-8654-f4939fefc738"
+                        "ca60f9e3-2e3d-11ed-8444-f4939fefc738"
                     ],
                     "Authorization": [
                     ]
@@ -474,41 +545,41 @@
                     "message": "OK"
                 },
                 "headers": {
-                    "Pragma": [
+                    "Cache-Control": [
                         "no-cache"
                     ],
-                    "Expires": [
-                        "-1"
+                    "Pragma": [
+                        "no-cache"
                     ],
                     "Strict-Transport-Security": [
                         "max-age=31536000; includeSubDomains"
                     ],
-                    "Vary": [
-                        "Accept-Encoding"
-                    ],
-                    "Cache-Control": [
-                        "no-cache"
-                    ],
-                    "Server": [
-                        "Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Content-Type": [
-                        "application/json; charset=utf-8"
-                    ],
-                    "Last-Modified": [
-                        "Thu, 25 Aug 2022 22:54:43 GMT"
-                    ],
                     "X-Content-Type-Options": [
                         "nosniff"
+                    ],
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:44:04 GMT"
                     ],
                     "ETag": [
                         "\"0x8DA86ECCD0DCE92\""
                     ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:47 GMT"
+                    "Last-Modified": [
+                        "Thu, 25 Aug 2022 22:54:43 GMT"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Server": [
+                        "Microsoft-HTTPAPI/2.0"
                     ],
                     "Transfer-Encoding": [
                         "chunked"
+                    ],
+                    "Content-Type": [
+                        "application/json; charset=utf-8"
+                    ],
+                    "Expires": [
+                        "-1"
                     ],
                     "content-length": [
                         "3617"
@@ -537,7 +608,7 @@
                         "keep-alive"
                     ],
                     "x-ms-client-request-id": [
-                        "8575d306-28a7-11ed-aea4-f4939fefc738"
+                        "cb35b152-2e3d-11ed-bb41-f4939fefc738"
                     ],
                     "Authorization": [
                     ],
@@ -552,45 +623,45 @@
                     "message": "OK"
                 },
                 "headers": {
-                    "Pragma": [
+                    "Cache-Control": [
                         "no-cache"
                     ],
-                    "Expires": [
-                        "-1"
+                    "Pragma": [
+                        "no-cache"
                     ],
                     "Strict-Transport-Security": [
                         "max-age=31536000; includeSubDomains"
                     ],
-                    "Vary": [
-                        "Accept-Encoding"
-                    ],
-                    "Cache-Control": [
-                        "no-cache"
-                    ],
-                    "Server": [
-                        "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Content-Type": [
-                        "application/json"
-                    ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:49 GMT"
+                    "x-ms-ratelimit-remaining-subscription-resource-requests": [
+                        "11999"
                     ],
                     "X-Content-Type-Options": [
                         "nosniff"
                     ],
-                    "x-ms-ratelimit-remaining-subscription-resource-requests": [
-                        "11999"
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:44:06 GMT"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Server": [
+                        "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
                     ],
                     "Transfer-Encoding": [
                         "chunked"
+                    ],
+                    "Content-Type": [
+                        "application/json"
+                    ],
+                    "Expires": [
+                        "-1"
                     ],
                     "content-length": [
                         "380"
                     ]
                 },
                 "body": {
-                    "string": "{\"keys\":[{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key1\",\"value\":\"fakeKey"\",\"permissions\":\"FULL\"},{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key2\",\"value\":\"fakeKey"\",\"permissions\":\"FULL\"}]}"
+                    "string": "{\"keys\":[{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key1\",\"value\":\"fakeKey\",\"permissions\":\"FULL\"},{\"creationTime\":\"2022-02-11T07:23:14.6962911Z\",\"keyName\":\"key2\",\"value\":\"fakeKey\",\"permissions\":\"FULL\"}]}"
                 }
             }
         },
@@ -610,10 +681,10 @@
                         "2018-11-09"
                     ],
                     "x-ms-client-request-id": [
-                        "86ac51f5-28a7-11ed-adec-f4939fefc738"
+                        "cbed1afe-2e3d-11ed-9359-f4939fefc738"
                     ],
                     "x-ms-date": [
-                        "Tue, 30 Aug 2022 21:05:50 GMT"
+                        "Tue, 06 Sep 2022 23:44:06 GMT"
                     ],
                     "Authorization": [
                     ],
@@ -628,17 +699,17 @@
                     "message": "The specified container already exists."
                 },
                 "headers": {
-                    "x-ms-error-code": [
-                        "ContainerAlreadyExists"
+                    "x-ms-version": [
+                        "2018-11-09"
+                    ],
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:44:07 GMT"
                     ],
                     "Server": [
                         "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
                     ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:50 GMT"
-                    ],
-                    "x-ms-version": [
-                        "2018-11-09"
+                    "x-ms-error-code": [
+                        "ContainerAlreadyExists"
                     ],
                     "Content-Type": [
                         "application/xml"
@@ -648,7 +719,7 @@
                     ]
                 },
                 "body": {
-                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The specified container already exists.\nRequestId:917ab9a5-101e-0059-29b4-bcfb30000000\nTime:2022-08-30T21:05:51.3917605Z</Message></Error>"
+                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The specified container already exists.\nRequestId:c732f3e2-401e-0027-334a-c264ff000000\nTime:2022-09-06T23:44:08.0358482Z</Message></Error>"
                 }
             }
         },
@@ -668,10 +739,10 @@
                         "2018-11-09"
                     ],
                     "x-ms-client-request-id": [
-                        "876dd2b0-28a7-11ed-bed7-f4939fefc738"
+                        "ccbbeb2f-2e3d-11ed-bc8e-f4939fefc738"
                     ],
                     "x-ms-date": [
-                        "Tue, 30 Aug 2022 21:05:51 GMT"
+                        "Tue, 06 Sep 2022 23:44:08 GMT"
                     ],
                     "Authorization": [
                     ]
@@ -683,17 +754,17 @@
                     "message": "The specified blob does not exist."
                 },
                 "headers": {
-                    "x-ms-error-code": [
-                        "BlobNotFound"
+                    "x-ms-version": [
+                        "2018-11-09"
+                    ],
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:44:07 GMT"
                     ],
                     "Server": [
                         "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
                     ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:50 GMT"
-                    ],
-                    "x-ms-version": [
-                        "2018-11-09"
+                    "x-ms-error-code": [
+                        "BlobNotFound"
                     ],
                     "Content-Type": [
                         "application/xml"
@@ -703,7 +774,7 @@
                     ]
                 },
                 "body": {
-                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\nRequestId:917aba4e-101e-0059-3eb4-bcfb30000000\nTime:2022-08-30T21:05:51.5597054Z</Message></Error>"
+                    "string": "\ufeff<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\nRequestId:c732f43a-401e-0027-054a-c264ff000000\nTime:2022-09-06T23:44:08.2027931Z</Message></Error>"
                 }
             }
         },
@@ -735,10 +806,10 @@
                         "2018-11-09"
                     ],
                     "x-ms-client-request-id": [
-                        "8786f782-28a7-11ed-8feb-f4939fefc738"
+                        "ccd55c11-2e3d-11ed-9e28-f4939fefc738"
                     ],
                     "x-ms-date": [
-                        "Tue, 30 Aug 2022 21:05:51 GMT"
+                        "Tue, 06 Sep 2022 23:44:08 GMT"
                     ],
                     "Authorization": [
                     ]
@@ -750,29 +821,29 @@
                     "message": "Created"
                 },
                 "headers": {
-                    "Content-MD5": [
-                        "xMpCOKC5I4INzFCab3WEmw=="
-                    ],
-                    "Server": [
-                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
-                    ],
-                    "Date": [
-                        "Tue, 30 Aug 2022 21:05:50 GMT"
+                    "x-ms-request-server-encrypted": [
+                        "true"
                     ],
                     "x-ms-version": [
                         "2018-11-09"
                     ],
+                    "Date": [
+                        "Tue, 06 Sep 2022 23:44:08 GMT"
+                    ],
+                    "ETag": [
+                        "\"0x8DA9061B118E4E0\""
+                    ],
                     "Last-Modified": [
-                        "Tue, 30 Aug 2022 21:05:51 GMT"
+                        "Tue, 06 Sep 2022 23:44:08 GMT"
+                    ],
+                    "Server": [
+                        "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0"
+                    ],
+                    "Content-MD5": [
+                        "xMpCOKC5I4INzFCab3WEmw=="
                     ],
                     "Content-Length": [
                         "0"
-                    ],
-                    "ETag": [
-                        "\"0x8DA8ACB6BC2AC50\""
-                    ],
-                    "x-ms-request-server-encrypted": [
-                        "true"
                     ]
                 },
                 "body": {

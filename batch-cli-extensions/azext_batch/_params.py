@@ -10,7 +10,7 @@ from azure.cli.command_modules.batch._completers import load_supported_images
 from azure.cli.command_modules.batch._validators import (
     metadata_item_format, certificate_reference_format, validate_json_file,
     environment_setting_format, resource_file_format)
-from azext_batch._validators import validate_pool_settings, validate_client_parameters
+from azext_batch._validators import validate_client_parameters
 
 
 # pylint: disable=line-too-long, too-many-statements

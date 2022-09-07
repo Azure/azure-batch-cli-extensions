@@ -14,7 +14,7 @@ SIG_PATTERN = r'sig=(.+?)\\'
 
 KEY_PATTERN1= r'\\"key1\\",\\"value\\":\\(.+?)\\'
 KEY_PATTERN2= r'\\"key2\\",\\"value\\":\\(.+?)\\'
-Key_REPLACEMENT = '"fakeKey"'
+KEY_REPLACEMENT = '"fakeKey'
 
 path_to_recordings = os.path.abspath(os.path.join(os.path.abspath(__file__),
                                                        '..', '..','tests','recordings'))
@@ -36,26 +36,23 @@ for name in os.listdir(path_to_recordings):
 
             search_result = re.search(KEY_PATTERN1, line, re.I)
             if search_result and search_result.group(1):
-                linex = search_result.group(1)
-                line = line.replace(search_result.group(1), Key_REPLACEMENT)
+                line = line.replace(search_result.group(1), KEY_REPLACEMENT)
+                insecure_cassettes.append(name)
             
             search_result = re.search(KEY_PATTERN2, line, re.I)
             if search_result and search_result.group(1):
-                linex = search_result.group(1)
-                line = line.replace(search_result.group(1), Key_REPLACEMENT)
+                line = line.replace(search_result.group(1), KEY_REPLACEMENT)
+                insecure_cassettes.append(name)
 
             search_result = re.search(SIG_PATTERN, line, re.I)
             if search_result and search_result.group(1):
-                linex = search_result.group(1)
                 line = line.replace(search_result.group(1), SIG_REPLACEMENT)
+                insecure_cassettes.append(name)
 
-            if 'bearer' in line.lower():
+            if 'bearer' in line.lower() or 'sharedkey' in line.lower():
                 insecure_cassettes.append(name)
             else: 
-                if 'sharedkey' in line.lower():
-                    insecure_cassettes.append(name)                
-                else:
-                    t.write(line)
+                t.write(line)
     t.seek(0)
     with open(src_path, 'w') as f:
         for line in t:
@@ -64,8 +61,8 @@ for name in os.listdir(path_to_recordings):
 
 insecure_cassettes = list(set(insecure_cassettes))
 if insecure_cassettes:
-    print('Bearer tokens removed from the following cassettes:')
+    print('Secrets scrubbed from the following cassettes:')
     for cassette in insecure_cassettes:
         print('\t{}'.format(cassette))
 else:
-    print('All cassettes free from Bearer and Shared Key tokens!')
+    print('All Secrets scrubbed!')
