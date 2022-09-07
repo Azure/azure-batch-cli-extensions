@@ -9,7 +9,7 @@ import re
 import tempfile
 
 COMMAND_MODULE_PREFIX = 'azure-cli-'
-SIG_REPLACEMENT = 'sig=fakeSig'
+SIG_REPLACEMENT = 'fakeSig'
 SIG_PATTERN = r'sig=(.+?)\\'
 
 KEY_PATTERN1= r'\\"key1\\",\\"value\\":\\(.+?)\\'
