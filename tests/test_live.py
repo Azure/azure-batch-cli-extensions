@@ -300,7 +300,7 @@ class TestBatchExtensionsLive(VCRTestBase):
         if flavor == 'ubuntu16':
             publisher = 'canonical'
             offer = 'ubuntuserver'
-            sku_id = '16.04-lts'
+            sku_id = '18.04-lts'
         elif flavor == 'centos':
             publisher = 'openlogic'
             offer = 'centos'

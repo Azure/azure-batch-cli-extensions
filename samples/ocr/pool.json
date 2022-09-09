@@ -24,16 +24,16 @@
     },
     "pool": {
         "type": "Microsoft.Batch/batchAccounts/pools",
-        "apiVersion": "2018-12-01",
+        "apiVersion": "2022-06-01",
         "properties": {
             "id": "[parameters('poolId')]",
             "virtualMachineConfiguration": {
                 "imageReference": { 
                     "publisher": "Canonical",
                     "offer": "UbuntuServer",
-                    "sku": "16.04.0-LTS"
+                    "sku": "18.04-LTS"
                 },
-                "nodeAgentSKUId": "batch.node.ubuntu 16.04"
+                "nodeAgentSKUId": "batch.node.ubuntu 18.04"
             },
             "vmSize": "[parameters('vmSize')]",
             "targetDedicatedNodes": "[parameters('vmCount')]",

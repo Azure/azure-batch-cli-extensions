@@ -40,10 +40,10 @@ An example of an APT package reference in an IaaS pool:
         "imageReference": {
             "publisher": "Canonical",
             "offer": "UbuntuServer",
-            "sku": "16.04.0-LTS",
+            "sku": "18.04-LTS",
             "version": "latest"
         },
-        "nodeAgentSKUId": "batch.node.ubuntu 16.04"
+        "nodeAgentSKUId": "batch.node.ubuntu 18.04"
     },
     "vmSize": "STANDARD_D1",
     "targetDedicated": 5,

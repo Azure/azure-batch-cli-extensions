@@ -14,20 +14,18 @@ CLASSIFIERS = [
     'Intended Audience :: Developers',
     'Intended Audience :: System Administrators',
     'Programming Language :: Python',
-    'Programming Language :: Python :: 2',
-    'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.4',
-    'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
     'License :: OSI Approved :: MIT License',
 ]
 
 DEPENDENCIES = [
     'autopep8==1.2.4',
     'coverage==4.2',
-    'flake8==3.2.1',
-    'pycodestyle==2.2.0',
+    'flake8==3.5.0',
+    'pycodestyle==2.3.1',
     'azure-storage-blob==1.1.0'
 ]
 
