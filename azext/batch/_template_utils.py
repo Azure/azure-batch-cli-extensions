@@ -202,14 +202,15 @@ def _strip_prefix(cmd_line):
     """Strip an OS operating prefix from a command line.
     """
     if cmd_line.startswith('cmd.exe /c '):
-        return cmd_line[11:].strip('"')
+        return 'cmd.exe /c ', cmd_line[11:].strip('"')
+    # Always use full cmd name for windows
     if cmd_line.startswith('cmd /c '):
-        return cmd_line[7:].strip('"')
+        return 'cmd.exe /c ', cmd_line[7:].strip('"')
     if cmd_line.startswith('/bin/bash -c '):
-        return cmd_line[13:]
+        return '/bin/bash -c ', cmd_line[13:]
     if cmd_line.startswith('/bin/sh -c '):
-        return cmd_line[11:]
-    return cmd_line
+        return '/bin/sh -c ', cmd_line[11:]
+    return "", cmd_line
 
 def _add_cmd_prefix(task, os_flavor):
     """Add OS-specific command prefix to command line."""
@@ -217,7 +218,7 @@ def _add_cmd_prefix(task, os_flavor):
         # TODO: Do we need windows shell escaping?
         task.command_line = 'cmd /c "{}"'.format(task.command_line) #.replace('\"','\\\\\"')
     elif os_flavor == pool_utils.PoolOperatingSystemFlavor.LINUX:
-        task.command_line = '/bin/bash -c \'set -e; set -o pipefail; {}; wait\''.format(task.command_line)
+        task.command_line = '/bin/sh -c \'set -e; set -o pipefail; {}; wait\''.format(task.command_line)
     else:
         raise ValueError("Unknown pool OS flavor: " + str(os_flavor))
 
@@ -1054,22 +1055,24 @@ def construct_setup_task(existing_task, command_info, os_flavor):
             if os_flavor == pool_utils.PoolOperatingSystemFlavor.WINDOWS:
                 result['command_line'] = 'cmd.exe /c "{}"'.format(result['command_line'])
             elif os_flavor == pool_utils.PoolOperatingSystemFlavor.LINUX:
-                result['command_line'] = '/bin/bash -c {}'.format(result['command_line'])
+                result['command_line'] = '/bin/sh -c {}'.format(result['command_line'])
             else:
                 raise ValueError("Unknown pool OS flavor: " + str(os_flavor))
         return result if result else None
+    prefix = ""
     if result.get('command_line'):
-        commands.append(_strip_prefix(result['command_line']))
+        prefix, cmd = _strip_prefix(result['command_line'])
+        commands.append(cmd)
     resources.extend(result.get('resource_files', []))
     if os_flavor == pool_utils.PoolOperatingSystemFlavor.WINDOWS:
         full_win_cmd = ' & '.join(commands)
-        result['command_line'] = 'cmd.exe /c "{}"'.format(full_win_cmd)
+        result['command_line'] = '{} "{}"'.format(prefix, full_win_cmd)
         result['user_identity'] = models.UserIdentity(
             auto_user=models.AutoUserSpecification(scope="task", elevation_level="admin"))
     elif os_flavor == pool_utils.PoolOperatingSystemFlavor.LINUX:
         # Escape the users command line
         full_linux_cmd = shell_escape(';'.join(commands))
-        result['command_line'] = '/bin/bash -c {}'.format(full_linux_cmd)
+        result['command_line'] = '{} {}'.format(prefix, full_linux_cmd)
         result['user_identity'] = models.UserIdentity(
             auto_user=models.AutoUserSpecification(scope="pool", elevation_level="admin"))
     else:
