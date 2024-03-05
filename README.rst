@@ -1,6 +1,14 @@
 Microsoft Azure Batch Extensions
 ================================
 
+Azure Batch CLI extensions will be retired on 30 September 2024
+https://azure.microsoft.com/en-us/updates/azure-batch-cli-extensions-will-be-retired-on-30-september-2024/
+
+Remove the Azure Batch CLI Extensions: 
+.. code-block:: bash
+
+	$ az extension remove -n azure-batch-cli-extensions
+
 .. image:: https://travis-ci.org/Azure/azure-batch-cli-extensions.svg?branch=master
  :target: https://travis-ci.org/Azure/azure-batch-cli-extensions
 

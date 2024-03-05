@@ -1,6 +1,15 @@
 Microsoft Azure Batch CLI Extensions for Windows, Mac and Linux
 ===============================================================
 
+Azure Batch CLI extensions will be retired on 30 September 2024
+https://azure.microsoft.com/en-us/updates/azure-batch-cli-extensions-will-be-retired-on-30-september-2024/
+
+Remove the Azure Batch CLI Extensions: 
+.. code-block:: bash
+
+	$ az extension remove -n azure-batch-cli-extensions
+
+
 This project is a preview build of the Microsoft Azure command-line interface to demonstrate proposed features in Azure Batch.
 For further details on the Azure CLI, please check the `official documentation <https://docs.microsoft.com/en-us/cli/azure/install-azure-cli>`_.
 
