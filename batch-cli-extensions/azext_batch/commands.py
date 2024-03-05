@@ -18,7 +18,7 @@ MINIMUM_UNSUPPORTED_BMGMT_VERSION = "16.3"
 MINIMUM_UNSUPPORTED_BATCH_EXT_VERSION = "9.1"
 
 def deprecation_warning():
-    logger.warning("Azure Batch CLI extensions will be retired on 30 September 2024\n https://azure.microsoft.com/en-us/updates/azure-batch-cli-extensions-will-be-retired-on-30-september-2024/\n")
+    logger.warning("Azure Batch CLI extensions will be retired on 30 September 2024\n https://azure.microsoft.com/updates/azure-batch-cli-extensions-will-be-retired-on-30-september-2024/\n")
         
 def confirm_version(current, supported, package):
     if version.StrictVersion(current) >= version.StrictVersion(supported):
