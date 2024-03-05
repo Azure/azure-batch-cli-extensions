@@ -17,13 +17,16 @@ MINIMUM_UNSUPPORTED_BATCH_VERSION = "12.2"
 MINIMUM_UNSUPPORTED_BMGMT_VERSION = "16.3"
 MINIMUM_UNSUPPORTED_BATCH_EXT_VERSION = "9.1"
 
-
+def deprecation_warning():
+    logger.warning("Azure Batch CLI extensions will be retired on 30 September 2024\n https://azure.microsoft.com/updates/azure-batch-cli-extensions-will-be-retired-on-30-september-2024/\n")
+        
 def confirm_version(current, supported, package):
     if version.StrictVersion(current) >= version.StrictVersion(supported):
         logger.warning("This package of the Batch Extensions module supports "
                        "%s up to version %s. The current version %s has not been "
                        "tested for compatibility.", package, supported, current)
 
+deprecation_warning()
 confirm_version(batch_version, MINIMUM_UNSUPPORTED_BATCH_VERSION, "Azure Batch")
 confirm_version(batch_mgmt_version, MINIMUM_UNSUPPORTED_BMGMT_VERSION, "Azure Batch Management")
 confirm_version(batch_ext_version, MINIMUM_UNSUPPORTED_BATCH_EXT_VERSION, "Azure Batch Extensions")
